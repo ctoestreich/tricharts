@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/triharder.iml" filepath="$PROJECT_DIR$/triharder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/triharder-grailsPlugins.iml" filepath="$PROJECT_DIR$/triharder-grailsPlugins.iml" />
     </modules>
   </component>
 </project>

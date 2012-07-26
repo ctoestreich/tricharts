@@ -35,6 +35,9 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+//        compile 'joda-time:joda-time-hibernate:1.3'
+//        compile 'org.jadira.usertype:usertype.jodatime:1.9'
+        compile "org.jadira.usertype:usertype.jodatime:1.9"
     }
 
     plugins {
@@ -44,6 +47,14 @@ grails.project.dependency.resolution = {
 
         runtime ':twitter-bootstrap:2.0.0.16'
         runtime ':fields:1.0.1'
+        runtime ":cache-headers:1.1.5"
+        runtime ":cached-resources:1.0"
+        runtime ":zipped-resources:1.0"
+        compile ":svn:1.0.2"
+        compile ":joda-time:1.4"
+
+        runtime ":spring-security-core:1.2.7.3"
+        runtime ":spring-security-facebook:0.9"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
