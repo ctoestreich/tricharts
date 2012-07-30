@@ -2,14 +2,6 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'user', 'error')} required">
-	<label for="user">
-		<g:message code="race.user.label" default="User" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="user" name="user.id" from="${com.tgid.tri.auth.User.list()}" optionKey="id" required="" value="${raceInstance?.user?.id}" class="many-to-one"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'raceType', 'error')} required">
 	<label for="raceType">
 		<g:message code="race.raceType.label" default="Race Type" />

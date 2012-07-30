@@ -44,8 +44,6 @@
 					<thead>
 						<tr>
 						
-							<th class="header"><g:message code="race.user.label" default="User" /></th>
-						
 							<g:sortableColumn property="raceType" title="${message(code: 'race.raceType.label', default: 'Race Type')}" />
 						
 							<g:sortableColumn property="date" title="${message(code: 'race.date.label', default: 'Date')}" />
@@ -60,8 +58,6 @@
 					<tbody>
 					<g:each in="${raceInstanceList}" var="raceInstance">
 						<tr>
-						
-							<td>${fieldValue(bean: raceInstance, field: "user")}</td>
 						
 							<td>${fieldValue(bean: raceInstance, field: "raceType")}</td>
 						

@@ -1,5 +1,7 @@
 package com.tgid.tri.auth
 
+import com.tgid.tri.Race
+
 class User {
 
     transient springSecurityService
@@ -10,6 +12,8 @@ class User {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
+
+    static hasMany = [races: Race]
 
     static constraints = {
         username blank: false, unique: true

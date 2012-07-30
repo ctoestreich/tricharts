@@ -42,13 +42,6 @@
 
 				<dl>
 				
-					<g:if test="${raceInstance?.user}">
-						<dt><g:message code="race.user.label" default="User" /></dt>
-						
-							<dd><g:link controller="user" action="show" id="${raceInstance?.user?.id}">${raceInstance?.user?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
 					<g:if test="${raceInstance?.raceType}">
 						<dt><g:message code="race.raceType.label" default="Race Type" /></dt>
 						

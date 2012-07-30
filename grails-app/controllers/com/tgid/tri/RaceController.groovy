@@ -16,27 +16,27 @@ class RaceController {
     }
 
     def create() {
-		switch (request.method) {
-		case 'GET':
-        	[raceInstance: new Race(params)]
-			break
-		case 'POST':
-	        def raceInstance = new Race(params)
-	        if (!raceInstance.save(flush: true)) {
-	            render view: 'create', model: [raceInstance: raceInstance]
-	            return
-	        }
+        switch(request.method) {
+            case 'GET':
+                [raceInstance: new Race(params)]
+                break
+            case 'POST':
+                def raceInstance = new Race(params)
+                if(!raceInstance.save(flush: true)) {
+                    render view: 'create', model: [raceInstance: raceInstance]
+                    return
+                }
 
-			flash.message = message(code: 'default.created.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.id])
-	        redirect action: 'show', id: raceInstance.id
-			break
-		}
+                flash.message = message(code: 'default.created.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.id])
+                redirect action: 'show', id: raceInstance.id
+                break
+        }
     }
 
     def show() {
         def raceInstance = Race.get(params.id)
-        if (!raceInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+        if(!raceInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
             redirect action: 'list'
             return
         }
@@ -45,64 +45,64 @@ class RaceController {
     }
 
     def edit() {
-		switch (request.method) {
-		case 'GET':
-	        def raceInstance = Race.get(params.id)
-	        if (!raceInstance) {
-	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
-	            redirect action: 'list'
-	            return
-	        }
+        switch(request.method) {
+            case 'GET':
+                def raceInstance = Race.get(params.id)
+                if(!raceInstance) {
+                    flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+                    redirect action: 'list'
+                    return
+                }
 
-	        [raceInstance: raceInstance]
-			break
-		case 'POST':
-	        def raceInstance = Race.get(params.id)
-	        if (!raceInstance) {
-	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
-	            redirect action: 'list'
-	            return
-	        }
+                [raceInstance: raceInstance]
+                break
+            case 'POST':
+                def raceInstance = Race.get(params.id)
+                if(!raceInstance) {
+                    flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+                    redirect action: 'list'
+                    return
+                }
 
-	        if (params.version) {
-	            def version = params.version.toLong()
-	            if (raceInstance.version > version) {
-	                raceInstance.errors.rejectValue('version', 'default.optimistic.locking.failure',
-	                          [message(code: 'race.label', default: 'Race')] as Object[],
-	                          "Another user has updated this Race while you were editing")
-	                render view: 'edit', model: [raceInstance: raceInstance]
-	                return
-	            }
-	        }
+                if(params.version) {
+                    def version = params.version.toLong()
+                    if(raceInstance.version > version) {
+                        raceInstance.errors.rejectValue('version', 'default.optimistic.locking.failure',
+                                                        [message(code: 'race.label', default: 'Race')] as Object[],
+                                                        "Another user has updated this Race while you were editing")
+                        render view: 'edit', model: [raceInstance: raceInstance]
+                        return
+                    }
+                }
 
-	        raceInstance.properties = params
+                raceInstance.properties = params
 
-	        if (!raceInstance.save(flush: true)) {
-	            render view: 'edit', model: [raceInstance: raceInstance]
-	            return
-	        }
+                if(!raceInstance.save(flush: true)) {
+                    render view: 'edit', model: [raceInstance: raceInstance]
+                    return
+                }
 
-			flash.message = message(code: 'default.updated.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.id])
-	        redirect action: 'show', id: raceInstance.id
-			break
-		}
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.id])
+                redirect action: 'show', id: raceInstance.id
+                break
+        }
     }
 
     def delete() {
         def raceInstance = Race.get(params.id)
-        if (!raceInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+        if(!raceInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'race.label', default: 'Race'), params.id])
             redirect action: 'list'
             return
         }
 
         try {
             raceInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'race.label', default: 'Race'), params.id])
             redirect action: 'list'
         }
-        catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'race.label', default: 'Race'), params.id])
+        catch(DataIntegrityViolationException e) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'race.label', default: 'Race'), params.id])
             redirect action: 'show', id: params.id
         }
     }
