@@ -35,6 +35,14 @@ class Segment {
                 PeriodFormatter formatter= new PeriodFormatterBuilder().appendMinutes().appendLiteral(':').minimumPrintedDigits(2).printZeroAlways().appendSeconds().toFormatter()
                 display = formatter.print(runPace.toPeriod())
                 break
+            case segmentType.Swim:
+                println "distance $distance"
+                def runPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / (distance*17.6))).standardSeconds)
+                paceDuration = runPace
+                PeriodFormatter formatter= new PeriodFormatterBuilder().appendMinutes().appendLiteral(':').minimumPrintedDigits(2).printZeroAlways().appendSeconds().toFormatter()
+                display = formatter.print(runPace.toPeriod())
+
+                break
             default:
                 break
         }

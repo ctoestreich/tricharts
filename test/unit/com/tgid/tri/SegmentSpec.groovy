@@ -40,6 +40,10 @@ class SegmentSpec extends Specification {
         SegmentType.Run  | 3        | Duration.standardMinutes(21)             | null  | '7:00'      | Duration.standardSeconds(7 * 60)
         SegmentType.Run  | 3        | Duration.standardMinutes(24)             | null  | '8:00'      | Duration.standardSeconds(8 * 60)
         SegmentType.Run  | 3        | Duration.standardSeconds((20 * 60) + 45) | null  | '6:55'      | Duration.standardSeconds(6 * 60 + 55)
+        SegmentType.Swim  | 0.5        | Duration.standardMinutes(12) | null  | '1:21'      | Duration.standardSeconds(81)
+        SegmentType.Swim  | 0.5        | Duration.standardMinutes(13) | null  | '1:28'      | Duration.standardSeconds(88)
+        SegmentType.Swim  | 0.5        | Duration.standardMinutes(14) | null  | '1:35'      | Duration.standardSeconds(95)
+        SegmentType.Swim  | 0.4        | Duration.standardMinutes(11) | null  | '1:33'      | Duration.standardSeconds(93)
     }
 }
 
