@@ -52,6 +52,8 @@
 						
 							<g:sortableColumn property="name" title="${message(code: 'race.name.label', default: 'Name')}" />
 						
+							<th class="header"><g:message code="race.user.label" default="User" /></th>
+						
 							<th></th>
 						</tr>
 					</thead>
@@ -66,6 +68,8 @@
 							<td>${fieldValue(bean: raceInstance, field: "duration")}</td>
 						
 							<td>${fieldValue(bean: raceInstance, field: "name")}</td>
+						
+							<td>${fieldValue(bean: raceInstance, field: "user")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${raceInstance.id}" class="btn btn-small">Show &raquo;</g:link>

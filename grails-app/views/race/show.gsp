@@ -79,6 +79,13 @@
 						
 					</g:if>
 				
+					<g:if test="${raceInstance?.user}">
+						<dt><g:message code="race.user.label" default="User" /></dt>
+						
+							<dd><g:link controller="user" action="show" id="${raceInstance?.user?.id}">${raceInstance?.user?.encodeAsHTML()}</g:link></dd>
+						
+					</g:if>
+				
 				</dl>
 
 				<g:form>

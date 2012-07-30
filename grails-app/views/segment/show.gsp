@@ -42,6 +42,13 @@
 
 				<dl>
 				
+					<g:if test="${segmentInstance?.distance}">
+						<dt><g:message code="segment.distance.label" default="Distance" /></dt>
+						
+							<dd><g:fieldValue bean="${segmentInstance}" field="distance"/></dd>
+						
+					</g:if>
+				
 					<g:if test="${segmentInstance?.duration}">
 						<dt><g:message code="segment.duration.label" default="Duration" /></dt>
 						
@@ -60,8 +67,12 @@
 						<dt><g:message code="segment.segmentType.label" default="Segment Type" /></dt>
 						
 							<dd><g:fieldValue bean="${segmentInstance}" field="segmentType"/></dd>
-						
 					</g:if>
+
+
+              <dt><g:message code="segment.pace.label" default="Segment Pace" /></dt>
+
+              <dd>${segmentInstance.pace}</dd>
 				
 				</dl>
 

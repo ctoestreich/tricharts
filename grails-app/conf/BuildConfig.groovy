@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.1.6"
 
         runtime ':twitter-bootstrap:2.0.0.16'
-        runtime ':fields:1.0.1'
+        runtime ':fields:1.1'
         runtime ":cache-headers:1.1.5"
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
@@ -54,7 +54,7 @@ grails.project.dependency.resolution = {
         compile ":joda-time:1.4"
 
         runtime ":spring-security-core:1.2.7.3"
-        runtime ":spring-security-facebook:0.9"
+        //runtime ":spring-security-facebook:0.9"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"

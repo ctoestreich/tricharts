@@ -10,17 +10,18 @@ class Segment {
 
     Duration duration
     SegmentType segmentType
-    Double distance
+    Float distance = 0.00
 
     static belongsTo = [race: Race]
 
     static constraints = {
+        distance scale:2
     }
 
     transient Pace getPace() {
         def display = null, paceDuration = null, paceSpeed = null
 
-        switch(segmentType) {
+        switch(this.segmentType) {
             case segmentType.Bike:
                 println "distance $distance"
                 println "speed : ${new BigDecimal(distance / (((duration.millis / 1000) / 60) / 60)).setScale(2, RoundingMode.HALF_UP)}"

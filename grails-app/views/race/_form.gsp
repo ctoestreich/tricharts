@@ -29,7 +29,7 @@
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'name', 'error')} ">
 	<label for="name">
 		<g:message code="race.name.label" default="Name" />
-		
+
 	</label>
 	<g:textField name="name" value="${raceInstance?.name}"/>
 </div>
@@ -37,9 +37,9 @@
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'segments', 'error')} ">
 	<label for="segments">
 		<g:message code="race.segments.label" default="Segments" />
-		
+
 	</label>
-	
+
 <ul class="one-to-many">
 <g:each in="${raceInstance?.segments?}" var="s">
     <li><g:link controller="segment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
@@ -49,5 +49,13 @@
 </li>
 </ul>
 
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'user', 'error')} required">
+	<label for="user">
+		<g:message code="race.user.label" default="User" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="user" name="user.id" from="${com.tgid.tri.auth.User.list()}" optionKey="id" required="" value="${raceInstance?.user?.id}" class="many-to-one"/>
 </div>
 

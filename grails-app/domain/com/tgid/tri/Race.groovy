@@ -23,7 +23,7 @@ class Race {
     }
 
     @Override
-    public String toString() {
-        "$name ${date.year + 1900}"
+    String toString() {
+       name ?: "Unknown"
     }
 }

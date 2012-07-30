@@ -44,14 +44,11 @@
 					bare Grails app using dynamically scaffolded controllers and views.</p>
 				</div>
 
-              <facebookAuth:init force="true" />
-              <sec:ifNotGranted roles="ROLE_FACEBOOK">
-                <ul>
-                  <li><facebookAuth:connect permissions="email"/> with permissions: email</li>
-                  <li><facebookAuth:connect permissions="${['email', 'user_about_me']}"/> with permissions: email, user_about_me</li>
-                </ul>
+              %{--<facebookAuth:init force="true" />--}%
+              <sec:ifNotGranted roles="ROLE_USER">
+                Not Logged In!
               </sec:ifNotGranted>
-              <sec:ifAllGranted roles="ROLE_FACEBOOK">
+              <sec:ifAllGranted roles="ROLE_USER">
                 Welcome! <sec:username/>
               </sec:ifAllGranted>
 

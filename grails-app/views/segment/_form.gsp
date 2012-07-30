@@ -1,6 +1,14 @@
 <%@ page import="com.tgid.tri.Segment" %>
 
 
+asdf
+<div class="fieldcontain ${hasErrors(bean: segmentInstance, field: 'distance', 'error')} required">
+	<label for="distance">
+		<g:message code="segment.distance.label" default="Distance" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="number" name="distance" required="" value="${fieldValue(bean: segmentInstance, field: 'distance')}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: segmentInstance, field: 'duration', 'error')} required">
 	<label for="duration">

@@ -6,6 +6,9 @@ class User {
 
     transient springSecurityService
 
+    String firstName
+    String lastName
+    Date dob
     String username
     String password
     boolean enabled
@@ -18,6 +21,9 @@ class User {
     static constraints = {
         username blank: false, unique: true
         password blank: false
+        firstName blank: false
+        lastName blank: false
+        dob blank: false
     }
 
     static mapping = {
@@ -40,5 +46,10 @@ class User {
 
     protected void encodePassword() {
         password = springSecurityService.encodePassword(password)
+    }
+
+    @Override
+    public String toString() {
+        return "$firstName $lastName"
     }
 }
