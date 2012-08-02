@@ -8,17 +8,26 @@
 <body>
 
 <div class="container">
+
+  <div class="row well">
+
+  </div>
+
   <div class="row well">
     %{--<div class="span12">--}%
-    <h2>Runs</h2>
+    <a href="#results-run" data-toggle="collapse" data-target="#results-run">Runs</a>
+    <div id="results-run" class="collapse">
     <g:render template="/templates/raceResult" collection="${runs}" var="result"/>
+    </div>
     %{--</div>--}%
   </div>
 
   <div class="row well">
     %{--<div class="span12">--}%
       <h2>Triathlons</h2>
+      <div id="results-run" class="collapse">
       <g:render template="/templates/raceResult" collection="${triathlons}" var="result"/>
+      </div>
     %{--</div>--}%
   </div>
 

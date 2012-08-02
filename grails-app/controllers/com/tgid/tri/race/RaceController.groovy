@@ -22,6 +22,10 @@ class RaceController {
 			break
 		case 'POST':
 	        def raceInstance = new Race(params)
+            if(raceInstance.raceType == RaceType.Triathlon){
+                createTriathlonSegments(raceInstance)
+            }
+
 	        if (!raceInstance.save(flush: true)) {
 	            render view: 'create', model: [raceInstance: raceInstance]
 	            return
@@ -31,6 +35,19 @@ class RaceController {
 	        redirect action: 'show', id: raceInstance.id
 			break
 		}
+    }
+
+    private void createTriathlonSegments(Race race) {
+        def swim = new Segment(segmentType: SegmentType.Swim, distanceType: DistanceType.Miles, distance: 0.5)
+        def t1 = new Segment(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400)
+        def bike = new Segment(segmentType: SegmentType.Bike, distanceType: DistanceType.Miles, distance: 15)
+        def t2 = new Segment(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400)
+        def run = new Segment(segmentType: SegmentType.Run, distanceType: DistanceType.Kilometers, distance: 5)
+        race.addToSegments(swim)
+        race.addToSegments(t1)
+        race.addToSegments(bike)
+        race.addToSegments(t2)
+        race.addToSegments(run)
     }
 
     def show() {

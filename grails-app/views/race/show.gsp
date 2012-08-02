@@ -94,7 +94,7 @@
 					<g:if test="${raceInstance?.segments}">
 						<dt><g:message code="race.segments.label" default="Segments" /></dt>
 						
-							<g:each in="${raceInstance.segments}" var="s">
+							<g:each in="${raceInstance.segments.sort{a,b-> a.segmentOrder <=> b.segmentOrder }}" var="s">
 							<dd><g:link controller="segment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></dd>
 							</g:each>
 						
