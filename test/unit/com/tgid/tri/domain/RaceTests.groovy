@@ -3,7 +3,7 @@ package com.tgid.tri.domain
 
 
 import grails.test.mixin.*
-import com.tgid.tri.Race
+import com.tgid.tri.race.Race
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions

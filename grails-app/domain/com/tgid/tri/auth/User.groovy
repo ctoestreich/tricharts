@@ -1,6 +1,6 @@
 package com.tgid.tri.auth
 
-import com.tgid.tri.Race
+import com.tgid.tri.race.Race
 
 class User {
 

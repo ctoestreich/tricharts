@@ -1,5 +1,5 @@
 
-<%@ page import="com.tgid.tri.Segment" %>
+<%@ page import="com.tgid.tri.race.Segment" %>
 <!doctype html>
 <html>
 	<head>
@@ -49,10 +49,17 @@
 						
 					</g:if>
 				
-					<g:if test="${segmentInstance?.duration}">
-						<dt><g:message code="segment.duration.label" default="Duration" /></dt>
+					<g:if test="${segmentInstance?.distanceType}">
+						<dt><g:message code="segment.distanceType.label" default="Distance Type" /></dt>
 						
-							<dd><g:fieldValue bean="${segmentInstance}" field="duration"/></dd>
+							<dd><g:fieldValue bean="${segmentInstance}" field="distanceType"/></dd>
+						
+					</g:if>
+				
+					<g:if test="${segmentInstance?.order}">
+						<dt><g:message code="segment.order.label" default="Order" /></dt>
+						
+							<dd><g:fieldValue bean="${segmentInstance}" field="order"/></dd>
 						
 					</g:if>
 				
@@ -67,12 +74,8 @@
 						<dt><g:message code="segment.segmentType.label" default="Segment Type" /></dt>
 						
 							<dd><g:fieldValue bean="${segmentInstance}" field="segmentType"/></dd>
+						
 					</g:if>
-
-
-              <dt><g:message code="segment.pace.label" default="Segment Pace" /></dt>
-
-              <dd>${segmentInstance.pace}</dd>
 				
 				</dl>
 

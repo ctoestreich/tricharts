@@ -1,5 +1,5 @@
 
-<%@ page import="com.tgid.tri.Race" %>
+<%@ page import="com.tgid.tri.race.Race" %>
 <!doctype html>
 <html>
 	<head>
@@ -48,11 +48,13 @@
 						
 							<g:sortableColumn property="date" title="${message(code: 'race.date.label', default: 'Date')}" />
 						
-							<g:sortableColumn property="duration" title="${message(code: 'race.duration.label', default: 'Duration')}" />
+							<g:sortableColumn property="distance" title="${message(code: 'race.distance.label', default: 'Distance')}" />
+						
+							<g:sortableColumn property="distanceType" title="${message(code: 'race.distanceType.label', default: 'Distance Type')}" />
 						
 							<g:sortableColumn property="name" title="${message(code: 'race.name.label', default: 'Name')}" />
 						
-							<th class="header"><g:message code="race.user.label" default="User" /></th>
+							<g:sortableColumn property="participantsAgeGroup" title="${message(code: 'race.participantsAgeGroup.label', default: 'Participants Age Group')}" />
 						
 							<th></th>
 						</tr>
@@ -65,11 +67,13 @@
 						
 							<td><g:formatDate date="${raceInstance.date}" /></td>
 						
-							<td>${fieldValue(bean: raceInstance, field: "duration")}</td>
+							<td>${fieldValue(bean: raceInstance, field: "distance")}</td>
+						
+							<td>${fieldValue(bean: raceInstance, field: "distanceType")}</td>
 						
 							<td>${fieldValue(bean: raceInstance, field: "name")}</td>
 						
-							<td>${fieldValue(bean: raceInstance, field: "user")}</td>
+							<td>${fieldValue(bean: raceInstance, field: "participantsAgeGroup")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${raceInstance.id}" class="btn btn-small">Show &raquo;</g:link>

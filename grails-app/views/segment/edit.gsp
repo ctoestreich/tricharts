@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.Segment" %>
+<%@ page import="com.tgid.tri.race.Segment" %>
 <!doctype html>
 <html>
 	<head>

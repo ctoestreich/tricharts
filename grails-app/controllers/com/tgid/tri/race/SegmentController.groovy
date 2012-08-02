@@ -1,4 +1,4 @@
-package com.tgid.tri
+package com.tgid.tri.race
 
 import org.springframework.dao.DataIntegrityViolationException
 

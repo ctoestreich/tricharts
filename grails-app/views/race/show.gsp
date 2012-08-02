@@ -1,5 +1,5 @@
 
-<%@ page import="com.tgid.tri.Race" %>
+<%@ page import="com.tgid.tri.race.Race" %>
 <!doctype html>
 <html>
 	<head>
@@ -56,10 +56,17 @@
 						
 					</g:if>
 				
-					<g:if test="${raceInstance?.duration}">
-						<dt><g:message code="race.duration.label" default="Duration" /></dt>
+					<g:if test="${raceInstance?.distance}">
+						<dt><g:message code="race.distance.label" default="Distance" /></dt>
 						
-							<dd><g:fieldValue bean="${raceInstance}" field="duration"/></dd>
+							<dd><g:fieldValue bean="${raceInstance}" field="distance"/></dd>
+						
+					</g:if>
+				
+					<g:if test="${raceInstance?.distanceType}">
+						<dt><g:message code="race.distanceType.label" default="Distance Type" /></dt>
+						
+							<dd><g:fieldValue bean="${raceInstance}" field="distanceType"/></dd>
 						
 					</g:if>
 				
@@ -70,19 +77,26 @@
 						
 					</g:if>
 				
+					<g:if test="${raceInstance?.participantsAgeGroup}">
+						<dt><g:message code="race.participantsAgeGroup.label" default="Participants Age Group" /></dt>
+						
+							<dd><g:fieldValue bean="${raceInstance}" field="participantsAgeGroup"/></dd>
+						
+					</g:if>
+				
+					<g:if test="${raceInstance?.participantsOverall}">
+						<dt><g:message code="race.participantsOverall.label" default="Participants Overall" /></dt>
+						
+							<dd><g:fieldValue bean="${raceInstance}" field="participantsOverall"/></dd>
+						
+					</g:if>
+				
 					<g:if test="${raceInstance?.segments}">
 						<dt><g:message code="race.segments.label" default="Segments" /></dt>
 						
 							<g:each in="${raceInstance.segments}" var="s">
 							<dd><g:link controller="segment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></dd>
 							</g:each>
-						
-					</g:if>
-				
-					<g:if test="${raceInstance?.user}">
-						<dt><g:message code="race.user.label" default="User" /></dt>
-						
-							<dd><g:link controller="user" action="show" id="${raceInstance?.user?.id}">${raceInstance?.user?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				

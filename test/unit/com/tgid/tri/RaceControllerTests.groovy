@@ -4,6 +4,7 @@ package com.tgid.tri
 
 import org.junit.*
 import grails.test.mixin.*
+import com.tgid.tri.race.Race
 
 @TestFor(RaceController)
 @Mock(Race)
