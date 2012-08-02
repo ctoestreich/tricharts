@@ -42,10 +42,10 @@
 
 				<dl>
 				
-					<g:if test="${raceInstance?.raceType}">
-						<dt><g:message code="race.raceType.label" default="Race Type" /></dt>
+					<g:if test="${raceInstance?.name}">
+						<dt><g:message code="race.name.label" default="Name" /></dt>
 						
-							<dd><g:fieldValue bean="${raceInstance}" field="raceType"/></dd>
+							<dd><g:fieldValue bean="${raceInstance}" field="name"/></dd>
 						
 					</g:if>
 				
@@ -56,10 +56,10 @@
 						
 					</g:if>
 				
-					<g:if test="${raceInstance?.distance}">
-						<dt><g:message code="race.distance.label" default="Distance" /></dt>
+					<g:if test="${raceInstance?.raceType}">
+						<dt><g:message code="race.raceType.label" default="Race Type" /></dt>
 						
-							<dd><g:fieldValue bean="${raceInstance}" field="distance"/></dd>
+							<dd><g:fieldValue bean="${raceInstance}" field="raceType"/></dd>
 						
 					</g:if>
 				
@@ -70,10 +70,10 @@
 						
 					</g:if>
 				
-					<g:if test="${raceInstance?.name}">
-						<dt><g:message code="race.name.label" default="Name" /></dt>
+					<g:if test="${raceInstance?.distance}">
+						<dt><g:message code="race.distance.label" default="Distance" /></dt>
 						
-							<dd><g:fieldValue bean="${raceInstance}" field="name"/></dd>
+							<dd><g:fieldValue bean="${raceInstance}" field="distance"/></dd>
 						
 					</g:if>
 				

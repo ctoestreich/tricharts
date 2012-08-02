@@ -15,11 +15,18 @@ class RaceResults {
 
     static belongsTo = [user: User]
 
+    static transients = ['date']
+
     static constraints = {
         race nullable: false
         placeAgeGroup nullable: true
         placeOverall nullable: true
         duration nullable: true
+    }
+
+    @Override
+    String toString() {
+        "${race.name} ${race.date.format('M/dd/yy')}"
     }
 
     transient Date getDate() {

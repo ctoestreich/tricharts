@@ -42,10 +42,10 @@
 
 				<dl>
 				
-					<g:if test="${segmentResultsInstance?.duration}">
-						<dt><g:message code="segmentResults.duration.label" default="Duration" /></dt>
+					<g:if test="${segmentResultsInstance?.segment}">
+						<dt><g:message code="segmentResults.segment.label" default="Segment" /></dt>
 						
-							<dd><g:fieldValue bean="${segmentResultsInstance}" field="duration"/></dd>
+							<dd><g:link controller="segment" action="show" id="${segmentResultsInstance?.segment?.id}">${segmentResultsInstance?.segment?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				
@@ -63,17 +63,17 @@
 						
 					</g:if>
 				
+					<g:if test="${segmentResultsInstance?.duration}">
+						<dt><g:message code="segmentResults.duration.label" default="Duration" /></dt>
+						
+							<dd><g:fieldValue bean="${segmentResultsInstance}" field="duration"/></dd>
+						
+					</g:if>
+				
 					<g:if test="${segmentResultsInstance?.raceResults}">
 						<dt><g:message code="segmentResults.raceResults.label" default="Race Results" /></dt>
 						
 							<dd><g:link controller="raceResults" action="show" id="${segmentResultsInstance?.raceResults?.id}">${segmentResultsInstance?.raceResults?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
-					<g:if test="${segmentResultsInstance?.segment}">
-						<dt><g:message code="segmentResults.segment.label" default="Segment" /></dt>
-						
-							<dd><g:link controller="segment" action="show" id="${segmentResultsInstance?.segment?.id}">${segmentResultsInstance?.segment?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				

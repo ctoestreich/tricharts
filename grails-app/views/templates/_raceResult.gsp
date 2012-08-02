@@ -8,8 +8,8 @@
   </thead>
   <tbody>
   <tr>
-    <g:each in="${result.segmentResults.sort()}" var="segment">
-      <td width="${segmentSize == 3 ? "33%" : "100%"}">
+    <g:each in="${result.segmentResults.sort{a,b -> a.segmentOrder <=> b.segmentOrder }}" var="segment">
+      <td width="${100/segmentSize}%">
         <h5>${segment.segment.segmentType}</h5>
       ${segment.segment.distance} ${segment.segment.distanceType}</br>
       <tri:formatDuration duration="${segment.duration}" formatter="${JodaTimeHelper.getPeriodFormat(false, true, true)}" /><br>

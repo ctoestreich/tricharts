@@ -28,6 +28,6 @@ class Race {
 
     @Override
     String toString() {
-        name ?: "Unknown"
+        "${name ?: 'Unknown'}  ${date?.format("yyyy")}"
     }
 }

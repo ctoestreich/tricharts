@@ -52,7 +52,7 @@
 				<fieldset>
 					<g:form class="form-horizontal" action="create" >
 						<fieldset>
-							<f:all bean="segmentResultsInstance"/>
+							<f:all bean="segmentResultsInstance"  />
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

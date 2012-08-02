@@ -44,15 +44,15 @@
 					<thead>
 						<tr>
 						
-							<g:sortableColumn property="duration" title="${message(code: 'segmentResults.duration.label', default: 'Duration')}" />
+							<th class="header"><g:message code="segmentResults.segment.label" default="Segment" /></th>
 						
 							<g:sortableColumn property="placeAgeGroup" title="${message(code: 'segmentResults.placeAgeGroup.label', default: 'Place Age Group')}" />
 						
 							<g:sortableColumn property="placeOverall" title="${message(code: 'segmentResults.placeOverall.label', default: 'Place Overall')}" />
 						
-							<th class="header"><g:message code="segmentResults.raceResults.label" default="Race Results" /></th>
+							<g:sortableColumn property="duration" title="${message(code: 'segmentResults.duration.label', default: 'Duration')}" />
 						
-							<th class="header"><g:message code="segmentResults.segment.label" default="Segment" /></th>
+							<th class="header"><g:message code="segmentResults.raceResults.label" default="Race Results" /></th>
 						
 							<th></th>
 						</tr>
@@ -61,15 +61,15 @@
 					<g:each in="${segmentResultsInstanceList}" var="segmentResultsInstance">
 						<tr>
 						
-							<td>${fieldValue(bean: segmentResultsInstance, field: "duration")}</td>
+							<td>${fieldValue(bean: segmentResultsInstance, field: "segment")}</td>
 						
 							<td>${fieldValue(bean: segmentResultsInstance, field: "placeAgeGroup")}</td>
 						
 							<td>${fieldValue(bean: segmentResultsInstance, field: "placeOverall")}</td>
 						
-							<td>${fieldValue(bean: segmentResultsInstance, field: "raceResults")}</td>
+							<td>${fieldValue(bean: segmentResultsInstance, field: "duration")}</td>
 						
-							<td>${fieldValue(bean: segmentResultsInstance, field: "segment")}</td>
+							<td>${fieldValue(bean: segmentResultsInstance, field: "raceResults")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${segmentResultsInstance.id}" class="btn btn-small">Show &raquo;</g:link>

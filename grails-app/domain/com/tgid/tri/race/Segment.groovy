@@ -8,25 +8,29 @@ class Segment {
 
     static belongsTo = [race: Race]
 
-    static mapping = {
-        sort 'segmentOrder'
-    }
+    static transients = ['segmentOrder']
 
     static constraints = {
         segmentType nullable: false
         distanceType nullable: false
-        distance scale: 2, nullable:  false
+        distance scale: 2, nullable: false
     }
 
-    transient Integer getSegmentOrder(){
-        (race.raceType == RaceType.Triathlon) ? triathlonSegmentOrder : 1
+    Integer getSegmentOrder() {
+        (race?.raceType == RaceType.Triathlon) ? triathlonSegmentOrder : 1
     }
 
-    private getTriathlonSegmentOrder(){
-        if(segmentType == SegmentType.Swim) return 1
-        if(segmentType == SegmentType.T1) return 2
-        if(segmentType == SegmentType.Bike) return 3
-        if(segmentType == SegmentType.T2) return 4
-        if(segmentType == SegmentType.Run) return 5
+    private getTriathlonSegmentOrder() {
+        if(SegmentType.Swim == segmentType) return 1
+        if(SegmentType.T1 == segmentType) return 2
+        if(SegmentType.Bike == segmentType) return 3
+        if(SegmentType.T2 == segmentType) return 4
+        if(SegmentType.Run == segmentType) return 5
+        return 1
+    }
+
+    @Override
+    String toString() {
+       "${race.toString()} - $segmentType"
     }
 }

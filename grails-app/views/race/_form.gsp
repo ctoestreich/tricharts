@@ -2,12 +2,12 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'raceType', 'error')} required">
-	<label for="raceType">
-		<g:message code="race.raceType.label" default="Race Type" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'name', 'error')} ">
+	<label for="name">
+		<g:message code="race.name.label" default="Name" />
+		
 	</label>
-	<g:select name="raceType" from="${com.tgid.tri.race.RaceType?.values()}" keys="${com.tgid.tri.race.RaceType.values()*.name()}" required="" value="${raceInstance?.raceType?.name()}"/>
+	<g:textField name="name" value="${raceInstance?.name}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'date', 'error')} required">
@@ -18,44 +18,44 @@
 	<g:datePicker name="date" precision="day"  value="${raceInstance?.date}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'distance', 'error')} required">
-	<label for="distance">
-		<g:message code="race.distance.label" default="Distance" />
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'raceType', 'error')} required">
+	<label for="raceType">
+		<g:message code="race.raceType.label" default="Race Type" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="distance" required="" value="${fieldValue(bean: raceInstance, field: 'distance')}"/>
+	<g:select name="raceType" from="${com.tgid.tri.race.RaceType?.values()}" keys="${com.tgid.tri.race.RaceType.values()*.name()}" required="" value="${raceInstance?.raceType?.name()}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'distanceType', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'distanceType', 'error')} ">
 	<label for="distanceType">
 		<g:message code="race.distanceType.label" default="Distance Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="distanceType" from="${com.tgid.tri.race.DistanceType?.values()}" keys="${com.tgid.tri.race.DistanceType.values()*.name()}" required="" value="${raceInstance?.distanceType?.name()}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'name', 'error')} ">
-	<label for="name">
-		<g:message code="race.name.label" default="Name" />
 		
 	</label>
-	<g:textField name="name" value="${raceInstance?.name}"/>
+	<g:select name="distanceType" from="${com.tgid.tri.race.DistanceType?.values()}" keys="${com.tgid.tri.race.DistanceType.values()*.name()}" value="${raceInstance?.distanceType?.name()}" noSelection="['': '']"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsAgeGroup', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'distance', 'error')} ">
+	<label for="distance">
+		<g:message code="race.distance.label" default="Distance" />
+		
+	</label>
+	<g:field type="number" name="distance" value="${fieldValue(bean: raceInstance, field: 'distance')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsAgeGroup', 'error')} ">
 	<label for="participantsAgeGroup">
 		<g:message code="race.participantsAgeGroup.label" default="Participants Age Group" />
-		<span class="required-indicator">*</span>
+		
 	</label>
-	<g:field type="number" name="participantsAgeGroup" required="" value="${fieldValue(bean: raceInstance, field: 'participantsAgeGroup')}"/>
+	<g:field type="number" name="participantsAgeGroup" value="${fieldValue(bean: raceInstance, field: 'participantsAgeGroup')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsOverall', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsOverall', 'error')} ">
 	<label for="participantsOverall">
 		<g:message code="race.participantsOverall.label" default="Participants Overall" />
-		<span class="required-indicator">*</span>
+		
 	</label>
-	<g:field type="number" name="participantsOverall" required="" value="${fieldValue(bean: raceInstance, field: 'participantsOverall')}"/>
+	<g:field type="number" name="participantsOverall" value="${fieldValue(bean: raceInstance, field: 'participantsOverall')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'segments', 'error')} ">

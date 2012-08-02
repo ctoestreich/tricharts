@@ -21,12 +21,18 @@ class SegmentResults {
     static belongsTo = [raceResults: RaceResults]
 
     static constraints = {
-
-        segment nullable:  false
+        segment nullable:  true
         placeAgeGroup nullable:  true
         placeOverall nullable:  true
         duration nullable: false
         raceResults nullable:  false
+    }
+
+    static transients = ['segmentOrder', 'pace']
+
+    @Override
+    String toString() {
+        "${segment?.segmentType} ${segment?.distance} ${segment?.distanceType} @ ${pace?.display}"
     }
 
     transient Integer getSegmentOrder(){
@@ -36,7 +42,7 @@ class SegmentResults {
     transient Pace getPace() {
         def display = null, paceDuration = null, paceSpeed = null
 
-        switch(segment.segmentType) {
+        switch(segment?.segmentType) {
             case SegmentType.Bike:
                 (display, paceSpeed) = calcBikePacing()
                 break
@@ -49,7 +55,7 @@ class SegmentResults {
             default:
                 break
         }
-        return new Pace(display: display, duration: paceDuration, speed: paceSpeed)
+        return (display) ? new Pace(display: display, duration: paceDuration, speed: paceSpeed) : null
     }
 
     private List calcBikePacing() {

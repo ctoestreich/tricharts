@@ -42,10 +42,10 @@
 
 				<dl>
 				
-					<g:if test="${segmentInstance?.distance}">
-						<dt><g:message code="segment.distance.label" default="Distance" /></dt>
+					<g:if test="${segmentInstance?.segmentType}">
+						<dt><g:message code="segment.segmentType.label" default="Segment Type" /></dt>
 						
-							<dd><g:fieldValue bean="${segmentInstance}" field="distance"/></dd>
+							<dd><g:fieldValue bean="${segmentInstance}" field="segmentType"/></dd>
 						
 					</g:if>
 				
@@ -56,10 +56,10 @@
 						
 					</g:if>
 				
-					<g:if test="${segmentInstance?.order}">
-						<dt><g:message code="segment.order.label" default="Order" /></dt>
+					<g:if test="${segmentInstance?.distance}">
+						<dt><g:message code="segment.distance.label" default="Distance" /></dt>
 						
-							<dd><g:fieldValue bean="${segmentInstance}" field="order"/></dd>
+							<dd><g:fieldValue bean="${segmentInstance}" field="distance"/></dd>
 						
 					</g:if>
 				
@@ -67,13 +67,6 @@
 						<dt><g:message code="segment.race.label" default="Race" /></dt>
 						
 							<dd><g:link controller="race" action="show" id="${segmentInstance?.race?.id}">${segmentInstance?.race?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
-					<g:if test="${segmentInstance?.segmentType}">
-						<dt><g:message code="segment.segmentType.label" default="Segment Type" /></dt>
-						
-							<dd><g:fieldValue bean="${segmentInstance}" field="segmentType"/></dd>
 						
 					</g:if>
 				
