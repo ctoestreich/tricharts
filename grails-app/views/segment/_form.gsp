@@ -26,11 +26,3 @@
 	<g:field type="number" name="distance" required="" value="${fieldValue(bean: segmentInstance, field: 'distance')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: segmentInstance, field: 'race', 'error')} required">
-	<label for="race">
-		<g:message code="segment.race.label" default="Race" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="race" name="race.id" from="${com.tgid.tri.race.Race.list()}" optionKey="id" required="" value="${segmentInstance?.race?.id}" class="many-to-one"/>
-</div>
-

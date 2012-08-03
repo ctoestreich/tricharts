@@ -26,10 +26,10 @@ class RaceResults {
 
     @Override
     String toString() {
-        "${race.name} ${race.date.format('M/dd/yy')}"
+        "${race?.name} ${race?.date?.format('M/dd/yy')}"
     }
 
     transient Date getDate() {
-        return race.date
+        race?.date
     }
 }

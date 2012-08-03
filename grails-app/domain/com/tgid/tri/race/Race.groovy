@@ -6,11 +6,12 @@ class Race {
     Date date
     RaceType raceType
     DistanceType distanceType
+    RaceCategoryType raceCategoryType
     Float distance = 0.00
     Integer participantsOverall
     Integer participantsAgeGroup
 
-    static hasMany = [segments: Segment]
+    static hasMany = [segments: RaceSegment]
 
     static constraints = {
         name nullable: false
@@ -20,6 +21,7 @@ class Race {
         distance nullable: true
         participantsAgeGroup nullable: true
         participantsOverall nullable: true
+        raceCategoryType nullable: true
     }
 
     static mapping ={

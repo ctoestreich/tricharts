@@ -14,7 +14,7 @@
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-  <r:require modules="scaffolding"/>
+  <r:require modules="scaffolding, application"/>
 
   <!-- Le fav and touch icons -->
   <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
@@ -28,50 +28,62 @@
 
 <body>
 
-<nav class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
+<div class="container">
 
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-
-      <a class="brand" href="${createLink(uri: '/')}">Tri Harder Results</a>
-
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index')}">Dashboard</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'race', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'race', action: 'index')}">Race</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'segment', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'segment', action: 'index')}">Segment</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'raceResults', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'raceResults', action: 'index')}">Race Result</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'segmentResults', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'segmentResults', action: 'index')}">Segment Result</a></li>
-          <li<%=request.forwardURI == "${createLink(controller: 'login', action: 'auth')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
-          %{--<li class="dropdown">--}%
-          %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>--}%
-          %{--<ul class="dropdown-menu">--}%
-          %{--<li><a href="${createLink(controller:'admin',action:'index')}">Dashboard</a></li>--}%
-          %{--<li><a href="${createLink(controller:'admin',action:'properties')}">System Properties</a></li>--}%
-          %{--</ul>--}%
-          %{--</li>--}%
-        </ul>
-      </div>
-
-      <div class="btn-group pull-right">
-        <sec:ifNotGranted roles="ROLE_FACEBOOK">
-          <facebookAuth:connect permissions="${['email', 'user_about_me']}"/>
+  <div class="row">
+      <p align="right">
+        <sec:ifNotGranted roles="ROLE_USER">
+          <g:link controller="login" action="index">login</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">register</g:link>
         </sec:ifNotGranted>
-        <sec:ifAllGranted roles="ROLE_FACEBOOK">
-          Welcome! <sec:username/>
+        <sec:ifAllGranted roles="ROLE_USER">
+          <sec:username/>&nbsp;|&nbsp;<g:link controller="logout" action="index">logout</g:link>
         </sec:ifAllGranted>
+      </p>
+  </div>
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        %{--<a class="brand" href="#">Project name</a>--}%
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
+            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index')}">Dashboard</a></li>
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
+                  <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
+                  <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
+                  <li><hr></li>
+                  <li><a href="${createLink(controller: 'raceResults', action: 'index')}">Race Results</a></li>
+                  <li><a href="${createLink(controller: 'segmentResults', action: 'index')}">Segment Results</a></li>
+                  <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
+                </ul>
+              </li>
+            </sec:ifAnyGranted>
+          </ul>
+        </div>
+
+        <div class="btn-group pull-right">
+          %{--<sec:ifNotGranted roles="ROLE_FACEBOOK">--}%
+            %{--<facebookAuth:connect permissions="${['email', 'user_about_me']}"/>--}%
+          %{--</sec:ifNotGranted>--}%
+          <sec:ifAllGranted roles="ROLE_FACEBOOK">
+            Welcome! <sec:username/>
+          </sec:ifAllGranted>
+        </div>
       </div>
     </div>
   </div>
-</nav>
 
-<div class="container-fluid">
+
   <g:layoutBody/>
 
   <hr>
@@ -82,7 +94,7 @@
 </div>
 
 <r:script>
-  $(function(){
+  $(function () {
     $(".collapse").collapse();
   })
 </r:script>

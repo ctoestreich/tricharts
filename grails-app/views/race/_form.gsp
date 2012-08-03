@@ -66,10 +66,10 @@
 	
 <ul class="one-to-many">
 <g:each in="${raceInstance?.segments?}" var="s">
-    <li><g:link controller="segment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
+    <li><g:link controller="raceSegment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="segment" action="create" params="['race.id': raceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'segment.label', default: 'Segment')])}</g:link>
+<g:link controller="raceSegment" action="create" params="['race.id': raceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'raceSegment.label', default: 'RaceSegment')])}</g:link>
 </li>
 </ul>
 

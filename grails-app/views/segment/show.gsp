@@ -63,13 +63,6 @@
 						
 					</g:if>
 				
-					<g:if test="${segmentInstance?.race}">
-						<dt><g:message code="segment.race.label" default="Race" /></dt>
-						
-							<dd><g:link controller="race" action="show" id="${segmentInstance?.race?.id}">${segmentInstance?.race?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
 				</dl>
 
 				<g:form>

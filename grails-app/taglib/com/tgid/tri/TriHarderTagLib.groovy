@@ -2,6 +2,7 @@ package com.tgid.tri
 
 import org.joda.time.Duration
 import org.joda.time.format.PeriodFormatter
+import com.tgid.tri.common.JodaTimeHelper
 
 class TriHarderTagLib {
 
@@ -9,9 +10,13 @@ class TriHarderTagLib {
 
     def formatDuration = { attrs, body ->
         Duration duration = attrs.duration
-        PeriodFormatter periodFormatter = attrs.formatter
-        println duration.standardSeconds
-        def display = periodFormatter.print(duration.toPeriod())
+        def display = ""
+
+        if(duration){
+            PeriodFormatter periodFormatter = attrs.formatter ?: JodaTimeHelper.getPeriodFormat(duration.standardHours > 0, duration.standardMinutes > 0, duration.standardSeconds > 0)
+            println duration.standardSeconds
+            display = periodFormatter.print(duration.toPeriod())
+        }
         out << display
     }
 

@@ -1,0 +1,65 @@
+body {
+    padding-top: 20px !important;
+}
+
+th.clsResultHK {
+    border-bottom: solid 1px #C6CDDC !important;
+}
+
+.clsResultHK {
+    color: #666D7C;
+    font-size: .7em;
+    font-weight: bold;
+    letter-spacing: -.02em;
+}
+
+td.clsResultBL {
+    border-left: 1px solid lightGrey;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1 !important;
+}
+
+.clsResultBig, .clsResultBigMutual, .clsResultbigmutualextended, .clsResultbigrv, .clsResultbigalt, .clsResultbigactive {
+    color: #363D4C;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.clsResultMed, .clsResultMedMutual, .clsResultMedMutualExtended, .clsResultMedrv, .clsResultMedAlt, .clsResultMedActive {
+    color: #565D6C;
+    font-size: .9em;
+    font-weight: bold;
+}
+
+.clsBorderBot {
+    border-bottom: solid 1px #EBEBEB;
+}
+
+tr.clsResultMed td {
+    vertical-align: top;
+    padding: 3px;
+}
+
+tr.clsResultMed td {
+    vertical-align: top;
+    padding: 3px;
+}
+
+tr.clsBorderBot td {
+    border-bottom: solid 1px #C6CDDC;
+}
+
+td.clsResultBL {
+    border-left: 1px solid lightGrey;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.clsCentered {
+    text-align: center;
+}
+
+.cls10pct {
+    width: 10%;
+}

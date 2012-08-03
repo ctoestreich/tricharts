@@ -1,0 +1,16 @@
+if(raceInstance.raceType == RaceType.Triathlon){
+                createTriathlonSegments(raceInstance)
+            }
+
+private void createTriathlonSegments(Race race) {
+        def swimSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Swim, distanceType: DistanceType.Miles, distance: 0.5)
+        def t1Segment = Segment.findOrCreateWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400)
+        def bikeSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Bike, distanceType: DistanceType.Miles, distance: 15)
+        def t2Segment = Segment.findOrCreateWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400)
+        def runSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Run, distanceType: DistanceType.Kilometers, distance: 5)
+        new RaceSegment(race: race, segment: swimSegment).save()
+        new RaceSegment(race: race, segment: t1Segment).save()
+        new RaceSegment(race: race, segment: bikeSegment).save()
+        new RaceSegment(race: race, segment: t2Segment).save()
+        new RaceSegment(race: race, segment: runSegment).save()
+    }

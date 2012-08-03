@@ -50,8 +50,6 @@
 						
 							<g:sortableColumn property="distance" title="${message(code: 'segment.distance.label', default: 'Distance')}" />
 						
-							<th class="header"><g:message code="segment.race.label" default="Race" /></th>
-						
 							<th></th>
 						</tr>
 					</thead>
@@ -64,8 +62,6 @@
 							<td>${fieldValue(bean: segmentInstance, field: "distanceType")}</td>
 						
 							<td>${fieldValue(bean: segmentInstance, field: "distance")}</td>
-						
-							<td>${fieldValue(bean: segmentInstance, field: "race")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${segmentInstance.id}" class="btn btn-small">Show &raquo;</g:link>
