@@ -1,14 +1,14 @@
 var Race = Backbone.Model.extend({
                                      //url:"/triharder/race/backbone"
-                                     defaults:function () {
-                                         return {
-                                             date:new Date(),
-                                             name:''
-                                         };
-                                     }
+//                                     defaults:function () {
+//                                         return {
+//                                             date:new Date(),
+//                                             name:''
+//                                         };
+//                                     }
                                  });
 
 var RaceList = Backbone.Collection.extend({
-                                              model:Todo,
+                                              model: Race,
                                               url:'/triharder/race/backbone'
                                           });

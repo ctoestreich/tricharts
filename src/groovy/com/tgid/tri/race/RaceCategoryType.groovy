@@ -28,4 +28,9 @@ enum RaceCategoryType implements Serializable {
     RaceCategoryType(String raceCategoryType) {
         this.raceCategoryType = raceCategoryType
     }
+
+    @Override
+    String toString() {
+        this.raceCategoryType
+    }
 }

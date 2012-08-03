@@ -63,3 +63,18 @@ td.clsResultBL {
 .cls10pct {
     width: 10%;
 }
+
+.btn-group-wrap {
+    text-align: center;
+}
+
+div.btn-group {
+    margin: 0 auto;
+    text-align: center;
+    width: inherit;
+    display: inline-block;
+}
+
+.well {
+    padding: 10px !important;
+}

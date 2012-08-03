@@ -19,4 +19,9 @@ modules = {
         dependsOn 'jquery'
         resource url:'js/underscore/underscore.min.js'
     }
+
+    raceMvc {
+        resource url:'js/backbone/model/race.model.js'
+        resource url:'js/backbone/view/race.view.js'
+    }
 }
