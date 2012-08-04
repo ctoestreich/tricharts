@@ -12,7 +12,7 @@
     <div class="btn-group-wrap">
       <div class="btn-group">
         <a class="btn" href="#" id="refresh-races"><i class="icon-search"></i> Refresh Races</a>
-        <a class="btn" href="#"><i class="icon-tag"></i> Create Race</a>
+        <a class="btn" href="#" id="add-race"><i class="icon-tag"></i> Create Race</a>
       </div>
     </div>
   </div>
@@ -53,8 +53,12 @@
   </tr>
 </script>
 
+<script id="race-create-template" type="text/x-handlebars-template">
+  <
+</script>
+
 <script language="JavaScript">
-  var App = {
+  var app = {
     initialize:function () {
       this.createDialogs();
     },
@@ -66,8 +70,9 @@
   };
 
   $(function () {
-    App.initialize();
-    App.raceView = new RaceView({model:new RaceList()});
+    app.initialize();
+    app.raceList = new RaceList();
+    app.raceView = new RaceView({model:app.raceList});
   });
 </script>
 </body>
