@@ -8,26 +8,36 @@ import grails.plugins.springsecurity.Secured
 @Secured(["ROLE_USER"])
 class DashboardController {
 
-    def springSecurityService
+  def springSecurityService
 
-    def index() {
+  def index() {
 
-        def results = RaceResults.where {
-            user.id == ((User) springSecurityService.currentUser).id
-            //segmentResults { segment { segmentType == SegmentType.Run && distance == 3.1 } }
-        }
-
-        def runs = results.where {
-            race.raceType == RaceType.Running
-        }.max(5)
-
-        def triathlons = results.where {
-            race.raceType == RaceType.Triathlon
-        }.max(5)
-
-
-        render view: 'index', model: [runs: runs, triathlons: triathlons]
+    def results = RaceResults.where {
+      user.id == ((User) springSecurityService.currentUser).id
+      //segmentResults { segment { segmentType == SegmentType.Run && distance == 3.1 } }
     }
 
-    def races(){}
+    def runs = results.where {
+      race.raceType == RaceType.Running
+    }.max(5)
+
+    def triathlons = results.where {
+      race.raceType == RaceType.Triathlon
+    }.max(5)
+
+
+    render view: 'index', model: [runs: runs, triathlons: triathlons]
+  }
+
+  def createResult() {
+    switch(params.type) {
+      case 'Run':
+        render view: 'createRun'
+        break
+      default:
+        render view: 'createRun'
+    }
+  }
+
+  def races() {}
 }

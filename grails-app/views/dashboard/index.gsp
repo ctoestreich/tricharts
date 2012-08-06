@@ -13,7 +13,7 @@
 
 <div class="row">
   %{--<div class="span12">--}%
-  <h2>Runs</h2>
+  <g:render template="/templates/dashboardHeader" model="[sport:'Run']" />
 
   <div id="results-run" class="accordion">
     <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
@@ -24,7 +24,7 @@
 
 <div class="row">
   %{--<div class="span12">--}%
-  <h2>Triathlons</h2>
+  <g:render template="/templates/dashboardHeader" model="[sport:'Triathlon']" />
 
   <div id="results-triathlon" class="accordion">
     <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>

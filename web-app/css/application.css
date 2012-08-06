@@ -68,6 +68,10 @@ td.clsResultBL {
     text-align: center;
 }
 
+.btn-group-wrap-right {
+    text-align: right;
+}
+
 div.btn-group {
     margin: 0 auto;
     text-align: center;
