@@ -1,8 +1,9 @@
 var RaceView = Backbone.View.extend({
-                                        el:$("#races-view"),
+                                        el:$("body"),
                                         events:{
                                             "click #refresh-races":"refreshRaces",
-                                            "click #add-race":"saveRace"
+                                            "click #add-race":"newRace",
+                                            "click #save-race":"saveRace"
                                         },
                                         initialize:function () {
                                             this.model.bind("reset", this.render, this);
@@ -14,6 +15,7 @@ var RaceView = Backbone.View.extend({
                                             this.model.fetch();
                                         },
                                         render:function () {
+                                            console.log('rendering races');
                                             $("#races").html('');
                                             var model, markUp;
                                             _.each(this.model.models, function (race) {
@@ -34,13 +36,18 @@ var RaceView = Backbone.View.extend({
                                                 model.destroy();
                                             }
                                         },
+                                        newRace:function () {
+                                            clearForm($("#createRaceForm").get(0));
+                                            $("#createRaceDiv").show();
+                                        },
                                         saveRace:function () {
-//                                            var race = new Race({
-//                                                         name:'New Race',
-//                                                         date:new Date(),
-//                                                         raceType:'Triathlon'
-//                                                     });
-//                                            console.log(race.toJSON());
-//                                            app.raceList.create(race);
+                                            console.log('creating race');
+                                            var race = new Race({
+                                                         name:$('#name'),
+                                                         date:$("#date"),
+                                                         raceType:'Triathlon'
+                                                     });
+                                            console.log(race.toJSON());
+                                            app.raceList.create(race);
                                         }
                                     });

@@ -17,6 +17,23 @@
     </div>
   </div>
 </div>
+
+<div class="row-fluid" style="display: none;" id="createRaceDiv">
+
+  <form id="createRaceForm" class="form-horizontal well">
+    <fieldset>
+      <legend>New Race</legend>
+      <f:with bean="race">
+        <f:field property="name"/>
+        <f:field property="date"/>
+      </f:with>
+      <div class="control-group">
+        <button class="btn" id="save-race">Save</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
 <table class="table table-bordered">
   <thead>
   %{--<th>ID</th>--}%
@@ -54,7 +71,7 @@
 </script>
 
 <script id="race-create-template" type="text/x-handlebars-template">
-  <
+
 </script>
 
 <script language="JavaScript">
@@ -74,6 +91,34 @@
     app.raceList = new RaceList();
     app.raceView = new RaceView({model:app.raceList});
   });
+
+  function clearForm(oForm) {
+    var elements = oForm.elements;
+    oForm.reset();
+    for(i=0; i<elements.length; i++) {
+      field_type = elements[i].type.toLowerCase();
+      switch(field_type) {
+        case "text":
+        case "password":
+        case "textarea":
+        case "hidden":
+          elements[i].value = "";
+          break;
+        case "radio":
+        case "checkbox":
+          if (elements[i].checked) {
+            elements[i].checked = false;
+          }
+          break;
+        case "select-one":
+        case "select-multi":
+          elements[i].selectedIndex = -1;
+          break;
+        default:
+          break;
+      }
+    }
+  }
 </script>
 </body>
 </html>

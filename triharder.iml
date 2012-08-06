@@ -48,24 +48,24 @@
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (triharder)">
         <CLASSES>
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.jadira.usertype/usertype.spi/jars/usertype.spi-1.9.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.jadira.usertype/usertype.jodatime/jars/usertype.jodatime-1.9.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.spi/jars/usertype.spi-1.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.jodatime/jars/usertype.jodatime-1.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="file://$MODULE_DIR$/lib" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.antlr/stringtemplate/jars/stringtemplate-3.2.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.antlr/antlr-runtime/jars/antlr-runtime-3.1.3.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.tmatesoft.sqljet/sqljet/jars/sqljet-1.0.4.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.tmatesoft.svnkit/trilead-ssh2/jars/trilead-ssh2-build213-svnkit-1.3-patch.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.tmatesoft.svnkit/svnkit/jars/svnkit-1.3.5.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.jodd/jodd/jars/jodd-3.3.1.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/asm/asm/jars/asm-3.2.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.1.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.2.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/junit/junit-dep/jars/junit-dep-4.9.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.spockframework/spock-core/jars/spock-core-0.6-groovy-1.8.jar!/" />
-          <root url="jar://$USER_HOME_GRAILS$/ivy-cache/org.spockframework/spock-grails-support/jars/spock-grails-support-0.6-groovy-1.8.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.antlr/stringtemplate/jars/stringtemplate-3.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.antlr/antlr-runtime/jars/antlr-runtime-3.1.3.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.tmatesoft.sqljet/sqljet/jars/sqljet-1.0.4.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.tmatesoft.svnkit/trilead-ssh2/jars/trilead-ssh2-build213-svnkit-1.3-patch.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.tmatesoft.svnkit/svnkit/jars/svnkit-1.3.5.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/asm/asm/jars/asm-3.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/junit/junit-dep/jars/junit-dep-4.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-core/jars/spock-core-0.6-groovy-1.8.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-grails-support/jars/spock-grails-support-0.6-groovy-1.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

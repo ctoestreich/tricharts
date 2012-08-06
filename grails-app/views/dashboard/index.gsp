@@ -1,3 +1,4 @@
+<%@ page import="com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -7,9 +8,15 @@
 
 <body>
 
-<div class="row">
-
+<div class="page-header">
+  <h1>Results For ${user.firstName} <small> results at a glance</small></h1>
 </div>
+
+<sec:ifAnyGranted roles="ROLE_ADMIN">
+  <div class="row">
+    <g:select name="user.id" from="${User.list().sort()}" id="user.id" value="${user?.id}" />
+  </div>
+</sec:ifAnyGranted>
 
 <div class="row">
   %{--<div class="span12">--}%
