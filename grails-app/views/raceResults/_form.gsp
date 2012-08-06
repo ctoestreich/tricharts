@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.results.RaceResults" %>
+<%@ page import="com.tgid.tri.results.RaceResult" %>
 
 
 
@@ -45,7 +45,7 @@
     <li><g:link controller="segmentResults" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="segmentResults" action="create" params="['raceResults.id': raceResultsInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'segmentResults.label', default: 'SegmentResults')])}</g:link>
+<g:link controller="segmentResults" action="create" params="['raceResults.id': raceResultsInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'segmentResults.label', default: 'SegmentResult')])}</g:link>
 </li>
 </ul>
 

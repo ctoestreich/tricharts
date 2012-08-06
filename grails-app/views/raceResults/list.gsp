@@ -1,5 +1,5 @@
 
-<%@ page import="com.tgid.tri.results.RaceResults" %>
+<%@ page import="com.tgid.tri.results.RaceResult" %>
 <!doctype html>
 <html>
 	<head>

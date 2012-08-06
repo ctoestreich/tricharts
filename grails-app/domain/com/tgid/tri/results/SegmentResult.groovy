@@ -12,14 +12,14 @@ import com.tgid.tri.race.DistanceType
 import com.tgid.tri.common.JodaTimeHelper
 import com.tgid.tri.race.RaceSegment
 
-class SegmentResults {
+class SegmentResult {
 
     RaceSegment raceSegment
     Duration duration
     Integer placeAgeGroup
     Integer placeOverall
 
-    static belongsTo = [raceResults: RaceResults]
+    static belongsTo = [raceResults: RaceResult]
 
     static constraints = {
         raceSegment nullable:  true

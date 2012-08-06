@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.results.SegmentResults" %>
+<%@ page import="com.tgid.tri.results.RaceResult; com.tgid.tri.results.SegmentResult" %>
 
 
 
@@ -39,6 +39,6 @@
 		<g:message code="segmentResults.raceResults.label" default="Race Results" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="raceResults" name="raceResults.id" from="${com.tgid.tri.results.RaceResults.list()}" optionKey="id" required="" value="${segmentResultsInstance?.raceResults?.id}" class="many-to-one"/>
+	<g:select id="raceResults" name="raceResults.id" from="${RaceResult.list()}" optionKey="id" required="" value="${segmentResultsInstance?.raceResults?.id}" class="many-to-one"/>
 </div>
 

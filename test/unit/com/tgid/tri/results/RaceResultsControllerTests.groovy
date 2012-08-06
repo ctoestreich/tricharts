@@ -148,7 +148,7 @@ class RaceResultsControllerTests {
 
         controller.delete()
 
-        assert RaceResults.count() == 0
+        assert RaceResult.count() == 0
         assert RaceResults.get(raceResults.id) == null
         assert response.redirectedUrl == '/raceResults/list'
     }

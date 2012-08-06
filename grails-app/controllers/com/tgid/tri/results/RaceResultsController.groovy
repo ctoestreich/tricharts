@@ -12,7 +12,7 @@ class RaceResultsController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [raceResultsInstanceList: RaceResults.list(params), raceResultsInstanceTotal: RaceResults.count()]
+        [raceResultsInstanceList: RaceResult.list(params), raceResultsInstanceTotal: RaceResults.count()]
     }
 
     def create() {
@@ -21,7 +21,7 @@ class RaceResultsController {
         	[raceResultsInstance: new RaceResults(params)]
 			break
 		case 'POST':
-	        def raceResultsInstance = new RaceResults(params)
+	        def raceResultsInstance = new RaceResult(params)
 	        if (!raceResultsInstance.save(flush: true)) {
 	            render view: 'create', model: [raceResultsInstance: raceResultsInstance]
 	            return
@@ -34,7 +34,7 @@ class RaceResultsController {
     }
 
     def show() {
-        def raceResultsInstance = RaceResults.get(params.id)
+        def raceResultsInstance = RaceResult.get(params.id)
         if (!raceResultsInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'raceResults.label', default: 'RaceResults'), params.id])
             redirect action: 'list'
@@ -47,7 +47,7 @@ class RaceResultsController {
     def edit() {
 		switch (request.method) {
 		case 'GET':
-	        def raceResultsInstance = RaceResults.get(params.id)
+	        def raceResultsInstance = RaceResult.get(params.id)
 	        if (!raceResultsInstance) {
 	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'raceResults.label', default: 'RaceResults'), params.id])
 	            redirect action: 'list'
@@ -57,7 +57,7 @@ class RaceResultsController {
 	        [raceResultsInstance: raceResultsInstance]
 			break
 		case 'POST':
-	        def raceResultsInstance = RaceResults.get(params.id)
+	        def raceResultsInstance = RaceResult.get(params.id)
 	        if (!raceResultsInstance) {
 	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'raceResults.label', default: 'RaceResults'), params.id])
 	            redirect action: 'list'

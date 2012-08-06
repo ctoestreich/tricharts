@@ -3,10 +3,13 @@ package com.tgid.tri.results
 import com.tgid.tri.auth.User
 import com.tgid.tri.race.Race
 import org.joda.time.Duration
+import org.apache.commons.collections.FactoryUtils
+import org.apache.commons.collections.list.LazyList
 
-class RaceResults {
+class RaceResult {
 
-    static hasMany = [segmentResults: SegmentResults]
+    List segmentResults = LazyList.decorate(new ArrayList(), FactoryUtils.instantiateFactory(SegmentResult.class))
+    static hasMany = [segmentResults: SegmentResult]
 
     Race race
     Duration duration
@@ -16,6 +19,10 @@ class RaceResults {
     static belongsTo = [user: User]
 
     static transients = ['date']
+
+    static mapping ={
+        segmentResults cascade:"all-delete-orphan"
+    }
 
     static constraints = {
         race nullable: false

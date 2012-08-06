@@ -1,12 +1,9 @@
 package com.tgid.tri.results
 
-
-
-import org.junit.*
 import grails.test.mixin.*
 
 @TestFor(SegmentResultsController)
-@Mock(SegmentResults)
+@Mock(SegmentResult)
 class SegmentResultsControllerTests {
 
     def populateValidParams(params) {
@@ -47,7 +44,7 @@ class SegmentResultsControllerTests {
 
         assert response.redirectedUrl == '/segmentResults/show/1'
         assert controller.flash.message != null
-        assert SegmentResults.count() == 1
+        assert SegmentResult.count() == 1
     }
 
     void testShow() {
@@ -57,7 +54,7 @@ class SegmentResultsControllerTests {
         assert response.redirectedUrl == '/segmentResults/list'
 
         populateValidParams(params)
-        def segmentResults = new SegmentResults(params)
+        def segmentResults = new SegmentResult(params)
 
         assert segmentResults.save() != null
 
@@ -75,7 +72,7 @@ class SegmentResultsControllerTests {
         assert response.redirectedUrl == '/segmentResults/list'
 
         populateValidParams(params)
-        def segmentResults = new SegmentResults(params)
+        def segmentResults = new SegmentResult(params)
 
         assert segmentResults.save() != null
 
@@ -95,7 +92,7 @@ class SegmentResultsControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def segmentResults = new SegmentResults(params)
+        def segmentResults = new SegmentResult(params)
 
         assert segmentResults.save() != null
 
@@ -139,17 +136,17 @@ class SegmentResultsControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def segmentResults = new SegmentResults(params)
+        def segmentResults = new SegmentResult(params)
 
         assert segmentResults.save() != null
-        assert SegmentResults.count() == 1
+        assert SegmentResult.count() == 1
 
         params.id = segmentResults.id
 
         controller.delete()
 
-        assert SegmentResults.count() == 0
-        assert SegmentResults.get(segmentResults.id) == null
+        assert SegmentResult.count() == 0
+        assert SegmentResult.get(segmentResults.id) == null
         assert response.redirectedUrl == '/segmentResults/list'
     }
 }

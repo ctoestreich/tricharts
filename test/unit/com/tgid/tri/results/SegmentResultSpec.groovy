@@ -11,7 +11,7 @@ import spock.lang.Specification
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
  */
 @TestMixin(GrailsUnitTestMixin)
-class SegmentResultsSpec extends Specification {
+class SegmentResultSpec extends Specification {
 
     void setup() {
         // Setup logic here

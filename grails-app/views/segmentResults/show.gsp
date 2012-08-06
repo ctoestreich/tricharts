@@ -1,10 +1,10 @@
 
-<%@ page import="com.tgid.tri.results.SegmentResults" %>
+<%@ page import="com.tgid.tri.results.SegmentResult" %>
 <!doctype html>
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="${message(code: 'segmentResults.label', default: 'SegmentResults')}" />
+		<g:set var="entityName" value="${message(code: 'segmentResults.label', default: 'SegmentResult')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>

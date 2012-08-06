@@ -1,8 +1,8 @@
 import com.tgid.tri.auth.Role
 import com.tgid.tri.auth.User
 import com.tgid.tri.auth.UserRole
-import com.tgid.tri.results.RaceResults
-import com.tgid.tri.results.SegmentResults
+import com.tgid.tri.results.RaceResult
+import com.tgid.tri.results.SegmentResult
 import org.joda.time.Duration
 import com.tgid.tri.race.*
 
@@ -39,11 +39,11 @@ class BootStrap {
         def t2Segment = new RaceSegment(race: race, segment: t2).save()
         def fiveKilometerRunSegment = new RaceSegment(race: race, segment: fiveKilometerRun).save()
 
-        def swimResults = new SegmentResults(raceSegment: swimRaceSegment, duration: Duration.standardSeconds(11 * 60 + 33), placeOverall: 18, placeAgeGroup: 3)
-        def t1Results = new SegmentResults(raceSegment: t1Segment, duration: Duration.standardSeconds(23))
-        def bikeResults = new SegmentResults(raceSegment: fifteenMileBikeSegment, duration: Duration.standardSeconds(40 * 60 + 15), placeOverall: 25, placeAgeGroup: 4)
-        def t2Results = new SegmentResults(raceSegment: t2Segment, duration: Duration.standardSeconds(52))
-        def runResults = new SegmentResults(raceSegment: fiveKilometerRunSegment, duration: Duration.standardSeconds(60 * 20 + 17), placeOverall: 27, placeAgeGroup: 5)
+        def swimResults = new SegmentResult(raceSegment: swimRaceSegment, duration: Duration.standardSeconds(11 * 60 + 33), placeOverall: 18, placeAgeGroup: 3)
+        def t1Results = new SegmentResult(raceSegment: t1Segment, duration: Duration.standardSeconds(23))
+        def bikeResults = new SegmentResult(raceSegment: fifteenMileBikeSegment, duration: Duration.standardSeconds(40 * 60 + 15), placeOverall: 25, placeAgeGroup: 4)
+        def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(52))
+        def runResults = new SegmentResult(raceSegment: fiveKilometerRunSegment, duration: Duration.standardSeconds(60 * 20 + 17), placeOverall: 27, placeAgeGroup: 5)
 
         def raceResults = new RaceResults(race: race, placeAgeGroup: 3, placeOverall: 12, user: user, duration: Duration.standardSeconds(83 * 60 + 17)).save()
         raceResults.addToSegmentResults(swimResults)
@@ -58,7 +58,7 @@ class BootStrap {
                              distance: 1, raceCategoryType: RaceCategoryType.OneMile).save()
         def oneMileRunSegment = new RaceSegment(race: race2, segment: oneMileRun).save()
 
-        def rsmResults = new SegmentResults(raceSegment: oneMileRunSegment, duration: Duration.standardSeconds((60 * 5) + 28))
+        def rsmResults = new SegmentResult(raceSegment: oneMileRunSegment, duration: Duration.standardSeconds((60 * 5) + 28))
         def rsmRaceResults = new RaceResults(race: race2, placeAgeGroup: 20, placeOverall: 50, user: user, duration: Duration.standardSeconds((60 * 5) + 28)).save()
         rsmRaceResults.addToSegmentResults(rsmResults)
         rsmRaceResults.save()
@@ -68,10 +68,15 @@ class BootStrap {
                              raceCategoryType: RaceCategoryType.OneMile).save()
         def oneMileRunSegment2 = new RaceSegment(race: race3, segment: oneMileRun).save()
 
-        def tcmResults = new SegmentResults(raceSegment: oneMileRunSegment2, duration: Duration.standardSeconds((60 * 5) + 31))
-        def tcmRaceResults = new RaceResults(race: race3, placeAgeGroup: 22, placeOverall: 57, user: user, duration: Duration.standardSeconds((60 * 5) + 31)).save()
+        def tcmResults = new SegmentResult(raceSegment: oneMileRunSegment2, duration: Duration.standardSeconds((60 * 5) + 31))
+        def tcmRaceResults = new RaceResult(race: race3, placeAgeGroup: 22, placeOverall: 57, user: user, duration: Duration.standardSeconds((60 * 5) + 31)).save()
         tcmRaceResults.addToSegmentResults(tcmResults)
         tcmRaceResults.save()
+
+        def torchlight = new Race(name: 'Torchlight 5k', date: new Date(112, 5, 12), raceType: RaceType.Running,
+                             distanceType: DistanceType.Kilometers, distance: 5,
+                             raceCategoryType: RaceCategoryType.FifteenKilometer).save()
+        def torchlightSegment = new RaceSegment(race: torchlight, segment: fiveKilometerRun).save()
     }
 
     def destroy = {

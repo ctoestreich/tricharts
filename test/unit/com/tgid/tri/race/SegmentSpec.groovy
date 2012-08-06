@@ -1,26 +1,28 @@
 package com.tgid.tri.race
 
 import com.tgid.tri.results.RaceResults
-import com.tgid.tri.results.SegmentResults
+
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.joda.time.Duration
 import spock.lang.Specification
 import spock.lang.Unroll
+import com.tgid.tri.results.RaceResult
+import com.tgid.tri.results.SegmentResult
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
 
 @TestFor(Segment)
-@Mock([Race, Segment, RaceResults, SegmentResults])
+@Mock([Race, Segment, RaceResults, SegmentResult])
 class SegmentSpec extends Specification {
 
     def setup() {
         mockForConstraintsTests(Race)
         mockForConstraintsTests(Segment)
-        mockForConstraintsTests(RaceResults)
-        mockForConstraintsTests(SegmentResults)
+        mockForConstraintsTests(RaceResult)
+        mockForConstraintsTests(SegmentResult)
     }
 
     @Unroll()
@@ -30,7 +32,7 @@ class SegmentSpec extends Specification {
         def segment = new Segment(distance: distance, segmentType: segmentType, distanceType: distanceType, order: 1)
         race.addToSegments(segment)
         def raceResults = new RaceResults(race: race, duration: segmentDuration)
-        def segmentResults = new SegmentResults(segment: segment, raceResults: raceResults, duration: segmentDuration)
+        def segmentResults = new SegmentResult(segment: segment, raceResults: raceResults, duration: segmentDuration)
         raceResults.addToSegmentResults(segmentResults)
 
         when:
