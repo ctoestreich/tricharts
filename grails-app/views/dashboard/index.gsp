@@ -21,19 +21,27 @@
 </sec:ifAnyGranted>
 <r:script>
  var app = {
-    runCharts:function(){
-        ${remoteFunction(controller: 'visualization', action: 'mileChart', update: 'mileChart')}
-        ${remoteFunction(controller: 'visualization', action: 'fiveKilometerChart', update: 'fiveKilometerChart')}
-        ${remoteFunction(controller: 'visualization', action: 'marathonChart', update: 'marathonChart')}
+    runCharts: function(){
+        if($("#runDashboardCharts").is(":visible")){
+           $("#runDashboardCharts").hide();
+       } else {
+            $("#runDashboardCharts").show();
+            if(!app.runChartsLoaded){
+                ${remoteFunction(controller: 'visualization', action: 'mileChart', update: 'mileChart')}
+                ${remoteFunction(controller: 'visualization', action: 'fiveKilometerChart', update: 'fiveKilometerChart')}
+                ${remoteFunction(controller: 'visualization', action: 'marathonChart', update: 'marathonChart')}
+            }
+            app.runChartsLoaded = true;
+        }
     }
-};
+}
 </r:script>
 
 <div class="row well_clear">
     %{--<div class="span12">--}%
     <g:render template="/templates/dashboardHeader" model="[sport: 'Run']"/>
 
-    <div class="row-fluid">
+    <div class="row-fluid" id="runDashboardCharts" style="display: none;">
         <div class="span4"><div id="mileChart" class="chart4"><g:img dir="/images" file="spinner.gif"/></div></div>
 
         <div class="span4"><div id="fiveKilometerChart" class="chart4"><g:img dir="/images" file="spinner.gif"/></div>
