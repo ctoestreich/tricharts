@@ -5,9 +5,9 @@ package com.tgid.tri.results
 import org.junit.*
 import grails.test.mixin.*
 
-@TestFor(RaceResultsController)
-@Mock(RaceResults)
-class RaceResultsControllerTests {
+@TestFor(RaceResultController)
+@Mock(RaceResult)
+class RaceResultControllerTests {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,139 +17,139 @@ class RaceResultsControllerTests {
 
     void testIndex() {
         controller.index()
-        assert "/raceResults/list" == response.redirectedUrl
+        assert "/raceResult/list" == response.redirectedUrl
     }
 
     void testList() {
 
         def model = controller.list()
 
-        assert model.raceResultsInstanceList.size() == 0
-        assert model.raceResultsInstanceTotal == 0
+        assert model.raceResultInstanceList.size() == 0
+        assert model.raceResultInstanceTotal == 0
     }
 
     void testCreate() {
         def model = controller.create()
 
-        assert model.raceResultsInstance != null
+        assert model.raceResultInstance != null
     }
 
     void testSave() {
         controller.save()
 
-        assert model.raceResultsInstance != null
-        assert view == '/raceResults/create'
+        assert model.raceResultInstance != null
+        assert view == '/raceResult/create'
 
         response.reset()
 
         populateValidParams(params)
         controller.save()
 
-        assert response.redirectedUrl == '/raceResults/show/1'
+        assert response.redirectedUrl == '/raceResult/show/1'
         assert controller.flash.message != null
-        assert RaceResults.count() == 1
+        assert RaceResult.count() == 1
     }
 
     void testShow() {
         controller.show()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/raceResults/list'
+        assert response.redirectedUrl == '/raceResult/list'
 
         populateValidParams(params)
-        def raceResults = new RaceResults(params)
+        def raceResult = new RaceResult(params)
 
-        assert raceResults.save() != null
+        assert raceResult.save() != null
 
-        params.id = raceResults.id
+        params.id = raceResult.id
 
         def model = controller.show()
 
-        assert model.raceResultsInstance == raceResults
+        assert model.raceResultInstance == raceResult
     }
 
     void testEdit() {
         controller.edit()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/raceResults/list'
+        assert response.redirectedUrl == '/raceResult/list'
 
         populateValidParams(params)
-        def raceResults = new RaceResults(params)
+        def raceResult = new RaceResult(params)
 
-        assert raceResults.save() != null
+        assert raceResult.save() != null
 
-        params.id = raceResults.id
+        params.id = raceResult.id
 
         def model = controller.edit()
 
-        assert model.raceResultsInstance == raceResults
+        assert model.raceResultInstance == raceResult
     }
 
     void testUpdate() {
         controller.update()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/raceResults/list'
+        assert response.redirectedUrl == '/raceResult/list'
 
         response.reset()
 
         populateValidParams(params)
-        def raceResults = new RaceResults(params)
+        def raceResult = new RaceResult(params)
 
-        assert raceResults.save() != null
+        assert raceResult.save() != null
 
         // test invalid parameters in update
-        params.id = raceResults.id
+        params.id = raceResult.id
         //TODO: add invalid values to params object
 
         controller.update()
 
-        assert view == "/raceResults/edit"
-        assert model.raceResultsInstance != null
+        assert view == "/raceResult/edit"
+        assert model.raceResultInstance != null
 
-        raceResults.clearErrors()
+        raceResult.clearErrors()
 
         populateValidParams(params)
         controller.update()
 
-        assert response.redirectedUrl == "/raceResults/show/$raceResults.id"
+        assert response.redirectedUrl == "/raceResult/show/$raceResult.id"
         assert flash.message != null
 
         //test outdated version number
         response.reset()
-        raceResults.clearErrors()
+        raceResult.clearErrors()
 
         populateValidParams(params)
-        params.id = raceResults.id
+        params.id = raceResult.id
         params.version = -1
         controller.update()
 
-        assert view == "/raceResults/edit"
-        assert model.raceResultsInstance != null
-        assert model.raceResultsInstance.errors.getFieldError('version')
+        assert view == "/raceResult/edit"
+        assert model.raceResultInstance != null
+        assert model.raceResultInstance.errors.getFieldError('version')
         assert flash.message != null
     }
 
     void testDelete() {
         controller.delete()
         assert flash.message != null
-        assert response.redirectedUrl == '/raceResults/list'
+        assert response.redirectedUrl == '/raceResult/list'
 
         response.reset()
 
         populateValidParams(params)
-        def raceResults = new RaceResults(params)
+        def raceResult = new RaceResult(params)
 
-        assert raceResults.save() != null
-        assert RaceResults.count() == 1
+        assert raceResult.save() != null
+        assert RaceResult.count() == 1
 
-        params.id = raceResults.id
+        params.id = raceResult.id
 
         controller.delete()
 
         assert RaceResult.count() == 0
-        assert RaceResults.get(raceResults.id) == null
-        assert response.redirectedUrl == '/raceResults/list'
+        assert RaceResult.get(raceResult.id) == null
+        assert response.redirectedUrl == '/raceResult/list'
     }
 }

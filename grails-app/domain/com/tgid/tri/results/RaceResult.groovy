@@ -8,7 +8,7 @@ import org.apache.commons.collections.list.LazyList
 
 class RaceResult {
 
-    List segmentResults = LazyList.decorate(new ArrayList(), FactoryUtils.instantiateFactory(SegmentResult.class))
+    List segmentResult = LazyList.decorate(new ArrayList(), FactoryUtils.instantiateFactory(SegmentResult.class))
     static hasMany = [segmentResults: SegmentResult]
 
     Race race

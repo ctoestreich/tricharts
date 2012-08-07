@@ -3,7 +3,7 @@ package com.tgid.tri
 import com.tgid.tri.auth.User
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.RaceType
-import com.tgid.tri.results.RaceResults
+import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
@@ -21,7 +21,7 @@ class DashboardController {
 
         def userId = user.id
 
-        def results = RaceResults.where {
+        def results = RaceResult.where {
             user.id == userId
             //segmentResults { segment { segmentType == SegmentType.Run && distance == 3.1 } }
         }
@@ -69,25 +69,25 @@ class DashboardController {
     def createRunResult() {
         User user = requestedUser
         def userId = user.id
-        def race = Race.get(params.int('raceResults.race'))
-        def raceResults = new RaceResult(race: race, user: user)
+        def race = Race.get(params.int('raceResult.race'))
+        def raceResult = new RaceResult(race: race, user: user)
         race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}.each {
-            raceResults.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
+            raceResult.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
         }
-        render view: 'createRunResult', model: [race: race, user: user, raceResults: raceResults]
+        render view: 'createRunResult', model: [race: race, user: user, raceResult: raceResult]
     }
 
     def saveRunResult() {
         User user = requestedUser
         def userId = user.id
-        def race = Race.get(params.int('raceResults.race'))
+        def race = Race.get(params.int('raceResult.race'))
         def durationHours = params?.int('duration_hours') * 60 * 60
         def durationMinutes = params?.int('duration_minutes') * 60
         def durationSeconds = params?.int('duration_seconds')
         def duration = Duration.standardSeconds(durationHours + durationMinutes + durationSeconds)
         def placeAgeGroup = params?.int('placeAgeGroup')
         def placeOverall = params?.int('placeOverall')
-        def raceResults = new RaceResult(race: race, user: user, duration: duration, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall)
+        def raceResult = new RaceResult(race: race, user: user, duration: duration, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall)
 
         println params?.segmentCount
         params.list("segmentResults").each {

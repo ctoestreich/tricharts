@@ -1,16 +1,14 @@
 package com.tgid.tri.results
 
+import com.tgid.tri.common.JodaTimeHelper
+import com.tgid.tri.race.DistanceType
 import com.tgid.tri.race.Pace
+import com.tgid.tri.race.RaceSegment
 import com.tgid.tri.race.SegmentType
-import com.tgid.tri.race.Segment
 import org.joda.time.Duration
 import org.joda.time.format.PeriodFormatter
-import org.joda.time.format.PeriodFormatterBuilder
 
 import java.math.RoundingMode
-import com.tgid.tri.race.DistanceType
-import com.tgid.tri.common.JodaTimeHelper
-import com.tgid.tri.race.RaceSegment
 
 class SegmentResult {
 
@@ -19,14 +17,14 @@ class SegmentResult {
     Integer placeAgeGroup
     Integer placeOverall
 
-    static belongsTo = [raceResults: RaceResult]
+    static belongsTo = [raceResult: RaceResult]
 
     static constraints = {
-        raceSegment nullable:  true
-        placeAgeGroup nullable:  true
-        placeOverall nullable:  true
+        raceSegment nullable: true
+        placeAgeGroup nullable: true
+        placeOverall nullable: true
         duration nullable: false
-        raceResults nullable:  false
+        raceResult nullable: false
     }
 
     static transients = ['segmentOrder', 'pace']
@@ -36,14 +34,14 @@ class SegmentResult {
         "${raceSegment?.segmentType} ${raceSegment?.distance} ${raceSegment?.distanceType} @ ${pace?.display}"
     }
 
-    transient Integer getSegmentOrder(){
+    transient Integer getSegmentOrder() {
         raceSegment.segmentOrder
     }
 
     transient Pace getPace() {
         def display = null, paceDuration = null, paceSpeed = null
 
-        switch(raceSegment?.segmentType) {
+        switch (raceSegment?.segmentType) {
             case SegmentType.Bike:
                 (display, paceSpeed) = calcBikePacing()
                 break
@@ -84,8 +82,8 @@ class SegmentResult {
         [display, paceDuration]
     }
 
-    private runAndBikeMultiplier(RaceSegment segment){
-        switch(segment.distanceType){
+    private runAndBikeMultiplier(RaceSegment segment) {
+        switch (segment.distanceType) {
             case DistanceType.Kilometers:
                 return 1.60934
             default:
@@ -93,8 +91,8 @@ class SegmentResult {
         }
     }
 
-    private swimMultiplier(RaceSegment segment){
-        switch(segment.distanceType){
+    private swimMultiplier(RaceSegment segment) {
+        switch (segment.distanceType) {
             case DistanceType.Meters:
                 return 0.0109361
             case DistanceType.Miles:

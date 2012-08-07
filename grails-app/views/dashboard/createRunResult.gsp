@@ -14,14 +14,14 @@
 
 <g:if test="${!race}">
 <g:form id="createRunResult" class="form-inline well" controller="dashboard" action="createRunResult">
-  <g:select optionKey="id" id="raceResult.race" from="${runs}" name="raceResults.race" />
+  <g:select optionKey="id" id="raceResult.race" from="${runs}" name="raceResult.race" />
   <button type="submit" class="btn">Next -></button>
 </g:form>
 </g:if>
 <g:else>
   <g:form id="saveRunResult" class="form-horizontal well" controller="dashboard" action="saveRunResult">
-    <input type="hidden" name="raceResults.race" value="${race.id}" id="raceResults.race">
-    <input type="hidden" name="segmentCount" value="${raceResults?.segmentResults?.size()}" id="segmentCount">
+    <input type="hidden" name="raceResult.race" value="${race.id}" id="raceResult.race">
+    <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
 
 
     <fieldset>
@@ -29,9 +29,9 @@
 
       <g:render template="/templates/resultsInput" model="[name:'Race']" />
 
-      <g:each in="${raceResults.segmentResults?.sort{a,b -> a.segmentOrder <=> b.segmentOrder}}" var="segmentResults" status="i">
+      <g:each in="${raceResult.segmentResults?.sort{a,b -> a.segmentOrder <=> b.segmentOrder}}" var="segmentResult" status="i">
         <div class="well">
-          <g:render template="/templates/resultsInput" model='[name: "Segment",prefix:"segmentResults[${i}].",segmentResults:segmentResults]' />
+          <g:render template="/templates/resultsInput" model='[name: "Segment",prefix:"segmentResult[${i}].",segmentResult:segmentResult]' />
         </div>
       </g:each>
 

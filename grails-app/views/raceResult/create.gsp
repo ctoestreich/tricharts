@@ -1,9 +1,9 @@
-<%@ page import="com.tgid.tri.results.RaceResults" %>
+<%@ page import="com.tgid.tri.results.RaceResult" %>
 <!doctype html>
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="${message(code: 'raceResults.label', default: 'RaceResults')}" />
+		<g:set var="entityName" value="${message(code: 'raceResult.label', default: 'RaceResult')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -39,10 +39,10 @@
 				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
 
-				<g:hasErrors bean="${raceResultsInstance}">
+				<g:hasErrors bean="${raceResultInstance}">
 				<bootstrap:alert class="alert-error">
 				<ul>
-					<g:eachError bean="${raceResultsInstance}" var="error">
+					<g:eachError bean="${raceResultInstance}" var="error">
 					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 					</g:eachError>
 				</ul>
@@ -52,7 +52,7 @@
 				<fieldset>
 					<g:form class="form-horizontal" action="create" >
 						<fieldset>
-							<f:all bean="raceResultsInstance"/>
+							<f:all bean="raceResultInstance"/>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

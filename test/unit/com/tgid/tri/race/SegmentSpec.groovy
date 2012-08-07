@@ -1,6 +1,6 @@
 package com.tgid.tri.race
 
-import com.tgid.tri.results.RaceResults
+import com.tgid.tri.results.RaceResult
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
@@ -15,7 +15,7 @@ import com.tgid.tri.results.SegmentResult
  */
 
 @TestFor(Segment)
-@Mock([Race, Segment, RaceResults, SegmentResult])
+@Mock([Race, Segment, RaceResult, SegmentResult])
 class SegmentSpec extends Specification {
 
     def setup() {
@@ -31,9 +31,9 @@ class SegmentSpec extends Specification {
         def race = new Race(name: 'Some Race', raceType: RaceType.Triathlon, date: new Date())
         def segment = new Segment(distance: distance, segmentType: segmentType, distanceType: distanceType, order: 1)
         race.addToSegments(segment)
-        def raceResults = new RaceResults(race: race, duration: segmentDuration)
-        def segmentResults = new SegmentResult(segment: segment, raceResults: raceResults, duration: segmentDuration)
-        raceResults.addToSegmentResults(segmentResults)
+        def raceResult = new RaceResult(race: race, duration: segmentDuration)
+        def segmentResults = new SegmentResult(segment: segment, raceResult: raceResult, duration: segmentDuration)
+        raceResult.addToSegmentResults(segmentResults)
 
         when:
         def pace = segmentResults.pace

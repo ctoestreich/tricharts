@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="${message(code: 'segmentResults.label', default: 'SegmentResult')}" />
+		<g:set var="entityName" value="${message(code: 'segmentResult.label', default: 'SegmentResult')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -39,10 +39,10 @@
 				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
 
-				<g:hasErrors bean="${segmentResultsInstance}">
+				<g:hasErrors bean="${segmentResultInstance}">
 				<bootstrap:alert class="alert-error">
 				<ul>
-					<g:eachError bean="${segmentResultsInstance}" var="error">
+					<g:eachError bean="${segmentResultInstance}" var="error">
 					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 					</g:eachError>
 				</ul>
@@ -50,10 +50,10 @@
 				</g:hasErrors>
 
 				<fieldset>
-					<g:form class="form-horizontal" action="edit" id="${segmentResultsInstance?.id}" >
-						<g:hiddenField name="version" value="${segmentResultsInstance?.version}" />
+					<g:form class="form-horizontal" action="edit" id="${segmentResultInstance?.id}" >
+						<g:hiddenField name="version" value="${segmentResultInstance?.version}" />
 						<fieldset>
-							<f:all bean="segmentResultsInstance"/>
+							<f:all bean="segmentResultInstance"/>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

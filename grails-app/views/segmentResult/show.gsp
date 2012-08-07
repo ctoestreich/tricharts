@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="${message(code: 'segmentResults.label', default: 'SegmentResult')}" />
+		<g:set var="entityName" value="${message(code: 'segmentResult.label', default: 'SegmentResult')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -42,47 +42,47 @@
 
 				<dl>
 				
-					<g:if test="${segmentResultsInstance?.segment}">
-						<dt><g:message code="segmentResults.segment.label" default="Segment" /></dt>
+					<g:if test="${segmentResultInstance?.raceSegment}">
+						<dt><g:message code="segmentResult.raceSegment.label" default="Race Segment" /></dt>
 						
-							<dd><g:link controller="segment" action="show" id="${segmentResultsInstance?.segment?.id}">${segmentResultsInstance?.segment?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
-					<g:if test="${segmentResultsInstance?.placeAgeGroup}">
-						<dt><g:message code="segmentResults.placeAgeGroup.label" default="Place Age Group" /></dt>
-						
-							<dd><g:fieldValue bean="${segmentResultsInstance}" field="placeAgeGroup"/></dd>
+							<dd><g:link controller="raceSegment" action="show" id="${segmentResultInstance?.raceSegment?.id}">${segmentResultInstance?.raceSegment?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				
-					<g:if test="${segmentResultsInstance?.placeOverall}">
-						<dt><g:message code="segmentResults.placeOverall.label" default="Place Overall" /></dt>
+					<g:if test="${segmentResultInstance?.placeAgeGroup}">
+						<dt><g:message code="segmentResult.placeAgeGroup.label" default="Place Age Group" /></dt>
 						
-							<dd><g:fieldValue bean="${segmentResultsInstance}" field="placeOverall"/></dd>
-						
-					</g:if>
-				
-					<g:if test="${segmentResultsInstance?.duration}">
-						<dt><g:message code="segmentResults.duration.label" default="Duration" /></dt>
-						
-							<dd><g:fieldValue bean="${segmentResultsInstance}" field="duration"/></dd>
+							<dd><g:fieldValue bean="${segmentResultInstance}" field="placeAgeGroup"/></dd>
 						
 					</g:if>
 				
-					<g:if test="${segmentResultsInstance?.raceResults}">
-						<dt><g:message code="segmentResults.raceResults.label" default="Race Results" /></dt>
+					<g:if test="${segmentResultInstance?.placeOverall}">
+						<dt><g:message code="segmentResult.placeOverall.label" default="Place Overall" /></dt>
 						
-							<dd><g:link controller="raceResults" action="show" id="${segmentResultsInstance?.raceResults?.id}">${segmentResultsInstance?.raceResults?.encodeAsHTML()}</g:link></dd>
+							<dd><g:fieldValue bean="${segmentResultInstance}" field="placeOverall"/></dd>
+						
+					</g:if>
+				
+					<g:if test="${segmentResultInstance?.duration}">
+						<dt><g:message code="segmentResult.duration.label" default="Duration" /></dt>
+						
+							<dd><g:fieldValue bean="${segmentResultInstance}" field="duration"/></dd>
+						
+					</g:if>
+				
+					<g:if test="${segmentResultInstance?.raceResult}">
+						<dt><g:message code="segmentResult.raceResult.label" default="Race Result" /></dt>
+						
+							<dd><g:link controller="raceResult" action="show" id="${segmentResultInstance?.raceResult?.id}">${segmentResultInstance?.raceResult?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				
 				</dl>
 
 				<g:form>
-					<g:hiddenField name="id" value="${segmentResultsInstance?.id}" />
+					<g:hiddenField name="id" value="${segmentResultInstance?.id}" />
 					<div class="form-actions">
-						<g:link class="btn" action="edit" id="${segmentResultsInstance?.id}">
+						<g:link class="btn" action="edit" id="${segmentResultInstance?.id}">
 							<i class="icon-pencil"></i>
 							<g:message code="default.button.edit.label" default="Edit" />
 						</g:link>

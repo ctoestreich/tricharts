@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="${message(code: 'raceResults.label', default: 'RaceResults')}" />
+		<g:set var="entityName" value="${message(code: 'raceResult.label', default: 'RaceResult')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -44,42 +44,42 @@
 					<thead>
 						<tr>
 						
-							<th class="header"><g:message code="raceResults.race.label" default="Race" /></th>
+							<th class="header"><g:message code="raceResult.race.label" default="Race" /></th>
 						
-							<g:sortableColumn property="duration" title="${message(code: 'raceResults.duration.label', default: 'Duration')}" />
+							<g:sortableColumn property="placeAgeGroup" title="${message(code: 'raceResult.placeAgeGroup.label', default: 'Place Age Group')}" />
 						
-							<g:sortableColumn property="placeAgeGroup" title="${message(code: 'raceResults.placeAgeGroup.label', default: 'Place Age Group')}" />
+							<g:sortableColumn property="placeOverall" title="${message(code: 'raceResult.placeOverall.label', default: 'Place Overall')}" />
 						
-							<g:sortableColumn property="placeOverall" title="${message(code: 'raceResults.placeOverall.label', default: 'Place Overall')}" />
+							<g:sortableColumn property="duration" title="${message(code: 'raceResult.duration.label', default: 'Duration')}" />
 						
-							<th class="header"><g:message code="raceResults.user.label" default="User" /></th>
+							<th class="header"><g:message code="raceResult.user.label" default="User" /></th>
 						
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-					<g:each in="${raceResultsInstanceList}" var="raceResultsInstance">
+					<g:each in="${raceResultInstanceList}" var="raceResultInstance">
 						<tr>
 						
-							<td>${fieldValue(bean: raceResultsInstance, field: "race")}</td>
+							<td>${fieldValue(bean: raceResultInstance, field: "race")}</td>
 						
-							<td>${fieldValue(bean: raceResultsInstance, field: "duration")}</td>
+							<td>${fieldValue(bean: raceResultInstance, field: "placeAgeGroup")}</td>
 						
-							<td>${fieldValue(bean: raceResultsInstance, field: "placeAgeGroup")}</td>
+							<td>${fieldValue(bean: raceResultInstance, field: "placeOverall")}</td>
 						
-							<td>${fieldValue(bean: raceResultsInstance, field: "placeOverall")}</td>
+							<td>${fieldValue(bean: raceResultInstance, field: "duration")}</td>
 						
-							<td>${fieldValue(bean: raceResultsInstance, field: "user")}</td>
+							<td>${fieldValue(bean: raceResultInstance, field: "user")}</td>
 						
 							<td class="link">
-								<g:link action="show" id="${raceResultsInstance.id}" class="btn btn-small">Show &raquo;</g:link>
+								<g:link action="show" id="${raceResultInstance.id}" class="btn btn-small">Show &raquo;</g:link>
 							</td>
 						</tr>
 					</g:each>
 					</tbody>
 				</table>
 				<div class="pagination">
-					<bootstrap:paginate total="${raceResultsInstanceTotal}" />
+					<bootstrap:paginate total="${raceResultInstanceTotal}" />
 				</div>
 			</div>
 

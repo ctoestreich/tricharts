@@ -62,8 +62,8 @@
                   <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
                   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
                   <li><hr></li>
-                  <li><a href="${createLink(controller: 'raceResults', action: 'index')}">Race Results</a></li>
-                  <li><a href="${createLink(controller: 'segmentResults', action: 'index')}">Segment Results</a></li>
+                  <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
+                  <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
                   <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
                 </ul>
               </li>
