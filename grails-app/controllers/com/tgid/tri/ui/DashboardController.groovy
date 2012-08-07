@@ -1,4 +1,4 @@
-package com.tgid.tri
+package com.tgid.tri.ui
 
 import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
@@ -10,11 +10,11 @@ import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.joda.time.Duration
+import com.tgid.tri.BaseController
 
 @Secured(["ROLE_USER"])
-class DashboardController {
+class DashboardController extends BaseController {
 
-    def springSecurityService
     def raceResultService
 
     def index() {
@@ -38,14 +38,6 @@ class DashboardController {
 
 
         render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
-    }
-
-    private User getRequestedUser() {
-        User user = ((User) springSecurityService.currentUser)
-        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN') && params.int('user.id')) {
-            user = User.get(params.int('user.id'))
-        }
-        user
     }
 
     def createResult() {
