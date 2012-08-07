@@ -1,4 +1,5 @@
-<h4>${segmentResults?.raceSegment?.segment}</h4>
+<h4>${segmentResult?.raceSegment?.segment}</h4>
+<input type="hidden" name="${prefix}raceSegment.id" value="${segmentResult?.raceSegment?.id}" />
 <div class="control-group ">
   <label class="control-label" for="${prefix}duration">${name} Duration</label>
   <div class="controls">

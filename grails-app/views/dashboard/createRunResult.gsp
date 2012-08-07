@@ -12,6 +12,20 @@
   <h1>Results For ${user.firstName} <small> results at a glance</small></h1>
 </div>
 
+<g:if test="${flash.message}">
+    <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+</g:if>
+
+<g:hasErrors bean="${raceResult}">
+    <bootstrap:alert class="alert-error">
+        <ul>
+            <g:eachError bean="${raceResult}" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+            </g:eachError>
+        </ul>
+    </bootstrap:alert>
+</g:hasErrors>
+
 <g:if test="${!race}">
 <g:form id="createRunResult" class="form-inline well" controller="dashboard" action="createRunResult">
   <g:select optionKey="id" id="raceResult.race" from="${runs}" name="raceResult.race" />

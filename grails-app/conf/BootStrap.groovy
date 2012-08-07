@@ -75,7 +75,7 @@ class BootStrap {
 
         def torchlight = new Race(name: 'Torchlight 5k', date: new Date(112, 5, 12), raceType: RaceType.Running,
                              distanceType: DistanceType.Kilometers, distance: 5,
-                             raceCategoryType: RaceCategoryType.FifteenKilometer).save()
+                             raceCategoryType: RaceCategoryType.FiveKilometer).save()
         def torchlightSegment = new RaceSegment(race: torchlight, segment: fiveKilometerRun).save()
     }
 

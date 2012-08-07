@@ -70,10 +70,10 @@
 						
 					</g:if>
 				
-					<g:if test="${raceResultInstance?.segmentResult}">
+					<g:if test="${raceResultInstance?.segmentResults}">
 						<dt><g:message code="raceResult.segmentResult.label" default="Segment Result" /></dt>
 						
-							<g:each in="${raceResultInstance.segmentResult}" var="s">
+							<g:each in="${raceResultInstance.segmentResults}" var="s">
 							<dd><g:link controller="segmentResult" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></dd>
 							</g:each>
 						

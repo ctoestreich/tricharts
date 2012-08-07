@@ -14,7 +14,6 @@ class TriHarderTagLib {
 
         if(duration){
             PeriodFormatter periodFormatter = attrs.formatter ?: JodaTimeHelper.getPeriodFormat(duration.standardHours > 0, duration.standardMinutes > 0, duration.standardSeconds > 0)
-            println duration.standardSeconds
             display = periodFormatter.print(duration.toPeriod())
         }
         out << display

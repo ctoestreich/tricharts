@@ -24,4 +24,9 @@ class RaceSegment {
     Float getDistance(){
         segment?.distance
     }
+
+    @Override
+    public String toString() {
+        "$segment"
+    }
 }
