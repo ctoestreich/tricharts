@@ -14,7 +14,7 @@ class JodaTimeHelper {
         }
         if(showMinutes) {
             if(showHours) {formatter.appendLiteral(':')}
-            formatter.minimumPrintedDigits(1).printZeroAlways().appendMinutes()
+            formatter.minimumPrintedDigits(2).printZeroAlways().appendMinutes()
         }
         if(showSeconds) {
             if(showMinutes) {formatter.appendLiteral(':')}

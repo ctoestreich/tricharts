@@ -28,13 +28,13 @@
 
 <g:if test="${!race}">
 <g:form id="createRunResult" class="form-inline well" controller="dashboard" action="createRunResult">
-  <g:select optionKey="id" id="raceResult.race" from="${runs}" name="raceResult.race" />
+  <g:select optionKey="id" id="race" from="${runs}" name="race.id" />
   <button type="submit" class="btn">Next -></button>
 </g:form>
 </g:if>
 <g:else>
   <g:form id="saveRunResult" class="form-horizontal well" controller="dashboard" action="saveRunResult">
-    <input type="hidden" name="raceResult.race" value="${race.id}" id="raceResult.race">
+    <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
 
 

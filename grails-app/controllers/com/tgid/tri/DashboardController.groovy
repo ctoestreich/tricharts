@@ -4,7 +4,6 @@ import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
-import com.tgid.tri.race.RaceSegment
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
@@ -72,7 +71,7 @@ class DashboardController {
     def createRunResult() {
         User user = requestedUser
         def userId = user.id
-        def race = Race.get(params.int('raceResult.race'))
+        def race = Race.get(params.int('race.id'))
         def raceResult = new RaceResult(race: race, user: user)
         race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}.each {
             raceResult.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
@@ -86,7 +85,7 @@ class DashboardController {
 
         try {
             raceResultService.createRaceResult(raceResult)
-            redirect action:'index', params: params
+            redirect action: 'index', params: params
         }
         catch (SegmentResultException failed) {
             flash.message = failed.message
@@ -101,32 +100,19 @@ class DashboardController {
     }
 
     private RaceResult mapRaceResult(User user) {
-        def race = Race.get(params.int('raceResult.race'))
-        def durationHours = params?.int('duration_hours') * 60 * 60
-        def durationMinutes = params?.int('duration_minutes') * 60
-        def durationSeconds = params?.int('duration_seconds')
-        def duration = Duration.standardSeconds(durationHours + durationMinutes + durationSeconds)
-        def placeAgeGroup = params?.int('placeAgeGroup')
-        def placeOverall = params?.int('placeOverall')
-        def raceResult = new RaceResult(race: race, user: user, duration: duration, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall)
+        params.user = user
+
+        def raceResult = new RaceResult(params)
 
         def segmentCount = params?.int('segmentCount') ?: 0
-        (0..<segmentCount).each {  i ->
-            def segment = params.get("segmentResult[${i}]")
+        (0..<segmentCount).each {
+            String key = "segmentResult[$it]".toString()
+            Map segment = params.get(key) as Map
             if (segment) {
-                def segmentDurationHours = (segment?.duration_hours ?: 0) * 60 * 60
-                def segmentDurationMinutes = (segment?.duration_minutes ?: 0) * 60
-                def segmentDurationSeconds = (segment?.duration_seconds ?: 0)
-                def segmentDuration = Duration.standardSeconds(segmentDurationHours + segmentDurationMinutes + segmentDurationSeconds)
-                def segmentPlaceAgeGroup = segment?.placeAgeGroup
-                def segmentPlaceOverall = segment?.placeOverall
-                def raceSegmentId = segment?.raceSegment?.id
-                println raceSegmentId
-                def segmentSegmentResults = new SegmentResult(duration: segmentDuration, placeOverall: segmentPlaceOverall, placeAgeGroup: segmentPlaceAgeGroup, raceSegment: RaceSegment.get(raceSegmentId))
+                def segmentSegmentResults = new SegmentResult(segment)
                 raceResult.addToSegmentResults(segmentSegmentResults)
             }
         }
-        println raceResult.segmentResults.size()
         raceResult
     }
 
