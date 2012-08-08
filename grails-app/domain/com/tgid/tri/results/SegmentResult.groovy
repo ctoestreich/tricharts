@@ -69,7 +69,7 @@ class SegmentResult {
         def swimPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
-        def display = formatter.print(swimPace.toPeriod()) + " / 100 yard"
+        def display = formatter.print(swimPace.toPeriod()) + " / 100y"
         [display, paceDuration]
     }
 

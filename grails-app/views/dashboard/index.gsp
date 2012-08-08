@@ -19,36 +19,41 @@
         <g:select name="user.id" from="${User.list().sort()}" id="user.id" value="${user?.id}"/>
     </div>
 </sec:ifAnyGranted>
-<r:script>
- var app = {
-    runCharts: function(){
-        if($("#runDashboardCharts").is(":visible")){
-           $("#runDashboardCharts").hide();
-       } else {
-            $("#runDashboardCharts").show();
-            if(!app.runChartsLoaded){
+<script>
+    var app = {
+        runCharts:function () {
+            if ($("#runDashboardCharts").is(":visible")) {
+                $("#runDashboardCharts").hide();
+            } else {
+                $("#runDashboardCharts").show();
+                if (!app.runChartsLoaded) {
                 ${remoteFunction(controller: 'visualization', action: 'mileChart', update: 'mileChart')}
                 ${remoteFunction(controller: 'visualization', action: 'fiveKilometerChart', update: 'fiveKilometerChart')}
                 ${remoteFunction(controller: 'visualization', action: 'marathonChart', update: 'marathonChart')}
+                }
+                app.runChartsLoaded = true;
             }
-            app.runChartsLoaded = true;
+        },
+        initialize:function () {
+                 this.loadRunRecords();
+        },
+        loadRunRecords:function () {
+            ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords')}
+            ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords')}
         }
-    }
-}
-</r:script>
+    };
+
+    $(function () {
+        app.initialize();
+    });
+</script>
 
 <div class="row well_clear">
     %{--<div class="span12">--}%
     <g:render template="/templates/dashboardHeader" model="[sport: 'Run']"/>
 
-    <div class="row-fluid" id="runDashboardCharts" style="display: none;">
-        <div class="span4"><div id="mileChart" class="chart4"><g:img dir="/images" file="spinner.gif"/></div></div>
+    <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
-        <div class="span4"><div id="fiveKilometerChart" class="chart4"><g:img dir="/images" file="spinner.gif"/></div>
-        </div>
-
-        <div class="span4"><div id="marathonChart" class="chart4"><g:img dir="/images" file="spinner.gif"/></div></div>
-    </div>
     <BR>
 
     <div id="results-run" class="accordion">
@@ -62,6 +67,10 @@
 <div class="row">
     %{--<div class="span12">--}%
     <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+
+    <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
+
+    <BR>
 
     <div id="results-triathlon" class="accordion">
         <g:render template="/templates/triathlonResults"
