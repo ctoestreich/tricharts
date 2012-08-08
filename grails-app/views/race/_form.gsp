@@ -42,20 +42,12 @@
 	<g:field type="number" name="distance" value="${fieldValue(bean: raceInstance, field: 'distance')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsAgeGroup', 'error')} ">
-	<label for="participantsAgeGroup">
-		<g:message code="race.participantsAgeGroup.label" default="Participants Age Group" />
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'raceCategoryType', 'error')} ">
+	<label for="raceCategoryType">
+		<g:message code="race.raceCategoryType.label" default="Race Category Type" />
 		
 	</label>
-	<g:field type="number" name="participantsAgeGroup" value="${fieldValue(bean: raceInstance, field: 'participantsAgeGroup')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'participantsOverall', 'error')} ">
-	<label for="participantsOverall">
-		<g:message code="race.participantsOverall.label" default="Participants Overall" />
-		
-	</label>
-	<g:field type="number" name="participantsOverall" value="${fieldValue(bean: raceInstance, field: 'participantsOverall')}"/>
+	<g:select name="raceCategoryType" from="${com.tgid.tri.race.RaceCategoryType?.values()}" keys="${com.tgid.tri.race.RaceCategoryType.values()*.name()}" value="${raceInstance?.raceCategoryType?.name()}" noSelection="['': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'segments', 'error')} ">

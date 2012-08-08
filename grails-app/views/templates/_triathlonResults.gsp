@@ -94,6 +94,8 @@
       %{--</tr>--}%
       </tbody>
     </table>
+
+      <g:render template="/templates/deleteRaceDashboard" model="[result: result]" />
   </div>
 </div>
 %{--<table class="table-condensed" id="table${result.id}">--}%

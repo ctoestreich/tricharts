@@ -26,6 +26,14 @@
 	<g:field type="number" name="placeOverall" value="${fieldValue(bean: segmentResultInstance, field: 'placeOverall')}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: segmentResultInstance, field: 'placeGender', 'error')} ">
+	<label for="placeGender">
+		<g:message code="segmentResult.placeGender.label" default="Place Gender" />
+		
+	</label>
+	<g:field type="number" name="placeGender" value="${fieldValue(bean: segmentResultInstance, field: 'placeGender')}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: segmentResultInstance, field: 'duration', 'error')} required">
 	<label for="duration">
 		<g:message code="segmentResult.duration.label" default="Duration" />

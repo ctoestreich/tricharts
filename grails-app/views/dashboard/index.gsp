@@ -4,6 +4,7 @@
 <head>
     <meta name="layout" content="bootstrap"/>
     <title>User Dashboard</title>
+    <r:require module="results" />
     <gvisualization:apiImport/>
 </head>
 
@@ -101,6 +102,15 @@
 %{--</table>--}%
 %{--</div>--}%
 %{--</div>--}%
+
+<div class="modal hide" id="deleteConfirmation">
+    <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Delete Results</h3></div>
+    <div class="modal-body"><p>Are you really sure you want to delete your results for this race?</p></div>
+    <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
+</div>
+
+<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult"><g:hiddenField name="raceResultId" value="" /></g:form>
 
 </body>
 </html>

@@ -63,6 +63,13 @@
 						
 					</g:if>
 				
+					<g:if test="${segmentResultInstance?.placeGender}">
+						<dt><g:message code="segmentResult.placeGender.label" default="Place Gender" /></dt>
+						
+							<dd><g:fieldValue bean="${segmentResultInstance}" field="placeGender"/></dd>
+						
+					</g:if>
+				
 					<g:if test="${segmentResultInstance?.duration}">
 						<dt><g:message code="segmentResult.duration.label" default="Duration" /></dt>
 						

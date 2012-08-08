@@ -8,8 +8,6 @@ class Race {
     DistanceType distanceType
     RaceCategoryType raceCategoryType
     Float distance = 0.00
-    Integer participantsOverall
-    Integer participantsAgeGroup
 
     static hasMany = [segments: RaceSegment]
 
@@ -19,8 +17,6 @@ class Race {
         raceType nullable: false, blank: false
         distanceType nullable: true
         distance nullable: true
-        participantsAgeGroup nullable: true
-        participantsOverall nullable: true
         raceCategoryType nullable: true
     }
 

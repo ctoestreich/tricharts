@@ -16,6 +16,7 @@ class SegmentResult {
     Duration duration
     Integer placeAgeGroup
     Integer placeOverall
+    Integer placeGender
 
     static belongsTo = [raceResult: RaceResult]
 
@@ -23,6 +24,7 @@ class SegmentResult {
         raceSegment nullable: true
         placeAgeGroup nullable: true
         placeOverall nullable: true
+        placeGender nullable: true
         duration nullable: false
         raceResult nullable: false
     }
@@ -58,27 +60,36 @@ class SegmentResult {
     }
 
     private List calcBikePacing() {
+        if(!duration || duration == Duration.standardSeconds(0)){
+            return ['','']
+        }
         def distance = raceSegment.distance * runAndBikeMultiplier(raceSegment)
         def paceSpeed = new BigDecimal(distance / (((duration.millis / 1000) / 60) / 60)).setScale(2, RoundingMode.HALF_UP)
-        def display = "${paceSpeed} mph"
+        def display = "${paceSpeed}"
         [display, paceSpeed]
     }
 
     private List calcSwimPacing() {
+        if(!duration || duration == Duration.standardSeconds(0)){
+            return ['','']
+        }
         def distance = raceSegment.distance * swimMultiplier(raceSegment)
         def swimPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
-        def display = formatter.print(swimPace.toPeriod()) + " / 100y"
+        def display = formatter.print(swimPace.toPeriod())
         [display, paceDuration]
     }
 
     private List calcRunPacing() {
+        if(!duration || duration == Duration.standardSeconds(0)){
+            return ['','']
+        }
         def distance = raceSegment.distance / runAndBikeMultiplier(raceSegment)
         def runPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = runPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
-        def display = formatter.print(runPace.toPeriod()) + " / mile"
+        def display = formatter.print(runPace.toPeriod())
         [display, paceDuration]
     }
 

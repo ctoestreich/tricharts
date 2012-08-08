@@ -50,6 +50,8 @@
 						
 							<g:sortableColumn property="placeOverall" title="${message(code: 'segmentResult.placeOverall.label', default: 'Place Overall')}" />
 						
+							<g:sortableColumn property="placeGender" title="${message(code: 'segmentResult.placeGender.label', default: 'Place Gender')}" />
+						
 							<g:sortableColumn property="duration" title="${message(code: 'segmentResult.duration.label', default: 'Duration')}" />
 						
 							<th class="header"><g:message code="segmentResult.raceResult.label" default="Race Result" /></th>
@@ -66,6 +68,8 @@
 							<td>${fieldValue(bean: segmentResultInstance, field: "placeAgeGroup")}</td>
 						
 							<td>${fieldValue(bean: segmentResultInstance, field: "placeOverall")}</td>
+						
+							<td>${fieldValue(bean: segmentResultInstance, field: "placeGender")}</td>
 						
 							<td>${fieldValue(bean: segmentResultInstance, field: "duration")}</td>
 						

@@ -7,51 +7,31 @@
 
 	<body>
 		<div class="row-fluid">
-			<aside id="application-status" class="span3">
-				<div class="well sidebar-nav">
-					<h5>Application Status</h5>
-					<ul>
-						<li>App version: <g:meta name="app.version"/></li>
-						<li>Grails version: <g:meta name="app.grails.version"/></li>
-						<li>Groovy version: ${org.codehaus.groovy.runtime.InvokerHelper.getVersion()}</li>
-						<li>JVM version: ${System.getProperty('java.version')}</li>
-						<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-						<li>Domains: ${grailsApplication.domainClasses.size()}</li>
-						<li>Services: ${grailsApplication.serviceClasses.size()}</li>
-						<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-					</ul>
-					<h5>Installed Plugins</h5>
-					<ul>
-						<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-							<li>${plugin.name} - ${plugin.version}</li>
-						</g:each>
-					</ul>
-				</div>
-			</aside>
-
-			<section id="main" class="span9">
+			<section id="main" class="span12">
 
 				<div class="hero-unit">
-					<h1>Welcome to Grails</h1>
-
-					<p>Grails scaffolding with a <a href="http://twitter.github.com/bootstrap" rel="external"><em>Twitter
-					Bootstrap</em></a> look &amp; feel?</p>
-					
-					<p>This is a demo of how to reskin Grails dynamic scaffolding pages. I've
-					used The <a href="http://freeside.co/grails-fields">Fields plugin</a> for customizing
-					form rendering and the <a href="https://github.com/groovydev/twitter-bootstrap-grails-plugin">Twitter
-					Bootstrap Resources plugin</a> to provide the CSS resources. Beyond that it&apos;s a
-					bare Grails app using dynamically scaffolded controllers and views.</p>
+					<h1>Race Results Tracking</h1>
+                          <br>
+					<p>Currently the site is in Prototype phase and new account creation is disabled.</p>
 				</div>
 
-              %{--<facebookAuth:init force="true" />--}%
-              <sec:ifNotGranted roles="ROLE_USER">
-                Not Logged In!
-              </sec:ifNotGranted>
-              <sec:ifAllGranted roles="ROLE_USER">
-                Welcome! <sec:username/>
-              </sec:ifAllGranted>
-
+                <div class="row-fluid">
+                    <div class="span4">
+                        <g:img dir="/images/site" file="glyphicons_042_group.png" class="hp-icon" />
+                        <h2>Athletes</h2>
+                        <p>Whether you are a runner, triathlete or cyclist this site can aggregate your results.</p>
+                    </div>
+                    <div class="span4">
+                        <g:img dir="/images/site" file="glyphicons_079_podium.png" class="hp-icon" />
+                        <h2>Results</h2>
+                        <p>Inputting results is easy and only takes a few moments.  </p>
+                    </div>
+                    <div class="span4">
+                        <g:img dir="/images/site" file="glyphicons_082_roundabout.png" class="hp-icon" />
+                        <h2>Reporting</h2>
+                        <p>After your results are entered, you will be able to see stats and graphs at a glance that you have been tracking in spreadsheets for years.</p>
+                    </div>
+                </div>
 			</section>
 		</div>
 

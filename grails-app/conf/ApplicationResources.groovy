@@ -1,8 +1,12 @@
 modules = {
     application {
         dependsOn 'backbone', 'handlebars', 'underscore'
-        //resource url:'js/application.js'
+        resource url:'js/application.js', disposition: 'head'
         resource url:'css/application.css'
+    }
+
+    results {
+        resource url:'js/results.js'
     }
 
     backbone {

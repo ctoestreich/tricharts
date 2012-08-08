@@ -77,17 +77,10 @@
 						
 					</g:if>
 				
-					<g:if test="${raceInstance?.participantsAgeGroup}">
-						<dt><g:message code="race.participantsAgeGroup.label" default="Participants Age Group" /></dt>
+					<g:if test="${raceInstance?.raceCategoryType}">
+						<dt><g:message code="race.raceCategoryType.label" default="Race Category Type" /></dt>
 						
-							<dd><g:fieldValue bean="${raceInstance}" field="participantsAgeGroup"/></dd>
-						
-					</g:if>
-				
-					<g:if test="${raceInstance?.participantsOverall}">
-						<dt><g:message code="race.participantsOverall.label" default="Participants Overall" /></dt>
-						
-							<dd><g:fieldValue bean="${raceInstance}" field="participantsOverall"/></dd>
+							<dd><g:fieldValue bean="${raceInstance}" field="raceCategoryType"/></dd>
 						
 					</g:if>
 				

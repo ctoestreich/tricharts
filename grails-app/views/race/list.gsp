@@ -54,7 +54,7 @@
 						
 							<g:sortableColumn property="distance" title="${message(code: 'race.distance.label', default: 'Distance')}" />
 						
-							<g:sortableColumn property="participantsAgeGroup" title="${message(code: 'race.participantsAgeGroup.label', default: 'Participants Age Group')}" />
+							<g:sortableColumn property="raceCategoryType" title="${message(code: 'race.raceCategoryType.label', default: 'Race Category Type')}" />
 						
 							<th></th>
 						</tr>
@@ -73,7 +73,7 @@
 						
 							<td>${fieldValue(bean: raceInstance, field: "distance")}</td>
 						
-							<td>${fieldValue(bean: raceInstance, field: "participantsAgeGroup")}</td>
+							<td>${fieldValue(bean: raceInstance, field: "raceCategoryType")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${raceInstance.id}" class="btn btn-small">Show &raquo;</g:link>

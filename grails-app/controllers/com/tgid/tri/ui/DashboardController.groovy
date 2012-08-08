@@ -1,5 +1,6 @@
 package com.tgid.tri.ui
 
+import com.tgid.tri.BaseController
 import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
@@ -8,9 +9,7 @@ import com.tgid.tri.race.RaceType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.joda.time.Duration
-import com.tgid.tri.BaseController
 
 @Secured(["ROLE_USER"])
 class DashboardController extends BaseController {
@@ -43,24 +42,34 @@ class DashboardController extends BaseController {
     def createResult() {
         User user = requestedUser
         def userId = user.id
-        switch (params.type) {
+        List<Race> races
+        switch (params?.type) {
             case 'Run':
-                def results = RaceResult.where {
-                    user.id == userId
-                    //segmentResults { segment { segmentType == SegmentType.Run && distance == 3.1 } }
-                }
-                def runResults = results.where {
-                    race.raceType == RaceType.Running
-                }
-                def runs = Race.findAll("from Race where raceType = 'Running' and id not in (:excludedRaces)", ["excludedRaces": runResults.collect { it.race.id }])
-                render view: 'createRunResult', model: [raceResult: new RaceResult(), user: user, runs: runs]
+                races = findRacesWithNoResults(userId, RaceType.Running)
+                break
+            case 'Triathlon':
+                races = findRacesWithNoResults(userId, RaceType.Triathlon)
                 break
             default:
-                render view: 'createRunResult', model: [raceResult: new RaceResult(), user: user]
+                races = []
         }
+        render view: 'createResult', model: [raceResult: new RaceResult(), user: user, races: races]
     }
 
-    def createRunResult() {
+    private List<Race> findRacesWithNoResults(userId, RaceType raceType) {
+        def results = RaceResult.where {
+            user.id == userId
+        }
+        def raceResults = results.where {
+            race.raceType == raceType
+        }
+        if (raceResults.count() > 0)
+            return Race.findAll("from Race where raceType = '${raceType}' and id not in (:excludedRaces)", ["excludedRaces": raceResults?.collect { it.race.id } ?: []])
+        else
+            return Race.findAll("from Race where raceType = '${raceType}'")
+    }
+
+    def selectRace() {
         User user = requestedUser
         def userId = user.id
         def race = Race.get(params.int('race.id'))
@@ -68,10 +77,10 @@ class DashboardController extends BaseController {
         race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}.each {
             raceResult.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
         }
-        render view: 'createRunResult', model: [race: race, user: user, raceResult: raceResult]
+        render view: 'createResult', model: [race: race, user: user, raceResult: raceResult]
     }
 
-    def saveRunResult() {
+    def saveResult() {
         User user = requestedUser
         RaceResult raceResult = mapRaceResult(user)
 
@@ -106,6 +115,18 @@ class DashboardController extends BaseController {
             }
         }
         raceResult
+    }
+
+    def deleteRaceResult() {
+        User user = requestedUser
+        try {
+            raceResultService.deleteRaceResult(params?.int('raceResultId') ?: 0, user);
+            redirect action: 'index'
+        } catch (RaceResultException failed) {
+            flash.message = failed.message
+            flash.raceResult = failed.problem
+            redirect action: 'index'
+        }
     }
 
     def races() {}

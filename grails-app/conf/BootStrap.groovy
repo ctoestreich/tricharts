@@ -30,7 +30,7 @@ class BootStrap {
         def twentyFiveKilometerRun = new Segment(distance: 25, distanceType: DistanceType.Kilometers, segmentType: SegmentType.Run).save()
 
         def race = new Race(name: 'Graniteman Triathlon', date: new Date(112, 6, 17), raceType: RaceType.Triathlon,
-                            distanceType: DistanceType.Miles, participantsOverall: 316, participantsAgeGroup: 34,
+                            distanceType: DistanceType.Miles,
                             raceCategoryType: RaceCategoryType.Sprint).save()
 
         def swimRaceSegment = new RaceSegment(race: race, segment: halfMileSwim).save()
@@ -39,19 +39,19 @@ class BootStrap {
         def t2Segment = new RaceSegment(race: race, segment: t2).save()
         def fiveKilometerRunSegment = new RaceSegment(race: race, segment: fiveKilometerRun).save()
 
-        def swimResults = new SegmentResult(raceSegment: swimRaceSegment, duration: Duration.standardSeconds(11 * 60 + 33), placeOverall: 18, placeAgeGroup: 3)
-        def t1Results = new SegmentResult(raceSegment: t1Segment, duration: Duration.standardSeconds(23))
-        def bikeResults = new SegmentResult(raceSegment: fifteenMileBikeSegment, duration: Duration.standardSeconds(40 * 60 + 15), placeOverall: 25, placeAgeGroup: 4)
-        def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(52))
-        def runResults = new SegmentResult(raceSegment: fiveKilometerRunSegment, duration: Duration.standardSeconds(60 * 20 + 17), placeOverall: 27, placeAgeGroup: 5)
-
-        def raceResult = new RaceResult(race: race, placeAgeGroup: 3, placeOverall: 12, user: user, duration: Duration.standardSeconds(83 * 60 + 17)).save()
-        raceResult.addToSegmentResults(swimResults)
-        raceResult.addToSegmentResults(t1Results)
-        raceResult.addToSegmentResults(bikeResults)
-        raceResult.addToSegmentResults(t2Results)
-        raceResult.addToSegmentResults(runResults)
-        raceResult.save()
+//        def swimResults = new SegmentResult(raceSegment: swimRaceSegment, duration: Duration.standardSeconds(11 * 60 + 33), placeOverall: 18, placeAgeGroup: 3)
+//        def t1Results = new SegmentResult(raceSegment: t1Segment, duration: Duration.standardSeconds(23))
+//        def bikeResults = new SegmentResult(raceSegment: fifteenMileBikeSegment, duration: Duration.standardSeconds(40 * 60 + 15), placeOverall: 25, placeAgeGroup: 4)
+//        def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(52))
+//        def runResults = new SegmentResult(raceSegment: fiveKilometerRunSegment, duration: Duration.standardSeconds(60 * 20 + 17), placeOverall: 27, placeAgeGroup: 5)
+//
+//        def raceResult = new RaceResult(race: race, placeAgeGroup: 3, placeOverall: 12, user: user, duration: Duration.standardSeconds(83 * 60 + 17)).save()
+//        raceResult.addToSegmentResults(swimResults)
+//        raceResult.addToSegmentResults(t1Results)
+//        raceResult.addToSegmentResults(bikeResults)
+//        raceResult.addToSegmentResults(t2Results)
+//        raceResult.addToSegmentResults(runResults)
+//        raceResult.save()
 
         def race2 = new Race(name: 'Rice Street Mile', date: new Date(112, 6, 26),
                              raceType: RaceType.Running, distanceType: DistanceType.Miles,
