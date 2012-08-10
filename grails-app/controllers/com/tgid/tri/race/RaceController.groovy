@@ -25,6 +25,10 @@ class RaceController {
                 def raceInstance = new Race(params)
                 if(raceInstance.raceType == RaceType.Triathlon) {
                     createTriathlonSegments(raceInstance)
+                } else if(raceInstance.raceType == RaceType.Running){
+                    createRunSegments(raceInstance)
+                } else if(raceInstance.raceType == RaceType.Biking){
+                    createBikeSegments(raceInstance)
                 }
 
                 if(!raceInstance.save(flush: true)) {
@@ -38,17 +42,27 @@ class RaceController {
         }
     }
 
+    private void createBikeSegments(Race race){
+        def runSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Bike, distanceType: race.distanceType, distance: race.distance)
+        race.addToSegments(new RaceSegment(segment: runSegment))
+    }
+
+    private void createRunSegments(Race race){
+        def runSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Run, distanceType: race.distanceType, distance: race.distance)
+        race.addToSegments(new RaceSegment(segment: runSegment))
+    }
+
     private void createTriathlonSegments(Race race) {
         def swimSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Swim, distanceType: DistanceType.Miles, distance: 0.5)
         def t1Segment = Segment.findOrCreateWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400)
         def bikeSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Bike, distanceType: DistanceType.Miles, distance: 15)
         def t2Segment = Segment.findOrCreateWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400)
         def runSegment = Segment.findOrCreateWhere(segmentType: SegmentType.Run, distanceType: DistanceType.Kilometers, distance: 5)
-        new RaceSegment(race: race, segment: swimSegment).save()
-        new RaceSegment(race: race, segment: t1Segment).save()
-        new RaceSegment(race: race, segment: bikeSegment).save()
-        new RaceSegment(race: race, segment: t2Segment).save()
-        new RaceSegment(race: race, segment: runSegment).save()
+        race.addToSegments(new RaceSegment(segment: swimSegment))
+        race.addToSegments(new RaceSegment(segment: t1Segment))
+        race.addToSegments(new RaceSegment(segment: bikeSegment))
+        race.addToSegments(new RaceSegment(segment: t2Segment))
+        race.addToSegments(new RaceSegment(segment: runSegment))
     }
 
     def show() {

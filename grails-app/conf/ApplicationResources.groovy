@@ -28,4 +28,15 @@ modules = {
         resource url:'js/backbone/model/race.model.js'
         resource url:'js/backbone/view/race.view.js'
     }
+
+    highcharts {
+        dependsOn 'jquery'
+        resource url:'js/highcharts/highcharts.js'
+        resource url:'js/highcharts/modules/exporting.js'
+    }
+
+    progression {
+        dependsOn 'highcharts'
+        resource url:'js/highcharts/highchart.theme.js'
+    }
 }

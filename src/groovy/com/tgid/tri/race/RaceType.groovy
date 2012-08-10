@@ -3,5 +3,21 @@ package com.tgid.tri.race
 /**
  */
 enum RaceType implements Serializable {
-    Triathlon, Running, Biking, Swimming
+
+    Triathlon('Triathlon'), Running('Running'), Biking('Biking'), Swimming('Swimming')
+
+    String raceType
+
+    RaceType(String raceType) {
+        this.raceType = raceType
+    }
+
+    static RaceType getRaceType(String value) {
+        RaceType.values().find { it.raceType == value }
+    }
+
+    @Override
+    String toString() {
+        this.raceType
+    }
 }

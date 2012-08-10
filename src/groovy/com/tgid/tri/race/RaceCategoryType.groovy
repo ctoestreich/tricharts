@@ -29,6 +29,10 @@ enum RaceCategoryType implements Serializable {
         this.raceCategoryType = raceCategoryType
     }
 
+    static RaceCategoryType getRaceCategoryType(String value) {
+        RaceCategoryType.values().find { it.raceCategoryType == value }
+    }
+
     @Override
     String toString() {
         this.raceCategoryType

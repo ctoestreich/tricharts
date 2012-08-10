@@ -40,6 +40,13 @@ class DashboardController extends BaseController {
         render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
     }
 
+    def progression(){
+        User user = requestedUser
+        def userId = user.id
+
+        render view: 'progression', model: [raceResult: new RaceResult(), user: user]
+    }
+
     def createResult() {
         User user = requestedUser
         def userId = user.id

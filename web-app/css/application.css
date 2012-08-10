@@ -80,7 +80,7 @@ div.btn-group {
 }
 
 .well {
-
+    padding: 5px !important;
 }
 
 .well_clear {

@@ -10,6 +10,60 @@ import com.tgid.tri.results.SegmentResult
 
 class VisualizationController extends BaseController {
 
+    def sportProgression() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceCategoryType = RaceCategoryType.getRaceCategoryType(params?.raceCategoryType)
+        def queryRaceType = RaceType.getRaceType(params?.raceType)
+
+        if(!queryRaceCategoryType || !queryRaceType){
+            println 'invalid params'
+            log.error('missing params')
+            return;
+        }
+
+        renderProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    def runningProgression() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceCategoryType = RaceCategoryType.getRaceCategoryType(params?.raceCategoryType ?: RaceCategoryType.OneMile.raceCategoryType)
+        def queryRaceType = RaceType.Running
+
+        renderProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    private void renderProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
+
+        def results = RaceResult.where {
+            user.id == userId
+            race.raceType == queryRaceType
+            race.raceCategoryType == queryRaceCategoryType
+        }
+
+        def sortedResults = results.list().sort {a, b -> a.date <=> b.date}
+        def data = [:]
+        sortedResults.each { result ->
+            def key = result.date.year + 1900
+            def period = result.duration.toPeriod()
+            if(data.containsKey(key)) {
+                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name} ${result.race.date.format("M-dd-yyyy")}'}")
+            } else {
+                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name} ${result.race.date.format("M-dd-yyyy")}'}"))
+            }
+        }
+
+        println data.each {
+            println it?.value
+        }
+
+        render template: "/templates/charts/runProgression",
+               model: [height: 200, width: 200, data: data, id: resultDiv, type: queryRaceCategoryType]
+    }
+
     def triathlonRecords() {
         User user = requestedUser
         def userId = user.id
@@ -139,6 +193,6 @@ class VisualizationController extends BaseController {
 
 
         render template: "chart",
-                model: [height: 200, width: 200, columns: columns, data: data, title: resultTitle, id: resultDiv]
+               model: [height: 200, width: 200, columns: columns, data: data, title: resultTitle, id: resultDiv]
     }
 }

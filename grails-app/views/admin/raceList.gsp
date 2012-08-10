@@ -86,12 +86,17 @@
                             <g:if test="${raceInstance.statusType != com.tgid.tri.race.StatusType.Approved}">
                             <g:link controller="admin" action="updateRaceStatus"
                                     params="[statusType: statusType, 'raceId': raceInstance.id, 'newStatus': StatusType.Approved]"
-                                    class="btn btn-small btn-primary"><i class="icon-ok"></i>Approve</g:link>
+                                    class="btn btn-small btn-primary"><i class="icon-ok"></i>&nbsp;Approve</g:link>
                             </g:if>
-                            <g:if test="${statusType != com.tgid.tri.race.StatusType.Deleted}">
+                          <g:if test="${raceInstance.statusType != com.tgid.tri.race.StatusType.Pending}">
+                            <g:link controller="admin" action="updateRaceStatus"
+                                    params="[statusType: statusType, 'raceId': raceInstance.id, 'newStatus': StatusType.Pending]"
+                                    class="btn btn-small btn-info"><i class="icon-adjust"></i>&nbsp;Pending</g:link>
+                          </g:if>
+                            <g:if test="${raceInstance.statusType != com.tgid.tri.race.StatusType.Deleted}">
                                 <g:link controller="admin" action="updateRaceStatus"
-                                        params="[statusType: statusType, 'raceId': raceInstance.id, 'newStatus': StatusType.Approved]"
-                                        class="btn btn-small btn-danger"><i class="icon-remove"></i>Delete</g:link>
+                                        params="[statusType: statusType, 'raceId': raceInstance.id, 'newStatus': StatusType.Deleted]"
+                                        class="btn btn-small btn-danger"><i class="icon-remove"></i>&nbsp;Delete</g:link>
                             </g:if>
                             <g:link controller="race" action="edit" id="${raceInstance.id}"
                                     class="btn btn-small">Edit &raquo;</g:link>

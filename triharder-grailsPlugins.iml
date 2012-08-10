@@ -16,7 +16,7 @@
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/google-visualization-0.5.3/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/cache-headers-1.1.5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/joda-time-1.4/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.3/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.1/grails-app/views" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -47,10 +47,10 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/database-migration-1.1/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/database-migration-1.1/grails-app/controllers" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.3">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.3/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.3/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.3/grails-app/taglib" isTestSource="false" />
+    <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.1">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.1/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/fields-1.1/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/google-visualization-0.5.3">
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/google-visualization-0.5.3/src/groovy" isTestSource="false" />
@@ -70,11 +70,11 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/jquery-1.7.2/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/jquery-1.7.2/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/src/java" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/grails-app/i18n" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/grails-app/taglib" isTestSource="false" />
+    <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.1.6">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.1.6/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.1.6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.1.6/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.1.6/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/spock-0.6" />
     <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/spring-security-core-1.2.7.3">
@@ -124,9 +124,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/junit/junit-dep/jars/junit-dep-4.9.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-core/jars/spock-core-0.6-groovy-1.8.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-grails-support/jars/spock-grails-support-0.6-groovy-1.8.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.4.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.4.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.4.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
