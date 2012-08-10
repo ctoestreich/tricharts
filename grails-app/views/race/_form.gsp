@@ -50,6 +50,14 @@
 	<g:select name="raceCategoryType" from="${com.tgid.tri.race.RaceCategoryType?.values()}" keys="${com.tgid.tri.race.RaceCategoryType.values()*.name()}" value="${raceInstance?.raceCategoryType?.name()}" noSelection="['': '']"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'statusType', 'error')} required">
+	<label for="statusType">
+		<g:message code="race.statusType.label" default="Status Type" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="statusType" from="${com.tgid.tri.race.StatusType?.values()}" keys="${com.tgid.tri.race.StatusType.values()*.name()}" required="" value="${raceInstance?.statusType?.name()}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: raceInstance, field: 'segments', 'error')} ">
 	<label for="segments">
 		<g:message code="race.segments.label" default="Segments" />

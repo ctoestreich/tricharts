@@ -57,6 +57,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
+                    <li><hr></li>
                   <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
                   <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
                   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>

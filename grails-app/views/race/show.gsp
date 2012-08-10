@@ -84,6 +84,13 @@
 						
 					</g:if>
 				
+					<g:if test="${raceInstance?.statusType}">
+						<dt><g:message code="race.statusType.label" default="Status Type" /></dt>
+						
+							<dd><g:fieldValue bean="${raceInstance}" field="statusType"/></dd>
+						
+					</g:if>
+				
 					<g:if test="${raceInstance?.segments}">
 						<dt><g:message code="race.segments.label" default="Segments" /></dt>
 						

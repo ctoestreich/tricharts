@@ -61,7 +61,7 @@
         <fieldset>
         %{--<legend></legend>--}%
 
-            <g:render template="/templates/resultsInput" model="[name: 'Race', isRaceResults: true]"/>
+            <g:render template="/templates/resultsInput" model="[name: 'Race', isRaceResults: true, raceResult: raceResult]"/>
 
             <g:each in="${raceResult.segmentResults?.sort {a, b -> a.segmentOrder <=> b.segmentOrder}}"
                     var="segmentResult" status="i">

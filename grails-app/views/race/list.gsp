@@ -50,12 +50,13 @@
 						
 							<g:sortableColumn property="raceType" title="${message(code: 'race.raceType.label', default: 'Race Type')}" />
 						
-							<g:sortableColumn property="distanceType" title="${message(code: 'race.distanceType.label', default: 'Distance Type')}" />
-						
-							<g:sortableColumn property="distance" title="${message(code: 'race.distance.label', default: 'Distance')}" />
+							%{--<g:sortableColumn property="distanceType" title="${message(code: 'race.distanceType.label', default: 'Distance Type')}" />--}%
+						%{----}%
+							%{--<g:sortableColumn property="distance" title="${message(code: 'race.distance.label', default: 'Distance')}" />--}%
 						
 							<g:sortableColumn property="raceCategoryType" title="${message(code: 'race.raceCategoryType.label', default: 'Race Category Type')}" />
-						
+							<g:sortableColumn property="statusType" title="${message(code: 'race.statusType.label', default: 'Race Status Type')}" />
+
 							<th></th>
 						</tr>
 					</thead>
@@ -69,12 +70,14 @@
 						
 							<td>${fieldValue(bean: raceInstance, field: "raceType")}</td>
 						
-							<td>${fieldValue(bean: raceInstance, field: "distanceType")}</td>
-						
-							<td>${fieldValue(bean: raceInstance, field: "distance")}</td>
+							%{--<td>${fieldValue(bean: raceInstance, field: "distanceType")}</td>--}%
+						%{----}%
+							%{--<td>${fieldValue(bean: raceInstance, field: "distance")}</td>--}%
 						
 							<td>${fieldValue(bean: raceInstance, field: "raceCategoryType")}</td>
-						
+
+                            <td>${fieldValue(bean: raceInstance, field: "statusType")}</td>
+
 							<td class="link">
 								<g:link action="show" id="${raceInstance.id}" class="btn btn-small">Show &raquo;</g:link>
 							</td>

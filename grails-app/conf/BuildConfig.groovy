@@ -43,15 +43,16 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.2"
-        runtime ":resources:1.1.6"
+        runtime ":resources:1.2-RC1"
 
         runtime ':twitter-bootstrap:2.0.0.16'
-        runtime ':fields:1.1'
+        runtime ':fields:1.3'
         runtime ":cache-headers:1.1.5"
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
+        compile ":google-visualization:0.5.3"
 
         runtime ":spring-security-core:1.2.7.3"
         //runtime ":spring-security-facebook:0.9"
@@ -60,6 +61,8 @@ grails.project.dependency.resolution = {
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.4"
+
+        test ":spock:0.6"
 
         build ":tomcat:$grailsVersion"
 
