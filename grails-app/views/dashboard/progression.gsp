@@ -35,7 +35,7 @@
   </div>
 </div>
 <div class="row-fluid" id="placeHolder"></div>
-<div id="chartDiv" class="row-fluid"></div>
+<div id="chartDiv" class="span4"></div>
 <script>
   $(function () {
     <g:each in="${races}" var="race">

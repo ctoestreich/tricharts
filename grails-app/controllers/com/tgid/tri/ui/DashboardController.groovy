@@ -6,11 +6,11 @@ import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.RaceType
+import com.tgid.tri.race.StatusType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
-import com.tgid.tri.race.StatusType
 
 @Secured(["ROLE_USER"])
 class DashboardController extends BaseController {
@@ -40,7 +40,7 @@ class DashboardController extends BaseController {
         render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
     }
 
-    def progression(){
+    def progression() {
         User user = requestedUser
         def userId = user.id
 
@@ -51,7 +51,7 @@ class DashboardController extends BaseController {
         User user = requestedUser
         def userId = user.id
         List<Race> races
-        switch (params?.type) {
+        switch(params?.type) {
             case 'Run':
                 races = findRacesWithNoResults(userId, RaceType.Running)
                 break
@@ -71,7 +71,7 @@ class DashboardController extends BaseController {
         def raceResults = results.where {
             race.raceType == raceType
         }
-        if (raceResults.count() > 0)
+        if(raceResults.count() > 0)
             return Race.findAll("from Race where raceType = '${raceType}' and statusType = '${StatusType.Approved}' and id not in (:excludedRaces)", ["excludedRaces": raceResults?.collect { it.race.id } ?: []])
         else
             return Race.findAll("from Race where raceType = '${raceType}' and statusType = '${StatusType.Approved}'")
@@ -82,7 +82,7 @@ class DashboardController extends BaseController {
         def race = Race.get(params.int('race.id'))
         def raceResult = new RaceResult(race: race, user: user)
 
-        if(!race){
+        if(!race) {
             raceResult.errors.rejectValue(
                     'race',
                     'raceResult.races.none.approved')
@@ -100,7 +100,7 @@ class DashboardController extends BaseController {
         User user = requestedUser
         RaceResult raceResult = mapRaceResult(user)
 
-        if(raceResult.hasErrors()){
+        if(raceResult.hasErrors()) {
             render view: 'createResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
             return
         }
@@ -109,12 +109,12 @@ class DashboardController extends BaseController {
             raceResultService.createRaceResult(raceResult)
             redirect action: 'index', params: params
         }
-        catch (SegmentResultException failed) {
+        catch(SegmentResultException failed) {
             flash.message = failed.message
             flash.segmentResult = failed.problem
             redirect action: 'createRunResult'
         }
-        catch (RaceResultException failed) {
+        catch(RaceResultException failed) {
             flash.message = failed.message
             flash.raceResult = failed.problem
             redirect action: 'createRunResult'
@@ -126,23 +126,40 @@ class DashboardController extends BaseController {
 
         def raceResult = new RaceResult(params)
 
-        if (raceResult.duration == Duration.standardSeconds(0)){
-            raceResult.errors.rejectValue('duration','raceResult.duration.greater.than.zero')
+        if(raceResult.duration == Duration.standardSeconds(0)) {
+            raceResult.errors.rejectValue('duration', 'raceResult.duration.greater.than.zero')
         }
 
         def segmentCount = params?.int('segmentCount') ?: 0
+
         (0..<segmentCount).each {
             String key = "segmentResult[$it]".toString()
             Map segment = params.get(key) as Map
-            if (segment) {
+            if(segment) {
                 def segmentSegmentResults = new SegmentResult(segment)
-                if (segmentSegmentResults.duration == Duration.standardSeconds(0)){
-                    segmentSegmentResults.errors.rejectValue('duration','raceResult.duration.greater.than.zero')
+                if(segmentCount == 1) {
+                    mapSegmentResultToRace(raceResult, segmentSegmentResults)
+                }
+                if(segmentSegmentResults.duration == Duration.standardSeconds(0)) {
+                    segmentSegmentResults.errors.rejectValue('duration', 'raceResult.duration.greater.than.zero')
                 }
                 raceResult.addToSegmentResults(segmentSegmentResults)
             }
         }
+
         raceResult
+    }
+
+    /**
+     * When only one segment result exists just map it to the race result since ui will be hidden
+     * @param raceResult
+     * @param segmentResult
+     */
+    private void mapSegmentResultToRace(RaceResult raceResult, SegmentResult segmentResult) {
+        segmentResult.duration = raceResult.duration
+        segmentResult.placeOverall = raceResult.placeOverall
+        segmentResult.placeAgeGroup = raceResult.placeAgeGroup
+        segmentResult.placeGender = raceResult.placeGender
     }
 
     def deleteRaceResult() {
@@ -150,7 +167,7 @@ class DashboardController extends BaseController {
         try {
             raceResultService.deleteRaceResult(params?.int('raceResultId') ?: 0, user);
             redirect action: 'index'
-        } catch (RaceResultException failed) {
+        } catch(RaceResultException failed) {
             flash.message = failed.message
             flash.raceResult = failed.problem
             redirect action: 'index'

@@ -55,7 +55,7 @@ class BootStrap {
 
         def race2 = new Race(name: 'Rice Street Mile', date: new Date(112, 6, 26),
                              raceType: RaceType.Running, distanceType: DistanceType.Miles,
-                             distance: 1, raceCategoryType: RaceCategoryType.OneMile).save()
+                             distance: 1, raceCategoryType: RaceCategoryType.OneMile, statusType: StatusType.Approved).save()
         def oneMileRunSegment = new RaceSegment(race: race2, segment: oneMileRun).save()
 
         def rsmResults = new SegmentResult(raceSegment: oneMileRunSegment, duration: Duration.standardSeconds((60 * 5) + 28))
@@ -65,7 +65,7 @@ class BootStrap {
 
         def race3 = new Race(name: 'TC 1 Mile', date: new Date(112, 5, 17), raceType: RaceType.Running,
                              distanceType: DistanceType.Miles, distance: 1,
-                             raceCategoryType: RaceCategoryType.OneMile).save()
+                             raceCategoryType: RaceCategoryType.OneMile, statusType: StatusType.Approved).save()
         def oneMileRunSegment2 = new RaceSegment(race: race3, segment: oneMileRun).save()
 
         def tcmResults = new SegmentResult(raceSegment: oneMileRunSegment2, duration: Duration.standardSeconds((60 * 5) + 31))
@@ -75,7 +75,7 @@ class BootStrap {
 
         def torchlight = new Race(name: 'Torchlight 5k', date: new Date(112, 5, 12), raceType: RaceType.Running,
                              distanceType: DistanceType.Kilometers, distance: 5,
-                             raceCategoryType: RaceCategoryType.FiveKilometer).save()
+                             raceCategoryType: RaceCategoryType.FiveKilometer, statusType: StatusType.Approved).save()
         def torchlightSegment = new RaceSegment(race: torchlight, segment: fiveKilometerRun).save()
     }
 
