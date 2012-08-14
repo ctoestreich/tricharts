@@ -86,8 +86,6 @@ class SegmentResult {
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
 
-        println swimPace.toPeriod()
-
         String display = formatter.print(swimPace.toPeriod())
         [display, paceDuration]
     }

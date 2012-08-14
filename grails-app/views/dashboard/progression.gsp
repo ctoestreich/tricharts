@@ -38,12 +38,12 @@
     jQuery.ajax({
                   type:'POST',
                   <g:if test="${params?.raceType == 'Run'}">
-                  url:'${createLink(controller: 'visualization', action:'runningProgression')}',
+                  url:'${createLink(controller: 'visualization', action:'runningProgression', params:['user.id',params?.user?.id])}',
                   </g:if>
                   <g:elseif test="${params?.raceType == 'Triathlon'}">
-                  url:'${createLink(controller: 'visualization', action:'triathlonProgression')}',
+                  url:'${createLink(controller: 'visualization', action:'triathlonProgression', params:['user.id',params?.user?.id])}',
                   </g:elseif>
-                  data:{ raceCategoryType:'${race.raceCategoryType}', div:'${race.raceCategoryType.replace(" ", "_")}Div'},
+                  data:{ 'user.id': '${params?.user?.id}', raceCategoryType:'${race.raceCategoryType}', div:'${race.raceCategoryType.replace(" ", "_")}Div'},
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#${race.raceCategoryType.replace(" ", "_")}').html(data);

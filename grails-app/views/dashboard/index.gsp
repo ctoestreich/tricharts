@@ -43,9 +43,10 @@
   </div>
   %{--</div>--}%
 </div>
-<hr>
 
-<div class="row">
+<BR />
+
+<div class="row well_clear">
   %{--<div class="span12">--}%
   <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
 
