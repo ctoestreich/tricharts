@@ -32,6 +32,7 @@ class BootStrap {
         findOrSaveSegment(4, DistanceType.Miles, SegmentType.Swim)
         findOrSaveSegment(5, DistanceType.Miles, SegmentType.Swim)
 
+        findOrSaveSegment(11, DistanceType.Miles, SegmentType.Bike)
         findOrSaveSegment(13, DistanceType.Miles, SegmentType.Bike)
         findOrSaveSegment(13.5f, DistanceType.Miles, SegmentType.Bike)
         findOrSaveSegment(15, DistanceType.Miles, SegmentType.Bike)
