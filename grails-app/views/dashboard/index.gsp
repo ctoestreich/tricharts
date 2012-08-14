@@ -2,81 +2,61 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="bootstrap"/>
-    <title>User Dashboard</title>
-    <r:require module="results" />
-    <gvisualization:apiImport/>
+  <meta name="layout" content="bootstrap"/>
+  <title>User Dashboard</title>
+  <r:require modules="dashboard,results"/>
+  <gvisualization:apiImport/>
 </head>
 
 <body>
 
 <div class="page-header">
-    <h1>Results For ${user.firstName} <small>results at a glance</small></h1>
+  <h1>Results For ${user.firstName} <small>results at a glance</small></h1>
 </div>
 
-<sec:ifAnyGranted roles="ROLE_ADMIN">
-    <div class="row">
-        <button class="close" data-dismiss="alert">×</button>
-        <g:select name="user.id" from="${User.list().sort()}" id="user.id" value="${user?.id}"/>
-    </div>
-</sec:ifAnyGranted>
-<script>
-    var app = {
-        runCharts:function () {
-            if ($("#runDashboardCharts").is(":visible")) {
-                $("#runDashboardCharts").hide();
-            } else {
-                $("#runDashboardCharts").show();
-                if (!app.runChartsLoaded) {
-                ${remoteFunction(controller: 'visualization', action: 'mileChart', update: 'mileChart')}
-                ${remoteFunction(controller: 'visualization', action: 'fiveKilometerChart', update: 'fiveKilometerChart')}
-                ${remoteFunction(controller: 'visualization', action: 'marathonChart', update: 'marathonChart')}
-                }
-                app.runChartsLoaded = true;
-            }
-        },
-        initialize:function () {
-                 this.loadRunRecords();
-        },
-        loadRunRecords:function () {
-            ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords')}
-            ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords')}
-        }
-    };
 
-    $(function () {
-        app.initialize();
-    });
+<g:render template="/templates/admin/userSelect" />
+
+<script type="text/javascript">
+  app.loadRunRecords = function () {
+    ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords', params: ['user.id': params?.user?.id])}
+    ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords', params: ['user.id': params?.user?.id])}
+  };
+
+  $(function(){
+    app.loadRunRecords();
+  });
+
 </script>
 
 <div class="row well_clear">
-    %{--<div class="span12">--}%
-    <g:render template="/templates/dashboardHeader" model="[sport: 'Run']"/>
+  %{--<div class="span12">--}%
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Run']"/>
 
-    <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
+  <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
-    <BR>
+  <BR>
 
-    <div id="results-run" class="accordion">
-        <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}"
-                  var="result"/>
-    </div>
-    %{--</div>--}%
+  <div id="results-run" class="accordion">
+    <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}"
+              var="result"/>
+  </div>
+  %{--</div>--}%
 </div>
 <hr>
 
 <div class="row">
-    %{--<div class="span12">--}%
-    <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+  %{--<div class="span12">--}%
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
 
-    <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
+  <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
-    <BR>
+  <BR>
 
-    <div id="results-triathlon" class="accordion">
-        <g:render template="/templates/triathlonResults"
-                  collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </div>
+  <div id="results-triathlon" class="accordion">
+    <g:render template="/templates/triathlonResults"
+              collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+  </div>
 </div>
 
 
@@ -104,13 +84,16 @@
 %{--</div>--}%
 
 <div class="modal hide" id="deleteConfirmation">
-    <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Delete Results</h3></div>
-    <div class="modal-body"><p>Are you really sure you want to delete your results for this race?</p></div>
-    <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
+  <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+
+    <h3>Delete Results</h3></div>
+
+  <div class="modal-body"><p>Are you really sure you want to delete your results for this race?</p></div>
+
+  <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
 </div>
 
-<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult"><g:hiddenField name="raceResultId" value="" /></g:form>
+<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult"><g:hiddenField name="raceResultId" value=""/></g:form>
 
 </body>
 </html>

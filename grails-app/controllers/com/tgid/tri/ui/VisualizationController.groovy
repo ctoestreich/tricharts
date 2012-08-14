@@ -17,13 +17,12 @@ class VisualizationController extends BaseController {
         def queryRaceCategoryType = RaceCategoryType.getRaceCategoryType(params?.raceCategoryType)
         def queryRaceType = RaceType.getRaceType(params?.raceType)
 
-        if(!queryRaceCategoryType || !queryRaceType){
-            println 'invalid params'
+        if(!queryRaceCategoryType || !queryRaceType) {
             log.error('missing params')
             return;
         }
 
-        renderProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+        renderRunProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
     def runningProgression() {
@@ -33,10 +32,20 @@ class VisualizationController extends BaseController {
         def queryRaceCategoryType = RaceCategoryType.getRaceCategoryType(params?.raceCategoryType ?: RaceCategoryType.OneMile.raceCategoryType)
         def queryRaceType = RaceType.Running
 
-        renderProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+        renderRunProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
-    private void renderProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
+    def triathlonProgression() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceCategoryType = RaceCategoryType.getRaceCategoryType(params?.raceCategoryType ?: RaceCategoryType.Sprint.raceCategoryType)
+        def queryRaceType = RaceType.Triathlon
+
+        renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    private void renderRunProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
 
         def results = RaceResult.where {
             user.id == userId
@@ -56,28 +65,81 @@ class VisualizationController extends BaseController {
             }
         }
 
-        println data.each {
-            println it?.value
-        }
-
         render template: "/templates/charts/runProgression",
                model: [height: 200, width: 200, data: data, id: resultDiv, type: queryRaceCategoryType]
     }
 
+    private void renderTriathlonProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
+
+        def segmentData = new HashMap<SegmentType, HashMap<Integer, StringBuilder>>()
+        segmentData.put(SegmentType.Swim, [:])
+        segmentData.put(SegmentType.Bike, [:])
+        segmentData.put(SegmentType.Run, [:])
+
+        segmentData.each { segmentType, data ->
+            def c = SegmentResult.createCriteria()
+            def results = c.list {
+                raceResult {
+                    user {
+                        eq('id', userId)
+                    }
+                    race {
+                        eq('raceType', queryRaceType)
+                        eq('raceCategoryType', queryRaceCategoryType)
+                    }
+                }
+                raceSegment {
+                    segment {
+                        eq('segmentType', segmentType)
+                    }
+                }
+            }
+
+            def sortedResults = results.sort {a, b -> a.date <=> b.date}
+            sortedResults.each { result ->
+                def key = result.date.year + 1900
+
+                if(data.containsKey(key)) {
+                    data.get(key).append(",${getTriathlonGraphData(result, segmentType)}")
+                } else {
+                    data.put(key, getTriathlonGraphData(result, segmentType))
+                }
+            }
+        }
+
+        render template: "/templates/charts/triathlonProgression",
+               model: [height: 200, width: 200, data: segmentData, id: resultDiv, type: queryRaceCategoryType]
+    }
+
+    private StringBuilder getTriathlonGraphData(SegmentResult result, SegmentType segmentType) {
+        def x, y, name
+        def period = result.duration.toPeriod()
+
+        x = "Date.UTC(${result.date.format('1970, M-1, dd')})"
+        y = (segmentType == SegmentType.Bike) ? result.pace : getSwimRunPaceGraph(result)
+        name = "${result.raceResult.race.name} ${result.raceResult.race.date.format("M-dd-yyyy")}"
+
+        new StringBuilder("{x: ${x}, y:${y}, name:'${name}'}")
+    }
+
+    private GString getSwimRunPaceGraph(SegmentResult result) {
+        "Date.parse('1-1-1 00:${result.pace}')-timeToSubtract"
+    }
+
     def triathlonRecords() {
         User user = requestedUser
-        def userId = user.id
+        def userId = user?.id
         def data = [:]
 
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Sprint, RaceType.Triathlon))
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Sprint, RaceType.Triathlon))
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Sprint, RaceType.Triathlon))
+        if(userId) {
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Sprint, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Sprint, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Sprint, RaceType.Triathlon))
 
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Olympic, RaceType.Triathlon))
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Olympic, RaceType.Triathlon))
-        data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Olympic, RaceType.Triathlon))
-
-        println data
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Olympic, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Olympic, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Olympic, RaceType.Triathlon))
+        }
 
         render template: "triathlonRecord", model: [data: data]
     }
@@ -109,7 +171,14 @@ class VisualizationController extends BaseController {
 //            raceSegment.segment.segmentType == segmentType
 //        }
 
-        def pr = results?.sort {a, b -> a.duration <=> b.duration}?.getAt(0)
+        def pr
+
+        if(segmentType == SegmentType.Bike) {
+            pr = results?.sort {a, b -> b.pace.speed <=> a.pace.speed}?.getAt(0)
+        } else {
+            pr = results?.sort {a, b -> a.pace.duration <=> b.pace.duration}?.getAt(0)
+        }
+
         ["'${raceCategoryType}_${segmentType}'": pr]
     }
 
@@ -123,8 +192,6 @@ class VisualizationController extends BaseController {
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenKilometer, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
-
-        println data
 
         render template: "runningRecord", model: [data: data]
     }

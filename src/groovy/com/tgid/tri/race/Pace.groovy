@@ -4,7 +4,7 @@ import org.joda.time.Duration
 
 /**
  */
-class Pace  implements Serializable {
+class Pace implements Serializable {
     Duration duration
     String display = ''
     BigDecimal speed

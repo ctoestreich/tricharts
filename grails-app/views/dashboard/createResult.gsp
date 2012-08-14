@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require module="results"/>
+  <r:require modules="dashboard, results"/>
   <title>User Dashboard</title>
 </head>
 

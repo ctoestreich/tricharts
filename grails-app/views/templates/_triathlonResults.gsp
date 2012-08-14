@@ -95,6 +95,10 @@
       </tbody>
     </table>
 
+    <div class="row-fluid">
+      <a href="${result?.race?.resultsUrl}" target="_blank">${result?.race?.resultsUrl}</a>
+    </div>
+
       <g:render template="/templates/deleteRaceDashboard" model="[result: result]" />
   </div>
 </div>

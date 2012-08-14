@@ -50,6 +50,8 @@ grails.project.dependency.resolution = {
         runtime ":cache-headers:1.1.5"
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
+        runtime ":gsp-resources:0.4.1"
+
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
         compile ":google-visualization:0.5.3"

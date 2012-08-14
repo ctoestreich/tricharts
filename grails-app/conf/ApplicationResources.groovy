@@ -1,3 +1,5 @@
+import com.tgid.tri.ui.DashboardController
+
 modules = {
     application {
         dependsOn 'backbone', 'handlebars', 'underscore'
@@ -38,5 +40,10 @@ modules = {
     progression {
         dependsOn 'highcharts'
         resource url:'js/highcharts/highchart.theme.js'
+    }
+
+    dashboard {
+        dependsOn 'jquery'
+        resource url:'js/dashboard/dashboard.js', disposition: 'head'
     }
 }

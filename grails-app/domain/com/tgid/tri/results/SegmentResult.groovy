@@ -29,7 +29,7 @@ class SegmentResult {
         raceResult nullable: false
     }
 
-    static transients = ['segmentOrder', 'pace']
+    static transients = ['segmentOrder', 'pace', 'date', 'segmentType']
 
     @Override
     String toString() {
@@ -40,10 +40,18 @@ class SegmentResult {
         raceSegment.segmentOrder
     }
 
+    transient Date getDate() {
+        raceResult.date
+    }
+
+    transient SegmentType getSegmentType() {
+        raceSegment.segmentType
+    }
+
     transient Pace getPace() {
         def display = null, paceDuration = null, paceSpeed = null
 
-        switch (raceSegment?.segmentType) {
+        switch(raceSegment?.segmentType) {
             case SegmentType.Bike:
                 (display, paceSpeed) = calcBikePacing()
                 break
@@ -60,8 +68,8 @@ class SegmentResult {
     }
 
     private List calcBikePacing() {
-        if(!duration || duration == Duration.standardSeconds(0)){
-            return ['','']
+        if(!duration || duration == Duration.standardSeconds(0)) {
+            return ['', '']
         }
         def distance = raceSegment.distance * runAndBikeMultiplier(raceSegment)
         def paceSpeed = new BigDecimal(distance / (((duration.millis / 1000) / 60) / 60)).setScale(2, RoundingMode.HALF_UP)
@@ -70,23 +78,26 @@ class SegmentResult {
     }
 
     private List calcSwimPacing() {
-        if(!duration || duration == Duration.standardSeconds(0)){
-            return ['','']
+        if(!duration || duration == Duration.standardSeconds(0)) {
+            return ['', '']
         }
         def distance = raceSegment.distance * swimMultiplier(raceSegment)
-        def swimPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
+        Duration swimPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
-        def display = formatter.print(swimPace.toPeriod())
+
+        println swimPace.toPeriod()
+
+        String display = formatter.print(swimPace.toPeriod())
         [display, paceDuration]
     }
 
     private List calcRunPacing() {
-        if(!duration || duration == Duration.standardSeconds(0)){
-            return ['','']
+        if(!duration || duration == Duration.standardSeconds(0)) {
+            return ['', '']
         }
         def distance = raceSegment.distance / runAndBikeMultiplier(raceSegment)
-        def runPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
+        Duration runPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = runPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
         def display = formatter.print(runPace.toPeriod())
@@ -94,7 +105,7 @@ class SegmentResult {
     }
 
     private runAndBikeMultiplier(RaceSegment segment) {
-        switch (segment.distanceType) {
+        switch(segment.distanceType) {
             case DistanceType.Kilometers:
                 return 1.60934
             default:
@@ -103,7 +114,7 @@ class SegmentResult {
     }
 
     private swimMultiplier(RaceSegment segment) {
-        switch (segment.distanceType) {
+        switch(segment.distanceType) {
             case DistanceType.Meters:
                 return 0.0109361
             case DistanceType.Miles:

@@ -1,7 +1,6 @@
 <div id="${id}"></div>
-<br/>
-
-
+%{--Maybe do records here?--}%
+%{--<div id="${id}Records" class="span3"></div>--}%
 
 <script>
   var chart;
@@ -9,12 +8,17 @@
     $(function(){
   chart = new Highcharts.Chart({
                                  plotOptions:{
+                                   series: {
+                                     animation: {
+                                       duration: 1500
+                                     }
+                                   },
                                    column:{
                                      stacking:'normal',
                                      dataLabels:{
                                        enabled:true,
                                        formatter:function () {
-                                         return '' + Highcharts.dateFormat('%H:%M:%S', this.y);
+                                         return '' + Highcharts.dateFormat('%M:%S', this.y);
                                        }
                                      }
                                    }

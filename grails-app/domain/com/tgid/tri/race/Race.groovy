@@ -8,11 +8,13 @@ class Race {
     DistanceType distanceType
     RaceCategoryType raceCategoryType
     Float distance = 0.00
+    String resultsUrl
     StatusType statusType = StatusType.Pending
 
     static hasMany = [segments: RaceSegment]
 
     static constraints = {
+        resultsUrl nullable: true, url: true
         name nullable: false
         date nullable: false
         raceType nullable: false, blank: false

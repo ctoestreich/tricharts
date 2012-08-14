@@ -5,6 +5,7 @@ import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
+import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.StatusType
 import com.tgid.tri.results.RaceResult
@@ -18,9 +19,7 @@ class DashboardController extends BaseController {
     def raceResultService
 
     def index() {
-
         User user = requestedUser
-
         def userId = user.id
 
         def results = RaceResult.where {
@@ -42,16 +41,27 @@ class DashboardController extends BaseController {
 
     def progression() {
         User user = requestedUser
-        def userId = user.id
 
-        render view: 'progression', model: [raceResult: new RaceResult(), user: user]
+        def races = getRaceCategoriesByType(params?.raceType)
+
+        render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
+    }
+
+    private List getRaceCategoriesByType(String raceType) {
+        if(raceType == 'Run')
+            return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
+
+        if(raceType == 'Triathlon')
+            return [RaceCategoryType.Sprint, RaceCategoryType.Olympic, RaceCategoryType.HalfIronman, RaceCategoryType.Ironman]
+
+        return []
     }
 
     def createResult() {
         User user = requestedUser
         def userId = user.id
         List<Race> races
-        switch(params?.type) {
+        switch(params?.raceType) {
             case 'Run':
                 races = findRacesWithNoResults(userId, RaceType.Running)
                 break
