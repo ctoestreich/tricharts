@@ -4,14 +4,11 @@ import com.tgid.tri.BaseController
 import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
-import com.tgid.tri.race.Race
-import com.tgid.tri.race.RaceCategoryType
-import com.tgid.tri.race.RaceType
-import com.tgid.tri.race.StatusType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
+import com.tgid.tri.race.*
 
 @Secured(["ROLE_USER"])
 class DashboardController extends BaseController {
@@ -48,6 +45,28 @@ class DashboardController extends BaseController {
         render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
     }
 
+    def addSegments() {
+        switch(request.method) {
+            case 'POST':
+                println params?.raceId
+                def raceInstance = Race.get(params?.raceId)
+
+                params?.segments?.toString()?.split(',')?.each {
+                    println it
+                    raceInstance.addToSegments(new RaceSegment(segment: Segment.get(it)))
+                }
+
+                if(!raceInstance.save(flush: true)) {
+                    render view: 'addSegments', model: [raceInstance: raceInstance]
+                    return
+                }
+
+                flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
+                redirect action: 'index', id: raceInstance.id
+                break
+        }
+    }
+
     def addRace() {
         switch(request.method) {
             case 'GET':
@@ -56,9 +75,9 @@ class DashboardController extends BaseController {
             case 'POST':
                 def raceInstance = new Race(params)
 
-               if(raceInstance.raceType == RaceType.Running){
+                if(raceInstance.raceType == RaceType.Running) {
                     raceService.createRunSegments(raceInstance)
-                } else if(raceInstance.raceType == RaceType.Biking){
+                } else if(raceInstance.raceType == RaceType.Biking) {
                     raceService.createBikeSegments(raceInstance)
                 }
 
@@ -69,10 +88,10 @@ class DashboardController extends BaseController {
 
                 flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
                 if(raceInstance.raceType == RaceType.Triathlon) {
-                    redirect action: 'addSegments', id: raceInstance.id
+                    render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance]
                     break
                 } else {
-                    redirect action: 'index', id:  raceInstance.id
+                    redirect action: 'index', id: raceInstance.id
                     break
                 }
         }
