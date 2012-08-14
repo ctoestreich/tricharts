@@ -234,5 +234,17 @@ class DashboardController extends BaseController {
         }
     }
 
-    def races() {}
+    def races() {
+        User user = requestedUser
+        def userId = user.id
+        def races = RaceResult.where {
+            user.id == userId
+        }
+
+        render view: 'races', model: [races: races, user: user]
+    }
+
+    def racesBackbone() {
+        render view: 'racesBackbone', model: [race: new Race()]
+    }
 }

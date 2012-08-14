@@ -67,6 +67,7 @@ class BootStrap {
         //tris
         createStCroixValley()
         createManitou2011()
+        createMinneman2011()
         createManitou2012()
         createGraniteman()
     }
@@ -147,15 +148,11 @@ class BootStrap {
 
     /**
      * Year	Name	Race Name	Date	AG#	Ovr#	Time	Swim Dist	Swim Time	Swim Pace	T1	Bike Dist	Bike Time	Bike Pace	T2	Run Dist	Run Time	Run Pace	Results
-     2010
-     d AG	Mitch	St Croix Valley	9/4/2010	7	13	1:09:19	0.33	0:11:02	0:01:55	0:57.0	10	0:29:15	21.2	0:00:57	4	0:28:10	0:07:03	http://www.onlineraceresults.com/race/view_plain_text.php?race_id=15976
-     d AG	Christian	St Croix Valley	9/4/2010	9	19	1:11:00	0.33	0:08:56	0:01:33	1:15.0	10	0:30:24	19.7	0:01:13	4	0:29:19	0:07:19	http://www.onlineraceresults.com/race/view_plain_text.php?race_id=15976
-     2011
-     AG	Christian	Manitou	6/12/2011	2	20	1:14:08	0.5	0:14:14	0:01:37	2:11.0	13.5	0:36:23	22.3	0:00:53	3.1	0:20:30	0:06:37	http://www.pigmantri.com/jmsracing/results11/man11b.html
-
-     AG	Mitch	Manitou	6/12/2011	7	70	1:22:04	0.5	0:18:40	0:02:08	2:18.0	13.5	0:37:08	21.8	0:00:53	3.1	0:23:07	0:07:28	http://www.pigmantri.com/jmsracing/results11/man11b.html
 
      AG	Christian	Minneman	7/2/2011	4	24	1:05:46	0.3	0:07:14	0:01:23	1:56.0	13	0:34:56	22.3	0:01:05	3	0:20:37	0:06:55	http://www.pigmantri.com/jmsracing/results11/mnman11b.html
+
+
+
      AG	Christian	Minneapolis	7/9/2011	3	10	1:13:27	0.4	0:10:29	0:01:28	1:28.7	15	0:40:01	22.5	0:01:18	3	0:20:10	0:06:43	http://www.peaktiming.com/2011ltf/categoryresults.asp?EventId=3&DivId=16&CatId=4
      AG	Christian	Twin Cities	7/24/2011	1	4	1:06:26	0.3	0:04:03	0:00:42	1:01.0	13.74	0:39:10	21	0:00:49	3.1	0:21:26	0:06:55	http://www.pigmantri.com/jmsracing/results11/twinctri11d.html
      AG	Christian	Maple Grove	8/27/2011	1	7	1:10:26	0.3	0:09:03	0:01:43	1:12.0	14	0:38:41	21.4	0:00:48	3.1	0:20:43	0:06:40	http://www.mtecresults.com/runner/show?rid=318&race=465
@@ -165,6 +162,28 @@ class BootStrap {
      E	Christian	Minneman	6/30/2012	4	15	1:10:36	0.5	0:11:32	0:01:19	1:43.0	13.3	0:35:24	22.5	0:01:01	3.1	0:20:58	0:06:46	http://www.pigmantri.com/jmsracing/results12/mnman12d.html
      AG	Christian	Graniteman	7/14/2012	3	12	1:13:17	0.5	0:11:33	0:01:26	0:23.0	15	0:40:15	22.4	0:00:52	3.1	0:20:17	0:06:33	http://live.mtecresults.com/race/show/942
      */
+    private createMinneman2011() {
+        def race = new Race(name: 'Minneman', date: new Date(111, 6, 2), raceType: RaceType.Triathlon,
+                            distanceType: DistanceType.Miles,
+                            distance:  17.24,
+                            raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
+                            resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/mnman11b.html').save()
+
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(0.3f, DistanceType.Miles, SegmentType.Swim))
+        def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
+        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(13f, DistanceType.Miles, SegmentType.Bike))
+        def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()
+        def fiveKilometerRun = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(3, DistanceType.Miles, SegmentType.Run))
+
+        def christian = User.findByUsername('acetrike@yahoo.com')
+
+        createTriathlon(race, christian, swimRaceSegment, t1Segment, fifteenMileBikeSegment, t2Segment, fiveKilometerRun,
+                        65 * 60 + 46, 7 * 60 + 14, 116, 34 * 60 + 56, 65, 20 * 60 + 37,
+                        18, 2, 32, 8, 32, 5,
+                        24, 4,
+                        342, 175, 16)
+    }
+
     private void createManitou2011() {
         def race = new Race(name: 'Manitou', date: new Date(111, 5, 12), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
