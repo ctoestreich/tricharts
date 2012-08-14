@@ -55,6 +55,7 @@ class BootStrap {
     private void createGraniteman() {
         def race = new Race(name: 'Graniteman Triathlon', date: new Date(112, 6, 17), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
+                            distance:  17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://live.mtecresults.com/race/show/942').save()
 
@@ -148,6 +149,7 @@ class BootStrap {
     private void createManitou2011() {
         def race = new Race(name: 'Manitou', date: new Date(111, 5, 12), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
+                            distance:  17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/man11b.html').save()
 
@@ -176,6 +178,7 @@ class BootStrap {
     private createManitou2012() {
         def race = new Race(name: 'Manitou', date: new Date(112, 5, 10), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
+                            distance:  17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results12/man12b.html').save()
 
@@ -197,6 +200,7 @@ class BootStrap {
     private void createStCroixValley() {
         def race = new Race(name: 'St Croix Valley', date: new Date(110, 8, 4), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
+                            distance:  17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.onlineraceresults.com/race/view_plain_text.php?race_id=15976').save()
 

@@ -17,6 +17,7 @@ import org.joda.time.Duration
 class DashboardController extends BaseController {
 
     def raceResultService
+    def raceService
 
     def index() {
         User user = requestedUser
@@ -45,6 +46,36 @@ class DashboardController extends BaseController {
         def races = getRaceCategoriesByType(params?.raceType)
 
         render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
+    }
+
+    def addRace() {
+        switch(request.method) {
+            case 'GET':
+                [raceInstance: new Race(params)]
+                break
+            case 'POST':
+                def raceInstance = new Race(params)
+
+               if(raceInstance.raceType == RaceType.Running){
+                    raceService.createRunSegments(raceInstance)
+                } else if(raceInstance.raceType == RaceType.Biking){
+                    raceService.createBikeSegments(raceInstance)
+                }
+
+                if(!raceInstance.save(flush: true)) {
+                    render view: 'addRace', model: [raceInstance: raceInstance]
+                    return
+                }
+
+                flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
+                if(raceInstance.raceType == RaceType.Triathlon) {
+                    redirect action: 'addSegments', id: raceInstance.id
+                    break
+                } else {
+                    redirect action: 'index', id:  raceInstance.id
+                    break
+                }
+        }
     }
 
     private List getRaceCategoriesByType(String raceType) {

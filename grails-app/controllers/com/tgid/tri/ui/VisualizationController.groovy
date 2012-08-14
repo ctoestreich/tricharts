@@ -7,7 +7,9 @@ import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.SegmentType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
+import grails.plugins.springsecurity.Secured
 
+@Secured(["ROLE_USER"])
 class VisualizationController extends BaseController {
 
     def sportProgression() {

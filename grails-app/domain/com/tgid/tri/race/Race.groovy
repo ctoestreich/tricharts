@@ -14,13 +14,13 @@ class Race {
     static hasMany = [segments: RaceSegment]
 
     static constraints = {
-        resultsUrl nullable: true, url: true
-        name nullable: false
+        resultsUrl nullable: true, url: true, blank: true
+        name nullable: false, blank: false
         date nullable: false
-        raceType nullable: false, blank: false
-        distanceType nullable: true
-        distance nullable: true
-        raceCategoryType nullable: true
+        raceType nullable: false
+        distanceType nullable: false
+        distance nullable: false, min: 0.01F
+        raceCategoryType nullable: false
         statusType nullable: false
     }
 

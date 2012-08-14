@@ -1,7 +1,9 @@
 package com.tgid.tri.race
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
 
+@Secured(["ROLE_ADMIN"])
 class SegmentController {
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']

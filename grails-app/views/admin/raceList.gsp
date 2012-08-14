@@ -86,7 +86,7 @@
                             <g:if test="${raceInstance.statusType != com.tgid.tri.race.StatusType.Approved}">
                             <g:link controller="admin" action="updateRaceStatus"
                                     params="[statusType: statusType, 'raceId': raceInstance.id, 'newStatus': StatusType.Approved]"
-                                    class="btn btn-small btn-primary"><i class="icon-ok"></i>&nbsp;Approve</g:link>
+                                    class="btn btn-small btn-info"><i class="icon-ok"></i>&nbsp;Approve</g:link>
                             </g:if>
                           <g:if test="${raceInstance.statusType != com.tgid.tri.race.StatusType.Pending}">
                             <g:link controller="admin" action="updateRaceStatus"

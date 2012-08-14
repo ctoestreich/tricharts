@@ -14,6 +14,9 @@
   <h1>Results For ${user.firstName} <small>results at a glance</small></h1>
 </div>
 
+<g:if test="${flash.message}">
+  <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+</g:if>
 
 <g:render template="/templates/admin/userSelect" />
 

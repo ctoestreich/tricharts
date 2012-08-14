@@ -53,7 +53,17 @@
 					<g:form class="form-horizontal" action="edit" id="${raceInstance?.id}" >
 						<g:hiddenField name="version" value="${raceInstance?.version}" />
 						<fieldset>
-							<f:all bean="raceInstance"/>
+                          <f:with bean="raceInstance">
+                            <f:field property="resultsUrl" />
+                            <f:field property="name" />
+                            <f:field property="date" />
+                            <f:field property="raceType" />
+                            <f:field property="distanceType" />
+                            <f:field property="distance" input-step="any" input-min="0" />
+                            <f:field property="raceCategoryType"  />
+                            <f:field property="statusType"  />
+                            <f:field property="segments"  />
+                          </f:with>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

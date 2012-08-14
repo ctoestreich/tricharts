@@ -12,6 +12,10 @@ class Segment {
         distance scale: 2, nullable: false
     }
 
+    static mapping = {
+        sort 'segmentType'
+    }
+
     static transients = ['segmentOrder']
 
     Integer getSegmentOrder() {
