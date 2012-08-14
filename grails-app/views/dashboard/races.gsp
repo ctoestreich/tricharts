@@ -1,124 +1,44 @@
+<%@ page import="com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>User Dashboard</title>
-  <r:require module="raceMvc"/>
+  <r:require modules="dashboard,results"/>
+  <gvisualization:apiImport/>
 </head>
 
 <body>
-<div class="row-fluid" id="races-view">
-  <div class="well">
-    <div class="btn-group-wrap">
-      <div class="btn-group">
-        <a class="btn" href="#" id="refresh-races"><i class="icon-search"></i> Refresh Races</a>
-        <a class="btn" href="#" id="add-race"><i class="icon-tag"></i> Create Race</a>
-      </div>
-    </div>
-  </div>
+
+<div class="page-header">
+  <h1>Results For ${user.firstName} <small>results at a glance</small></h1>
 </div>
 
-<div class="row-fluid" style="display: none;" id="createRaceDiv">
-
-  <form id="createRaceForm" class="form-horizontal well">
-    <fieldset>
-      <legend>New Race</legend>
-      <f:with bean="race">
-        <f:field property="name"/>
-        <f:field property="date"/>
-      </f:with>
-      <div class="control-group">
-        <button class="btn" id="save-race">Save</button>
-      </div>
-    </fieldset>
-  </form>
-</div>
-
-<table class="table table-bordered">
-  <thead>
-  %{--<th>ID</th>--}%
-  <th>Name</th>
-  <th>Date</th>
-  <th>Race Type</th>
-  <th>Admin</th>
-  </thead>
-  <tbody id="races">
-
-  </tbody>
-
+<table width="100%" border="0" cellpadding="3" cellspacing="0" style="background-color:#fff;" class="table table-striped">
+  <tbody>
+  <tr>
+    <th class="clsResultBL"></th>
+    <th class="clsResultBL">Name</th>
+    <th class="clsResultBL">Date</th>
+    <th class="clsResultBL">Plc A</th>
+    <th class="clsResultBL">Plc G</th>
+    <th class="clsResultBL">Plc O</th>
+    <th class="clsResultBL">Pace</th>
+    <th class="clsResultBL">Time</th>
+  </tr>
+  <g:each in="${races.list().sort{a,b -> a.date <=> b.date}}" var="result">
+    <tr>
+      <td class="${result.race.raceType.raceType}">${result.race.raceType.raceType.substring(0,1)}</td>
+      <td class="">${result.race.name}</td>
+      <td class="">${result.race.date}</td>
+      <td class="">${result.placeAgeGroup}</td>
+      <td class="">${result.placeGender}</td>
+      <td class="">${result.placeOverall}</td>
+      <td class="">${result?.segmentResults?.size() == 1 ? result.segmentResults.toArray()[0].pace : ''}</td>
+      <td class=""><tri:formatDuration duration="${result?.duration}" /></td>
+    </tr>
+  </g:each>
 </table>
 
-
-<script id="race-list-template" type="text/x-handlebars-template">
-  <tr>
-    %{--<td>{{id}}</td>--}%
-    <td>{{name}}</td>
-    <td>{{date}}</td>
-    <td>{{raceType.name}} {{raceCategoryType.name}}</td>
-    <td>
-      <div class="btn-group">
-        <button class="btn btn-info">Action</button>
-        <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#">Edit</a></li>
-          <li class="divider"></li>
-          <li><a href="#" class='delete-race' data-id="{{id}}">Delete</a></li>
-        </ul>
-      </div></td>
-  </tr>
-</script>
-
-<script id="race-create-template" type="text/x-handlebars-template">
-
-</script>
-
-<script language="JavaScript">
-  var app = {
-    initialize:function () {
-      this.createDialogs();
-    },
-    createDialogs:function () {
-      $(".dialog").modal({
-                           show:false
-                         });
-    }
-  };
-
-  $(function () {
-    app.initialize();
-    app.raceList = new RaceList();
-    app.raceView = new RaceView({model:app.raceList});
-  });
-
-  function clearForm(oForm) {
-    var elements = oForm.elements;
-    oForm.reset();
-    for(i=0; i<elements.length; i++) {
-      field_type = elements[i].type.toLowerCase();
-      switch(field_type) {
-        case "text":
-        case "password":
-        case "textarea":
-        case "hidden":
-          elements[i].value = "";
-          break;
-        case "radio":
-        case "checkbox":
-          if (elements[i].checked) {
-            elements[i].checked = false;
-          }
-          break;
-        case "select-one":
-        case "select-multi":
-          elements[i].selectedIndex = -1;
-          break;
-        default:
-          break;
-      }
-    }
-  }
-</script>
 </body>
 </html>
