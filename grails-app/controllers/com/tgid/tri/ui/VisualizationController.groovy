@@ -21,7 +21,7 @@ class VisualizationController extends BaseController {
 
         if(!queryRaceCategoryType || !queryRaceType) {
             log.error('missing params')
-            return;
+            return
         }
 
         renderRunProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
@@ -45,6 +45,74 @@ class VisualizationController extends BaseController {
         def queryRaceType = RaceType.Triathlon
 
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    def triathlonRecords() {
+        User user = requestedUser
+        def userId = user?.id
+        def data = [:]
+
+        if(userId) {
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Sprint, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Sprint, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Sprint, RaceType.Triathlon))
+
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Olympic, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Olympic, RaceType.Triathlon))
+            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Olympic, RaceType.Triathlon))
+        }
+
+        render template: "triathlonRecord", model: [data: data]
+    }
+
+    def runningRecords() {
+        User user = requestedUser
+        def userId = user.id
+        def data = [:]
+
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.OneMile, RaceType.Running))
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.FiveKilometer, RaceType.Running))
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenKilometer, RaceType.Running))
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
+
+        render template: "runningRecord", model: [data: data, user: user]
+    }
+
+    def mileChart() {
+        User user = requestedUser
+        def userId = user.id
+        def columnName = 'Mile Time'
+        def resultTitle = "Mile Run Times"
+        def resultDiv = "mileChartDiv"
+        def queryRaceCategoryType = RaceCategoryType.OneMile
+        def queryRaceType = RaceType.Running
+
+        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    def fiveKilometerChart() {
+        User user = requestedUser
+        def userId = user.id
+        def columnName = '5k Time'
+        def resultTitle = "5k Run Times"
+        def resultDiv = "fiveKilometerChartDiv"
+        def queryRaceCategoryType = RaceCategoryType.FiveKilometer
+        def queryRaceType = RaceType.Running
+
+        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    def marathonChart() {
+        User user = requestedUser
+        def userId = user.id
+        def columnName = 'Marathon Time'
+        def resultTitle = "Marathon Run Times"
+        def resultDiv = "marathonChartDiv"
+        def queryRaceCategoryType = RaceCategoryType.Marathon
+        def queryRaceType = RaceType.Running
+
+        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
     private void renderRunProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
@@ -114,39 +182,18 @@ class VisualizationController extends BaseController {
     }
 
     private StringBuilder getTriathlonGraphData(SegmentResult result, SegmentType segmentType) {
-        def x, y, name
-        def period = result.duration.toPeriod()
-
-        x = "Date.UTC(${result.date.format('1970, M-1, dd')})"
-        y = (segmentType == SegmentType.Bike) ? result.pace : getSwimRunPaceGraph(result)
-        name = "${result.raceResult.race.name} ${result.raceResult.race.date.format("M-dd-yyyy")}"
+        def x = "Date.UTC(${result.date.format('1970, M-1, dd')})"
+        def y = (segmentType == SegmentType.Bike) ? result.pace : getSwimRunPaceGraph(result)
+        def name = "${result.raceResult.race.name} ${result.raceResult.race.date.format("M-dd-yyyy")}"
 
         new StringBuilder("{x: ${x}, y:${y}, name:'${name}'}")
     }
 
-    private GString getSwimRunPaceGraph(SegmentResult result) {
+    private String getSwimRunPaceGraph(SegmentResult result) {
         "Date.parse('1-1-1 00:${result.pace}')-timeToSubtract"
     }
 
-    def triathlonRecords() {
-        User user = requestedUser
-        def userId = user?.id
-        def data = [:]
-
-        if(userId) {
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Sprint, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Sprint, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Sprint, RaceType.Triathlon))
-
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Olympic, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Olympic, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Olympic, RaceType.Triathlon))
-        }
-
-        render template: "triathlonRecord", model: [data: data]
-    }
-
-    private def retrieveTriathlonRecord(long userId, SegmentType segmentType, RaceCategoryType raceCategoryType, RaceType raceType) {
+    private Map retrieveTriathlonRecord(long userId, SegmentType segmentType, RaceCategoryType raceCategoryType, RaceType raceType) {
 
         def c = SegmentResult.createCriteria()
         def results = c.list {
@@ -184,21 +231,7 @@ class VisualizationController extends BaseController {
         ["'${raceCategoryType}_${segmentType}'": pr]
     }
 
-    def runningRecords() {
-        User user = requestedUser
-        def userId = user.id
-        def data = [:]
-
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.OneMile, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.FiveKilometer, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenKilometer, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
-
-        render template: "runningRecord", model: [data: data, user: user]
-    }
-
-    private def retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType) {
+    private Map retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType) {
         def results = RaceResult.where {
             user.id == userId
             race.raceType == raceType
@@ -206,42 +239,6 @@ class VisualizationController extends BaseController {
         }
         def pr = results?.list()?.sort {a, b -> a.duration <=> b.duration}?.getAt(0)
         ["'${raceCategoryType}'": pr]
-    }
-
-    def mileChart() {
-        User user = requestedUser
-        def userId = user.id
-        def columnName = 'Mile Time'
-        def resultTitle = "Mile Run Times"
-        def resultDiv = "mileChartDiv"
-        def queryRaceCategoryType = RaceCategoryType.OneMile
-        def queryRaceType = RaceType.Running
-
-        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
-    }
-
-    def fiveKilometerChart() {
-        User user = requestedUser
-        def userId = user.id
-        def columnName = '5k Time'
-        def resultTitle = "5k Run Times"
-        def resultDiv = "fiveKilometerChartDiv"
-        def queryRaceCategoryType = RaceCategoryType.FiveKilometer
-        def queryRaceType = RaceType.Running
-
-        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
-    }
-
-    def marathonChart() {
-        User user = requestedUser
-        def userId = user.id
-        def columnName = 'Marathon Time'
-        def resultTitle = "Marathon Run Times"
-        def resultDiv = "marathonChartDiv"
-        def queryRaceCategoryType = RaceCategoryType.Marathon
-        def queryRaceType = RaceType.Running
-
-        renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
     private void renderDashboardChart(String columnName, String resultTitle, String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
