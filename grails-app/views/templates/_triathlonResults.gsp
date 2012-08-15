@@ -36,45 +36,34 @@
       </tr>
       <tr class="clsResultMed clsBorderBot">
         <td valign="top"><div class="clsCentered">Place (AG/O)</div></td>
-        <td class="clsResultBL" valign="top" id="celResS_0" style="color: rgb(46, 176, 9); ">
-          <div class="clsBorderBot">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Swim}?.placeAgeGroup ?: '&nbsp;'}</div>
-          <div>${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Swim}?.placeOverall ?: '&nbsp;'}</div>
+
+        <td class="clsResultBL" valign="top" id="celResS_0">
+          <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Swim}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+          %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
+          <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Swim}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
         </td>
-        <td class="clsResultBL" valign="top" id="celResS_0" style="color: rgb(46, 176, 9); ">
-          <div class="clsBorderBot">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T1}?.placeAgeGroup ?: '&nbsp;'}</div>
-          <div>${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T1}?.placeOverall ?: '&nbsp;'}</div>
+        <td class="clsResultBL" valign="top" id="celResS_0">
+          <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T1}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+          %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
+          <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T1}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
         </td>
-        <td class="clsResultBL" valign="top" id="celResS_0" style="color: rgb(46, 176, 9); ">
-          <div class="clsBorderBot">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Bike}?.placeAgeGroup ?: '&nbsp;'}</div>
-          <div>${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Bike}?.placeOverall ?: '&nbsp;'}</div>
+        <td class="clsResultBL" valign="top" id="celResS_0">
+          <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Bike}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+          %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
+          <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Bike}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
         </td>
-        <td class="clsResultBL" valign="top" id="celResS_0" style="color: rgb(46, 176, 9); ">
-          <div class="clsBorderBot">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T2}?.placeAgeGroup ?: '&nbsp;'}</div>
-          <div>${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T2}?.placeOverall ?: '&nbsp;'}</div>
+        <td class="clsResultBL" valign="top" id="celResS_0">
+          <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T2}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+          %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
+          <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.T2}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
         </td>
-        <td class="clsResultBL" valign="top" id="celResS_0" style="color: rgb(46, 176, 9); ">
-          <div class="clsBorderBot">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeAgeGroup ?: '&nbsp;'}</div>
-          <div>${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeOverall ?: '&nbsp;'}</div>
+        <td class="clsResultBL" valign="top" id="celResS_0">
+          <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+          %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
+          <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
         </td>
 
-        <td class="cls10pct clsCentered clsResultBL">
-          <div id="rnkA"><div class="clsBorderBot">3</div></div>
-
-          <div id="cntA"><div class="clsBorderBot">26</div></div>
-
-          <div id="pctA"><div style="color:#3db20c">12%</div></div></td>
-        <td class="cls10pct clsCentered clsResultBL">
-          <div id="rnkG"><div class="clsBorderBot">19</div></div>
-
-          <div id="cntG"><div class="clsBorderBot">293</div></div>
-
-          <div id="pctG"><div style="color:#1fae06">6%</div></div></td>
-        <td class="cls10pct clsCentered clsResultBL"><div id="rnkO"><div class="clsBorderBot">20</div></div>
-
-          <div id="cntO"><div class="clsBorderBot">466</div></div>
-
-          <div id="pctO"><div style="color:#14ad04">4%</div></div>
-        </td>
+        <g:render template="/templates/dashboard/overallStats" model="[result:result]"/>
       </tr>
 
       %{--<tr class="clsResultMed">--}%

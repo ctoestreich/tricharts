@@ -26,11 +26,11 @@
     <th class="clsResultBL">Pace</th>
     <th class="clsResultBL">Time</th>
   </tr>
-  <g:each in="${races.list().sort{a,b -> a.date <=> b.date}}" var="result">
+  <g:each in="${races.list().sort{a,b -> b.date <=> a.date}}" var="result">
     <tr>
-      <td class="${result.race.raceType.raceType}">${result.race.raceType.raceType.substring(0,1)}</td>
+      <td class="${result.race.raceType.raceType}"><small>${result.race.raceType.raceType.substring(0,1)}</small></td>
       <td class="">${result.race.name}</td>
-      <td class="">${result.race.date}</td>
+      <td class="">${result.race.date.format('M-dd-yyyy')}</td>
       <td class="">${result.placeAgeGroup}</td>
       <td class="">${result.placeGender}</td>
       <td class="">${result.placeOverall}</td>

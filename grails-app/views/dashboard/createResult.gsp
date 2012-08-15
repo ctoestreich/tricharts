@@ -30,8 +30,14 @@
 
 <g:if test="${!race}">
   <g:form id="createResult" class="form-inline well" controller="dashboard" action="selectRace">
-    <g:select optionKey="id" id="race" from="${races}" name="race.id"/>
-    <button type="submit" class="btn">Next -></button>
+    <g:if test="${races}">
+      <g:select optionKey="id" id="race" from="${races}" name="race.id"/>
+      <button type="submit" class="btn">Next -></button>
+    </g:if>
+    <g:else>
+      <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved" /></bootstrap:alert>
+      <a href="<g:createLink controller="dashboard" action="addRace" />" class="btn">Add Race</a>
+    </g:else>
   </g:form>
 </g:if>
 <g:else>

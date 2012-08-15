@@ -19,7 +19,7 @@ class RaceResult {
 
     static belongsTo = [user: User]
 
-    static transients = ['date']
+    static transients = ['date', 'result']
 
     static mapping = {
         segmentResults cascade: "all-delete-orphan"
@@ -43,5 +43,9 @@ class RaceResult {
 
     transient Date getDate() {
         race?.date
+    }
+
+    transient SegmentResult getResult() {
+        segmentResults?.asList()?.get(0)
     }
 }

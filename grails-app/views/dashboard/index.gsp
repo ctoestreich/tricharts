@@ -20,6 +20,8 @@
 
 <g:render template="/templates/admin/userSelect" />
 
+${ params?.user}
+
 <script type="text/javascript">
   app.loadRunRecords = function () {
     ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords', params: ['user.id': params?.user?.id])}
@@ -32,9 +34,10 @@
 
 </script>
 
+<g:if test="${runs}">
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Run']"/>
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Run', user: params?.user]"/>
 
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
@@ -46,9 +49,11 @@
   </div>
   %{--</div>--}%
 </div>
+</g:if>
 
 <BR />
 
+<g:if test="${triathlons}">
 <div class="row well_clear">
   %{--<div class="span12">--}%
   <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
@@ -62,6 +67,7 @@
               collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
   </div>
 </div>
+</g:if>
 
 
 %{--<div class="row">--}%

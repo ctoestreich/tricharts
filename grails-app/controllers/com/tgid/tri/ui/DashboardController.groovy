@@ -81,9 +81,11 @@ class DashboardController extends BaseController {
                     raceService.createBikeSegments(raceInstance)
                 }
 
-                if(!raceInstance.save(flush: true)) {
+                if(!raceInstance.validate()) {
                     render view: 'addRace', model: [raceInstance: raceInstance]
                     return
+                } else {
+                    raceInstance.save(flush: true)
                 }
 
                 flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
@@ -167,17 +169,20 @@ class DashboardController extends BaseController {
 
         try {
             raceResultService.createRaceResult(raceResult)
-            redirect action: 'index', params: params
+            render action: 'index', model: [race: raceResult.race, user: user, raceResult: raceResult]
+            return
         }
         catch(SegmentResultException failed) {
             flash.message = failed.message
             flash.segmentResult = failed.problem
-            redirect action: 'createRunResult'
+            redirect action: 'createRunResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
+            return
         }
         catch(RaceResultException failed) {
             flash.message = failed.message
             flash.raceResult = failed.problem
-            redirect action: 'createRunResult'
+            redirect action: 'createRunResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
+            return
         }
     }
 

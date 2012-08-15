@@ -75,7 +75,7 @@ class BootStrap {
     private void createGraniteman() {
         def race = new Race(name: 'Graniteman Triathlon', date: new Date(112, 6, 17), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
-                            distance:  17.24,
+                            distance: 17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://live.mtecresults.com/race/show/942').save()
 
@@ -165,7 +165,7 @@ class BootStrap {
     private createMinneman2011() {
         def race = new Race(name: 'Minneman', date: new Date(111, 6, 2), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
-                            distance:  17.24,
+                            distance: 17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/mnman11b.html').save()
 
@@ -187,7 +187,7 @@ class BootStrap {
     private void createManitou2011() {
         def race = new Race(name: 'Manitou', date: new Date(111, 5, 12), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
-                            distance:  17.24,
+                            distance: 17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/man11b.html').save()
 
@@ -216,7 +216,7 @@ class BootStrap {
     private createManitou2012() {
         def race = new Race(name: 'Manitou', date: new Date(112, 5, 10), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
-                            distance:  17.24,
+                            distance: 17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results12/man12b.html').save()
 
@@ -238,7 +238,7 @@ class BootStrap {
     private void createStCroixValley() {
         def race = new Race(name: 'St Croix Valley', date: new Date(110, 8, 4), raceType: RaceType.Triathlon,
                             distanceType: DistanceType.Miles,
-                            distance:  17.24,
+                            distance: 17.24,
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.onlineraceresults.com/race/view_plain_text.php?race_id=15976').save()
 
@@ -253,11 +253,15 @@ class BootStrap {
 
         createTriathlon(race, mitch, swimRaceSegment, t1Segment, fifteenMileBikeSegment, t2Segment, fourKilometerRun,
                         60 * 79 + 19, 11 * 60 + 2, 57, 29 * 60 + 15, 57, 28 * 60 + 10,
-                        59, 19, 5, 1, 31, 14, 13, 7, 344, 201, 80)
+                        59, 19, 5, 1, 31, 14,
+                        13, 7,
+                        344, 201, 80)
 
         createTriathlon(race, christian, swimRaceSegment, t1Segment, fifteenMileBikeSegment, t2Segment, fourKilometerRun,
                         60 * 81, 8 * 60 + 56, 75, 30 * 60 + 24, 73, 29 * 60 + 14,
-                        11, 2, 25, 12, 52, 21, 13, 9, 344, 201, 80)
+                        11, 2, 25, 12, 52, 21,
+                        13, 9,
+                        344, 201, 80)
     }
 
     private void createTriathlon(Race race, User user, RaceSegment swimSegment, RaceSegment t1Segment, RaceSegment bikeSegment, RaceSegment t2Segment, RaceSegment runSegment,
@@ -272,7 +276,9 @@ class BootStrap {
         def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(t2Seconds))
         def runResults = new SegmentResult(raceSegment: runSegment, duration: Duration.standardSeconds(runSeconds), placeOverall: runPlaceOverall, placeAgeGroup: runPlaceAgeGroup)
 
-        def raceResult = new RaceResult(race: race, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall, user: user, duration: Duration.standardSeconds(raceSeconds)).save()
+        def raceResult = new RaceResult(race: race, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall, user: user,
+                                        participantsAgeGroup: participantsAgeGroup, participantsGender: participantsGender, participantsOverall: participantsOverall,
+                                        duration: Duration.standardSeconds(raceSeconds)).save()
         raceResult.addToSegmentResults(swimResults)
         raceResult.addToSegmentResults(t1Results)
         raceResult.addToSegmentResults(bikeResults)

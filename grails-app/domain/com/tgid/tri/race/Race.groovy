@@ -7,7 +7,7 @@ class Race {
     RaceType raceType
     DistanceType distanceType
     RaceCategoryType raceCategoryType
-    Float distance = 0.00
+    Float distance = 0.00f
     String resultsUrl
     StatusType statusType = StatusType.Pending
 
@@ -15,7 +15,7 @@ class Race {
 
     static constraints = {
         resultsUrl nullable: true, url: true, blank: true
-        name nullable: false, blank: false
+        name nullable: false, blank: false, unique: ['date', 'raceCategoryType']
         date nullable: false
         raceType nullable: false
         distanceType nullable: false

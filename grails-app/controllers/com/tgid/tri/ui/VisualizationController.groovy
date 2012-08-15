@@ -195,7 +195,7 @@ class VisualizationController extends BaseController {
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
 
-        render template: "runningRecord", model: [data: data]
+        render template: "runningRecord", model: [data: data, user: user]
     }
 
     private def retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType) {
