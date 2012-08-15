@@ -13,9 +13,12 @@ class BootStrap {
     }
 
     private void createInitialRacesAndResults() {
+        //create dome dummy users to test
         createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true), true)
         createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true), false)
         createUser(new User(username: 'bugurlu@hotmail.com', password: 'bugurlu', firstName: 'Bulent', lastName: 'Ugurlu', dob: new Date(70, 10, 18), enabled: true), true)
+        createUser(new User(username: 'kwschulz@gmail.com', password: 'kwschulz', firstName: 'Ken', lastName: 'Schulz', dob: new Date(77, 5, 18), enabled: true), true)
+        createUser(new User(username: 'user@gmail.com', password: 'user', firstName: 'Test', lastName: 'User', dob: new Date(80, 3, 1), enabled: true), false)
 
         seedSegments()
 
