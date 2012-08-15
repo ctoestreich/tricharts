@@ -1,16 +1,23 @@
 <%@ page import="com.tgid.tri.race.SegmentType" %>
-<p><h3>${type} Results</h3></p>
+<p>
+
+<h3>${type} Results</h3></p>
 <div id="${id}_Swim"></div>
 <BR>
+
 <div id="${id}_Bike"></div>
 <BR>
+
 <div id="${id}_Run"></div>
 <BR>
 %{--Maybe do records here?--}%
 %{--<div id="${id}Records" class="span3"></div>--}%
 
 <script>
+  var hasData = false;
   <g:each in="${[SegmentType.Swim , SegmentType.Bike, SegmentType.Run]}" var="segmentType">
+  <g:if test="${data.get(segmentType)}">
+  hasData = true;
   var chart${segmentType};
   var timeToSubtract = Date.parse("1-1-1 0:00:00");
   $(function () {
@@ -74,5 +81,10 @@
                                                  ]
                                                });
   });
+  </g:if>
   </g:each>
+
+  if(!hasData){
+    $("#${id}_Bike").html('No data for ${type} races.')
+  }
 </script>

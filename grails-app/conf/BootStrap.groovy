@@ -14,7 +14,8 @@ class BootStrap {
 
     private void createInitialRacesAndResults() {
         createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true), true)
-        createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'talbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true), true)
+        createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true), false)
+        createUser(new User(username: 'bugurlu@hotmail.com', password: 'bugurlu', firstName: 'Bulent', lastName: 'Ugurlu', dob: new Date(70, 10, 18), enabled: true), true)
 
         seedSegments()
 
@@ -64,6 +65,7 @@ class BootStrap {
         createRiceStreetMile()
         createTcOneMile()
         createTorchlight()
+        createVictoryDay()
         //tris
         createStCroixValley()
         createManitou2011()
@@ -120,6 +122,26 @@ class BootStrap {
 
         def segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 5) + 31))
         def raceResult = new RaceResult(race: twinCitiesMile, placeAgeGroup: 29, placeGender: 179, placeOverall: 192, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 5) + 31)).save()
+        raceResult.addToSegmentResults(segmentResult)
+        raceResult.save()
+    }
+
+    private void createVictoryDay() {
+        def race = new Race(name: 'MDRA Victory 5K', date: new Date(111, 8, 5), raceType: RaceType.Running,
+                                  distanceType: DistanceType.Kilometers, distance: 5,
+                                  raceCategoryType: RaceCategoryType.FiveKilometer, statusType: StatusType.Approved).save()
+        def raceSegment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(5, DistanceType.Kilometers, SegmentType.Run))
+        def segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 19) + 05))
+        def raceResult = new RaceResult(race: race, placeAgeGroup: 2, placeGender: 20, placeOverall: 20, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 19) + 05)).save()
+        raceResult.addToSegmentResults(segmentResult)
+        raceResult.save()
+
+        race = new Race(name: 'MDRA Victory 10K', date: new Date(111, 8, 5), raceType: RaceType.Running,
+                            distanceType: DistanceType.Kilometers, distance: 10,
+                            raceCategoryType: RaceCategoryType.TenKilometer, statusType: StatusType.Approved).save()
+        raceSegment = RaceSegment.findOrSaveWhere(race: race, segment: findOrSaveSegment(10, DistanceType.Kilometers, SegmentType.Run))
+        segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 45) + 52))
+        raceResult = new RaceResult(race: race, placeAgeGroup: 24, placeGender: 150, placeOverall: 154, user: User.findByUsername('bugurlu@hotmail.com'), duration: Duration.standardSeconds((60 * 45) + 52)).save()
         raceResult.addToSegmentResults(segmentResult)
         raceResult.save()
     }

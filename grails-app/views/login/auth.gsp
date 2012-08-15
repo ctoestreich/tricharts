@@ -1,58 +1,63 @@
-  <html>
-  <head>
-    <meta name="layout" content="bootstrap"/>
-    <title><g:message code="springSecurity.login.title"/></title>
-  </head>
+<html>
+<head>
+  <meta name="layout" content="bootstrap"/>
+  <title><g:message code="springSecurity.login.title"/></title>
+</head>
 
-  <body>
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span4">&nbsp;</div>
+<body>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">&nbsp;</div>
 
-      <div class="span4">
-        <g:if test="${flash.message}">
-          <div class="alert alert-error">
-            <h4 class="alert-heading">Failed</h4>
-            <g:message code="${flash.message}" args="${flash.args}"
-                       default="${flash.default}"/></div>
-        </g:if>
+    <div class="span6">
+      <div class="page-header">
+        <h1><g:message code="springSecurity.login.header"/> <small>start logging greatness</small></h1>
+      </div>
 
-        <div id='login'>
-          <div class='well'>
-		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
+      <g:if test="${flash.message}">
+        <div class="alert alert-error">
+          <h4 class="alert-heading">Failed</h4>
+          <g:message code="${flash.message}" args="${flash.args}"
+                     default="${flash.default}"/></div>
+      </g:if>
+      <g:if test='${flash.message}'>
+        <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+      </g:if>
 
-		<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-		</g:if>
+      <form action='${postUrl}' method='POST' id='loginForm' class='form-horizontal' autocomplete='off'>
+        <fieldset>
+          <div class="control-group">
+            <label for='username' class="control-label"><g:message code="springSecurity.login.username.label"/>:</label>
 
-		<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-			<p>
-				<label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
-				<input type='text' class='text_' name='j_username' id='username'/>
-			</p>
+            <div class="controls"><input type='text' name='j_username' id='username'/></div>
+          </div>
 
-			<p>
-				<label for='password'><g:message code="springSecurity.login.password.label"/>:</label>
-				<input type='password' class='text_' name='j_password' id='password'/>
-			</p>
+          <div class="control-group">
+            <label for='password' class="control-label"><g:message code="springSecurity.login.password.label"/>:</label>
 
-			<p id="remember_me_holder">
-				<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-				<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
-			</p>
+            <div class="controls"><input type='password' name='j_password' id='password'/></div>
+          </div>
 
-			<p>
-				<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>&nbsp;<facebookAuth:connect permissions="email,user_about_me"/>
-			</p>
-		</form>
-	</div>
+          <div class="control-group">
+            <label for='remember_me' class="control-label"><g:message code="springSecurity.login.remember.me.label"/></label>
+
+            <div class="controls"><input type='checkbox' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/></div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">${message(code: "springSecurity.login.button")}</button>
+          </div>
+        </fieldset>
+      </form>
+      <script type='text/javascript'>
+        <!--
+        (function () {
+          document.forms['loginForm'].elements['j_username'].focus();
+        })();
+        // -->
+      </script>
+    </div>
+  </div>
 </div>
-<script type='text/javascript'>
-	<!--
-	(function() {
-		document.forms['loginForm'].elements['j_username'].focus();
-	})();
-	// -->
-</script>
 </body>
 </html>
