@@ -134,6 +134,10 @@ div.btn-group {
     list-style-type: none;
 }
 
+.form-horizontal .control-group {
+    margin-bottom: 10px !important;
+}
+
 /*td.Running { background-color: rgba(255, 0, 0, 0.47);}*/
 /*td.Swimming { background-color: rgba(59, 2, 255, 0.46);}*/
 /*td.Biking { background-color: rgba(111, 255, 0, 0.46);}*/

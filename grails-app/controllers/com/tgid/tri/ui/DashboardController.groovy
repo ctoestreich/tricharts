@@ -139,6 +139,13 @@ class DashboardController extends BaseController {
             return Race.findAll("from Race where raceType = '${raceType}' and statusType = '${StatusType.Approved}'")
     }
 
+    def editRaceResult(){
+        User user = requestedUser
+        def raceResult = RaceResult.get(params?.int('raceResultId') ?: 0)
+
+        render view: 'createResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
+    }
+
     def selectRace() {
         User user = requestedUser
         def race = Race.get(params.int('race.id'))
@@ -160,7 +167,7 @@ class DashboardController extends BaseController {
 
     def saveResult() {
         User user = requestedUser
-        RaceResult raceResult = mapRaceResult(user)
+        RaceResult raceResult = raceResultService.mapRaceResult(user, params)
 
         if(raceResult.hasErrors()) {
             render view: 'createResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
@@ -169,7 +176,7 @@ class DashboardController extends BaseController {
 
         try {
             raceResultService.createRaceResult(raceResult)
-            render action: 'index', model: [race: raceResult.race, user: user, raceResult: raceResult]
+            redirect action: 'index', model: [race: raceResult.race, user: user, raceResult: raceResult]
             return
         }
         catch(SegmentResultException failed) {
@@ -186,45 +193,12 @@ class DashboardController extends BaseController {
         }
     }
 
-    private RaceResult mapRaceResult(User user) {
-        params.user = user
-
-        def raceResult = new RaceResult(params)
-
-        if(raceResult.duration == Duration.standardSeconds(0)) {
-            raceResult.errors.rejectValue('duration', 'raceResult.duration.greater.than.zero')
+    def modifyRaceResults(){
+        if(params?.raceResultEdit){
+            editRaceResult()
+        } else {
+            deleteRaceResult()
         }
-
-        def segmentCount = params?.int('segmentCount') ?: 0
-
-        (0..<segmentCount).each {
-            String key = "segmentResult[$it]".toString()
-            Map segment = params.get(key) as Map
-            if(segment) {
-                def segmentSegmentResults = new SegmentResult(segment)
-                if(segmentCount == 1) {
-                    mapSegmentResultToRace(raceResult, segmentSegmentResults)
-                }
-                if(segmentSegmentResults.duration == Duration.standardSeconds(0)) {
-                    segmentSegmentResults.errors.rejectValue('duration', 'raceResult.duration.greater.than.zero')
-                }
-                raceResult.addToSegmentResults(segmentSegmentResults)
-            }
-        }
-
-        raceResult
-    }
-
-    /**
-     * When only one segment result exists just map it to the race result since ui will be hidden
-     * @param raceResult
-     * @param segmentResult
-     */
-    private void mapSegmentResultToRace(RaceResult raceResult, SegmentResult segmentResult) {
-        segmentResult.duration = raceResult.duration
-        segmentResult.placeOverall = raceResult.placeOverall
-        segmentResult.placeAgeGroup = raceResult.placeAgeGroup
-        segmentResult.placeGender = raceResult.placeGender
     }
 
     def deleteRaceResult() {

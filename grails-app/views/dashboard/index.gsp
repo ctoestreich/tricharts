@@ -69,30 +69,6 @@ ${ params?.user}
 </div>
 </g:if>
 
-
-%{--<div class="row">--}%
-%{--<div class="span12">--}%
-%{--<table class="table table-striped">--}%
-%{--<thead>--}%
-%{--<tr>--}%
-%{--<th>Date</th>--}%
-%{--<th>asdfasd</th>--}%
-%{--<th>Last Name</th>--}%
-%{--<th>Username</th>--}%
-%{--</tr>--}%
-%{--</thead>--}%
-%{--<tbody>--}%
-%{--<tr>--}%
-%{--<td>1</td>--}%
-%{--<td>Mark</td>--}%
-%{--<td>Otto</td>--}%
-%{--<td>@mdo</td>--}%
-%{--</tr>--}%
-%{--</tbody>--}%
-%{--</table>--}%
-%{--</div>--}%
-%{--</div>--}%
-
 <div class="modal hide" id="deleteConfirmation">
   <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
 
@@ -103,7 +79,10 @@ ${ params?.user}
   <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
 </div>
 
-<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult"><g:hiddenField name="raceResultId" value=""/></g:form>
+<g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="dashboard" action="modifyRaceResults">
+  <g:hiddenField name="raceResultId" value=""/>
+  <g:hiddenField name="raceResultEdit" value="false"/>
+</g:form>
 
 </body>
 </html>

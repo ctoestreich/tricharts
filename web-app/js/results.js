@@ -11,11 +11,18 @@ $(function () {
             $('#deleteConfirmation').modal('toggle');
         };
 
+        my.editRaceResult = function(id){
+            $('#raceResultId').val(id);
+            $('#raceResultEdit').val("true");
+            $('#modifyRaceResultsForm').submit();
+        };
+
         my.deleteRaceResultConfirmation = function () {
             console.log('val',raceResultId);
             if (raceResultId) {
                $('#raceResultId').val(raceResultId);
-               $('#raceResultDeleteForm').submit();
+                $('#raceResultEdit').val("false");
+               $('#modifyRaceResultsForm').submit();
             }
         };
         return my;

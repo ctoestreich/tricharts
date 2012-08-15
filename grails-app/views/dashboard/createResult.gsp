@@ -43,6 +43,7 @@
 <g:else>
   <g:form id="saveResult" class="form-horizontal well" controller="dashboard" action="saveResult">
     <input type="hidden" name="race.id" value="${race.id}" id="race">
+    <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
 
     <div class="row-fluid">

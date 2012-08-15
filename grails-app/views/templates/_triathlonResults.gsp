@@ -5,7 +5,7 @@
     <g:render template="/templates/resultsHeading" model="[result:result]"/>
   </div>
 
-  <div id="result-collapse-${result?.id}" class="accordion-body collapse in" style="height:0px">
+  <div id="result-collapse-${result?.id}" class="accordion-body collapse in collapse-triathlon" style="height:0px">
     <table width="100%" border="0" cellpadding="3" cellspacing="0" style="background-color:#fff;">
       <tbody>
       <tr>
@@ -88,7 +88,7 @@
       <a href="${result?.race?.resultsUrl}" target="_blank">${result?.race?.resultsUrl}</a>
     </div>
 
-      <g:render template="/templates/deleteRaceDashboard" model="[result: result]" />
+      <g:render template="/templates/dashboard/raceResultsButtons" model="[result: result]" />
   </div>
 </div>
 %{--<table class="table-condensed" id="table${result.id}">--}%
