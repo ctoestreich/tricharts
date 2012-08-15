@@ -67,6 +67,10 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/junit/junit-dep/jars/junit-dep-4.9.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-core/jars/spock-core-0.6-groovy-1.8.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.spockframework/spock-grails-support/jars/spock-grails-support-0.6-groovy-1.8.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.jackson/jackson-core-asl/jars/jackson-core-asl-1.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.jackson/jackson-mapper-asl/jars/jackson-mapper-asl-1.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-client-lib/jars/cloudfoundry-client-lib-0.7.5.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-caldecott-lib/jars/cloudfoundry-caldecott-lib-0.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

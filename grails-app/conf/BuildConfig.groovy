@@ -30,6 +30,7 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo "https://repo.springsource.org/repo"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -56,6 +57,8 @@ grails.project.dependency.resolution = {
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
         compile ":google-visualization:0.5.3"
+        compile ":cloud-foundry:1.2.3"
+        compile ':webxml:1.4.1'
 
         runtime ":spring-security-core:1.2.7.3"
         //runtime ":spring-security-facebook:0.9"
@@ -66,11 +69,8 @@ grails.project.dependency.resolution = {
         //runtime ":yui-minify-resources:0.1.4"
 
         test ":spock:0.6"
-
         build ":tomcat:$grailsVersion"
-
         runtime ":database-migration:1.1"
-
         compile ':cache:1.0.0'
     }
 }
