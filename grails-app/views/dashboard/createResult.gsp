@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require modules="dashboard, results"/>
+  <r:require modules="dashboard, results, widgets"/>
   <title>User Dashboard</title>
 </head>
 
@@ -29,21 +29,29 @@
 </g:hasErrors>
 
 <g:if test="${!race}">
+  <h3>Add ${params?.raceType} Result</h3>
   <g:form id="createResult" class="form-inline well" controller="dashboard" action="selectRace">
-    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}" />
+    <g:hiddenField name="user.id" id="user.id" value="${params?.user?.id}"/>
+    <g:hiddenField name="raceType" id="raceType" value="${params?.raceType}"/>
     <g:if test="${races}">
-      <g:select optionKey="id" id="race" from="${races}" name="race.id"/>
+      <p>Search For Race By Name</p>
+      <g:select noSelection="${['':'']}" optionKey="id" id="race" from="${races}" name="race.id" />
       <button type="submit" class="btn">Next -></button>
     </g:if>
     <g:else>
-      <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved" /></bootstrap:alert>
-      <a href="<g:createLink controller="dashboard" action="addRace" />" class="btn">Add Race</a>
+      <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved"/></bootstrap:alert>
+      <a href="<g:createLink controller="dashboard" action="addRace"/>" class="btn">Add Race</a>
     </g:else>
   </g:form>
+  <script>
+    $(function () {
+      $("#race").combobox();
+    });
+  </script>
 </g:if>
 <g:else>
   <g:form id="saveResult" class="form-horizontal well" controller="dashboard" action="saveResult">
-    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}" />
+    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}"/>
     <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
@@ -89,7 +97,7 @@
 </g:else>
 
 <r:script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('form:first *:input[type!=hidden]:first').focus();
   });
 </r:script>

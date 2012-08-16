@@ -46,4 +46,9 @@ modules = {
         dependsOn 'jquery'
         resource url:'js/dashboard/dashboard.js', disposition: 'head'
     }
+
+    widgets {
+        dependsOn 'jquery, jquery-ui'
+        resource url:'js/jquery/widgets.js'
+    }
 }

@@ -52,7 +52,16 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
-            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index')}">Dashboard</a></li>
+            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params:['user.id':params?.user?.id])}">Dashboard</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Triathlon', 'user.id':params?.user?.id])}">Add Triathlon Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Run', 'user.id':params?.user?.id])}">Add Run Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Bike', 'user.id':params?.user?.id])}">Add Biking Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Swim', 'user.id':params?.user?.id])}">Add Swimming Result</a></li>
+              </ul>
+            </li>
             <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
               <li class="dropdown">

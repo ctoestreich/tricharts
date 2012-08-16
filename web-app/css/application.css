@@ -150,6 +150,29 @@ div.btn-group {
     width: 50px;
 }
 
+.ui-combobox {
+    position: relative;
+    display: inline-block;
+}
+.ui-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* adjust styles for IE 6/7 */
+    *height: 1.7em;
+    *top: 0.1em;
+}
+.ui-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+}
+
+.ui-autocomplete-input {
+    width: 400px;
+}
+
 /*td.Running { background-color: rgba(255, 0, 0, 0.47);}*/
 /*td.Swimming { background-color: rgba(59, 2, 255, 0.46);}*/
 /*td.Biking { background-color: rgba(111, 255, 0, 0.46);}*/

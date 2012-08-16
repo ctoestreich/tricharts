@@ -139,7 +139,7 @@ class DashboardController extends BaseController {
             return Race.findAll("from Race where raceType = '${raceType}' and statusType = '${StatusType.Approved}'")
     }
 
-    def editRaceResult(){
+    def editRaceResult() {
         User user = requestedUser
         def raceResult = RaceResult.get(params?.int('raceResultId') ?: 0)
 
@@ -152,10 +152,15 @@ class DashboardController extends BaseController {
         def raceResult = new RaceResult(race: race, user: user)
 
         if(!race) {
-            raceResult.errors.rejectValue(
-                    'race',
-                    'raceResult.races.none.approved')
-            render view: 'createResult', model: [race: race, user: user, raceResult: raceResult]
+            def raceType = params?.raceType
+            params.clear()
+            params.setProperty('user.id', user.id)
+            params.setProperty('raceType', raceType)
+            if(!params.int('race.id')){
+                flash.message = g.message(code: 'raceResult.race.null')
+            }
+            raceResult.errors.rejectValue('race','raceResult.races.none.approved')
+            redirect action: 'createResult', params: params, model: [race: race, user: user, raceResult: raceResult]
             return
         }
 
@@ -176,9 +181,9 @@ class DashboardController extends BaseController {
 
         try {
             params.clear()
-            params.user.id = user.id
+            params.setProperty('user.id', user.id)
             raceResultService.createRaceResult(raceResult)
-            redirect action: 'index', params: params, model: [race: raceResult.race, user: user, raceResult: raceResult]
+            redirect action: 'index', params: params
             return
         }
         catch(SegmentResultException failed) {
@@ -195,8 +200,8 @@ class DashboardController extends BaseController {
         }
     }
 
-    def modifyRaceResults(){
-        if(params?.raceResultEdit){
+    def modifyRaceResults() {
+        if(params?.raceResultEdit) {
             editRaceResult()
         } else {
             deleteRaceResult()
