@@ -68,6 +68,9 @@ class DashboardController extends BaseController {
     }
 
     def addRace() {
+        if(params?.raceType){
+            params["raceType"] = RaceType.getRaceType(params.raceType)
+        }
         switch(request.method) {
             case 'GET':
                 [raceInstance: new Race(params)]
@@ -114,7 +117,7 @@ class DashboardController extends BaseController {
         def userId = user.id
         List<Race> races
         switch(params?.raceType) {
-            case 'Run':
+            case 'Running':
                 races = findRacesWithNoResults(userId, RaceType.Running)
                 break
             case 'Triathlon':

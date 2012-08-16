@@ -1,4 +1,4 @@
-<%@ page import="org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
+<%@ page import="com.tgid.tri.race.RaceType; org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,14 +30,14 @@
 <div class="container">
 
   <div class="row">
-      <p align="right">
-        <sec:ifNotGranted roles="ROLE_USER">
-          <g:link controller="login" action="index">login</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">register</g:link>
-        </sec:ifNotGranted>
-        <sec:ifAllGranted roles="ROLE_USER">
-          <sec:username/>&nbsp;|&nbsp;<g:link controller="logout" action="index">logout</g:link>
-        </sec:ifAllGranted>
-      </p>
+    <p align="right">
+      <sec:ifNotGranted roles="ROLE_USER">
+        <g:link controller="login" action="index">login</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">register</g:link>
+      </sec:ifNotGranted>
+      <sec:ifAllGranted roles="ROLE_USER">
+        <sec:username/>&nbsp;|&nbsp;<g:link controller="logout" action="index">logout</g:link>
+      </sec:ifAllGranted>
+    </p>
   </div>
 
   <div class="navbar">
@@ -52,14 +52,14 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
-            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params:['user.id':params?.user?.id])}">Dashboard</a></li>
+            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Triathlon', 'user.id':params?.user?.id])}">Add Triathlon Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Run', 'user.id':params?.user?.id])}">Add Run Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Bike', 'user.id':params?.user?.id])}">Add Biking Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params:['raceType':'Swim', 'user.id':params?.user?.id])}">Add Swimming Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Add Triathlon Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Add Running Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking, 'user.id': params?.user?.id])}">Add Biking Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming, 'user.id': params?.user?.id])}">Add Swimming Result</a></li>
               </ul>
             </li>
             <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
@@ -67,8 +67,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
-                    <li><hr></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
+                  <li><hr></li>
                   <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
                   <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
                   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
@@ -84,7 +84,7 @@
 
         <div class="btn-group pull-right">
           %{--<sec:ifNotGranted roles="ROLE_FACEBOOK">--}%
-            %{--<facebookAuth:connect permissions="${['email', 'user_about_me']}"/>--}%
+          %{--<facebookAuth:connect permissions="${['email', 'user_about_me']}"/>--}%
           %{--</sec:ifNotGranted>--}%
           <sec:ifAllGranted roles="ROLE_FACEBOOK">
             Welcome! <sec:username/>

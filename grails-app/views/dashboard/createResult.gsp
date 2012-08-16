@@ -35,12 +35,12 @@
     <g:hiddenField name="raceType" id="raceType" value="${params?.raceType}"/>
     <g:if test="${races}">
       <p>Search For Race By Name</p>
-      <g:select noSelection="${['':'']}" optionKey="id" id="race" from="${races}" name="race.id" />
+      <g:select noSelection="${['': '']}" optionKey="id" id="race" from="${races.sort {a, b -> b.date <=> a.date}}" name="race.id"/>
       <button type="submit" class="btn">Next -></button>
     </g:if>
     <g:else>
       <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved"/></bootstrap:alert>
-      <a href="<g:createLink controller="dashboard" action="addRace"/>" class="btn">Add Race</a>
+      <a href="<g:createLink controller="dashboard" action="addRace" params='[raceType: "${params?.raceType}"]'/>" class="btn">Add Race</a>
     </g:else>
   </g:form>
   <script>
