@@ -11,8 +11,8 @@
   <div class="well">
     <div class="btn-group-wrap">
       <div class="btn-group">
-        <a class="btn" href="#" id="refresh-races"><i class="icon-search"></i> Refresh Races</a>
-        <a class="btn" href="#" id="add-race"><i class="icon-tag"></i> Create Race</a>
+        <a class="btn" href="javascript:void(0);" id="refresh-races"><i class="icon-search"></i> Refresh Races</a>
+        <a class="btn" href="javascript:void(0);" id="add-race"><i class="icon-tag"></i> Create Race</a>
       </div>
     </div>
   </div>
@@ -62,9 +62,9 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <li><a href="#">Edit</a></li>
+          <li><a href="javascript:void(0);">Edit</a></li>
           <li class="divider"></li>
-          <li><a href="#" class='delete-race' data-id="{{id}}">Delete</a></li>
+          <li><a href="javascript:void(0);" class='delete-race' data-id="{{id}}">Delete</a></li>
         </ul>
       </div></td>
   </tr>

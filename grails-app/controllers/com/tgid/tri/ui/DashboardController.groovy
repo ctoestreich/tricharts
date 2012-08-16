@@ -175,8 +175,10 @@ class DashboardController extends BaseController {
         }
 
         try {
+            params.clear()
+            params.user.id = user.id
             raceResultService.createRaceResult(raceResult)
-            redirect action: 'index', model: [race: raceResult.race, user: user, raceResult: raceResult]
+            redirect action: 'index', params: params, model: [race: raceResult.race, user: user, raceResult: raceResult]
             return
         }
         catch(SegmentResultException failed) {

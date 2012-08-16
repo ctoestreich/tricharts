@@ -57,9 +57,9 @@ class TriHarderTagLib {
     }
 
     def periodPicker = {attrs ->
-        def name = attrs.name
-        def id = attrs.id ?: name
-        def value = attrs.value
+        def name = attrs?.name ?: ''
+        def id = attrs?.id ?: name
+        def value = attrs?.value
         def prefix = attrs?.prefix ?: ''
 
         def periodType = getPeriodType(attrs.fields, DEFAULT_PERIOD_TYPE)
@@ -68,12 +68,12 @@ class TriHarderTagLib {
             value = value.toPeriod(periodType)
         }
 
-        out << "<input type=\"hidden\" name=\"$prefix$name\" value=\"struct\" />"
+        out << "<input type=\"hidden\" name=\"duration\" value=\"struct\" />"
 
         (0..<periodType.size()).each {i ->
             def fieldType = periodType.getFieldType(i)
-            out << "<label for=\"${id}_${fieldType.name}\">"
-            out << """<input type="text" name="${prefix}${name}_${fieldType.name}" id="${id}_${fieldType.name}" value="${value?.get(fieldType) ?: 0}" size="1"/>"""
+            out << "<label class=\"duration-label\" for=\"${prefix}duration${fieldType.name}\">"
+            out << """<input class="duration-field" type="text" name="${prefix}duration_${fieldType.name}" id="${prefix}duration_${fieldType.name}" value="${value?.get(fieldType) ?: 0}" size="1"/>"""
             out << "&nbsp;" << message(code: "${DurationFieldType.name}.$fieldType.name", default: fieldType.name) << " "
             out << "</label>"
         }

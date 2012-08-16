@@ -30,6 +30,7 @@
 
 <g:if test="${!race}">
   <g:form id="createResult" class="form-inline well" controller="dashboard" action="selectRace">
+    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}" />
     <g:if test="${races}">
       <g:select optionKey="id" id="race" from="${races}" name="race.id"/>
       <button type="submit" class="btn">Next -></button>
@@ -42,6 +43,7 @@
 </g:if>
 <g:else>
   <g:form id="saveResult" class="form-horizontal well" controller="dashboard" action="saveResult">
+    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}" />
     <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
@@ -85,5 +87,11 @@
     </fieldset>
   </g:form>
 </g:else>
+
+<r:script>
+  $(document).ready(function() {
+    $('form:first *:input[type!=hidden]:first').focus();
+  });
+</r:script>
 </body>
 </html>

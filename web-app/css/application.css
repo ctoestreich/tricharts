@@ -2,6 +2,10 @@ body {
     padding-top: 20px !important;
 }
 
+div.container {
+    height: 40px;
+}
+
 th.clsResultHK {
     border-bottom: solid 1px #C6CDDC !important;
 }
@@ -136,6 +140,14 @@ div.btn-group {
 
 .form-horizontal .control-group {
     margin-bottom: 10px !important;
+}
+
+.duration-label {
+    display: inline !important;
+}
+
+.duration-field {
+    width: 50px;
 }
 
 /*td.Running { background-color: rgba(255, 0, 0, 0.47);}*/

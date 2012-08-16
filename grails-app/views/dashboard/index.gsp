@@ -20,8 +20,6 @@
 
 <g:render template="/templates/admin/userSelect" />
 
-${ params?.user}
-
 <script type="text/javascript">
   app.loadRunRecords = function () {
     ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords', params: ['user.id': params?.user?.id])}
@@ -76,7 +74,7 @@ ${ params?.user}
 
   <div class="modal-body"><p>Are you really sure you want to delete your results for this race?</p></div>
 
-  <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
+  <div class="modal-footer"><a href="javascript:void(0);" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
 </div>
 
 <g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="dashboard" action="modifyRaceResults">

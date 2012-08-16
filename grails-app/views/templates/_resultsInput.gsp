@@ -6,10 +6,14 @@
   %{--<label class="control-label" for="${prefix}duration">${name} Duration</label>--}%
   %{--<div class="controls">--}%
   <g:if test="${segmentResult}">
-    <f:field bean="segmentResult" property="duration" prefix="${prefix}"/>
+    %{--<tri:periodPicker id="${segmentResult?.id}" value="${segmentResult?.duration}" prefix="${prefix}" />--}%
+    %{--<BR>--}%
+    <f:field property="duration" bean="segmentResult" prefix="${prefix}" />
   </g:if>
   <g:elseif test="${raceResult}">
-    <f:field bean="raceResult" property="duration" prefix="${prefix}"/>
+    %{--<tri:periodPicker id="${raceResult?.id}" value="${raceResult?.duration}" prefix="${prefix}"/>--}%
+    %{--<BR />--}%
+    <f:field property="duration" bean="raceResult" prefix="${prefix}" />
   </g:elseif>
 
   %{--<joda:periodPicker name="${prefix ?: ''}duration" value="${segmentResult?.duration}" fields="hours,minutes,seconds" />--}%

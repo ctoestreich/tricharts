@@ -32,6 +32,6 @@ class Race {
 
     @Override
     String toString() {
-        "${name ?: 'Unknown'} ${(raceCategoryType) ?: ''} ${date?.format("yyyy")}"
+        "${name ?: 'Unknown'}${(raceCategoryType) ?" ($raceCategoryType) ": ' '}${date?.format("yyyy")}"
     }
 }

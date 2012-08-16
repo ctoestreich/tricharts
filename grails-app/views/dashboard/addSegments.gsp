@@ -105,7 +105,7 @@
     <p>Please add one (1) or more segments to the race to save.</p>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="javascript:void(0);" class="btn" data-dismiss="modal">Close</a>
   </div>
 </div>
 </body>
