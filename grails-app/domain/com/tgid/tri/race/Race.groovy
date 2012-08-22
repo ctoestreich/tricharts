@@ -4,6 +4,7 @@ class Race {
 
     String name
     Date date
+    Long athlinkRaceId
     RaceType raceType
     DistanceType distanceType
     RaceCategoryType raceCategoryType
@@ -22,6 +23,7 @@ class Race {
         distance nullable: false, min: 0.01F
         raceCategoryType nullable: false
         statusType nullable: false
+        athlinkRaceId nullable: true
     }
 
     static mapping = {

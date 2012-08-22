@@ -1,5 +1,5 @@
 <%@ page import="com.tgid.tri.race.StatusType; com.tgid.tri.race.Race" %>
-<g:set var="statusType" value="${params?.statusType ?: StatusType.Pending.value()}"/>
+<g:set var="statusType" value="${params?.int('statusType') ?: 2}"/>
 <g:set var="statusTypeText" value="${StatusType.getStatusType(params?.statusType ?: StatusType.Pending.value())}"/>
 <!doctype html>
 <html>
@@ -108,7 +108,7 @@
         </table>
 
         <div class="pagination">
-            <bootstrap:paginate total="${raceInstanceTotal}"/>
+            <bootstrap:paginate params="${params}" total="${raceInstanceTotal}"/>
         </div>
     </div>
 

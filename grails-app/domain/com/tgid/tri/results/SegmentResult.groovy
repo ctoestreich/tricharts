@@ -81,7 +81,7 @@ class SegmentResult {
         if(!duration || duration == Duration.standardSeconds(0)) {
             return ['', '']
         }
-        def distance = raceSegment.distance * swimMultiplier(raceSegment)
+        def distance = raceSegment.distance / swimMultiplier(raceSegment)
         Duration swimPace = Duration.standardSeconds(new Duration(Math.round(duration.millis / distance)).standardSeconds)
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat

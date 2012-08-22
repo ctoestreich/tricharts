@@ -39,6 +39,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/integration" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/grails-app/jobs" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
@@ -71,6 +72,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.jackson/jackson-mapper-asl/jars/jackson-mapper-asl-1.6.2.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-client-lib/jars/cloudfoundry-client-lib-0.7.5.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-caldecott-lib/jars/cloudfoundry-caldecott-lib-0.1.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-1.8.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -1,10 +1,9 @@
 package com.tgid.tri
 
-
-
-import org.junit.*
-import grails.test.mixin.*
 import com.tgid.tri.race.Segment
+import com.tgid.tri.race.SegmentController
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
 
 @TestFor(SegmentController)
 @Mock(Segment)

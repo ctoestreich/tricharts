@@ -122,3 +122,7 @@ grails.gorm.default.mapping = {
     "user-type" type: org.jadira.usertype.dateandtime.joda.PersistentYearMonthDay, class: org.joda.time.YearMonthDay
     "user-type" type: org.jadira.usertype.dateandtime.joda.PersistentYears, class: org.joda.time.Years
 }
+
+athlinks {
+    key ="8253934e71896ea92a53f00e3577efa0"
+}

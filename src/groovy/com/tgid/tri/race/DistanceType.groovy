@@ -3,5 +3,5 @@ package com.tgid.tri.race
 /**
  */
 enum DistanceType  implements Serializable {
-    Miles, Kilometers, Yards, Meters
+    Miles, Kilometers, Yards, Meters, Feet
 }

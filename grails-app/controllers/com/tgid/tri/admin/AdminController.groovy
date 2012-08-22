@@ -11,11 +11,13 @@ class AdminController {
 
     def raceList() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-
-        def races = Race?.list(params)?.findAll { it.statusType == StatusType.getStatusType(params?.int('statusType') ?: 2) }
-
-
-        [raceInstanceList: races, raceInstanceTotal: races.size()]
+        params.statusType = params?.int('statusType')?:2
+        def criteria = Race.createCriteria()
+        def raceCount = Race.findAllByStatusType(StatusType.getStatusType(params?.int('statusType')?:2)).size()
+        def races = criteria.list(max: params.max, offset: params?.offset?:0, sort: params?.sort ?: 'date'){
+            eq('statusType', StatusType.getStatusType(params?.int('statusType')?:2))
+        }
+        [raceInstanceList: races, raceInstanceTotal: raceCount]
     }
 
     def updateRaceStatus() {

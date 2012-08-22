@@ -9,6 +9,7 @@ class RaceResult {
     static hasMany = [segmentResults: SegmentResult]
 
     Race race
+    Long athlinkEntryID
     Duration duration
     Integer placeAgeGroup
     Integer placeGender
@@ -34,6 +35,7 @@ class RaceResult {
         participantsAgeGroup nullable: true
         participantsOverall nullable: true
         participantsGender nullable: true
+        athlinkEntryID nullable: true
     }
 
     @Override

@@ -15,8 +15,9 @@ class User {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
+    Long athlinkRacerId
 
-    static hasMany = [races: Race]
+    static hasMany = [races: Race, racers: Racer]
 
     static constraints = {
         username blank: false, unique: true
@@ -24,6 +25,7 @@ class User {
         firstName blank: false
         lastName blank: false
         dob blank: false
+        athlinkRacerId blank: true, nullable: true
     }
 
     static mapping = {

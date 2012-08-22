@@ -1,10 +1,9 @@
 package com.tgid.tri
 
-
-
-import org.junit.*
-import grails.test.mixin.*
 import com.tgid.tri.race.Race
+import com.tgid.tri.race.RaceController
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
 
 @TestFor(RaceController)
 @Mock(Race)
