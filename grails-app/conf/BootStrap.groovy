@@ -17,15 +17,15 @@ class BootStrap {
     }
 
     private void createInitialRacesAndResults() {
+        seedSegments()
+
         //create dome dummy users to test
         createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true), true)
         createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true), false)
         createUser(new User(username: 'bugurlu@hotmail.com', password: 'bugurlu', firstName: 'Bulent', lastName: 'Ugurlu', dob: new Date(70, 10, 18), enabled: true), true)
         createUser(new User(username: 'kwschulz@gmail.com', password: 'kwschulz', firstName: 'Ken', lastName: 'Schulz', dob: new Date(77, 5, 18), enabled: true), true)
-        createUser(new User(username: 'patrick.parish@gmail.com', password: 'kwschulz', firstName: 'Ken', lastName: 'Schulz', dob: new Date(77, 5, 18), enabled: true), true)
+        createUser(new User(username: 'patrick.parish@gmail.com', password: 'pparish', firstName: 'Patrick', lastName: 'Parish', dob: new Date(85, 5, 18), enabled: true), false)
         createUser(new User(username: 'user@gmail.com', password: 'user', firstName: 'Test', lastName: 'User', dob: new Date(80, 3, 1), enabled: true), false)
-
-        seedSegments()
 
         //seedResults()
     }
@@ -163,18 +163,18 @@ class BootStrap {
         raceResult.save()
     }
 
-    private User createUser(User user, boolean isAdmin = false) {
-        user.save()
-        def role_user = Role.findOrSaveWhere(authority: 'ROLE_USER')
-        def role_admin = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
-        new UserRole(user: user, role: role_user).save()
-        if(isAdmin) {
-            new UserRole(user: user, role: role_admin).save()
+    private void createUser(User user, boolean isAdmin = false) {
+        if(!User.findByUsername(user.username)){
+            user.save()
+            def role_user = Role.findOrSaveWhere(authority: 'ROLE_USER')
+            def role_admin = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
+            new UserRole(user: user, role: role_user).save()
+            if(isAdmin) {
+                new UserRole(user: user, role: role_admin).save()
+            }
         }
 
         userService.mapUserToAthlinkUsers(user)
-
-        user
     }
 
     /**

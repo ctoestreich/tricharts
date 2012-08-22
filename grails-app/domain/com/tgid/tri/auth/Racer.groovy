@@ -9,4 +9,9 @@ class Racer {
     static constraints = {
         racerID nullable: false
     }
+
+    @Override
+    public String toString() {
+        return "${user} (${racerID})"
+    }
 }

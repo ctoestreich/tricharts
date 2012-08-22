@@ -11,6 +11,7 @@ class RaceService {
         if(race.raceType == RaceType.Running) { createRunSegments(race) }
         if(race.raceType == RaceType.Biking) { createBikeSegments(race) }
         if(race.raceType == RaceType.Triathlon) { createTriathlonSegments(race, course) }
+        if(race.raceType == RaceType.Duathlon) { createDuathlonSegments(race, course) }
 
         if(race.validate()) {
             try {
@@ -44,6 +45,21 @@ class RaceService {
         }
     }
 
+    void createDuathlonSegments(Race race, Map course = [:]) {
+        Segment runSegment1 = null, t1Segment = null, bikeSegment = null, t2Segment = null, runSegment2 = null
+        if(course && course.CoursePattern.contains(',')) {
+            course.CoursePattern.split(',').each {
+                def segment = it.toString().toUpperCase()
+                if(segment.contains('RUN') && !runSegment1) {runSegment1 = mapSegment(segment, 'RUN', SegmentType.DuRun1)}
+                else if(segment.contains('BIKE') && !bikeSegment) {bikeSegment = mapSegment(segment, 'BIKE', SegmentType.Bike)}
+                else if(segment.contains('RUN') && !runSegment2 && runSegment1) {runSegment2 = mapSegment(segment, 'RUN', SegmentType.DuRun2)}
+                if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400f) }
+                if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f) }
+            }
+            addSegmentsToRace(race, [runSegment1, t1Segment, bikeSegment, t2Segment, runSegment2])
+        }
+    }
+
     void createTriathlonSegments(Race race, Map course = [:]) {
         Segment swimSegment = null, t1Segment = null, bikeSegment = null, t2Segment = null, runSegment = null
 
@@ -56,19 +72,17 @@ class RaceService {
                 if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400f) }
                 if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f) }
             }
-            addSegmentsToRace(race, swimSegment, t1Segment, bikeSegment, t2Segment, runSegment)
+            addSegmentsToRace(race, [swimSegment, t1Segment, bikeSegment, t2Segment, runSegment])
         } else {
             mapTriathlonRaceSegments(race, swimSegment, runSegment, t1Segment, t2Segment, bikeSegment)
         }
 
     }
 
-    private void addSegmentsToRace(Race race, Segment swimSegment, Segment t1Segment, Segment bikeSegment, Segment t2Segment, Segment runSegment) {
-        race.addToSegments(new RaceSegment(segment: swimSegment))
-        race.addToSegments(new RaceSegment(segment: t1Segment))
-        race.addToSegments(new RaceSegment(segment: bikeSegment))
-        race.addToSegments(new RaceSegment(segment: t2Segment))
-        race.addToSegments(new RaceSegment(segment: runSegment))
+    private void addSegmentsToRace(Race race, List<Segment> segments) {
+        segments.each {
+            race.addToSegments(new RaceSegment(segment: it))
+        }
     }
 
     private void mapTriathlonRaceSegments(Race race, Segment swimSegment, Segment runSegment, Segment t1Segment, Segment t2Segment, Segment bikeSegment) {
@@ -97,7 +111,7 @@ class RaceService {
         if(!t2Segment) {t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f)}
         if(!runSegment) {runSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Run, distanceType: runDistance.distanceType, distance: runDistance.distance.floatValue())}
 
-        addSegmentsToRace(race, swimSegment, t1Segment, bikeSegment, t2Segment, runSegment)
+        addSegmentsToRace(race, [swimSegment, t1Segment, bikeSegment, t2Segment, runSegment])
 
     }
 
@@ -115,6 +129,7 @@ class RaceService {
             case 'MILES':
                 return DistanceType.Miles
             case 'K':
+            case 'K TRAIL':
             case 'KM':
             case 'KILOMETER':
             case 'KILOMETERS':
@@ -125,6 +140,8 @@ class RaceService {
                 return DistanceType.Yards
             case 'FT':
                 return DistanceType.Feet
+            case 'M':
+                return DistanceType.Meters
         }
         println "!! Could not mapDistanceType - $distanceType"
         return DistanceType.Miles

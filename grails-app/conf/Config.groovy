@@ -79,9 +79,9 @@ environments {
 log4j = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name: "stdout", threshold: org.apache.log4j.Level.INFO
+    }
 
     error 'org.codehaus.groovy.grails.web.servlet',        // controllers
           'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -94,6 +94,16 @@ log4j = {
           'org.springframework',
           'org.hibernate',
           'net.sf.ehcache.hibernate'
+
+    info 'com.tgid.tri'
+
+    environments {
+        production {
+            // Override previous setting for 'grails.app.controller'
+            error "com.tgid.tri"
+        }
+    }
+
 }
 
 grails.plugins.twitterbootstrap.fixtaglib = true
@@ -124,5 +134,5 @@ grails.gorm.default.mapping = {
 }
 
 athlinks {
-    key ="8253934e71896ea92a53f00e3577efa0"
+    key = "8253934e71896ea92a53f00e3577efa0"
 }

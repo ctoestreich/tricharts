@@ -1,24 +1,26 @@
 package com.tgid.tri.data.parsing
 
-import grails.plugin.spock.IntegrationSpec
-import com.tgid.tri.auth.User
+import com.tgid.tri.auth.Racer
 import com.tgid.tri.results.RaceResult
+import grails.plugin.spock.IntegrationSpec
+import spock.lang.Unroll
 
 /**
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
  */
 class AthlinksResultsParsingServiceSpec extends IntegrationSpec {
 
-   AthlinksResultsParsingService athlinksResultsParsingService
+    AthlinksResultsParsingService athlinksResultsParsingService
 
-    def "test importing results for athlete"() {
-        given:
-        def user = User.findByUsername('acetrike@yahoo.com')
-
+    @Unroll()
+    def "test importing results for racer #racer"() {
         when:
-        athlinksResultsParsingService.retrieveResults(user)
+        athlinksResultsParsingService.retrieveResults(racer)
 
         then:
-        RaceResult.findAllByUser(user).size() > 0
+        RaceResult.findAllByUser(racer.user).size() > 0
+
+        where:
+        racer << Racer.list()
     }
 }

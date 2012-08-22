@@ -6,7 +6,6 @@ import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap
 import org.joda.time.Duration
-import com.tgid.tri.race.SegmentType
 
 class RaceResultService {
 
@@ -23,21 +22,29 @@ class RaceResultService {
                 participantsGender: result.CountG,
                 participantsOverall: result.Count0)
 
-        result.LegEntries.eachWithIndex { segment, i ->
-            createSegmentResult(race, raceResult, segment, i)
+        Integer index = 0
+        result.LegEntries.each { segment ->
+            if(segment.ActionCatName != 'Penalty'){
+                createSegmentResult(race, raceResult, segment, index)
+                index++
+            }
         }
-
         createRaceResult(raceResult)
     }
 
     private void createSegmentResult(Race race, RaceResult raceResult, Map segment, Integer i) {
-        def raceSegment = race.segments.sort {a,b -> a.segmentOrder <=> b.segmentOrder}
-        def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
-                                              duration: Duration.millis(segment.Ticks as Long),
-                                              placeAgeGroup: segment.RankA,
-                                              placeOverall: segment.RankO,
-                                              placeGender: segment.RankG)
-        raceResult.addToSegmentResults(segmentResult)
+        try {
+            def raceSegment = race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
+            def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
+                                                  duration: Duration.millis(segment.Ticks as Long),
+                                                  placeAgeGroup: segment.RankA,
+                                                  placeOverall: segment.RankO,
+                                                  placeGender: segment.RankG)
+            raceResult.addToSegmentResults(segmentResult)
+        } catch(Exception e) {
+            log.info "Error adding segment to ${raceResult}"
+            log.error e
+        }
     }
 
     RaceResult mapRaceResult(User user, GrailsParameterMap params) {

@@ -20,10 +20,12 @@ class Segment {
 
     Integer getSegmentOrder() {
         if(SegmentType.Swim == segmentType) return 1
+        if(SegmentType.DuRun1 == segmentType) return 1
         if(SegmentType.T1 == segmentType) return 2
         if(SegmentType.Bike == segmentType) return 3
         if(SegmentType.T2 == segmentType) return 4
         if(SegmentType.Run == segmentType) return 5
+        if(SegmentType.DuRun2 == segmentType) return 5
         return 1
     }
 

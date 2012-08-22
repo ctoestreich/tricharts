@@ -6,7 +6,7 @@ class UserService {
 
     def grailsApplication
 
-    def mapUserToAthlinkUsers(User user) {
+    void mapUserToAthlinkUsers(User user) {
         def searchUrl = "http://api.athlinks.com/athletes/search/${user.firstName}%20${user.lastName}/us_mn?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0"
         def users = null
 
@@ -18,7 +18,7 @@ class UserService {
         }
 
         users.each {
-            Racer.findOrSaveWhere(user: user, racerID: it.RacerID)
+            Racer.findOrSaveWhere(user: user, racerID: it.RacerID as Long)
         }
     }
 }

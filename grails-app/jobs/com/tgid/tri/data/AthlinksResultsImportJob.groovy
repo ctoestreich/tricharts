@@ -1,9 +1,7 @@
 package com.tgid.tri.data
 
-import com.tgid.tri.auth.User
+import com.tgid.tri.auth.Racer
 import com.tgid.tri.data.parsing.AthlinksResultsParsingService
-
-
 
 class AthlinksResultsImportJob {
 
@@ -13,13 +11,15 @@ class AthlinksResultsImportJob {
     AthlinksResultsParsingService athlinksResultsParsingService
 
     static triggers = {
-        simple name:'simpleTrigger', startDelay:10000, repeatInterval: 30000, repeatCount: 10
-        cron name: 'myTrigger', cronExpression: "0 0 6 * * ?"
+        simple name: 'applicationBootTrigger', startDelay: 10000, repeatCount: 1
+        cron name: 'dailyTrigger', cronExpression: "0 0 6 * * ?"
     }
 
     def execute() {
-        User.findAllWhere(athlinkRacerId: !null).each {
-            athlinksResultsParsingService.retrieveResults(it)
+        log.trace "Running AthlinksResultsImportJob ${new Date()}"
+        Racer.list().each {
+            log.info "Adding Results for ${it.user} using id: ${it.racerID}"
+            athlinksResultsParsingService.retrieveResults(it.user)
         }
     }
 }
