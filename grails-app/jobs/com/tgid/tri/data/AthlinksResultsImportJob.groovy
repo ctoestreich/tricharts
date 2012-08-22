@@ -11,7 +11,7 @@ class AthlinksResultsImportJob {
     AthlinksResultsParsingService athlinksResultsParsingService
 
     static triggers = {
-        simple name: 'applicationBootTrigger', startDelay: 10000, repeatCount: 1
+        simple name: 'applicationBootTrigger', startDelay: 10000, repeatCount: 1, repeatInterval: 10000
         cron name: 'dailyTrigger', cronExpression: "0 0 6 * * ?"
     }
 

@@ -54,14 +54,14 @@ class AthlinksResultsParsingService {
         if(!race && raceMap?.Race?.RaceID) {
             log.info "Creating race for ${raceMap.Race.RaceID} - ${raceMap.Race.RaceName}"
             def course = raceMap.Race.Courses[0]
-            def coursePattern = coursePatternService.lookup(course?.CoursePattern)
+            def coursePattern = coursePatternService.lookup(course)
             race = new Race(
                     name: raceMap.Race.RaceName,
                     date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
                     raceType: mapRaceType(course),
-                    raceCategoryType: coursePattern.raceCategoryType,
-                    distanceType: coursePattern.distanceType,
-                    distance: coursePattern.distance,
+                    raceCategoryType: coursePattern?.raceCategoryType,
+                    distanceType: coursePattern?.distanceType,
+                    distance: coursePattern?.distance,
                     athlinkRaceId: raceMap.Race.RaceID
             )
             raceService.saveRace(race, course)
@@ -91,6 +91,8 @@ class AthlinksResultsParsingService {
 
     private RaceType mapRaceType(Map course) {
         switch(course?.RaceCatDesc) {
+            case 'Swimming':
+                return RaceType.Swimming
             case 'Running':
                 return RaceType.Running
             case 'Triathlon & Multisport':

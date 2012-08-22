@@ -29,14 +29,14 @@
 
 <div class="span2"><div id="halfRecord" class="personalBestDiv">
     <div class="btn-group-wrap">
-        <h2><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${RaceCategoryType.HalfMarathon}'")?.race} @ ${data?.get("'${RaceCategoryType.HalfMarathon}'")?.result?.pace}" data-content=""><tri:formatDuration duration="${data?.get("'${RaceCategoryType.HalfMarathon}'", Duration.standardSeconds(0))}" /></a></h2>
+        <h2><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${RaceCategoryType.HalfMarathon}'")?.race} @ ${data?.get("'${RaceCategoryType.HalfMarathon}'")?.result?.pace}" data-content=""><tri:formatDuration duration="${data?.get("'${RaceCategoryType.HalfMarathon}'", Duration.standardSeconds(0))?.duration}" /></a></h2>
         <h4>13.1 PR <tri:displayPace pace="${data?.get("'${RaceCategoryType.HalfMarathon}'")?.result?.pace}"/></h4>
     </div>
 </div></div>
 
 <div class="span2"><div id="halfRecord" class="personalBestDiv">
     <div class="btn-group-wrap">
-        <h2><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${RaceCategoryType.Marathon}'")?.race} @ ${data?.get("'${RaceCategoryType.Marathon}'")?.result?.pace}" data-content=""><tri:formatDuration duration="${data?.get("'${RaceCategoryType.Marathon}'", Duration.standardSeconds(0))}" /></a></h2>
+        <h2><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${RaceCategoryType.Marathon}'")?.race} @ ${data?.get("'${RaceCategoryType.Marathon}'")?.result?.pace}" data-content=""><tri:formatDuration duration="${data?.get("'${RaceCategoryType.Marathon}'", Duration.standardSeconds(0))?.duration}" /></a></h2>
         <h4>26.2 PR <tri:displayPace pace="${data?.get("'${RaceCategoryType.Marathon}'")?.result?.pace}"/></h4>
     </div>
 </div></div>

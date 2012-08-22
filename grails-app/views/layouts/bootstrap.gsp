@@ -76,6 +76,8 @@
                   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
                   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
                   <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
+                  <li><hr></li>
+                  <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
                 </ul>
               </li>
             </sec:ifAnyGranted>

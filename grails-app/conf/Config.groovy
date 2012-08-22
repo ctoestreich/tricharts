@@ -76,12 +76,16 @@ environments {
 }
 
 // log4j configuration
-log4j = {
+log4j = { root ->
     // Example of changing the log pattern for the default console appender:
     //
-    appenders {
-        console name: "stdout", threshold: org.apache.log4j.Level.INFO
-    }
+//    appenders {
+//        console name: "stdout", threshold: org.apache.log4j.Level.DEBUG
+//    }
+//
+//    root {
+//        debug 'stdout'
+//    }
 
     error 'org.codehaus.groovy.grails.web.servlet',        // controllers
           'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -95,12 +99,14 @@ log4j = {
           'org.hibernate',
           'net.sf.ehcache.hibernate'
 
-    info 'com.tgid.tri'
+    debug 'com.tgid.tri'
+    debug "grails.app"
 
     environments {
         production {
             // Override previous setting for 'grails.app.controller'
             error "com.tgid.tri"
+            error "grails.app"
         }
     }
 
