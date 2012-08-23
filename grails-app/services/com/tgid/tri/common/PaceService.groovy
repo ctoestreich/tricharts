@@ -34,7 +34,7 @@ class PaceService {
         if(!result.duration || result.duration == Duration.standardSeconds(0)) {
             return ['', '']
         }
-        def distance = result.raceSegment.distance * runAndBikeMultiplier(raceSegment)
+        def distance = result.raceSegment.distance * runAndBikeMultiplier(result?.raceSegment)
         def paceSpeed = new BigDecimal(distance / (((result.duration.millis / 1000) / 60) / 60)).setScale(2, RoundingMode.HALF_UP)
         def display = "${paceSpeed}"
         [display, paceSpeed]
@@ -57,7 +57,7 @@ class PaceService {
         if(!result.duration || result.duration == Duration.standardSeconds(0)) {
             return ['', '']
         }
-        def distance = result.raceSegment.distance / runAndBikeMultiplier(raceSegment)
+        def distance = result.raceSegment.distance / runAndBikeMultiplier(result.raceSegment)
         Duration runPace = Duration.standardSeconds(new Duration(Math.round(result.duration.millis / distance)).standardSeconds)
         def paceDuration = runPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
@@ -77,11 +77,11 @@ class PaceService {
     private swimMultiplier(RaceSegment segment) {
         switch(segment.distanceType) {
             case DistanceType.Meters:
-                return 0.0109361
+                return 91.44
             case DistanceType.Miles:
                 return 0.0568
             default:
-                return 0.01
+                return 100
         }
     }
 }
