@@ -31,7 +31,7 @@
 <g:if test="${!race}">
   <h3>Add ${params?.raceType} Result</h3>
   <g:form id="createResult" class="form-inline well" controller="dashboard" action="selectRace">
-    <g:hiddenField name="user.id" id="user.id" value="${params?.user?.id}"/>
+    <g:hiddenField name="user.id" id="user.id" value="${params.get('user.id')}"/>
     <g:hiddenField name="raceType" id="raceType" value="${params?.raceType}"/>
     <g:if test="${races}">
       <p>Search For Race By Name</p>
@@ -51,7 +51,7 @@
 </g:if>
 <g:else>
   <g:form id="saveResult" class="form-horizontal well" controller="dashboard" action="saveResult">
-    <g:hiddenField name="user.id" if="user.id" value="${params?.user?.id}"/>
+    <g:hiddenField name="user.id" if="user.id" value="${user?.id}"/>
     <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">

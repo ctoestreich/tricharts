@@ -83,6 +83,7 @@
 
 <g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="dashboard" action="modifyRaceResults">
   <g:hiddenField name="raceResultId" value=""/>
+  <g:hiddenField name="user.id" value="${user?.id}"/>
   <g:hiddenField name="raceResultEdit" value="false"/>
 </g:form>
 

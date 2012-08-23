@@ -53,26 +53,45 @@ class AthlinksResultsParsingService {
         if(!race && raceMap?.Race?.RaceID) {
             log.info "Creating race for ${raceMap.Race.RaceID} - ${raceMap.Race.RaceName}"
             raceMap.Race.Courses.each { course ->
-                def coursePattern = coursePatternService.lookup(course)
-                race = new Race(
-                        name: raceMap.Race.RaceName,
-                        date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
-                        raceType: mapRaceType(course),
-                        raceCategoryType: coursePattern?.raceCategoryType,
-                        distanceType: coursePattern?.distanceType,
-                        distance: coursePattern?.distance,
-                        athlinkRaceID: raceMap.Race.RaceID,
-                        eventCourseID: course.EventCourseID
-                )
-                raceService.saveRace(race, course)
+                mapCourseAndResult(user, raceMap, course)
+            }
+        }
+
+        raceMap?.Race?.Courses?.each { course ->
+            importResult(user, raceMap.EntryID, course.EventCourseID)
+        }
+    }
+
+    private void mapCourseAndResult(User user, Map raceMap, Map course) {
+        try {
+            def coursePattern = coursePatternService.lookup(course)
+            def race = new Race(
+                    name: raceMap.Race.RaceName,
+                    date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
+                    raceType: mapRaceType(course),
+                    raceCategoryType: coursePattern?.raceCategoryType,
+                    distanceType: coursePattern?.distanceType,
+                    distance: coursePattern?.distance,
+                    athlinkRaceID: raceMap.Race.RaceID,
+                    eventCourseID: course.EventCourseID
+            )
+            race = raceService.saveRace(race, course)
+            if(race) {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
+        } catch(Exception e) {
+            log.error e
         }
     }
 
     private RaceResult importResult(User user, Long entryID, Long eventCourseID) {
-        if(RaceResult.findByAthlinkEntryID(entryID)) {
-            return
+        def raceResult = RaceResult.findByAthlinkEntryID(entryID)
+        if(!entryID || !eventCourseID){
+            return null
+        }
+
+        if(raceResult) {
+            return raceResult
         }
 
         log.info "Creating result for ${eventCourseID} entry: ${entryID}"
@@ -86,8 +105,10 @@ class AthlinksResultsParsingService {
         } catch(Exception e) {
             log.error e
         }
-
-        raceResultService.mapRaceResultAthlinks(user, eventCourseID, result)
+        if(result?.EntryID) {
+            return raceResultService.mapRaceResultAthlinks(user, eventCourseID, result)
+        }
+        return null
     }
 
     private RaceType mapRaceType(Map course) {

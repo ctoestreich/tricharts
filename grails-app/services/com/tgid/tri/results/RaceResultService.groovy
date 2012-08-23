@@ -11,26 +11,30 @@ class RaceResultService {
 
     RaceResult mapRaceResultAthlinks(User user, Long eventCourseID, Map result = [:]) {
         def race = Race.findByEventCourseID(eventCourseID)
-        def raceResult = new RaceResult(
-                race: race,
-                user: user,
-                athlinkEntryID: result.EntryID,
-                duration: Duration.millis(result.Ticks as Long),
-                placeAgeGroup: result.RankA,
-                placeGender: result.RankG,
-                placeOverall: result.RankO,
-                participantsAgeGroup: result.CountA,
-                participantsGender: result.CountG,
-                participantsOverall: result.CountO)
+        def raceResult = RaceResult.findByAthlinkEntryID(result?.EntryID)
+        if(race && !raceResult) {
+            raceResult = new RaceResult(
+                    race: race,
+                    user: user,
+                    athlinkEntryID: result.EntryID,
+                    duration: Duration.millis(result.Ticks as Long),
+                    placeAgeGroup: result.RankA,
+                    placeGender: result.RankG,
+                    placeOverall: result.RankO,
+                    participantsAgeGroup: result.CountA,
+                    participantsGender: result.CountG,
+                    participantsOverall: result.CountO)
 
-        Integer index = 0
-        result.LegEntries.each { segment ->
-            if(segment.ActionCatName != 'Penalty'){
-                createSegmentResult(race, raceResult, segment, index)
-                index++
+            Integer index = 0
+            result.LegEntries.each { segment ->
+                if(segment.ActionCatName != 'Penalty') {
+                    createSegmentResult(race, raceResult, segment, index)
+                    index++
+                }
             }
+            createRaceResult(raceResult)
         }
-        createRaceResult(raceResult)
+        return raceResult
     }
 
     private void createSegmentResult(Race race, RaceResult raceResult, Map segment, Integer i) {

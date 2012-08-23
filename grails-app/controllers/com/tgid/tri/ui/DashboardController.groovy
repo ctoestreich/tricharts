@@ -115,7 +115,7 @@ class DashboardController extends BaseController {
             default:
                 races = []
         }
-        render view: 'createResult', model: [raceResult: new RaceResult(), user: user, races: races]
+        render view: 'createResult', model: [raceResult: new RaceResult(), user: user, races: races, 'user.id': user.id]
     }
 
     private List<Race> findRacesWithNoResults(userId, RaceType raceType) {
@@ -135,7 +135,7 @@ class DashboardController extends BaseController {
         User user = requestedUser
         def raceResult = RaceResult.get(params?.int('raceResultId') ?: 0)
 
-        render view: 'createResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
+        render view: 'createResult', model: [race: raceResult.race, user: user as User, raceResult: raceResult, 'user.id': user.id]
     }
 
     def selectRace() {

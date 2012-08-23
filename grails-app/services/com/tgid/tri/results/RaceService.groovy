@@ -17,9 +17,9 @@ class RaceService {
             try {
                 race.save()
             } catch(ValidationException e) {
-                println race.name
-                println e.message
+                log.error "error saving race: ${race.name}"
                 log.error e.message
+                return null
             }
         } else {
             println 'Validation Errors!'
@@ -29,6 +29,8 @@ class RaceService {
             }
             return null
         }
+
+        return race
     }
 
     void createBikeSegments(Race race) {

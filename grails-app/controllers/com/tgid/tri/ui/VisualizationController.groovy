@@ -2,17 +2,26 @@ package com.tgid.tri.ui
 
 import com.tgid.tri.BaseController
 import com.tgid.tri.auth.User
+import com.tgid.tri.common.JodaTimeHelper
 import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.SegmentType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
-import grails.plugins.springsecurity.Secured
 import grails.plugin.springcache.annotations.Cacheable
+import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
 
 @Secured(["ROLE_USER"])
 class VisualizationController extends BaseController {
+
+    def averages() {
+        User user = requestedUser
+
+        def races = getRaceCategoriesByType(params?.raceType)
+
+        render view: 'averages', model: [user: user, races: races]
+    }
 
     def progression() {
         User user = requestedUser
@@ -22,7 +31,7 @@ class VisualizationController extends BaseController {
         render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
     }
 
-    private List getRaceCategoriesByType(String raceType) {
+    private List<RaceCategoryType> getRaceCategoriesByType(String raceType) {
         if(raceType == 'Run')
             return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
 
@@ -65,6 +74,15 @@ class VisualizationController extends BaseController {
         def queryRaceType = RaceType.Triathlon
 
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
+    }
+
+    def runningAverages() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceType = RaceType.Running
+
+        renderRunAveragesChart(resultDiv, userId, queryRaceType)
     }
 
     @Cacheable("triathlonRecordsCache")
@@ -151,14 +169,83 @@ class VisualizationController extends BaseController {
             def key = result.date.year + 1900
             def period = result.duration.toPeriod()
             if(data.containsKey(key)) {
-                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name} ${result.race.date.format("M-dd-yyyy")}'}")
+                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'','\\\'')} ${result.race.date.format("M-dd-yyyy")}'}")
             } else {
-                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name} ${result.race.date.format("M-dd-yyyy")}'}"))
+                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'','\\\'')} ${result.race.date.format("M-dd-yyyy")}'}"))
             }
         }
 
         render template: "/templates/charts/runProgression",
                model: [height: 200, width: 200, data: data, id: resultDiv, type: queryRaceCategoryType]
+    }
+
+    private renderRunAveragesChart(String resultDiv, userId, RaceType queryRaceType) {
+        def races = getRaceCategoriesByType('Run')
+        def data = new HashMap<Integer, HashMap<String, List>>()
+        def categories = []
+        def totalRaces = []
+
+        races.each { raceCategoryType ->
+            categories << "'${raceCategoryType.raceCategoryType}'"
+            def results = RaceResult.where {
+                user.id == userId
+                race.raceType == queryRaceType
+                race.raceCategoryType == raceCategoryType
+            }
+
+            def sortedResults = results.list().sort {a, b -> a?.date <=> b?.date}
+
+            totalRaces << "{name: '${raceCategoryType.raceCategoryType}', y: ${sortedResults?.size() ?: 0}}"
+
+            sortedResults.each { result ->
+                def key = result.date.year + 1900
+                def duration = result?.segmentResults?.toList()?.get(0)?.pace?.duration
+                if(duration) {
+                    if(data.containsKey(key)) {
+                        def childMap = data.get(key)
+                        if(childMap.containsKey(result.race.raceCategoryType.raceCategoryType)) {
+                            childMap.get(result.race.raceCategoryType.raceCategoryType) << duration
+                        } else {
+                            childMap.put(result.race.raceCategoryType.raceCategoryType, [duration])
+                        }
+                    } else {
+                        data.put(key, [:])
+                        data.get(key).put(result.race.raceCategoryType.raceCategoryType, [duration])
+                    }
+                }
+            }
+        }
+
+        def results = new HashMap<Integer, List>()
+        def sortedData = data.keySet().toList().sort { a, b -> a <=> b}.collect()
+        sortedData.each {key ->
+            def map = data.get(key)
+            def list = []
+            races.each { race ->
+                if(map.containsKey(race.raceCategoryType)) {
+                    def duration = averageRaces(map.get(race.raceCategoryType))
+                    list << "Date.parse('1-1-1 ${tri.formatDuration(duration: duration, formatter: JodaTimeHelper.getPeriodFormat(true, true, true))}')-timeToSubtract"
+                } else {
+                    list << "null"
+                }
+            }
+            results.put(key, list)
+            println list
+        }
+
+        render template: "/templates/charts/runAverages",
+               model: [height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+    }
+
+    private Duration averageRaces(List races) {
+        Duration time = Duration.standardSeconds(0)
+        Integer total = 0
+        races.toArray().each { Duration duration ->
+            time = time.plus(duration)
+            total++
+        }
+        def result = Duration.standardSeconds(Math.round(time.standardSeconds / total))
+        return result
     }
 
     private void renderTriathlonProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
@@ -237,7 +324,7 @@ class VisualizationController extends BaseController {
         }
 
         //filter out results under 2min for now
-        results = results.findAll{ it.duration > Duration.standardSeconds(120)}.collect()
+        results = results.findAll { it.duration > Duration.standardSeconds(120)}.collect()
 
 //        def results = SegmentResult.where {
 //            raceResult.user.id == userId

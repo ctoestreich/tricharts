@@ -10,6 +10,7 @@ enum RaceCategoryType implements Serializable {
     HalfMarathon('Half Marathon'),
     Ironman('Ironman'),
     HalfIronman('Half Ironman'),
+    HalfMile('0.5 Mile'),
     OneMile('1 Mile'),
     ThreeMile('3 Mile'),
     FiveMile('5 Mile'),

@@ -36,7 +36,12 @@ class CoursePatternService {
             '0.5Mi Swim, 15Mi Bike/Cycle, 3Mi Run': sprint,
             '0.5Mi Swim, 0.5Mi Swim, 15Mi Bike/Cycle, 15Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
             '0.5Mi Swim, 0.5Mi Swim, 13.3Mi Bike/Cycle, 13.3Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
-            '0.5Mi Swim, 21Mi Bike/Cycle, 5.3Mi Run': sprint
+            '0.5Mi Swim, 21Mi Bike/Cycle, 5.3Mi Run': sprint,
+            '0.5Mi Swim': new CoursePattern(distance: 0.5f, raceCategoryType: RaceCategoryType.HalfMile, distanceType: DistanceType.Miles),
+            '5Mi Mountain Bike': new CoursePattern(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '5Mi Swim': new CoursePattern(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '7.3Mi Run': new CoursePattern(distance: 7.3f, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '1Mi Swim': new CoursePattern(distance: 1, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
     ]
 
     CoursePattern lookup(Map course) {
@@ -65,7 +70,7 @@ class CoursePatternService {
     }
 
     private boolean testForDuathlon(String name){
-        (name =~ /DUATHLON/).find()
+        ((name =~ /DUATHLON/).find() || (name =~ /DUA/).find())
     }
 
     private boolean testForTenKilometer(String name) {
