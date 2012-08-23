@@ -173,6 +173,15 @@ div.btn-group {
     width: 400px;
 }
 
+.accordion-heading {
+    border-bottom: 0;
+    font-size: .75em;
+}
+.accordion-heading .accordion-toggle {
+    display: block;
+    padding: 4px 7px;
+}
+
 /*td.Running { background-color: rgba(255, 0, 0, 0.47);}*/
 /*td.Swimming { background-color: rgba(59, 2, 255, 0.46);}*/
 /*td.Biking { background-color: rgba(111, 255, 0, 0.46);}*/

@@ -65,7 +65,7 @@
             <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Data Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
                   <li><hr></li>
@@ -78,6 +78,14 @@
                   <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
                   <li><hr></li>
                   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear Record Cache</a></li>
+                  <li><hr></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksData')}">Import Athlinks Data</a></li>
                 </ul>
               </li>
             </sec:ifAnyGranted>

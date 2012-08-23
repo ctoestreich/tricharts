@@ -18,7 +18,7 @@
   <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 </g:if>
 
-<g:render template="/templates/admin/userSelect"/>
+<g:render template="/templates/admin/userSelect" />
 
 <script type="text/javascript">
   app.loadRunRecords = function () {
@@ -26,7 +26,7 @@
     ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords', params: ['user.id': params?.user?.id])}
   };
 
-  $(function () {
+  $(function(){
     app.loadRunRecords();
   });
 
@@ -41,17 +41,13 @@
   <BR>
 
   <div id="results-run" class="accordion">
-    <g:if test="${params?.srt == "typeRun"}">
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
+    <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}"
+              var="result"/>
   </div>
   %{--</div>--}%
 </div>
 
-<BR/>
+<BR />
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
@@ -62,12 +58,8 @@
   <BR>
 
   <div id="results-triathlon" class="accordion">
-    <g:if test="${params?.srt == "typeTriathlon"}">
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
+    <g:render template="/templates/triathlonResults"
+              collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
   </div>
 </div>
 

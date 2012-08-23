@@ -3,9 +3,23 @@ package com.tgid.tri.admin
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugins.springsecurity.Secured
+import grails.plugin.springcache.annotations.CacheFlush
+import com.tgid.tri.data.AthlinksResultsImportJob
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
+
+    def athlinksResultsParsingService
+
+    @CacheFlush(["triathlonRecordsCache", "runningRecordsCache"])
+    def clearRecordsCaches(){
+        redirect( controller: 'dashboard', action: 'index')
+    }
+
+    def importAthlinksData(){
+        AthlinksResultsImportJob.triggerNow()
+        redirect( controller: 'dashboard', action: 'index')
+    }
 
     def index() { }
 

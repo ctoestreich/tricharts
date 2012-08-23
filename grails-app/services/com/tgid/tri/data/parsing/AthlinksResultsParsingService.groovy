@@ -95,6 +95,7 @@ class AthlinksResultsParsingService {
             case 'Running':
                 return RaceType.Running
             case 'Triathlon & Multisport':
+            case 'Off-Road Triathlon':
                 return RaceType.Triathlon
             case 'Duathlon':
             case 'Off-Road Duathlon':

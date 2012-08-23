@@ -142,3 +142,11 @@ grails.gorm.default.mapping = {
 athlinks {
     key = "8253934e71896ea92a53f00e3577efa0"
 }
+
+cache.headers.presets = [
+//        authed_page: false, // No caching for logged in user
+        content: [shared:true, validFor: 3600], // 1 hr on content
+        news: [shared: true, validUntil:new Date()+1],
+        search_results: [validFor: 60, shared: true],
+        records: [validFor: 3600, shared: false]
+]

@@ -127,9 +127,12 @@ class RaceService {
             case 'MI':
             case 'MILE':
             case 'MILES':
+            case 'MI MOUNTAIN':
+            case 'MI TRAIL':
                 return DistanceType.Miles
             case 'K':
             case 'K TRAIL':
+            case 'K MOUNTAIN':
             case 'KM':
             case 'KILOMETER':
             case 'KILOMETERS':
@@ -137,6 +140,7 @@ class RaceService {
             case 'YARD':
             case 'YARDS':
             case 'Y':
+            case 'YD':
                 return DistanceType.Yards
             case 'FT':
                 return DistanceType.Feet

@@ -73,6 +73,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-client-lib/jars/cloudfoundry-client-lib-0.7.5.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.cloudfoundry/cloudfoundry-caldecott-lib/jars/cloudfoundry-caldecott-lib-0.1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-1.8.4.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.ehcache/ehcache-web/jars/ehcache-web-2.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -8,6 +8,8 @@ import com.tgid.tri.race.SegmentType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
+import grails.plugin.springcache.annotations.Cacheable
+import org.joda.time.Duration
 
 @Secured(["ROLE_USER"])
 class VisualizationController extends BaseController {
@@ -47,6 +49,7 @@ class VisualizationController extends BaseController {
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
+    @Cacheable("triathlonRecordsCache")
     def triathlonRecords() {
         User user = requestedUser
         def userId = user?.id
@@ -65,6 +68,7 @@ class VisualizationController extends BaseController {
         render template: "triathlonRecord", model: [data: data]
     }
 
+    @Cacheable("runningRecordsCache")
     def runningRecords() {
         User user = requestedUser
         def userId = user.id
@@ -197,6 +201,7 @@ class VisualizationController extends BaseController {
 
         def c = SegmentResult.createCriteria()
         def results = c.list {
+//            gt('duration', Duration.standardSeconds(120))
             raceResult {
                 user {
                     eq('id', userId)
@@ -213,6 +218,9 @@ class VisualizationController extends BaseController {
             }
         }
 
+        //filter out results under 2min for now
+        results = results.findAll{ it.duration > Duration.standardSeconds(120)}.collect()
+
 //        def results = SegmentResult.where {
 //            raceResult.user.id == userId
 //            raceResult.race.raceType == raceType
@@ -225,7 +233,7 @@ class VisualizationController extends BaseController {
         if(segmentType == SegmentType.Bike) {
             pr = results?.sort {a, b -> b?.pace?.speed <=> a?.pace?.speed}?.getAt(0)
         } else {
-            pr = results?.sort {a, b -> a.pace.duration <=> b.pace.duration}?.getAt(0)
+            pr = results?.sort {a, b -> a?.pace?.duration <=> b?.pace?.duration}?.getAt(0)
         }
 
         ["'${raceCategoryType}_${segmentType}'": pr]

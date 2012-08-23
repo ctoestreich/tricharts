@@ -1,13 +1,14 @@
 package com.tgid.tri.common
 
-import com.tgid.tri.results.SegmentResult
-import com.tgid.tri.race.SegmentType
-import com.tgid.tri.race.Pace
-import org.joda.time.Duration
-import java.math.RoundingMode
-import org.joda.time.format.PeriodFormatter
-import com.tgid.tri.race.RaceSegment
 import com.tgid.tri.race.DistanceType
+import com.tgid.tri.race.Pace
+import com.tgid.tri.race.RaceSegment
+import com.tgid.tri.race.SegmentType
+import com.tgid.tri.results.SegmentResult
+import org.joda.time.Duration
+import org.joda.time.format.PeriodFormatter
+
+import java.math.RoundingMode
 
 class PaceService {
 
@@ -31,17 +32,17 @@ class PaceService {
     }
 
     private List calcBikePacing(SegmentResult result) {
-        if(!result.duration || result.duration == Duration.standardSeconds(0)) {
+        if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
             return ['', '']
         }
-        def distance = result.raceSegment.distance * runAndBikeMultiplier(result?.raceSegment)
+        def distance = result.raceSegment.distance / runAndBikeMultiplier(result?.raceSegment)
         def paceSpeed = new BigDecimal(distance / (((result.duration.millis / 1000) / 60) / 60)).setScale(2, RoundingMode.HALF_UP)
         def display = "${paceSpeed}"
         [display, paceSpeed]
     }
 
     private List calcSwimPacing(SegmentResult result) {
-        if(!result.duration || result.duration == Duration.standardSeconds(0)) {
+        if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
             return ['', '']
         }
         def distance = result.raceSegment.distance / swimMultiplier(result.raceSegment)
@@ -54,7 +55,7 @@ class PaceService {
     }
 
     private List calcRunPacing(SegmentResult result) {
-        if(!result.duration || result.duration == Duration.standardSeconds(0)) {
+        if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
             return ['', '']
         }
         def distance = result.raceSegment.distance / runAndBikeMultiplier(result.raceSegment)

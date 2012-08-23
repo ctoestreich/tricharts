@@ -28,9 +28,8 @@ class SegmentSpec extends Specification {
     @Unroll()
     def "test speed calculations #segmentType #distance #distanceType. #display"() {
         given:
-
         def race = new Race(name: 'Some Race', raceType: RaceType.Triathlon, date: new Date())
-        def segment = new Segment(distance: distance, segmentType: segmentType, distanceType: distanceType, order: 1)
+        def segment = new Segment(distance: distance, segmentType: segmentType, distanceType: distanceType)
         def raceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segment)
         race.addToSegments(raceSegment)
         def raceResult = new RaceResult(race: race, duration: segmentDuration)
