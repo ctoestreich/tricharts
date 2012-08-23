@@ -4,7 +4,7 @@ package com.tgid.tri.race
  */
 enum RaceType implements Serializable {
 
-    Triathlon('Triathlon'), Running('Running'), Biking('Biking'), Swimming('Swimming'), Duathlon('Duathlon')
+    Triathlon('Triathlon'), Running('Running'), Biking('Biking'), Swimming('Swimming'), Duathlon('Duathlon'), Aquathon('Aquathon')
 
     String raceType
 

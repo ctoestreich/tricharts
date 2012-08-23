@@ -44,14 +44,6 @@ class DashboardController extends BaseController {
         render view: 'runCharts', model: [user: user]
     }
 
-    def progression() {
-        User user = requestedUser
-
-        def races = getRaceCategoriesByType(params?.raceType)
-
-        render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
-    }
-
     def addSegments() {
         switch(request.method) {
             case 'POST':
@@ -107,16 +99,6 @@ class DashboardController extends BaseController {
                     break
                 }
         }
-    }
-
-    private List getRaceCategoriesByType(String raceType) {
-        if(raceType == 'Run')
-            return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
-
-        if(raceType == 'Triathlon')
-            return [RaceCategoryType.Sprint, RaceCategoryType.Olympic, RaceCategoryType.HalfIronman, RaceCategoryType.Ironman]
-
-        return []
     }
 
     def createResult() {

@@ -16,6 +16,8 @@
 
 <g:render template="/templates/admin/userSelect" />
 
+<g:render template="/templates/visualization/chartSelection" />
+
 <div class="row-fluid">
   <div class="well">
     <div class="btn-group-wrap">

@@ -12,6 +12,8 @@ import groovy.json.JsonSlurper
 
 class AthlinksResultsParsingService {
 
+    static transactional = false
+
     def grailsApplication
     RaceService raceService
     RaceResultService raceResultService
@@ -100,6 +102,8 @@ class AthlinksResultsParsingService {
             case 'Duathlon':
             case 'Off-Road Duathlon':
                 return RaceType.Duathlon
+            case 'Aquathon':
+                return RaceType.Aquathon
         }
 
         println "!! Could not mapRaceType - ${course?.RaceCatDesc}"

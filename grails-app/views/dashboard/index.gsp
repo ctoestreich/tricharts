@@ -41,7 +41,7 @@
   <BR>
 
   <div id="results-run" class="accordion">
-    <g:if test="${params?.srt == "typeRun"}">
+    <g:if test="${params?.srt == "type"}">
       <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>
@@ -62,7 +62,7 @@
   <BR>
 
   <div id="results-triathlon" class="accordion">
-    <g:if test="${params?.srt == "typeTriathlon"}">
+    <g:if test="${params?.srt == "type"}">
       <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>

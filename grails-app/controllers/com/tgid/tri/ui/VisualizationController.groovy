@@ -14,6 +14,24 @@ import org.joda.time.Duration
 @Secured(["ROLE_USER"])
 class VisualizationController extends BaseController {
 
+    def progression() {
+        User user = requestedUser
+
+        def races = getRaceCategoriesByType(params?.raceType)
+
+        render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
+    }
+
+    private List getRaceCategoriesByType(String raceType) {
+        if(raceType == 'Run')
+            return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
+
+        if(raceType == 'Triathlon')
+            return [RaceCategoryType.Sprint, RaceCategoryType.Olympic, RaceCategoryType.HalfIronman, RaceCategoryType.Ironman]
+
+        return []
+    }
+
     def sportProgression() {
         User user = requestedUser
         def userId = user.id
