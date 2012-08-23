@@ -16,6 +16,7 @@ class User {
     boolean accountLocked
     boolean passwordExpired
     Long athlinkRacerId
+    String stateCode = 'MN'
 
     static hasMany = [races: Race, racers: Racer]
 
@@ -26,6 +27,7 @@ class User {
         lastName blank: false
         dob blank: false
         athlinkRacerId blank: true, nullable: true
+        stateCode nullable: false, blank: false
     }
 
     static mapping = {

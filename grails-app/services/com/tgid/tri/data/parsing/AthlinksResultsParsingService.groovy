@@ -3,9 +3,7 @@ package com.tgid.tri.data.parsing
 import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.User
 import com.tgid.tri.common.CoursePatternService
-import com.tgid.tri.race.DistanceType
 import com.tgid.tri.race.Race
-import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.RaceResultService
@@ -20,14 +18,14 @@ class AthlinksResultsParsingService {
     CoursePatternService coursePatternService
 
     def retrieveResults(User user) {
-        importRaces(user)
+        importAthlinkRaces(user)
     }
 
     def retrieveResults(Racer racer) {
         importRacerRaces(racer, racer.user)
     }
 
-    private void importRaces(User user) {
+    private void importAthlinkRaces(User user) {
         user.racers.each {
             importRacerRaces(it, user)
         }
@@ -44,37 +42,38 @@ class AthlinksResultsParsingService {
         }
 
         races.each { raceMap ->
-            def race = importRace(raceMap)
-            def result = importResult(user, race, raceMap.EntryID)
+            importRaces(user, raceMap)
         }
     }
 
-    private Race importRace(raceMap) {
-        def race = Race.findByAthlinkRaceId(raceMap?.Race?.RaceID)
+    private void importRaces(User user, Map raceMap) {
+        def race = Race.findByAthlinkRaceID(raceMap?.Race?.RaceID)
         if(!race && raceMap?.Race?.RaceID) {
             log.info "Creating race for ${raceMap.Race.RaceID} - ${raceMap.Race.RaceName}"
-            def course = raceMap.Race.Courses[0]
-            def coursePattern = coursePatternService.lookup(course)
-            race = new Race(
-                    name: raceMap.Race.RaceName,
-                    date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
-                    raceType: mapRaceType(course),
-                    raceCategoryType: coursePattern?.raceCategoryType,
-                    distanceType: coursePattern?.distanceType,
-                    distance: coursePattern?.distance,
-                    athlinkRaceId: raceMap.Race.RaceID
-            )
-            raceService.saveRace(race, course)
+            raceMap.Race.Courses.each { course ->
+                def coursePattern = coursePatternService.lookup(course)
+                race = new Race(
+                        name: raceMap.Race.RaceName,
+                        date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
+                        raceType: mapRaceType(course),
+                        raceCategoryType: coursePattern?.raceCategoryType,
+                        distanceType: coursePattern?.distanceType,
+                        distance: coursePattern?.distance,
+                        athlinkRaceID: raceMap.Race.RaceID,
+                        eventCourseID: course.EventCourseID
+                )
+                raceService.saveRace(race, course)
+                importResult(user, raceMap.EntryID, course.EventCourseID)
+            }
         }
-        race
     }
 
-    private RaceResult importResult(User user, Race race, Long entryID) {
+    private RaceResult importResult(User user, Long entryID, Long eventCourseID) {
         if(RaceResult.findByAthlinkEntryID(entryID)) {
             return
         }
 
-        log.info "Creating result for ${race} entry: ${entryID}"
+        log.info "Creating result for ${eventCourseID} entry: ${entryID}"
 
         def racesUrl = "http://api.athlinks.com/results/${entryID}?key=${grailsApplication.config.athlinks.key}&format=json"
         def result = null
@@ -86,7 +85,7 @@ class AthlinksResultsParsingService {
             log.error e
         }
 
-        raceResultService.mapRaceResultAthlinks(user, race, result)
+        raceResultService.mapRaceResultAthlinks(user, eventCourseID, result)
     }
 
     private RaceType mapRaceType(Map course) {

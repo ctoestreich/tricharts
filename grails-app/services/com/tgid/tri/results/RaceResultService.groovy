@@ -9,7 +9,8 @@ import org.joda.time.Duration
 
 class RaceResultService {
 
-    RaceResult mapRaceResultAthlinks(User user, Race race, Map result = [:]) {
+    RaceResult mapRaceResultAthlinks(User user, Long eventCourseID, Map result = [:]) {
+        def race = Race.findByEventCourseID(eventCourseID)
         def raceResult = new RaceResult(
                 race: race,
                 user: user,

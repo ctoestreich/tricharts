@@ -13,16 +13,19 @@ class CoursePatternService {
     private static final CoursePattern ironman = new CoursePattern(distance: 140.6f, raceCategoryType: RaceCategoryType.Ironman, distanceType: DistanceType.Miles)
     private static final CoursePattern tenKilomter = new CoursePattern(distance: 10, raceCategoryType: RaceCategoryType.TenKilometer, distanceType: DistanceType.Kilometers)
     private static final CoursePattern halfMarathon = new CoursePattern(distance: 13.1f, raceCategoryType: RaceCategoryType.HalfMarathon, distanceType: DistanceType.Miles)
+    private static final CoursePattern duathlon = new CoursePattern(distance: 45f, raceCategoryType: RaceCategoryType.Duathlon, distanceType: DistanceType.Kilometers)
 
     private static final HashMap<String, CoursePattern> map = [
             '1Mi Run': new CoursePattern(distance: 1, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
             '3Mi Run': new CoursePattern(distance: 3, raceCategoryType: RaceCategoryType.ThreeMile, distanceType: DistanceType.Miles),
             '5Mi Run': new CoursePattern(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '8Mi Run': new CoursePattern(distance: 8, raceCategoryType: RaceCategoryType.EightMile, distanceType: DistanceType.Miles),
             '5K': new CoursePattern(distance: 5, raceCategoryType: RaceCategoryType.FiveKilometer, distanceType: DistanceType.Kilometers),
             '10K': tenKilomter,
             '10Mi Run': new CoursePattern(distance: 10, raceCategoryType: RaceCategoryType.TenMile, distanceType: DistanceType.Miles),
             '20Mi Run': new CoursePattern(distance: 20, raceCategoryType: RaceCategoryType.TwentyMile, distanceType: DistanceType.Miles),
             '8K Run': new CoursePattern(distance: 8, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
+            '25K Run': new CoursePattern(distance: 25, raceCategoryType: RaceCategoryType.TwentyFiveKilometer, distanceType: DistanceType.Kilometers),
             '8K': new CoursePattern(distance: 8, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
             'Marathon': new CoursePattern(distance: 26.2f, raceCategoryType: RaceCategoryType.Marathon, distanceType: DistanceType.Miles),
             '13.1Mi Run': halfMarathon,
@@ -32,7 +35,8 @@ class CoursePatternService {
             'Ironman': ironman,
             '0.5Mi Swim, 15Mi Bike/Cycle, 3Mi Run': sprint,
             '0.5Mi Swim, 0.5Mi Swim, 15Mi Bike/Cycle, 15Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
-            '0.5Mi Swim, 0.5Mi Swim, 13.3Mi Bike/Cycle, 13.3Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint
+            '0.5Mi Swim, 0.5Mi Swim, 13.3Mi Bike/Cycle, 13.3Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
+            '0.5Mi Swim, 21Mi Bike/Cycle, 5.3Mi Run': sprint
     ]
 
     CoursePattern lookup(Map course) {
@@ -53,10 +57,15 @@ class CoursePatternService {
         else if(testForSprintKeys(name)) { return sprint }
         else if(testForOlympicKeys(name)) { return olympic }
         else if(testForTenKilometer(name)) { return tenKilomter }
+        else if(testForDuathlon(name)) { return duathlon }
 
         log.debug "!! Lookup failed for ${name}"
 
         return new CoursePattern(distance: 1, distanceType: DistanceType.Miles, raceCategoryType: RaceCategoryType.Unknown)
+    }
+
+    private boolean testForDuathlon(String name){
+        (name =~ /DUATHLON/).find()
     }
 
     private boolean testForTenKilometer(String name) {

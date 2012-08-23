@@ -4,13 +4,14 @@ class Race {
 
     String name
     Date date
-    Long athlinkRaceId
+    Long athlinkRaceID
     RaceType raceType
     DistanceType distanceType
     RaceCategoryType raceCategoryType
     Float distance = 0.00f
     String resultsUrl
     StatusType statusType = StatusType.Pending
+    Long eventCourseID
 
     static hasMany = [segments: RaceSegment]
 
@@ -23,7 +24,8 @@ class Race {
         distance nullable: false, min: 0.01F
         raceCategoryType nullable: false
         statusType nullable: false
-        athlinkRaceId nullable: true
+        athlinkRaceID nullable: true
+        eventCourseID nullable: true
     }
 
     static mapping = {

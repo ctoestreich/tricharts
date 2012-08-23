@@ -223,7 +223,7 @@ class VisualizationController extends BaseController {
         def pr
 
         if(segmentType == SegmentType.Bike) {
-            pr = results?.sort {a, b -> b.pace.speed <=> a.pace.speed}?.getAt(0)
+            pr = results?.sort {a, b -> b?.pace?.speed <=> a?.pace?.speed}?.getAt(0)
         } else {
             pr = results?.sort {a, b -> a.pace.duration <=> b.pace.duration}?.getAt(0)
         }
