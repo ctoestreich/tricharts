@@ -125,6 +125,8 @@ class AthlinksResultsParsingService {
 
     private RaceType mapRaceType(Map course) {
         switch(course?.RaceCatDesc) {
+            case 'Mountain Biking':
+                return RaceType.Biking
             case 'Swimming':
                 return RaceType.Swimming
             case 'Running':

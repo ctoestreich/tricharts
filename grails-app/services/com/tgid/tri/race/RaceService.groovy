@@ -9,7 +9,7 @@ class RaceService {
     Race saveRace(Race race, Map course = [:]) {
         if(race.raceType == RaceType.Running) { createRunSegments(race) }
         if(race.raceType == RaceType.Biking) { createBikeSegments(race) }
-        if(race.raceType == RaceType.Triathlon) { createTriathlonSegments(race, course) }
+        if(race.raceType == RaceType.Triathlon || race.raceType == RaceType.Aquathon) { createTriathlonSegments(race, course) }
         if(race.raceType == RaceType.Duathlon) { createDuathlonSegments(race, course) }
 
         if(race.validate()) {

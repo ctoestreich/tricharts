@@ -41,8 +41,8 @@ class RaceResultService {
 
     private void createSegmentResult(Race race, RaceResult raceResult, Map segment, Integer i) {
         try {
-            def raceSegment = race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
-            if(raceSegment.get(i)) {
+            def raceSegment = race?.segments?.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
+            if(raceSegment?.get(i)) {
                 def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
                                                       duration: Duration.millis(segment.Ticks as Long),
                                                       placeAgeGroup: segment.RankA,

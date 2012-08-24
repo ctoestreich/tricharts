@@ -26,18 +26,19 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
+            dbCreate = "update"
+            url = "jdbc:mysql://127.0.0.1/triharder?useUnicode=yes&characterEncoding=UTF-8"
+            username = "triharder"
+            password = "H4rd3r"
             properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
+                maxActive = 100
+                maxIdle = 25
+                minIdle = 5
+                initialSize = 10
+                minEvictableIdleTimeMillis = 60000
+                timeBetweenEvictionRunsMillis = 60000
+                maxWait = 10000
             }
         }
     }

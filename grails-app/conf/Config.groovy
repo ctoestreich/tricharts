@@ -99,8 +99,8 @@ log4j = { root ->
           'org.hibernate',
           'net.sf.ehcache.hibernate'
 
-    debug 'com.tgid.tri'
-    info "grails.app"
+    //debug 'com.tgid.tri'
+    //info "grails.app"
 
     environments {
         production {
