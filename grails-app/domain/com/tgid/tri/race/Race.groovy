@@ -12,6 +12,8 @@ class Race {
     String resultsUrl
     StatusType statusType = StatusType.Pending
     Long eventCourseID
+    RaceCategory raceCategory
+    CoursePattern coursePattern
 
     static hasMany = [segments: RaceSegment]
 
@@ -26,6 +28,8 @@ class Race {
         statusType nullable: false
         athlinkRaceID nullable: true
         eventCourseID nullable: true
+        raceCategory nullable: true
+        coursePattern nullable:  true
     }
 
     static mapping = {

@@ -1,7 +1,6 @@
-package com.tgid.tri.results
+package com.tgid.tri.race
 
 import grails.validation.ValidationException
-import com.tgid.tri.race.*
 
 class RaceService {
 
@@ -15,14 +14,14 @@ class RaceService {
 
         if(race.validate()) {
             try {
-                race.save()
+                race.save(flush: true)
             } catch(ValidationException e) {
                 log.error "error saving race: ${race.name}"
                 log.error e.message
                 return null
             }
         } else {
-            println 'Validation Errors!'
+            println 'Race Validation Errors!'
             race?.errors?.allErrors?.each {
                 println it
                 log.error it

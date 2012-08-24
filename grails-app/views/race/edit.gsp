@@ -62,6 +62,9 @@
                             <f:field property="distance" input-step="any" input-min="0" />
                             <f:field property="raceCategoryType"  />
                             <f:field property="statusType"  />
+                            <f:field property="athlinkRaceID"  />
+                            <f:field property="eventCourseID"  />
+                            <f:field property="coursePattern"  />
                             <f:field property="segments"  />
                           </f:with>
 							<div class="form-actions">

@@ -23,6 +23,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">
   <g:layoutHead/>
   <r:layoutResources/>
+  <script type="text/javascript">if (!window.console) console = {log: function() {}}; </script>
 </head>
 
 <body>
@@ -53,16 +54,18 @@
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
             <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Add Triathlon Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Add Running Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking, 'user.id': params?.user?.id])}">Add Biking Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming, 'user.id': params?.user?.id])}">Add Swimming Result</a></li>
-              </ul>
-            </li>
-            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
+            <sec:ifLoggedIn>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Add Triathlon Result</a></li>
+                  <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Add Running Result</a></li>
+                  <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking, 'user.id': params?.user?.id])}">Add Biking Result</a></li>
+                  <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming, 'user.id': params?.user?.id])}">Add Swimming Result</a></li>
+                </ul>
+              </li>
+              <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
+            </sec:ifLoggedIn>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Data Admin <b class="caret"></b></a>
@@ -72,10 +75,11 @@
                   <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
                   <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
                   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
+                  <li><a href="${createLink(controller: 'raceCategory', action: 'index')}">Race Categories</a></li>
+                  <li><a href="${createLink(controller: 'coursePattern', action: 'index')}">Course Patterns</a></li>
                   <li><hr></li>
                   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
                   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
-                  <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
                   <li><hr></li>
                   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
                 </ul>
