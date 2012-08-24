@@ -64,18 +64,21 @@ class AthlinksResultsParsingService {
 
     private void mapCourseAndResult(User user, Map raceMap, Map course) {
         try {
-            def coursePattern = coursePatternService.lookup(course)
-            def race = new Race(
-                    name: raceMap.Race.RaceName,
-                    date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
-                    raceType: mapRaceType(course),
-                    raceCategoryType: coursePattern?.raceCategoryType,
-                    distanceType: coursePattern?.distanceType,
-                    distance: coursePattern?.distance,
-                    athlinkRaceID: raceMap.Race.RaceID,
-                    eventCourseID: course.EventCourseID
-            )
-            race = raceService.saveRace(race, course)
+            def race = null
+            Race.withNewTransaction {
+                def coursePattern = coursePatternService.lookup(course)
+                race = new Race(
+                        name: raceMap.Race.RaceName,
+                        date: new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long),
+                        raceType: mapRaceType(course),
+                        raceCategoryType: coursePattern?.raceCategoryType,
+                        distanceType: coursePattern?.distanceType,
+                        distance: coursePattern?.distance,
+                        athlinkRaceID: raceMap.Race.RaceID,
+                        eventCourseID: course.EventCourseID
+                )
+                race = raceService.saveRace(race, course)
+            }
             if(race) {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
@@ -86,7 +89,7 @@ class AthlinksResultsParsingService {
 
     private RaceResult importResult(User user, Long entryID, Long eventCourseID) {
         def raceResult = RaceResult.findByAthlinkEntryID(entryID)
-        if(!entryID || !eventCourseID){
+        if(!entryID || !eventCourseID) {
             return null
         }
 

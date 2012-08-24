@@ -44,6 +44,12 @@ class RaceService {
         def segment = Segment.findOrSaveWhere(segmentType: SegmentType.Run, distanceType: race?.distanceType, distance: race?.distance)
         if(segment.validate()) {
             race.addToSegments(new RaceSegment(segment: segment))
+        } else {
+            println 'Validation Errors!'
+            race?.errors?.allErrors?.each {
+                println it
+                log.error it
+            }
         }
     }
 

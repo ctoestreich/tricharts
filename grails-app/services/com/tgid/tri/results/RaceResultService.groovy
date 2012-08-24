@@ -13,26 +13,28 @@ class RaceResultService {
         def race = Race.findByEventCourseID(eventCourseID)
         def raceResult = RaceResult.findByAthlinkEntryID(result?.EntryID)
         if(race && !raceResult) {
-            raceResult = new RaceResult(
-                    race: race,
-                    user: user,
-                    athlinkEntryID: result.EntryID,
-                    duration: Duration.millis(result.Ticks as Long),
-                    placeAgeGroup: result.RankA,
-                    placeGender: result.RankG,
-                    placeOverall: result.RankO,
-                    participantsAgeGroup: result.CountA,
-                    participantsGender: result.CountG,
-                    participantsOverall: result.CountO)
+            RaceResult.withNewTransaction {
+                raceResult = new RaceResult(
+                        race: race,
+                        user: user,
+                        athlinkEntryID: result.EntryID,
+                        duration: Duration.millis(result.Ticks as Long),
+                        placeAgeGroup: result.RankA,
+                        placeGender: result.RankG,
+                        placeOverall: result.RankO,
+                        participantsAgeGroup: result.CountA,
+                        participantsGender: result.CountG,
+                        participantsOverall: result.CountO)
 
-            Integer index = 0
-            result.LegEntries.each { segment ->
-                if(segment.ActionCatName != 'Penalty') {
-                    createSegmentResult(race, raceResult, segment, index)
-                    index++
+                Integer index = 0
+                result.LegEntries.each { segment ->
+                    if(segment.ActionCatName != 'Penalty') {
+                        createSegmentResult(race, raceResult, segment, index)
+                        index++
+                    }
                 }
+                createRaceResult(raceResult)
             }
-            createRaceResult(raceResult)
         }
         return raceResult
     }
@@ -40,12 +42,14 @@ class RaceResultService {
     private void createSegmentResult(Race race, RaceResult raceResult, Map segment, Integer i) {
         try {
             def raceSegment = race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
-            def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
-                                                  duration: Duration.millis(segment.Ticks as Long),
-                                                  placeAgeGroup: segment.RankA,
-                                                  placeOverall: segment.RankO,
-                                                  placeGender: segment.RankG)
-            raceResult.addToSegmentResults(segmentResult)
+            if(raceSegment.get(i)) {
+                def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
+                                                      duration: Duration.millis(segment.Ticks as Long),
+                                                      placeAgeGroup: segment.RankA,
+                                                      placeOverall: segment.RankO,
+                                                      placeGender: segment.RankG)
+                raceResult.addToSegmentResults(segmentResult)
+            }
         } catch(Exception e) {
             log.info "Error adding segment to ${raceResult}"
             log.error e
