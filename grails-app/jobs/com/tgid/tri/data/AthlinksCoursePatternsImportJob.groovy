@@ -16,7 +16,6 @@ class AthlinksCoursePatternsImportJob {
 
     def execute() {
         log.info "Running AthlinksCoursePatternsImportJob ${new Date()}"
-
         athlinksResultsParsingService.importCoursePatterns()
     }
 }

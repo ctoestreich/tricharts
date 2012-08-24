@@ -87,9 +87,11 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear Record Cache</a></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
                   <li><hr></li>
-                  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksData')}">Import Athlinks Data</a></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksResults')}">Import Athlinks Results</a></li>
                 </ul>
               </li>
             </sec:ifAnyGranted>

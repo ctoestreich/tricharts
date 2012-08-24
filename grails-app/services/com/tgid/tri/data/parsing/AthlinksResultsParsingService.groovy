@@ -2,14 +2,10 @@ package com.tgid.tri.data.parsing
 
 import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.User
-import com.tgid.tri.race.CoursePatternService
-import com.tgid.tri.race.Race
-import com.tgid.tri.race.RaceType
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.RaceResultService
-import com.tgid.tri.race.RaceService
 import groovy.json.JsonSlurper
-import com.tgid.tri.race.RaceCategoryService
+import com.tgid.tri.race.*
 
 class AthlinksResultsParsingService {
 
@@ -26,7 +22,12 @@ class AthlinksResultsParsingService {
     }
 
     def retrieveResults(Racer racer) {
-        importRacerRaces(racer, racer.user)
+        try {
+            importRacerRaces(racer, racer.user)
+            racer.save(lastImport: new Date())
+        } catch(Exception e){
+            log.error e
+        }
     }
 
     private void importAthlinkRaces(User user) {
@@ -42,7 +43,7 @@ class AthlinksResultsParsingService {
             String apiString = new URL(racesUrl).text
             races = new JsonSlurper().parseText(apiString)
         } catch(Exception e) {
-            log.error e
+            throw e
         }
 
         races.each { raceMap ->
@@ -69,7 +70,7 @@ class AthlinksResultsParsingService {
             def race = null
             Race.withNewTransaction {
                 def coursePatternLocal = coursePatternService.lookup(course)
-                if(!coursePatternLocal){
+                if(!coursePatternLocal) {
                     log.info "!! Can't resolve pattern for ${course?.CoursePattern} - skipping"
                     return;
                 }
@@ -91,7 +92,7 @@ class AthlinksResultsParsingService {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
         } catch(Exception e) {
-            log.error e
+            throw e
         }
     }
 
@@ -114,7 +115,7 @@ class AthlinksResultsParsingService {
             String apiString = new URL(racesUrl).text
             result = new JsonSlurper().parseText(apiString)
         } catch(Exception e) {
-            log.error e
+            throw e
         }
         if(result?.EntryID) {
             return raceResultService.mapRaceResultAthlinks(user, eventCourseID, result)
@@ -134,6 +135,7 @@ class AthlinksResultsParsingService {
             case 'Duathlon':
             case 'Off-Road Duathlon':
                 return RaceType.Duathlon
+            case 'Aquathlon':
             case 'Aquathon':
                 return RaceType.Aquathon
         }
@@ -143,7 +145,7 @@ class AthlinksResultsParsingService {
         return RaceType.Triathlon
     }
 
-    def importCoursePatterns(){
+    def importCoursePatterns() {
         def url = "http://api.athlinks.com/enums/CoursePatterns?key=${grailsApplication.config.athlinks.key}&page=1&pageSize=30000&format=json"
         def coursePatterns = null
         try {
@@ -158,7 +160,7 @@ class AthlinksResultsParsingService {
         }
     }
 
-    def importRaceCategories(){
+    def importRaceCategories() {
         def url = "http://api.athlinks.com/enums/RaceCategories?key=${grailsApplication.config.athlinks.key}&format=json"
         def raceCategories = null
         try {

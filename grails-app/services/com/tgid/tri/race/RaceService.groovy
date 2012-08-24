@@ -88,7 +88,9 @@ class RaceService {
 
     private void addSegmentsToRace(Race race, List<Segment> segments) {
         segments.each {
-            race.addToSegments(new RaceSegment(segment: it))
+            if(it) {
+                race.addToSegments(new RaceSegment(segment: it))
+            }
         }
     }
 

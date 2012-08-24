@@ -16,7 +16,6 @@ class AthlinksRaceCategoryImportJob {
 
     def execute() {
         log.info "Running AthlinksRaceCategoryImportJob ${new Date()}"
-
         athlinksResultsParsingService.importRaceCategories()
     }
 }

@@ -96,19 +96,22 @@ class RaceResultService {
     }
 
     RaceResult createRaceResult(RaceResult raceResult) throws RaceResultException, SegmentResultException {
-
-        if(raceResult.validate()) {
-            raceResult.save(flush: true)
+        try {
+            if(raceResult.validate()) {
+                raceResult.save(flush: true)
+            }
+            else {
+                log.error(raceResult.errors.toString())
+                def message = "Could not save result ${raceResult}"
+                throw new RaceResultException(
+                        message: message,
+                        problem: raceResult
+                )
+            }
+            raceResult
+        } catch(Exception e) {
+            throw e
         }
-        else {
-            log.error(raceResult.errors.toString())
-            def message = "Could not save result ${raceResult}"
-            throw new RaceResultException(
-                    message: message,
-                    problem: raceResult
-            )
-        }
-        raceResult
     }
 
     void deleteRaceResult(long raceResultId, User user) {

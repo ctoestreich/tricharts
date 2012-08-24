@@ -17,9 +17,9 @@ class AthlinksResultsImportJob {
 
     def execute() {
         log.trace "Running AthlinksResultsImportJob ${new Date()}"
-        Racer.list().each {
-            log.info "Adding Results for ${it.user} using id: ${it.racerID}"
-            athlinksResultsParsingService.retrieveResults(it.user)
+        Racer.findAllByLastImportIsNullOrLastImportLessThanEquals(new Date() - 1)?.each {
+            log.info "Retrieving races & results for ${it.user} using id: ${it.racerID}"
+            athlinksResultsParsingService.retrieveResults(it)
         }
     }
 }
