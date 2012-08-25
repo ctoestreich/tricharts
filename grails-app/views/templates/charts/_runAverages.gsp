@@ -69,7 +69,7 @@
                                      ]
                                    },
                                    series:[
-                                     <g:each in="${data}" var="result">
+                                     <g:each in="${data.sort{a,b-> a.key <=> b.key}}" var="result">
                                      {
                                        type:'column',
                                        name:'${result.key}',
