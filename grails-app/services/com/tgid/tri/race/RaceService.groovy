@@ -128,7 +128,7 @@ class RaceService {
         segment = segment.replaceAll(/[ ]*${search}.*/, '')
         def distance = segment.replaceAll(/(\d+\.*\d*).*/, '$1')
         def distanceType = mapDistanceType(segment.replaceAll(/\d+\.*\d*([ A-Z]+)/, '$1'))
-        return Segment.findOrSaveWhere(segmentType: segmentType, distanceType: distanceType, distance: distance as Float)
+        return Segment.findOrSaveWhere(segmentType: segmentType, distanceType: distanceType, distance: Float.parseFloat(distance))
     }
 
     private DistanceType mapDistanceType(String distanceType) {

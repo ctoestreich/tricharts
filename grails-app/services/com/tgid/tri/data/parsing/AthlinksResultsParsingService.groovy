@@ -84,7 +84,8 @@ class AthlinksResultsParsingService {
                         athlinkRaceID: raceMap.Race.RaceID,
                         eventCourseID: course.EventCourseID,
                         coursePattern: com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID),
-                        raceCategory: com.tgid.tri.race.RaceCategory.get(course?.RaceCatID)
+                        raceCategory: com.tgid.tri.race.RaceCategory.get(course?.RaceCatID),
+                        statusType: StatusType.Approved
                 )
                 race = raceService.saveRace(race, course)
             }

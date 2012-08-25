@@ -5,6 +5,7 @@
 		<meta name="layout" content="bootstrap">
 		<g:set var="entityName" value="${message(code: 'race.label', default: 'Race')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+      <r:require module="widgets" />
 	</head>
 	<body>
 		<div class="row-fluid">
@@ -64,7 +65,12 @@
                             <f:field property="statusType"  />
                             <f:field property="athlinkRaceID"  />
                             <f:field property="eventCourseID"  />
-                            <f:field property="coursePattern"  />
+                            <div class="control-group">
+                              <label class="control-label" for="coursePattern">Course Pattern</label>
+                              <div class="controls">
+                                <f:display property="coursePattern"   />
+                              </div>
+                            </div>
                             <f:field property="segments"  />
                           </f:with>
 							<div class="form-actions">
@@ -84,5 +90,8 @@
 			</div>
 
 		</div>
+    <script>
+
+    </script>
 	</body>
 </html>

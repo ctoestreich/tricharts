@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.race.Segment; com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.race.SegmentType; com.tgid.tri.race.Segment; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -49,45 +49,93 @@
   </g:hasErrors>
 </div>
 
-<div class="row-fluid">
-  <h3>Add segments to ${raceInstance}</h3>
-  <br />
-  <g:form controller="dashboard" action="addSegments" name="addSegmentsForm" id="addSegmentsForm">
-    <g:hiddenField name="segments" id="segments" value="" />
-    <g:hiddenField name="raceId" value="${raceInstance.id}" />
-  <fieldset>
-      <div class="span4">
-        <h5>Segments In Race (drag right to remove)</h5>
-        <ul id="segmentOptIn" class="connectedSortable">
+<h3>Add segments to ${raceInstance}</h3>
+<br/>
+<g:form controller="dashboard" action="addSegments" name="addSegmentsForm" id="addSegmentsForm">
+  <g:hiddenField name="segments" id="segments" value=""/>
+  <g:hiddenField name="raceId" value="${raceInstance.id}"/>
 
-        </ul>
-      </div>
-      <div class="span3"><p align="center"><a href="#" id="saveSegments" class="btn">Save Segments</a></p></div>
-      <div class="span4">
-        <h5>Available Segments (drag left to add)</h5>
-        <ul id="segmentOptOut" class="connectedSortable">
-          <g:each in="${com.tgid.tri.race.Segment.list().sort{a,b-> a.segmentOrder <=> b.segmentOrder}}" var="segment">
+  <div class="row-fluid">
+    <div class="span4">
+
+      <h5>Segments In Race (drag right to remove)</h5>
+      <ul id="segmentOptIn" class="connectedSortable">
+
+      </ul>
+<br /><br />
+      <p><a href="#" id="saveSegments" class="btn">Save Segments</a></p>
+    </div>
+    <div class="span7">
+      <h5>Available Segments (drag left to add)</h5>
+
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#swim">Swim</a></li>
+        <li><a href="#bike">Bike</a></li>
+        <li><a href="#run">Run</a></li>
+        <li><a href="#transition">Transition</a></li>
+      </ul>
+
+      <div class="tab-content"><div class="tab-pane active" id="swim">
+        <ul id="segmentSwim" class="connectedSortable">
+          <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Swim).sort {a, b -> a.distance <=> b.distance}}" var="segment">
             <li class="well" data-id="${segment.id}">${segment}</li>
           </g:each>
         </ul>
       </div>
-  </fieldset>
-    </g:form>
-</div>
+
+        <div class="tab-pane" id="bike">
+          <ul id="segmentBike" class="connectedSortable">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Bike).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+              <li class="well" data-id="${segment.id}">${segment}</li>
+            </g:each>
+          </ul>
+        </div>
+
+        <div class="tab-pane" id="run">
+          <ul id="segmentRun" class="connectedSortable">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Run).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+              <li class="well" data-id="${segment.id}">${segment}</li>
+            </g:each>
+          </ul>
+        </div>
+
+        <div class="tab-pane" id="transition">
+          <ul id="segmentTransition" class="connectedSortable">
+            <g:each in="${com.tgid.tri.race.Segment.where {
+              segmentType == SegmentType.T1 || segmentType == SegmentType.T2
+            }.list().sort {a, b -> a.toString() <=> b.toString()}}" var="segment">
+              <li class="well" data-id="${segment.id}">${segment}</li>
+            </g:each>
+          </ul>
+        </div></div>
+      <script>
+        $(function () {
+
+          $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+          });
+          $('#myTab a:first').tab('show');
+        });
+      </script>
+    </div>
+  </div>
+</g:form>
+
 <script>
   $(function () {
-    $("#segmentOptIn, #segmentOptOut").sortable({
-                                           connectWith:".connectedSortable"
-                                         }).disableSelection();
+    $("#segmentOptIn, #segmentSwim, #segmentBike, #segmentRun, #segmentTransition").sortable({
+                                                                                               connectWith:".connectedSortable"
+                                                                                             }).disableSelection();
 
-    $('#saveSegments').on('click',function(){
+    $('#saveSegments').on('click', function () {
       var ids = [];
-      $('#segmentOptIn li').each(function(i,o){
+      $('#segmentOptIn li').each(function (i, o) {
         ids.push($(o).data('id'));
       });
       $('#segments').val(ids);
       console.log($('#segments').val());
-      if(ids.length > 0){
+      if(ids.length > 0) {
         $('#addSegmentsForm').submit()
       } else {
         $('#segmentsAlert').modal();
@@ -99,11 +147,14 @@
 <div class="modal hide" id="segmentsAlert">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
+
     <h3>Add Segments</h3>
   </div>
+
   <div class="modal-body">
     <p>Please add one (1) or more segments to the race to save.</p>
   </div>
+
   <div class="modal-footer">
     <a href="javascript:void(0);" class="btn" data-dismiss="modal">Close</a>
   </div>
