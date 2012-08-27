@@ -86,6 +86,7 @@
                   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
                   <li><hr></li>
                   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
+                  <li><a href="${createLink(controller: 'state', action: 'index')}">Racers</a></li>
                 </ul>
               </li>
               <li class="dropdown">

@@ -4,10 +4,10 @@ class RegistrationCode {
 
     String username
     String token = UUID.randomUUID().toString().replaceAll('-', '')
-    Date dateCreated
+    Date dateCreated = new Date()
 
     static mapping = {
         version false
-        username index: 'UserName_Index'
+        username index: 'UserName_Index', email: true
     }
 }

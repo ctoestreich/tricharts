@@ -145,8 +145,8 @@ athlinks {
 
 cache.headers.presets = [
 //        authed_page: false, // No caching for logged in user
-        content: [shared:true, validFor: 3600], // 1 hr on content
-        news: [shared: true, validUntil:new Date()+1],
+        content: [shared: true, validFor: 3600], // 1 hr on content
+        news: [shared: true, validUntil: new Date() + 1],
         search_results: [validFor: 60, shared: true],
         records: [validFor: 3600, shared: false]
 ]
@@ -154,13 +154,16 @@ cache.headers.presets = [
 grails {
     mail {
         host = "smtp.gmail.com"
-        port = 465
+        port = 587
         username = "acetrike@gmail.com"
-        password = "!Chris\$4"
-        props = ["mail.smtp.auth":"true",
-                "mail.smtp.socketFactory.port":"465",
-                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-                "mail.smtp.socketFactory.fallback":"false"]
+        password = '!Chris$4'
+        props = ["mail.debug": "true",
+                "mail.transport.protocol":"smtps",
+                "mail.smtps.host":"smtp.gmail.com",
+                "mail.smtps.port":"465",
+                "mail.smtps.auth":"true",
+                "mail.smtps.user": "acetrike@gmail.com",
+                "mail.smtps.password": '!Chris$4']
     }
 }
 
@@ -174,7 +177,7 @@ You (or someone pretending to be you) created an account with this email address
 <br/>
 If you made the request, please click&nbsp;<a href="$url">here</a> to finish the registration.
 '''
-            emailFrom = 'do.not.reply@localhost'
+            emailFrom = 'admin@triharder.com'
             emailSubject = 'New Account'
             defaultRoleNames = ['ROLE_USER']
             postRegisterUrl = null // use defaultTargetUrl if not set
@@ -190,7 +193,7 @@ If you didn't make this request then ignore the email; no changes have been made
 <br/>
 If you did make the request, then click <a href="$url">here</a> to reset your password.
 '''
-            emailFrom = 'do.not.reply@localhost'
+            emailFrom = 'admin@triharder.com'
             emailSubject = 'Password Reset'
             postResetUrl = null // use defaultTargetUrl if not set
         }

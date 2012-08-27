@@ -59,7 +59,7 @@ grails.project.dependency.resolution = {
         compile ":google-visualization:0.5.3"
         compile ":cloud-foundry:1.2.3"
         compile ':webxml:1.4.1'
-        conpile ":mail:1.0"
+        compile ":mail:1.0"
         //runtime ":spring-security-facebook:0.9"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities

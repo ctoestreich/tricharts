@@ -31,8 +31,10 @@ class AthlinksResultsParsingService {
     }
 
     private void importAthlinkRaces(User user) {
-        user.racers.each {
-            importRacerRaces(it, user)
+        user?.racers?.each {
+            if(it.lastImport < new Date() - 1) {
+                importRacerRaces(it, user)
+            }
         }
     }
 
@@ -49,6 +51,8 @@ class AthlinksResultsParsingService {
         races.each { raceMap ->
             importRaces(user, raceMap)
         }
+
+        racer.save(lastImport: new Date())
     }
 
     private void importRaces(User user, Map raceMap) {
