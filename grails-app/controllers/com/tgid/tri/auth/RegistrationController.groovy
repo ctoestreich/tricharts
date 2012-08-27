@@ -53,6 +53,7 @@ class RegistrationController {
             user = User.findByUsername(registrationCode.username)
             user.enabled = true
             user.accountExpired = false
+            user.accountLocked = false
             user.save(flush: true)
             def userRole = Role.findByAuthority('ROLE_USER')
             if(userRole && !user?.authorities?.contains(userRole)) {
@@ -82,7 +83,9 @@ class RegistrationController {
         }
         if(save) {user.save(flush: true)}
 
-        athlinksResultsParsingService.retrieveResults(user)
+        runAsync {
+            athlinksResultsParsingService.retrieveResults(user)
+        }
 
         redirect controller: 'dashboard', action: 'index'
     }
@@ -97,11 +100,13 @@ class RegistrationController {
 
         println body.toString()
 
-        sendMail {
-            to registrationCode.username
-            from "acetrike@gmail.com"
-            subject "Registration Link"
-            html body.toString()
+        runAsync {
+            sendMail {
+                to registrationCode.username
+                from "acetrike@gmail.com"
+                subject "Registration Link"
+                html body.toString()
+            }
         }
     }
 

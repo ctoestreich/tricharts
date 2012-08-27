@@ -28,7 +28,7 @@ class UserService {
     }
 
     void mapUserToAthlinkUsers(User user) {
-        def searchUrl = "http://api.athlinks.com/athletes/search/${user.firstName}%20${user.lastName}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0&state=${user.states.join(",")}"
+        def searchUrl = "http://api.athlinks.com/athletes/search/${user.firstName}%20${user.lastName}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0&state=${user?.states?.collect { it?.provID?.toLowerCase()}?.join(",")}}"
         def users = null
 
         try {
