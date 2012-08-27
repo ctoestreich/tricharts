@@ -18,14 +18,14 @@ class User {
     Long athlinkRacerId
     String stateCode = 'MN'
 
-    static hasMany = [races: Race, racers: Racer]
+    static hasMany = [races: Race, racers: Racer, states: State]
 
     static constraints = {
-        username blank: false, unique: true
+        username blank: false, unique: true, email: true
         password blank: false
         firstName blank: false
         lastName blank: false
-        dob blank: false
+        dob blank: false, max: new Date()
         athlinkRacerId blank: true, nullable: true
         stateCode nullable: false, blank: false
     }

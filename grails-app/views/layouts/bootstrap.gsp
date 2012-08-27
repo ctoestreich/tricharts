@@ -53,8 +53,12 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
-            <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
+            <sec:ifNotLoggedIn>
+            <li><a href="${createLink(controller: 'registration', action: 'index')}">Create Account</a></li>
+            <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
+            </sec:ifNotLoggedIn>
             <sec:ifLoggedIn>
+              <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -111,8 +115,9 @@
   </div>
 
 
+  <div class="well_clear">
   <g:layoutBody/>
-
+  </div>
   <hr>
 
   <footer>

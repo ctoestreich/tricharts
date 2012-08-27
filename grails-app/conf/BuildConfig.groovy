@@ -52,14 +52,14 @@ grails.project.dependency.resolution = {
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
         runtime ":gsp-resources:0.4.1"
+        runtime ":spring-security-core:1.2.7.3"
 
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
         compile ":google-visualization:0.5.3"
         compile ":cloud-foundry:1.2.3"
         compile ':webxml:1.4.1'
-
-        runtime ":spring-security-core:1.2.7.3"
+        conpile ":mail:1.0"
         //runtime ":spring-security-facebook:0.9"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities

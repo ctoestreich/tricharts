@@ -7,7 +7,7 @@ class UserService {
     def grailsApplication
 
     void mapUserToAthlinkUsers(User user) {
-        def searchUrl = "http://api.athlinks.com/athletes/search/${user.firstName}%20${user.lastName}/us_${user.stateCode.toLowerCase()}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0"
+        def searchUrl = "http://api.athlinks.com/athletes/search/${user.firstName}%20${user.lastName}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0&state=${user.states.join(",")}"
         def users = null
 
         try {
@@ -20,5 +20,15 @@ class UserService {
         users.each {
             Racer.findOrSaveWhere(user: user, racerID: it.RacerID as Long)
         }
+    }
+
+    RegistrationCode createRegistrationCode(User user) {
+        def registrationCode = new RegistrationCode(username: user.username, dateCreated: new Date())
+        if(registrationCode.validate()) {
+            registrationCode.save(flush: true)
+            return registrationCode
+        }
+
+        return null
     }
 }

@@ -21,13 +21,13 @@ class AthlinksResultsImportJob {
     def execute() {
         log.trace "Running AthlinksResultsImportJob ${new Date()}"
 
-        User.list().each {
-            userService.mapUserToAthlinkUsers(it)
-        }
-
-        Racer.findAllByLastImportIsNullOrLastImportLessThanEquals(new Date() - 1)?.each {
-            log.info "Retrieving races & results for ${it.user} using id: ${it.racerID}"
-            athlinksResultsParsingService.retrieveResults(it)
-        }
+//        User.findAllByEnabled(true).each {
+//            userService.mapUserToAthlinkUsers(it)
+//        }
+//
+//        Racer.findAllByLastImportIsNullOrLastImportLessThanEquals(new Date() - 1)?.each {
+//            log.info "Retrieving races & results for ${it.user} using id: ${it.racerID}"
+//            athlinksResultsParsingService.retrieveResults(it)
+//        }
     }
 }
