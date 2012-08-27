@@ -25,7 +25,7 @@ class AthlinksResultsParsingService {
         try {
             importRacerRaces(racer, racer.user)
             racer.save(lastImport: new Date())
-        } catch(Exception e){
+        } catch(Exception e) {
             log.error e
         }
     }
@@ -149,17 +149,23 @@ class AthlinksResultsParsingService {
     }
 
     def importCoursePatterns() {
-        def url = "http://api.athlinks.com/enums/CoursePatterns?key=${grailsApplication.config.athlinks.key}&page=1&pageSize=30000&format=json"
-        def coursePatterns = null
-        try {
-            String apiString = new URL(url).text
-            coursePatterns = new JsonSlurper().parseText(apiString)
-        } catch(Exception e) {
-            log.error e
-        }
+        def results = true
+        def page = 1
+        while(results) {
+            def url = "http://api.athlinks.com/enums/CoursePatterns?key=${grailsApplication.config.athlinks.key}&page=${page}&pageSize=10000&format=json"
+            def coursePatterns = null
+            try {
+                String apiString = new URL(url).text
+                coursePatterns = new JsonSlurper().parseText(apiString)
+            } catch(Exception e) {
+                log.error e
+            }
 
-        coursePatterns?.List?.each { coursePattern ->
-            coursePatternService.importCoursePattern(coursePattern)
+            results = ((coursePatterns?.List?.size() ?: 0) > 0)
+            coursePatterns?.List?.each { coursePattern ->
+                coursePatternService.importCoursePattern(coursePattern)
+            }
+            page++
         }
     }
 

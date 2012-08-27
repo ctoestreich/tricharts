@@ -1,7 +1,7 @@
 package com.tgid.tri.auth
 
 class State {
-    //"StateProvID":"US_MT ","CountryID":"US","Abbrev":"MT","StateProvName":"Montana"
+
     String provID
     String countryID
     String abbrev

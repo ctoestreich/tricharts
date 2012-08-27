@@ -1,13 +1,6 @@
 import com.tgid.tri.auth.Role
 import com.tgid.tri.auth.User
 import com.tgid.tri.auth.UserRole
-import com.tgid.tri.results.RaceResult
-import com.tgid.tri.results.SegmentResult
-import org.joda.time.Duration
-import com.tgid.tri.race.*
-import groovy.json.JsonBuilder
-import groovy.json.JsonSlurper
-import com.tgid.tri.auth.State
 
 class BootStrap {
 
@@ -32,14 +25,18 @@ class BootStrap {
     }
 
     private void createUser(User user, boolean isAdmin = false) {
-        if(!User.findByUsername(user.username)) {
-            user.save(flush: true)
-            def role_user = Role.findOrSaveWhere(authority: 'ROLE_USER')
-            def role_admin = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
-            new UserRole(user: user, role: role_user).save(flush:  true)
-            if(isAdmin) {
-                new UserRole(user: user, role: role_admin).save(flush:  true)
+        try {
+            if(!User.findByUsername(user.username)) {
+                user.save(flush: true)
+                def role_user = Role.findOrSaveWhere(authority: 'ROLE_USER')
+                def role_admin = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
+                new UserRole(user: user, role: role_user).save(flush: true)
+                if(isAdmin) {
+                    new UserRole(user: user, role: role_admin).save(flush: true)
+                }
             }
+        } catch(Exception e) {
+            log.error e
         }
     }
 }
