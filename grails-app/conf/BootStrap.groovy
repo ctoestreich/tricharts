@@ -15,6 +15,9 @@ class BootStrap {
         segmentService.seedSegments()
         stateService.seedStates()
 
+        Role.findOrSaveWhere(authority: 'ROLE_USER')
+        Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
+
         //create dome dummy users to test
 //        createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', stateCode: 'MN', dob: new Date(79, 4, 23), enabled: true), true)
 //        createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', stateCode: 'MN', dob: new Date(79, 4, 18), enabled: true), false)

@@ -100,7 +100,7 @@ log4j = { root ->
           'net.sf.ehcache.hibernate'
 
     //debug 'com.tgid.tri'
-    //info "grails.app"
+    info "grails.app"
 
     environments {
         production {
@@ -151,10 +151,15 @@ cache.headers.presets = [
         records: [validFor: 3600, shared: false]
 ]
 
+sendgrid {
+    username = 'ctoestreich'
+    password = 'Acetrike1'
+}
+
 grails {
     mail {
         host = "smtp.gmail.com"
-        port = 587
+        port = 465
         username = "acetrike@gmail.com"
         password = '!Chris$4'
         props = ["mail.debug": "true",

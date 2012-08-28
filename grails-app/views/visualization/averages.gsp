@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.race.RaceCategoryType; com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.race.SegmentType; com.tgid.tri.race.RaceCategoryType; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -14,29 +14,48 @@
   <h1>Progression For ${user.firstName} <small>make me faster</small></h1>
 </div>
 
-<g:render template="/templates/admin/userSelect" />
+<g:render template="/templates/admin/userSelect"/>
 
-<g:render template="/templates/visualization/chartSelection" />
+<g:render template="/templates/visualization/chartSelection"/>
 
-<div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif" /></div>
+<g:if test="${params?.raceType == 'Running'}">
+  <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Chart Run Averages</div>
+</g:if>
+<g:elseif test="${params?.raceType == 'Triathlon'}">
+  <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
+    <div class="row-fluid" id="averages${segmentType}"><g:img dir="/images" file="spinner.gif"/> Loading Chart ${segmentType} Averages</div>
+    <br />
+  </g:each>
+</g:elseif>
 
 <script>
   $(function () {
+    <g:if test="${params?.raceType == 'Running'}">
     jQuery.ajax({
                   type:'POST',
-                  <g:if test="${params?.raceType == 'Run'}">
                   url:'${createLink(controller: 'visualization', action:'runningAverages', params:['user.id',params?.user?.id])}',
-                  </g:if>
-                  <g:elseif test="${params?.raceType == 'Triathlon'}">
-                  url:'${createLink(controller: 'visualization', action:'triathlonAverages', params:['user.id',params?.user?.id])}',
-                  </g:elseif>
-                  data:{ 'user.id': '${params?.user?.id}', div:'averagesDiv'},
+                  data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv'},
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averages').html(data);
                   },
                   error:function (XMLHttpRequest, textStatus, errorThrown) {
                   }});
+    </g:if>
+    <g:elseif test="${params?.raceType == 'Triathlon'}">
+    <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
+    jQuery.ajax({
+                  type:'POST',
+                  url:'${createLink(controller: 'visualization', action:'triathlonAverages', params:['user.id',params?.user?.id])}',
+                  data:{ 'user.id':'${params?.user?.id}', div:'averages${segmentType}Div', segmentType:'${segmentType}'},
+                  success:function (data, textStatus) {
+                    console.log('success');
+                    $('#averages${segmentType}').html(data);
+                  },
+                  error:function (XMLHttpRequest, textStatus, errorThrown) {
+                  }});
+    </g:each>
+    </g:elseif>
   });
 </script>
 </body>

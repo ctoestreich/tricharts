@@ -34,7 +34,27 @@
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Run', user: params?.user]"/>
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+
+  <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
+
+  <BR>
+
+  <div id="results-triathlon" class="accordion">
+    <g:if test="${params?.srt == "type"}">
+      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+    </g:if>
+    <g:else>
+      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+    </g:else>
+  </div>
+</div>
+
+<br />
+
+<div class="row well_clear">
+  %{--<div class="span12">--}%
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
 
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
@@ -51,25 +71,27 @@
   %{--</div>--}%
 </div>
 
-<BR/>
+%{--<BR/>--}%
 
-<div class="row well_clear">
+%{--<div class="row well_clear">--}%
   %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+  %{--<g:render template="/templates/dashboardHeader" model="[sport: 'Biking', user: params?.user]"/>--}%
 
-  <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
+  %{--<div class="row-fluid" id="bikeDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading bike records...</div>--}%
 
-  <BR>
+  %{--<BR>--}%
 
-  <div id="results-triathlon" class="accordion">
-    <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
-  </div>
-</div>
+  %{--<div id="results-run" class="accordion">--}%
+    %{--<g:if test="${params?.srt == "type"}">--}%
+      %{--<g:render template="/templates/bikeResults" collection="${bikes.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+      %{--<g:render template="/templates/bikeResults" collection="${bikes.list().sort {a, b -> b.date <=> a.date}}" var="result"/>--}%
+    %{--</g:else>--}%
+  %{--</div>--}%
+  %{--</div>--}%
+%{--</div>--}%
+
 
 <div class="modal hide" id="deleteConfirmation">
   <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>

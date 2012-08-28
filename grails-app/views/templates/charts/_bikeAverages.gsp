@@ -7,7 +7,6 @@
   <g:if test="${data}">
   hasData = true;
   var chart;
-  var timeToSubtract = Date.parse("1-1-1 0:00:00");
   $(function () {
     chart = new Highcharts.Chart({
                                    plotOptions:{
@@ -19,10 +18,7 @@
                                      column:{
                                        stacking:null,
                                        dataLabels:{
-                                         enabled:true,
-                                         formatter:function () {
-                                           return '' + Highcharts.dateFormat('%M:%S', this.y);
-                                         }
+                                         enabled:true
                                        }
                                      }
                                    },
@@ -30,18 +26,13 @@
                                      renderTo:'${id}'
                                    },
                                    title:{
-                                     text: '${title ?: "Mile Pace By Distance Averages"}'
+                                     text: '${title ?: "Bike Average Pace By Year"}'
                                    },
                                    xAxis:{
-                                     categories: ${categories},
-                                     dateTimeLabelFormats: { // don't display the dummy year
-                                       month: '%e. %b',
-                                       year: '%b'
-                                     }
+                                     categories: ${categories}
                                    },
                                    yAxis:[{
-                                     title: 'Average Mile',
-                                     type:'datetime'
+                                     title: 'Average Pace'
                                    }],
                                    tooltip:{
                                      formatter:function () {
@@ -49,7 +40,7 @@
                                        if(this.point.name) { // the pie chart
                                          s = '' + this.point.name + ': ' + this.y + ' races';
                                        } else {
-                                         s = '<b>' + this.x + '</b><br/>' + Highcharts.dateFormat('%H:%M:%S', this.y);
+                                         s = '<b>' + this.x + '</b><br/>' + this.y;
                                        }
                                        return s;
                                      }

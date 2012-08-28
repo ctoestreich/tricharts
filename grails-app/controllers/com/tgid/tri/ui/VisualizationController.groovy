@@ -11,9 +11,12 @@ import com.tgid.tri.results.SegmentResult
 import grails.plugin.springcache.annotations.Cacheable
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
+import java.text.DecimalFormat
 
 @Secured(["ROLE_USER"])
 class VisualizationController extends BaseController {
+
+    def paceService
 
     def averages() {
         User user = requestedUser
@@ -32,7 +35,7 @@ class VisualizationController extends BaseController {
     }
 
     private List<RaceCategoryType> getRaceCategoriesByType(String raceType) {
-        if(raceType == 'Run')
+        if(raceType == 'Running')
             return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
 
         if(raceType == 'Triathlon')
@@ -83,6 +86,16 @@ class VisualizationController extends BaseController {
         def queryRaceType = RaceType.Running
 
         renderRunAveragesChart(resultDiv, userId, queryRaceType)
+    }
+
+    def triathlonAverages() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceType = RaceType.Triathlon
+        def segmentType = params?.segmentType as SegmentType
+
+        renderTriathlonAveragesChart(resultDiv, userId, queryRaceType, segmentType)
     }
 
     @Cacheable("triathlonRecordsCache")
@@ -169,9 +182,9 @@ class VisualizationController extends BaseController {
             def key = result.date.year + 1900
             def period = result.duration.toPeriod()
             if(data.containsKey(key)) {
-                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'','\\\'')} ${result.race.date.format("M-dd-yyyy")}'}")
+                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}")
             } else {
-                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'','\\\'')} ${result.race.date.format("M-dd-yyyy")}'}"))
+                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}"))
             }
         }
 
@@ -179,8 +192,8 @@ class VisualizationController extends BaseController {
                model: [height: 200, width: 200, data: data, id: resultDiv, type: queryRaceCategoryType]
     }
 
-    private renderRunAveragesChart(String resultDiv, userId, RaceType queryRaceType) {
-        def races = getRaceCategoriesByType('Run')
+    private renderTriathlonAveragesChart(String resultDiv, userId, RaceType queryRaceType, SegmentType segmentType) {
+        def races = getRaceCategoriesByType('Triathlon')
         def data = new HashMap<Integer, HashMap<String, List>>()
         def categories = []
         def totalRaces = []
@@ -199,50 +212,122 @@ class VisualizationController extends BaseController {
 
             sortedResults.each { result ->
                 def key = result.date.year + 1900
-                def duration = result?.segmentResults?.toList()?.get(0)?.pace?.duration
-                if(duration) {
-                    if(data.containsKey(key)) {
-                        def childMap = data.get(key)
-                        if(childMap.containsKey(result.race.raceCategoryType.raceCategoryType)) {
-                            childMap.get(result.race.raceCategoryType.raceCategoryType) << duration
-                        } else {
-                            childMap.put(result.race.raceCategoryType.raceCategoryType, [duration])
-                        }
-                    } else {
-                        data.put(key, [:])
-                        data.get(key).put(result.race.raceCategoryType.raceCategoryType, [duration])
-                    }
-                }
+                def segmentResult = result?.segmentResults?.toList()?.find {it.raceSegment.segmentType == segmentType}
+                println segmentResult
+                mapSegmentResults(segmentResult, data, key, result)
             }
         }
 
-        def results = new HashMap<Integer, List>()
         def sortedData = data.keySet().toList().sort { a, b -> a <=> b}.collect()
+        def results = createAveragesPaceChartData(sortedData, data, races, segmentType)
+
+        if(segmentType == SegmentType.Run || segmentType == SegmentType.Swim) {
+            render template: "/templates/charts/runAverages",
+                   model: [title: (segmentType == SegmentType.Run) ? 'Average Mile Pace Per Year' : 'Average Swim Pace Per Year', height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+            return
+        }
+        if(segmentType == SegmentType.Bike) {
+            render template: "/templates/charts/bikeAverages",
+                   model: [title: 'Average Bike Speed Per Year', height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+            return
+        }
+    }
+
+    private void mapSegmentResults(SegmentResult segmentResult, HashMap<Integer, HashMap<String, List>> data, int key, RaceResult result) {
+        if(segmentResult) {
+            if(data.containsKey(key)) {
+                def childMap = data.get(key)
+                if(childMap.containsKey(result.race.raceCategoryType.raceCategoryType)) {
+                    childMap.get(result.race.raceCategoryType.raceCategoryType) << segmentResult
+                } else {
+                    childMap.put(result.race.raceCategoryType.raceCategoryType, [segmentResult])
+                }
+            } else {
+                data.put(key, [:])
+                data.get(key).put(result.race.raceCategoryType.raceCategoryType, [segmentResult])
+            }
+        }
+    }
+
+    private Map<Integer, List> createAveragesPaceChartData(List<Integer> sortedData, HashMap<Integer, HashMap<String, List>> data, List<RaceCategoryType> races, SegmentType segmentType) {
+        def results = new HashMap<Integer, List>()
         sortedData.each {key ->
             def map = data.get(key)
             def list = []
             races.each { race ->
                 if(map.containsKey(race.raceCategoryType)) {
-                    def duration = averageRaces(map.get(race.raceCategoryType))
-                    list << "Date.parse('1-1-1 ${tri.formatDuration(duration: duration, formatter: JodaTimeHelper.getPeriodFormat(true, true, true))}')-timeToSubtract"
+                    switch(segmentType) {
+                        case SegmentType.Run:
+                        case SegmentType.Swim:
+                            def duration = averageTime(map.get(race.raceCategoryType))
+                            list << "Date.parse('1-1-1 ${tri.formatDuration(duration: duration, formatter: JodaTimeHelper.getPeriodFormat(true, true, true))}')-timeToSubtract"
+                            break
+                        case SegmentType.Bike:
+                            list << "${averageSpeed(map.get(race.raceCategoryType))}"
+                            break
+                    }
                 } else {
                     list << "null"
                 }
             }
             results.put(key, list)
-            println list
         }
+        results
+    }
+
+    private renderRunAveragesChart(String resultDiv, userId, RaceType queryRaceType) {
+        def races = getRaceCategoriesByType('Running')
+        def data = new HashMap<Integer, HashMap<String, List>>()
+        def categories = []
+        def totalRaces = []
+
+        races.each { raceCategoryType ->
+            categories << "'${raceCategoryType.raceCategoryType}'"
+            def results = RaceResult.where {
+                user.id == userId
+                race.raceType == queryRaceType
+                race.raceCategoryType == raceCategoryType
+            }
+
+            def sortedResults = results.list().sort {a, b -> a?.date <=> b?.date}
+
+            totalRaces << "{name: '${raceCategoryType.raceCategoryType}', y: ${sortedResults?.size() ?: 0}}"
+
+            sortedResults.each { result ->
+                def key = result.date.year + 1900
+                def segmentResult = result?.segmentResults?.toList()?.get(0)
+                mapSegmentResults(segmentResult, data, key, result)
+            }
+        }
+
+
+        def sortedData = data.keySet().toList().sort { a, b -> a <=> b}.collect()
+        def results = createAveragesPaceChartData(sortedData, data, races, SegmentType.Run)
 
         render template: "/templates/charts/runAverages",
                model: [height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
     }
 
-    private Duration averageRaces(List races) {
+    private Double averageSpeed(List races){
+        BigDecimal speed = 0.00
+        Integer total = 0
+        races.toArray().each { SegmentResult segment ->
+            if(segment?.pace?.speed && segment?.pace?.speed > 0) {
+                speed += segment.pace.speed
+                total++
+            }
+        }
+        return Double.valueOf(new DecimalFormat("#.##").format(speed / total));
+    }
+
+    private Duration averageTime(List races) {
         Duration time = Duration.standardSeconds(0)
         Integer total = 0
-        races.toArray().each { Duration duration ->
-            time = time.plus(duration)
-            total++
+        races.toArray().each { SegmentResult segment ->
+            if(segment?.pace?.duration && segment?.pace?.duration > Duration.standardMinutes(0)) {
+                time = time.plus(segment?.pace?.duration)
+                total++
+            }
         }
         def result = Duration.standardSeconds(Math.round(time.standardSeconds / total))
         return result

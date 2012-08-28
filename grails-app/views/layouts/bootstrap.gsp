@@ -11,8 +11,8 @@
 
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
   <!--[if lt IE 9]>
-			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 
   <r:require modules="scaffolding, application"/>
 
@@ -23,7 +23,8 @@
   <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">
   <g:layoutHead/>
   <r:layoutResources/>
-  <script type="text/javascript">if (!window.console) console = {log: function() {}}; </script>
+  <script type="text/javascript">if(!window.console) console = {log:function () {
+  }}; </script>
 </head>
 
 <body>
@@ -54,11 +55,24 @@
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
             <sec:ifNotLoggedIn>
-            <li><a href="${createLink(controller: 'registration', action: 'index')}">Create Account</a></li>
-            <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
+              <li><a href="${createLink(controller: 'registration', action: 'index')}">Create Account</a></li>
+              <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
             </sec:ifNotLoggedIn>
             <sec:ifLoggedIn>
               <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Run Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Trending</a></li>
+                  <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Averages</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Triathlon Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Trending</a></li>
+                </ul>
+              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add Results <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -115,9 +129,9 @@
     </div>
   </div>
 
-
   <div class="well_clear">
-  <g:layoutBody/>
+
+    <g:layoutBody/>
   </div>
   <hr>
 

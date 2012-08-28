@@ -1,12 +1,15 @@
 package com.tgid.tri.auth
 
 import groovy.text.SimpleTemplateEngine
+import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
+import uk.co.desirableobjects.sendgrid.SendGridEmail
 
 class RegistrationController {
 
     def userService
     def grailsApplication
     def athlinksResultsParsingService
+    def sendGridService
 
     def index() {
         def userInstance = new User(params)
@@ -29,7 +32,7 @@ class RegistrationController {
                 }
 
                 userInstance.save(flush: true)
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.username])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), ''])
                 redirect action: 'newuser', id: userInstance.id
                 break
         }
@@ -37,13 +40,19 @@ class RegistrationController {
 
     def newuser() {
         def userInstance = User.get(params?.id)
+        def body = ''
+
+        if(!userInstance){
+            redirect uri: "/"
+            return
+        }
 
         if(!RegistrationCode.findByUsername(userInstance?.username)) {
             def registrationCode = userService.createRegistrationCode(userInstance)
-            createRegistrationEmail(userInstance, registrationCode)
+            body = createRegistrationEmail(userInstance, registrationCode)
         }
 
-        render view: 'newuser', model: [userInstance: userInstance]
+        render view: 'newuser', model: [userInstance: userInstance, body: body]
     }
 
     def confirmation() {
@@ -98,16 +107,28 @@ class RegistrationController {
             body = evaluate(body, [user: user, url: url])
         }
 
-        println body.toString()
+        log.info body.toString()
 
         runAsync {
-            sendMail {
-                to registrationCode.username
-                from "acetrike@gmail.com"
-                subject "Registration Link"
-                html body.toString()
-            }
+
+            SendGridEmail email = new SendGridEmailBuilder()
+                    .from("acetrike@gmail.com")
+                    .to(registrationCode.username)
+                    .subject("Registration Link")
+                    .withHtml(body.toString())
+                    .build()
+
+            sendGridService.send(email)
+
+//            sendMail {
+//                to registrationCode.username
+//                from "acetrike@gmail.com"
+//                subject "Registration Link"
+//                html body.toString()
+//            }
         }
+
+        return body.toString()
     }
 
 

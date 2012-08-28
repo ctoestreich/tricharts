@@ -89,8 +89,9 @@
         </div>
       </g:each>
 
-      <div class="control-group">
+      <div class="form-actions">
         <button type="submit" class="btn">Save</button>
+        <a href="${createLink(controller:'dashboard', action:'index')}" class="btn">Cancel</a>
       </div>
     </fieldset>
   </g:form>

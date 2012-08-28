@@ -27,6 +27,7 @@
         <h1>Almost Done</h1>
         <br>
         <p><g:if test="${flash.message}">${flash.message}</g:if></p>
+        <p>Temp: ${body}</p>
       </div>
     </div>
 

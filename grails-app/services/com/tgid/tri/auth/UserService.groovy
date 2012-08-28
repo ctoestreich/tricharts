@@ -21,7 +21,6 @@ class UserService {
         }
 
         users.each {
-            println it
             racers << [user: user, racerID: it.RacerID as Long, age: it?.Age, city: it?.City, name: it?.DisplayName]
         }
         return racers

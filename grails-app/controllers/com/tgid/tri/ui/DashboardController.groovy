@@ -47,11 +47,9 @@ class DashboardController extends BaseController {
     def addSegments() {
         switch(request.method) {
             case 'POST':
-                println params?.raceId
                 def raceInstance = Race.get(params?.raceId)
 
                 params?.segments?.toString()?.split(',')?.each {
-                    println it
                     raceInstance.addToSegments(new RaceSegment(segment: Segment.get(it)))
                 }
 

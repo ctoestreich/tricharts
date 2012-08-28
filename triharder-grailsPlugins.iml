@@ -20,6 +20,7 @@
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/jquery-ui-1.8.15/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/mail-1.0/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/mail-1.0/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/sendgrid-0.4/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -108,6 +109,11 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/resources-1.2-RC1/grails-app/taglib" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/sendgrid-0.4">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/sendgrid-0.4/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/sendgrid-0.4/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/sendgrid-0.4/grails-app/services" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/spock-0.6" />
     <content url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/spring-security-core-1.2.7.3">
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.0/projects/triharder/plugins/spring-security-core-1.2.7.3/src/java" isTestSource="false" />
@@ -173,6 +179,16 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.20.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.activation/activation/jars/activation-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.mail/mail/jars/mail-1.4.3.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/xml-resolver/xml-resolver/jars/xml-resolver-1.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/xerces/xercesImpl/jars/xercesImpl-2.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.ezmorph/ezmorph/jars/ezmorph-1.0.6.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.json-lib/json-lib/jars/json-lib-2.3-jdk15.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.groovy.modules.http-builder/http-builder/jars/http-builder-0.5.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.gmock/gmock/jars/gmock-0.8.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -39,7 +39,7 @@
     <g:each in="${races}" var="race">
     jQuery.ajax({
                   type:'POST',
-                  <g:if test="${params?.raceType == 'Run'}">
+                  <g:if test="${params?.raceType == 'Running'}">
                   url:'${createLink(controller: 'visualization', action:'runningProgression', params:['user.id',params?.user?.id])}',
                   </g:if>
                   <g:elseif test="${params?.raceType == 'Triathlon'}">
