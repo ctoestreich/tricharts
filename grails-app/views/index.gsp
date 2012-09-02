@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <title>Tri Harder Results</title>
+  <title>TriCharts.com</title>
 </head>
 
 <body>
