@@ -182,7 +182,7 @@ You (or someone pretending to be you) created an account with this email address
 <br/>
 If you made the request, please click&nbsp;<a href="$url">here</a> to finish the registration.
 '''
-            emailFrom = 'admin@triharder.com'
+            emailFrom = 'admin@tricharts.com'
             emailSubject = 'New Account'
             defaultRoleNames = ['ROLE_USER']
             postRegisterUrl = null // use defaultTargetUrl if not set
@@ -198,7 +198,7 @@ If you didn't make this request then ignore the email; no changes have been made
 <br/>
 If you did make the request, then click <a href="$url">here</a> to reset your password.
 '''
-            emailFrom = 'admin@triharder.com'
+            emailFrom = 'admin@tricharts.com'
             emailSubject = 'Password Reset'
             postResetUrl = null // use defaultTargetUrl if not set
         }

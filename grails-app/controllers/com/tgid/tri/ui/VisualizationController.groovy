@@ -18,6 +18,14 @@ class VisualizationController extends BaseController {
 
     def paceService
 
+    def prs(){
+        User user = requestedUser
+
+        def races = getRaceCategoriesByType(params?.raceType)
+
+        render view: 'prs', model: [user: user]
+    }
+
     def averages() {
         User user = requestedUser
 
@@ -96,6 +104,14 @@ class VisualizationController extends BaseController {
         def segmentType = params?.segmentType as SegmentType
 
         renderTriathlonAveragesChart(resultDiv, userId, queryRaceType, segmentType)
+    }
+
+    def runningPrs(){
+        render "tbd"
+    }
+
+    def triathlonPrs(){
+        render "tbd"
     }
 
     @Cacheable("triathlonRecordsCache")

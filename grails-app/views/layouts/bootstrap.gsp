@@ -34,7 +34,7 @@
   <div class="row">
     <p align="right">
       <sec:ifNotGranted roles="ROLE_USER">
-        <g:link controller="login" action="index">login</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">register</g:link>
+        <g:link controller="registration" action="index">register</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">login</g:link>
       </sec:ifNotGranted>
       <sec:ifAllGranted roles="ROLE_USER">
         <sec:username/>&nbsp;|&nbsp;<g:link controller="logout" action="index">logout</g:link>
@@ -55,7 +55,7 @@
           <ul class="nav">
             <li<%=request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : ''%>><a href="${createLink(uri: '/')}">Home</a></li>
             <sec:ifNotLoggedIn>
-              <li><a href="${createLink(controller: 'registration', action: 'index')}">Create Account</a></li>
+              <li><a href="${createLink(controller: 'registration', action: 'index')}">Register</a></li>
               <li><a href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
             </sec:ifNotLoggedIn>
             <sec:ifLoggedIn>

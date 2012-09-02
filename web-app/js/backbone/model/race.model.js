@@ -1,5 +1,5 @@
 var Race = Backbone.Model.extend({
-                                     //url:"/triharder/race/backbone"
+                                     //url:"/tricharts/race/backbone"
 //                                     defaults:function () {
 //                                         return {
 //                                             date:new Date(),
@@ -10,5 +10,5 @@ var Race = Backbone.Model.extend({
 
 var RaceList = Backbone.Collection.extend({
                                               model: Race,
-                                              url:'/triharder/race/backbone'
+                                              url:'/tricharts/race/backbone'
                                           });

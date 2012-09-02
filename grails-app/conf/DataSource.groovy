@@ -13,8 +13,8 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://127.0.0.1/triharder?useUnicode=yes&characterEncoding=UTF-8"
-            username = "triharder"
+            url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
+            username = "tricharts"
             password = "H4rd3r"
         }
     }
@@ -28,8 +28,8 @@ environments {
         dataSource {
             pooled = true
             dbCreate = "update"
-            url = "jdbc:mysql://127.0.0.1/triharder?useUnicode=yes&characterEncoding=UTF-8"
-            username = "triharder"
+            url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
+            username = "tricharts"
             password = "H4rd3r"
             properties {
                 maxActive = 100

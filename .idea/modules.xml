@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/triharder.iml" filepath="$PROJECT_DIR$/triharder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/triharder-grailsPlugins.iml" filepath="$PROJECT_DIR$/triharder-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tricharts.iml" filepath="$PROJECT_DIR$/tricharts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tricharts-grailsPlugins.iml" filepath="$PROJECT_DIR$/tricharts-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
