@@ -2,7 +2,7 @@ import com.tgid.tri.ui.DashboardController
 
 modules = {
     application {
-        dependsOn 'backbone', 'handlebars', 'underscore'
+        dependsOn 'backbone', 'handlebars', 'underscore', 'google-analytics'
         resource url:'js/application.js', disposition: 'head'
         resource url:'css/application.css'
     }
@@ -50,5 +50,9 @@ modules = {
     widgets {
         dependsOn 'jquery, jquery-ui'
         resource url:'js/jquery/widgets.js'
+    }
+
+    google-analytics {
+        resource url:'js/google.js', disposition: 'head'
     }
 }
