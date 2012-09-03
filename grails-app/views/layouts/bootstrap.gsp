@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.race.RaceType; org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
+<%@ page import="grails.util.Environment; com.tgid.tri.race.RaceType; org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,16 +6,15 @@
   <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
   <meta name="description" content="">
   <meta name="author" content="Christian Oestreich">
-
   <meta name="viewport" content="initial-scale = 1.0">
-
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
   <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <r:require modules="scaffolding, application"/>
-
+  <g:if test="${Environment.current == Environment.PRODUCTION}">
+    <r:require modules="analytics"/>
+  </g:if>
   <!-- Le fav and touch icons -->
   <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
   <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
