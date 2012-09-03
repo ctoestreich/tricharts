@@ -13,6 +13,8 @@
 
 grails.config.locations = ["file:${userHome}/.grails/s2fb-config.properties"]
 
+grails.app.context = "/"
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -212,3 +214,7 @@ If you did make the request, then click <a href="$url">here</a> to reset your pa
         }
     }
 }
+
+tomcat.deploy.username="ctoestreich"
+tomcat.deploy.password="Acetrike1"
+tomcat.deploy.url="http://www.tricharts.com/manager"
