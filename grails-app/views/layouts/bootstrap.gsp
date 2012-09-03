@@ -143,7 +143,7 @@
 <r:script>
   $(function () {
     $(".collapse").collapse();
-  })
+  });
 </r:script>
 
 <r:layoutResources/>

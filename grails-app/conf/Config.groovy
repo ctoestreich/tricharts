@@ -151,6 +151,13 @@ cache.headers.presets = [
         records: [validFor: 3600, shared: false]
 ]
 
+jobs {
+    enabled = true
+    AthlinksResultsImportJob {
+        enabled = false
+    }
+}
+
 sendgrid {
     username = 'ctoestreich'
     password = 'Acetrike1'

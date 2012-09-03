@@ -1,0 +1,3 @@
+create schema tricharts;
+CREATE USER 'tricharts'@'localhost' IDENTIFIED BY 'Tr1Ch4rt5';
+GRANT ALL ON tricharts.* TO 'tricharts'@'localhost';

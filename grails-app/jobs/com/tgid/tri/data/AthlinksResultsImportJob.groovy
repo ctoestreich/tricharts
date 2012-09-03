@@ -9,6 +9,7 @@ class AthlinksResultsImportJob {
 
     def group = "AthlinksImport"
     def concurrent = false
+    def grailsApplication
 
     UserService userService
     AthlinksResultsParsingService athlinksResultsParsingService
@@ -19,6 +20,11 @@ class AthlinksResultsImportJob {
     }
 
     def execute() {
+        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs["${this.class.name}"].enabled){
+            log.info "AthlinksResultsImportJob disabled!"
+            return
+        }
+
         log.trace "Running AthlinksResultsImportJob ${new Date()}"
 
         Racer.findAllByLastImportIsNullOrLastImportLessThanEquals(new Date() - 1)?.each {

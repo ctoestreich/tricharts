@@ -11,6 +11,7 @@ import com.tgid.tri.results.SegmentResult
 import grails.plugin.springcache.annotations.Cacheable
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
+
 import java.text.DecimalFormat
 
 @Secured(["ROLE_USER"])
@@ -18,7 +19,7 @@ class VisualizationController extends BaseController {
 
     def paceService
 
-    def prs(){
+    def prs() {
         User user = requestedUser
 
         def races = getRaceCategoriesByType(params?.raceType)
@@ -106,11 +107,45 @@ class VisualizationController extends BaseController {
         renderTriathlonAveragesChart(resultDiv, userId, queryRaceType, segmentType)
     }
 
-    def runningPrs(){
-        render "tbd"
+    @Cacheable("runningRecordsCache")
+    def runningPrs() {
+        User user = requestedUser
+        def userId = user.id
+        def resultDiv = params?.div ?: 'resultDiv'
+        def queryRaceType = RaceType.Running
+
+        renderRunningPrsChart(resultDiv, userId, queryRaceType)
     }
 
-    def triathlonPrs(){
+    private void renderRunningPrsChart(String div, long userId, RaceType raceType) {
+        def data = [:]
+        def minYear = 0
+        def maxYear = 0
+
+        def years = RaceResult.executeQuery("select min(date) as mn, max(date) as mx from RaceResult where user.id = :userId and race.raceType = :raceType",
+                                            [userId: userId, raceType: raceType])
+        def types = RaceResult.executeQuery("select distinct race.raceCategoryType from RaceResult where user.id = :userId and race.raceType = :raceType",
+                                            [userId: userId, raceType: raceType])
+
+        years.each {
+            maxYear = it[1].year
+            minYear = it[0].year
+        }
+
+        if(minYear > 0 && maxYear > 0) {
+            types.each { RaceCategoryType raceCategoryType ->
+                def year = minYear
+                while(year <= maxYear) {
+                    data.putAll(retrieveRunRecord(userId, raceCategoryType, RaceType.Running, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
+                    year++
+                }
+            }
+        }
+
+        render template: '/templates/charts/runPrs', model: [types: types, data: data, minYear: minYear, maxYear: maxYear]
+    }
+
+    def triathlonPrs() {
         render "tbd"
     }
 
@@ -324,7 +359,7 @@ class VisualizationController extends BaseController {
                model: [height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
     }
 
-    private Double averageSpeed(List races){
+    private Double averageSpeed(List races) {
         BigDecimal speed = 0.00
         Integer total = 0
         races.toArray().each { SegmentResult segment ->
@@ -445,14 +480,18 @@ class VisualizationController extends BaseController {
         ["'${raceCategoryType}_${segmentType}'": pr]
     }
 
-    private Map retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType) {
+    private Map retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType, Date minDate = null, Date maxDate = null) {
         def results = RaceResult.where {
             user.id == userId
             race.raceType == raceType
             race.raceCategoryType == raceCategoryType
+            if(minDate && maxDate) {
+                race.date > minDate
+                race.date <= maxDate
+            }
         }
         def pr = results?.list()?.sort {a, b -> a.duration <=> b.duration}?.getAt(0)
-        ["'${raceCategoryType}'": pr]
+        ["'${minDate?.year ? minDate.year+1900 + '_' : ''}${raceCategoryType}'": pr]
     }
 
     private void renderDashboardChart(String columnName, String resultTitle, String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {

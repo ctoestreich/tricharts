@@ -15,7 +15,7 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
             username = "tricharts"
-            password = "H4rd3r"
+            password = "Tr1Ch4rt5"
         }
     }
     test {
@@ -30,7 +30,7 @@ environments {
             dbCreate = "update"
             url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
             username = "tricharts"
-            password = "H4rd3r"
+            password = "Tr1Ch4rt5"
             properties {
                 maxActive = 100
                 maxIdle = 25
