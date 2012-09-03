@@ -109,8 +109,9 @@ log4j = { root ->
             error "grails.app"
         }
     }
-
 }
+
+grails.plugin.cloudfoundry.appname = 'tricharts'
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 // Added by the Spring Security Core plugin:
