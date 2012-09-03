@@ -112,9 +112,9 @@ class RegistrationController {
         runAsync {
 
             SendGridEmail email = new SendGridEmailBuilder()
-                    .from("acetrike@gmail.com")
+                    .from("christian@tricharts.com")
                     .to(registrationCode.username)
-                    .subject("Registration Link")
+                    .subject("TriCharts.com Registration Link")
                     .withHtml(body.toString())
                     .build()
 
