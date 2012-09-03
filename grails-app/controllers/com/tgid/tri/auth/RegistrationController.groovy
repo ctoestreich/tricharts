@@ -52,7 +52,7 @@ class RegistrationController {
             body = createRegistrationEmail(userInstance, registrationCode)
         }
 
-        render view: 'newuser', model: [userInstance: userInstance, body: body]
+        render view: 'newuser', model: [userInstance: userInstance]
     }
 
     def confirmation() {
