@@ -185,7 +185,7 @@ security {
             emailBody = '''\
 Hi $user.username,<br/>
 <br/>
-You (or someone pretending to be you) created an account with this email address.<br/>
+An account was created at TriCharts.com with this email address.<br/>
 <br/>
 If you made the request, please click&nbsp;<a href="$url">here</a> to finish the registration.
 '''
@@ -199,7 +199,7 @@ If you made the request, please click&nbsp;<a href="$url">here</a> to finish the
             emailBody = '''\
 Hi $user.username,<br/>
 <br/>
-You (or someone pretending to be you) requested that your password be reset.<br/>
+You requested that your password be reset for TriCharts.com.<br/>
 <br/>
 If you didn't make this request then ignore the email; no changes have been made.<br/>
 <br/>

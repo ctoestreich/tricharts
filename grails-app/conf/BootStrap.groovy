@@ -17,8 +17,7 @@ class BootStrap {
     private void createInitialRacesAndResults() {
         segmentService.seedSegments()
         stateService.seedStates()
-        bootStrapService.createDefaultUsers()
-        bootStrapService.seedResults()
-
+//        bootStrapService.createDefaultUsers()
+//        bootStrapService.seedResults()
     }
 }

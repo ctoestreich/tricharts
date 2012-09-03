@@ -11,6 +11,17 @@ import grails.plugins.springsecurity.Secured
 @Secured(['ROLE_ADMIN'])
 class AdminController {
 
+    def grailsApplication
+
+    def jobSettings(){
+    }
+
+    def updateSettings(){
+        grailsApplication.config.jobs.enabled = params.boolean('enabled')
+        grailsApplication.config.jobs.AthlinksResultsImportJob.enabled = params.boolean('AthlinksResultsImportJob')
+        redirect action: 'jobSettings'
+     }
+
     @CacheFlush(["triathlonRecordsCache", "runningRecordsCache"])
     def clearRecordsCaches() {
         flash.message = message(code: 'clear.cache', args: ['PRs Cache'])

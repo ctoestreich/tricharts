@@ -109,6 +109,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
                   <li><hr></li>
+                  <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
+                  <li><hr></li>
                   <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
                   <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
                   <li><a href="${createLink(controller: 'admin', action: 'importAthlinksResults')}">Import Athlinks Results</a></li>
