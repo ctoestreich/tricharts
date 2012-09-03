@@ -99,8 +99,9 @@
                   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
                   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
                   <li><hr></li>
+                  <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
                   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
-                  <li><a href="${createLink(controller: 'state', action: 'index')}">Racers</a></li>
+                  <li><a href="${createLink(controller: 'state', action: 'index')}">States</a></li>
                 </ul>
               </li>
               <li class="dropdown">

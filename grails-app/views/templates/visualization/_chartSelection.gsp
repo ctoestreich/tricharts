@@ -2,7 +2,7 @@
   <div class="span3">
     <h3>${params?.raceType} Trending</h3>
 
-    <p>View your results trending broken out by race.</p>
+    <p>View your result trending by distance.</p>
 
     <p align="left"><a href="${createLink(controller: 'visualization', action: 'progression', params: [raceType: params?.raceType, 'user.id': params?.user?.id])}" class="btn btn-info">View Trending</a></p>
   </div>
