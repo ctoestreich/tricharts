@@ -18,7 +18,7 @@ class TriHarderTagLib {
 
     def displayPace = {attrs ->
         def pace = attrs.pace
-        def showAt = attrs?.showAt ?: true
+        def showAt = attrs.containsKey('showAt') ? attrs.showAt : true
 
         if(pace){
             out << "${showAt ? ' @ ' : ' '}$pace"

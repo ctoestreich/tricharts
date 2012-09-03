@@ -60,7 +60,7 @@ grails.project.dependency.resolution = {
         compile ":cloud-foundry:1.2.3"
         compile ':webxml:1.4.1'
         compile ":mail:1.0"
-        compile ":sendgrid:0.4"
+//        compile ':sendgrid:0.4'
         //runtime ":spring-security-facebook:0.9"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
