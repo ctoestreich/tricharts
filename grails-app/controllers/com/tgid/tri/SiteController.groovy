@@ -3,19 +3,23 @@ package com.tgid.tri
 import com.tgid.tri.auth.User
 import uk.co.desirableobjects.sendgrid.SendGridEmail
 import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
+import grails.plugin.springcache.annotations.Cacheable
 
 class SiteController extends BaseController {
 
     def sendGridService
 
+    @Cacheable('siteCache')
     def thanks() { }
 
+    @Cacheable('siteCache')
     def aboutus() {
         User user = requestedUser
 
         render view: 'aboutus', model: [user: user]
     }
 
+    @Cacheable('siteCache')
     def contact() {
         User user = requestedUser
 

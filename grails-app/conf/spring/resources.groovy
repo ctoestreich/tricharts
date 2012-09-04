@@ -24,4 +24,15 @@ beans = {
         timeToIdle = 3600
         timeToLive = 64000
     }
+
+    siteCache(EhCacheFactoryBean){bean->
+        cacheManager = ref("springcacheCacheManager")
+        cacheName = "siteCache"
+        // these are just examples of properties you could set
+        eternal = true
+        diskPersistent = false
+        memoryStoreEvictionPolicy = "LRU"
+        timeToIdle = 64000
+        timeToLive = 64000
+    }
 }

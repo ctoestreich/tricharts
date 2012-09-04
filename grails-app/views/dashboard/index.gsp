@@ -18,7 +18,7 @@
   <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 </g:if>
 
-<g:render template="/templates/admin/userSelect"/>
+<cache:render key="${user.id}" template="/templates/admin/userSelect"/>
 
 <script type="text/javascript">
   app.loadRunRecords = function () {
@@ -34,34 +34,34 @@
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+  <cache:render key="${user.id}Triathlon" template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
 
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
   <div id="results-triathlon" class="accordion">
     <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      <cache:render key="${user.id}_${params?.srt?:''}_${triathlons?.list()?.size()}" template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      <cache:render key="${user.id}_${params?.srt?:''}_${triathlons?.list()?.size()}" template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
     </g:else>
   </div>
 </div>
 
-<br />
+<br/>
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
+  <cache:render key="${user.id}Running" template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
 
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
   <div id="results-run" class="accordion">
     <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      <cache:render key="${user.id}_${params?.srt?:''}_${runs?.list()?.size()}" template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      <cache:render key="${user.id}_${params?.srt?:''}_${runs?.list()?.size()}" template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
     </g:else>
   </div>
   %{--</div>--}%
@@ -84,7 +84,7 @@
 </g:form>
 
 <script type="text/javascript">
-  $(function(){
+  $(function () {
     $('.autopop').popover();
   });
 </script>

@@ -73,6 +73,8 @@ logDirectory = 'c:/logs'
 
 environments {
     development {
+        grails.resources.cdn.enabled = true
+        grails.resources.cdn.url = "http://cache.tricharts.com/"
         grails.logging.jul.usebridge = true
         grails.naming.entries = ['jdbc/trichartsDB': [
                 type: "javax.sql.DataSource",
@@ -87,6 +89,8 @@ environments {
                 maxIdle: "4"]]
     }
     production {
+        grails.resources.cdn.enabled = true
+        grails.resources.cdn.url = "http://cache.tricharts.com/"
         logDirectory = "/var/log/tomcat6"
         jquery.minified = true
         jqueryUi.minified = true
