@@ -64,12 +64,15 @@
                 <ul class="dropdown-menu">
                   <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Trending</a></li>
                   <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Averages</a></li>
+                  <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Averages</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Triathlon Charts <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Trending</a></li>
+                  <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Trending</a></li>
+                  <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Trending</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -82,6 +85,8 @@
                 </ul>
               </li>
               <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'addRace')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race</a></li>
+              <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'aboutus')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'aboutus', params: ['user.id': params?.user?.id])}">About Us</a></li>
+              <li<%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'contact')}" ? ' class="active"' : ''%>><a href="${createLink(controller: 'dashboard', action: 'contact', params: ['user.id': params?.user?.id])}">Contact</a></li>
             </sec:ifLoggedIn>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
               <li class="dropdown">

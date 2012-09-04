@@ -22,10 +22,7 @@
   <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Run PRs</div>
 </g:if>
 <g:elseif test="${params?.raceType == 'Triathlon'}">
-  <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
-    <div class="row-fluid" id="averages${segmentType}"><g:img dir="/images" file="spinner.gif"/> Loading ${segmentType} PRs</div>
-    <br />
-  </g:each>
+    <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Triathlon PRs</div>
 </g:elseif>
 
 <script>
@@ -43,18 +40,16 @@
                   }});
     </g:if>
     <g:elseif test="${params?.raceType == 'Triathlon'}">
-    <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
     jQuery.ajax({
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'triathlonPrs', params:['user.id',params?.user?.id])}',
-                  data:{ 'user.id':'${params?.user?.id}', div:'averages${segmentType}Div', segmentType:'${segmentType}'},
+                  data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv'},
                   success:function (data, textStatus) {
                     console.log('success');
-                    $('#averages${segmentType}').html(data);
+                    $('#averages').html(data);
                   },
                   error:function (XMLHttpRequest, textStatus, errorThrown) {
                   }});
-    </g:each>
     </g:elseif>
   });
 </script>
