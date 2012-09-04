@@ -157,7 +157,14 @@ cache.headers.presets = [
 jobs {
     enabled = true
     AthlinksResultsImportJob {
-        enabled = false
+        environments {
+            development {
+                enabled = false
+            }
+            production {
+                enabled = true
+            }
+        }
     }
 }
 
@@ -173,10 +180,10 @@ grails {
         username = "acetrike@gmail.com"
         password = '!Chris$4'
         props = ["mail.debug": "true",
-                "mail.transport.protocol":"smtps",
-                "mail.smtps.host":"smtp.gmail.com",
-                "mail.smtps.port":"465",
-                "mail.smtps.auth":"true",
+                "mail.transport.protocol": "smtps",
+                "mail.smtps.host": "smtp.gmail.com",
+                "mail.smtps.port": "465",
+                "mail.smtps.auth": "true",
                 "mail.smtps.user": "acetrike@gmail.com",
                 "mail.smtps.password": '!Chris$4']
     }
@@ -215,6 +222,6 @@ If you did make the request, then click <a href="$url">here</a> to reset your pa
     }
 }
 
-tomcat.deploy.username="ctoestreich"
-tomcat.deploy.password="Acetrike1"
-tomcat.deploy.url="http://www.tricharts.com/manager"
+tomcat.deploy.username = "ctoestreich"
+tomcat.deploy.password = "Acetrike1"
+tomcat.deploy.url = "http://www.tricharts.com/manager"
