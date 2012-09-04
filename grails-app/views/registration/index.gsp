@@ -16,7 +16,7 @@
     <div class="span4">
       <h2>Step 1</h2>
 
-      <p>Sign up and enter your email, password, dob & state (used to help find results at athlinks).  You will next be asked to confirm any matching
+      <p>Sign up and enter your username (email), password, dob & state (used to help find results at athlinks).  You will next be asked to confirm any matching
       users found at <a href="http://athlinks.com/" target="_blank">Athlinks.com</a> to start your initial results import process.</p>
     </div>
 
@@ -26,9 +26,9 @@
 
       <g:form id="registrationForm" class="form-horizontal" action="index">
         <fieldset>
-          <f:field property="username" bean="userInstance"/>
-          <f:field property="firstName" bean="userInstance"/>
-          <f:field property="lastName" bean="userInstance"/>
+          <f:field property="username" bean="userInstance" input-class="span10"/>
+          <f:field property="firstName" bean="userInstance" input-class="span10"/>
+          <f:field property="lastName" bean="userInstance" input-class="span10"/>
           <f:field property="password" bean="userInstance" input-type="password"/>
           <div class="control-group <g:if test="${userInstance.errors.getFieldError('password')}">error</g:if>">
             <label class="control-label" for="password2">Password Again</label>
@@ -42,7 +42,7 @@
           <div class="control-group ">
             <label class="control-label" for="states">State(s) <a href="javascript:void(0);" class="autopop" rel="popover" data-content="Select the state(s) in which you currently reside and race in." data-original-title="State(s)"><i class="icon-question-sign"></i></a></label>
             <div class="controls">
-              <g:select optionKey="id" value="${userInstance?.states}" optionValue="name" id="states" name="states" from="${State?.list()?.sort {a, b -> a.name <=> b.name}}" multiple="true" size="8"/>
+              <g:select class="span10" optionKey="id" value="${userInstance?.states}" optionValue="name" id="states" name="states" from="${State?.list()?.sort {a, b -> a.name <=> b.name}}" multiple="true" size="8"/>
             </div>
           </div>
 

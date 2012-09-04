@@ -1,7 +1,7 @@
 <div class="row-fluid">
-  <div class="span4"><h2>${sport}</h2></div>
+  <div class="<g:if test="${showButtons != "no"}">span4</g:if><g:else>span9</g:else>"><h3>${sport}</h3></div>
 
-  <div class="span8">
+  <div class="<g:if test="${showButtons != "no"}">span8</g:if><g:else>span3</g:else>">
     <g:if test="${showButtons != "no"}">
       <div class="btn-group-wrap-right">
         <div class="btn-group">

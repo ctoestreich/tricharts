@@ -20,7 +20,7 @@ class TriHarderTagLib {
         def pace = attrs.pace
         def showAt = attrs.containsKey('showAt') ? attrs.showAt : true
 
-        if(pace){
+        if(pace && !pace.trim()?.equals('')){
             out << "${showAt ? ' @ ' : ' '}$pace"
         }
     }

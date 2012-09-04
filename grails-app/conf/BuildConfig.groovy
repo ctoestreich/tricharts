@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery-ui:1.8.15"
         runtime ":resources:1.2-RC1"
 
-        runtime ':twitter-bootstrap:2.0.0.16'
+        runtime ':twitter-bootstrap:2.1.0.1'
         runtime ':fields:1.3'
         runtime ":cache-headers:1.1.5"
         runtime ":cached-resources:1.0"

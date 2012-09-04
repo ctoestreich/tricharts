@@ -7,9 +7,9 @@
 <body>
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span3">&nbsp;</div>
+    <div class="span2">&nbsp;</div>
 
-    <div class="span6">
+    <div class="span8">
       <div class="page-header">
         <h1><g:message code="springSecurity.login.header"/> <small>start logging greatness</small></h1>
       </div>

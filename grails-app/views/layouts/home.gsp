@@ -27,11 +27,18 @@
 </head>
 
 <body>
+%{--<div id="fb-root"></div>--}%
+%{--<script>(function(d, s, id) {--}%
+%{--var js, fjs = d.getElementsByTagName(s)[0];--}%
+%{--if (d.getElementById(id)) return;--}%
+%{--js = d.createElement(s); js.id = id;--}%
+%{--js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=423509571032868";--}%
+%{--fjs.parentNode.insertBefore(js, fjs);--}%
+%{--}(document, 'script', 'facebook-jssdk'));</script>--}%
 
-<g:render template="/templates/site/topnav" />
+<g:render template="/templates/site/topnav"/>
 
 <div class="container content">
-
   <div class="row">
     <p align="right">
       <sec:ifNotGranted roles="ROLE_USER">
@@ -40,22 +47,14 @@
       <sec:ifAllGranted roles="ROLE_USER">
         <sec:username/>&nbsp;|&nbsp;<g:link controller="logout" action="index">logout</g:link>
       </sec:ifAllGranted>
-
-    <div class="btn-group pull-right">
-      %{--<sec:ifNotGranted roles="ROLE_FACEBOOK">--}%
-      %{--<facebookAuth:connect permissions="${['email', 'user_about_me']}"/>--}%
-      %{--</sec:ifNotGranted>--}%
-      <sec:ifAllGranted roles="ROLE_FACEBOOK">
-        Welcome! <sec:username/>
-      </sec:ifAllGranted>
-    </div>
-  </p>
+    </p>
   </div>
-
-    <g:layoutBody/>
 </div>
 
+<g:layoutBody/>
+
 <g:render template="/templates/site/footer" />
+
 
 <r:script>
   $(function () {
