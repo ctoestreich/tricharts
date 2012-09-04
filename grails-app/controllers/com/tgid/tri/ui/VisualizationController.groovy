@@ -122,7 +122,7 @@ class VisualizationController extends BaseController {
         def minYear = 0
         def maxYear = 0
 
-        def years = RaceResult.executeQuery("select min(date) as mn, max(date) as mx from RaceResult where user.id = :userId and race.raceType = :raceType",
+        def years = RaceResult.executeQuery("select min(race.date) as mn, max(race.date) as mx from RaceResult rr where user.id = :userId and race.raceType = :raceType",
                                             [userId: userId, raceType: raceType])
         def types = RaceResult.executeQuery("select distinct race.raceCategoryType from RaceResult where user.id = :userId and race.raceType = :raceType",
                                             [userId: userId, raceType: raceType])
@@ -160,7 +160,7 @@ class VisualizationController extends BaseController {
         def minYear = 0
         def maxYear = 0
 
-        def years = RaceResult.executeQuery("select min(date) as mn, max(date) as mx from RaceResult where user.id = :userId and race.raceType = :raceType",
+        def years = RaceResult.executeQuery("select min(race.date), max(race.date) from RaceResult where user.id = :userId and race.raceType = :raceType",
                                             [userId: userId, raceType: raceType])
 
         def types = [RaceCategoryType.Sprint, RaceCategoryType.Olympic, RaceCategoryType.HalfIronman, RaceCategoryType.Ironman]
@@ -300,7 +300,6 @@ class VisualizationController extends BaseController {
             sortedResults.each { result ->
                 def key = result.date.year + 1900
                 def segmentResult = result?.segmentResults?.toList()?.find {it.raceSegment.segmentType == segmentType}
-                println segmentResult
                 mapSegmentResults(segmentResult, data, key, result)
             }
         }

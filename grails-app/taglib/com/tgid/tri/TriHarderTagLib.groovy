@@ -11,16 +11,17 @@ import org.joda.time.format.PeriodFormatter
 
 import static org.joda.time.DurationFieldType.months
 import static org.joda.time.DurationFieldType.years
+import com.tgid.tri.race.Pace
 
 class TriHarderTagLib {
 
     static namespace = "tri"
 
     def displayPace = {attrs ->
-        def pace = attrs.pace
+        Pace pace = attrs?.pace ?: null
         def showAt = attrs.containsKey('showAt') ? attrs.showAt : true
 
-        if(pace && !pace.trim()?.equals('')){
+        if(pace && !pace.toString()?.trim()?.equals('')){
             out << "${showAt ? ' @ ' : ' '}$pace"
         }
     }

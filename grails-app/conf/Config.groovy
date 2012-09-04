@@ -70,10 +70,25 @@ grails.gorm.failOnError = true
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.naming.entries = ['jdbc/trichartsDB': [
+                type: "javax.sql.DataSource",
+                auth: "Container",
+                description: "tricharts",
+                url: "jdbc:mysql://127.0.0.1/tricharts",
+                username: "tricharts",
+                password: "Tr1Ch4rt5",
+                driverClassName: "com.mysql.jdbc.Driver",
+                dialect: "org.hibernate.dialect.MySQLInnoDBDialect",
+                maxActive: "8",
+                maxIdle: "4"]]
     }
     production {
+        jquery.minified = true
+        jqueryUi.minified = true
+        grails.dbconsole.enabled = true
+        grails.dbconsole.urlRoot = '/dbadmin/dbconsole'
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://www.tricharts.com"
     }
 }
 

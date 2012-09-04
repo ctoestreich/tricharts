@@ -10,5 +10,5 @@ var Race = Backbone.Model.extend({
 
 var RaceList = Backbone.Collection.extend({
                                               model: Race,
-                                              url:'/tricharts/race/backbone'
+                                              url:'/race/backbone'
                                           });

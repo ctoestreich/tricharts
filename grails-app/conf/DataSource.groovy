@@ -1,9 +1,8 @@
 dataSource {
     pooled = true
-    driverClassName = "com.mysql.jdbc.Driver"
-    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
+//    dialect = "org.hibernate.dialect.MySQLInnoDBDialect"
     cache.use_second_level_cache = true
     cache.use_query_cache = true
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
@@ -13,9 +12,7 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
-            username = "tricharts"
-            password = "Tr1Ch4rt5"
+            jndi = "java:comp/env/jdbc/trichartsDB"
         }
     }
     test {
@@ -28,16 +25,8 @@ environments {
         dataSource {
             pooled = true
             dbCreate = "update"
-            url = System.getProperty("JDBC_CONNECTION_STRING")
-            properties {
-                maxActive = 100
-                maxIdle = 25
-                minIdle = 5
-                initialSize = 10
-                minEvictableIdleTimeMillis = 60000
-                timeBetweenEvictionRunsMillis = 60000
-                maxWait = 10000
-            }
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            jndi = "java:comp/env/jdbc/trichartsDB"
         }
     }
 }
