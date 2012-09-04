@@ -6,7 +6,7 @@
   <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
   <meta name="description" content="">
   <meta name="author" content="Christian Oestreich">
-  %{--<meta name="viewport" content="initial-scale = 1.0">--}%
+  <meta name="viewport" content="initial-scale=1.0">
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -28,7 +28,7 @@
 
 <body>
 
-<g:render template="/templates/site/topnav" />
+<g:render template="/templates/site/topnav"/>
 
 <div class="container content">
 
@@ -52,10 +52,10 @@
   </p>
   </div>
 
-    <g:layoutBody/>
+  <g:layoutBody/>
 </div>
 
-<g:render template="/templates/site/footer" />
+<g:render template="/templates/site/footer"/>
 
 <r:script>
   $(function () {

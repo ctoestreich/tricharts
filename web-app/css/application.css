@@ -70,6 +70,10 @@ div.row, div.row-fluid {
     /*text-align: center;*/
 }
 
+.collapse {
+    overflow: hidden !important;
+}
+
 .container {
     margin-right: auto;
     margin-left: auto;
