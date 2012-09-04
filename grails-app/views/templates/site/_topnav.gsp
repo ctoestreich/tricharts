@@ -1,4 +1,8 @@
 <%@ page import="com.tgid.tri.race.RaceType" %>
+<g:set var="paramMap" value="${[]}" />
+<sec:ifAllGranted roles="ROLE_ADMIN">
+  <g:set var="paramMap" value="${['user.id': params?.user?.id]}" />
+</sec:ifAllGranted>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -13,14 +17,14 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li><a <%=request.forwardURI == "${createLink(uri: '/')}" ? 'class="btn disabled"' : ''%> href="${createLink(uri: '/')}">Home</a></li>
-          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'aboutus')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'aboutus', params: ['user.id': params?.user?.id])}">About Us</a></li>
-          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'contact')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'contact', params: ['user.id': params?.user?.id])}">Contact</a></li>
+          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'aboutus')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'aboutus', params: paramMap)}">About Us</a></li>
+          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'contact')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'contact', params: paramMap)}">Contact</a></li>
           <sec:ifNotLoggedIn>
             <li><a <%=request.forwardURI == "${createLink(controller: 'registration', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'registration', action: 'index')}">Register</a></li>
             <li><a <%=request.forwardURI == "${createLink(controller: 'login', action: 'auth')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
           </sec:ifNotLoggedIn>
           <sec:ifLoggedIn>
-            <li><a <%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'dashboard', action: 'index', params: ['user.id': params?.user?.id])}">Dashboard</a></li>
+            <li><a <%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'dashboard', action: 'index', params: paramMap)}">Dashboard</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
               <ul class="dropdown-menu">
