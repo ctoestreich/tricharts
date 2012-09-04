@@ -1,4 +1,5 @@
 import com.tgid.tri.auth.Role
+import grails.util.Environment
 
 class BootStrap {
 
@@ -17,7 +18,9 @@ class BootStrap {
     private void createInitialRacesAndResults() {
         segmentService.seedSegments()
         stateService.seedStates()
-        bootStrapService.createDefaultUsers()
-        bootStrapService.seedResults()
+        if(Environment.current == Environment.DEVELOPMENT) {
+            bootStrapService.createDefaultUsers()
+            bootStrapService.seedResults()
+        }
     }
 }
