@@ -28,9 +28,7 @@ environments {
         dataSource {
             pooled = true
             dbCreate = "update"
-            url = "jdbc:mysql://127.0.0.1/tricharts?useUnicode=yes&characterEncoding=UTF-8"
-            username = "tricharts"
-            password = "Tr1Ch4rt5"
+            url = System.getProperty("JDBC_CONNECTION_STRING")
             properties {
                 maxActive = 100
                 maxIdle = 25
