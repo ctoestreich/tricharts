@@ -40,10 +40,14 @@ body {
     position: fixed;
 }
 
-/*div.row, div.row-fluid {*/
+div.row, div.row-fluid {
     /*width: 940px;*/
-    /*padding-bottom: 15px;*/
-/*}*/
+    padding-bottom: 10px;
+}
+
+.accordion-heading .row-fluid {
+    padding-bottom: 0px;
+}
 
 .btn.huge {
     font-size: 18px;

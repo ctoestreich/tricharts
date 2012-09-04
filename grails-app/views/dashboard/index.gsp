@@ -38,8 +38,6 @@
 
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
-  <BR>
-
   <div id="results-triathlon" class="accordion">
     <g:if test="${params?.srt == "type"}">
       <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
@@ -57,8 +55,6 @@
   <g:render template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
 
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
-
-  <BR>
 
   <div id="results-run" class="accordion">
     <g:if test="${params?.srt == "type"}">
@@ -86,6 +82,12 @@
   <g:hiddenField name="user.id" value="${user?.id}"/>
   <g:hiddenField name="raceResultEdit" value="false"/>
 </g:form>
+
+<script type="text/javascript">
+  $(function(){
+    $('.autopop').popover();
+  });
+</script>
 
 </body>
 </html>

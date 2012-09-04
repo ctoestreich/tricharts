@@ -1,3 +1,5 @@
+import org.apache.log4j.DailyRollingFileAppender
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -67,6 +69,8 @@ grails.hibernate.cache.queries = true
 
 grails.gorm.failOnError = true
 
+logDirectory = 'c:/logs'
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -78,11 +82,12 @@ environments {
                 username: "tricharts",
                 password: "Tr1Ch4rt5",
                 driverClassName: "com.mysql.jdbc.Driver",
-                dialect: "org.hibernate.dialect.MySQLInnoDBDialect",
+//                dialect: "org.hibernate.dialect.MySQLInnoDBDialect",
                 maxActive: "8",
                 maxIdle: "4"]]
     }
     production {
+        logDirectory = "/var/log/tomcat6"
         jquery.minified = true
         jqueryUi.minified = true
         grails.dbconsole.enabled = true
@@ -94,15 +99,27 @@ environments {
 
 // log4j configuration
 log4j = { root ->
-    // Example of changing the log pattern for the default console appender:
-    //
-//    appenders {
-//        console name: "stdout", threshold: org.apache.log4j.Level.DEBUG
-//    }
-//
-//    root {
-//        debug 'stdout'
-//    }
+    appenders {
+        //console name: 'stdout', threshold: org.apache.log4j.Level.INFO
+        //rollingFile name: 'fdbErrorLog', file: logDirectory + '/fdbError.log', threshold: org.apache.log4j.Level.ERROR, maxFileSize: "32MB", maxBackupIndex: 10, 'append': true
+        appender new DailyRollingFileAppender(
+                name: 'dailyAppender',
+                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
+                fileName: "${logDirectory}/trichartsError.log",
+                threshold: org.apache.log4j.Level.ERROR,
+                append: true,
+                layout: pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+        )
+
+        appender new DailyRollingFileAppender(
+                name: 'dailyAppender',
+                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
+                fileName: "${logDirectory}/trichartsDebug.log",
+                threshold: org.apache.log4j.Level.DEBUG,
+                append: true,
+                layout: pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+        )
+    }
 
     error 'org.codehaus.groovy.grails.web.servlet',        // controllers
           'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -126,6 +143,11 @@ log4j = { root ->
             error "grails.app"
         }
     }
+
+    root {
+        error 'dailyAppender'
+        additivity = true
+    }
 }
 
 grails.plugin.cloudfoundry.appname = 'tricharts'
@@ -137,6 +159,7 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.tgid.tri.
 grails.plugins.springsecurity.authority.className = 'com.tgid.tri.auth.Role'
 
 grails.plugins.springsecurity.facebook.domain.classname = 'com.tgid.tri.auth.FacebookUser'
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/dashboard/index'
 
 jodatime.format.html5 = true
 
