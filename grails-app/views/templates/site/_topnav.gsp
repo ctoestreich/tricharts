@@ -28,22 +28,22 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Run Trending</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Run Averages</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Run PRs</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running] << paramMap)}">Run Trending</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running] << paramMap)}">Run Averages</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running] << paramMap)}">Run PRs</a></li>
              <li><hr></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Triathlon Trending</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Triathlon Averages</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Triathlon PRs</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Trending</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Averages</a></li>
+                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon PRs</a></li>
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Results <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon, 'user.id': params?.user?.id])}">Add Triathlon Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running, 'user.id': params?.user?.id])}">Add Running Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking, 'user.id': params?.user?.id])}">Add Biking Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming, 'user.id': params?.user?.id])}">Add Swimming Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon] << paramMap)}">Add Triathlon Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running] << paramMap)}">Add Running Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking] << paramMap)}">Add Biking Result</a></li>
+                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming] << paramMap)}">Add Swimming Result</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race Course</a></li>
               </ul>

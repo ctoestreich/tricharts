@@ -51,7 +51,6 @@ grails.project.dependency.resolution = {
         runtime ":cache-headers:1.1.5"
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
-        compile ":cdn-resources:0.2.1"
         runtime ":gsp-resources:0.4.1"
         runtime ":spring-security-core:1.2.7.3"
 
