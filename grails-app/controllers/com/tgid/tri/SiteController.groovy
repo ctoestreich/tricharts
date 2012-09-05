@@ -10,6 +10,9 @@ class SiteController extends BaseController {
     def sendGridService
 
     @Cacheable('siteCache')
+    def faq() { }
+
+    @Cacheable('siteCache')
     def thanks() { }
 
     @Cacheable('siteCache')

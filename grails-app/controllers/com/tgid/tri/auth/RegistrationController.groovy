@@ -3,6 +3,8 @@ package com.tgid.tri.auth
 import groovy.text.SimpleTemplateEngine
 import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
 import uk.co.desirableobjects.sendgrid.SendGridEmail
+import grails.plugin.springcache.annotations.Cacheable
+import grails.plugins.springsecurity.SpringSecurityService
 
 class RegistrationController {
 
@@ -10,6 +12,7 @@ class RegistrationController {
     def grailsApplication
     def athlinksResultsParsingService
     def sendGridService
+    def springSecurityService
 
     def index() {
         def userInstance = new User(params)
@@ -49,7 +52,7 @@ class RegistrationController {
 
         if(!RegistrationCode.findByUsername(userInstance?.username)) {
             def registrationCode = userService.createRegistrationCode(userInstance)
-            body = createRegistrationEmail(userInstance, registrationCode)
+            sendRegistrationEmail(userInstance, registrationCode)
         }
 
         render view: 'newuser', model: [userInstance: userInstance]
@@ -96,10 +99,34 @@ class RegistrationController {
             athlinksResultsParsingService.retrieveResults(user)
         }
 
+        springSecurityService.reauthenticate user.username
+
         redirect controller: 'dashboard', action: 'index'
     }
 
-    private String createRegistrationEmail(User user, RegistrationCode registrationCode) {
+    @Cacheable("siteCache")
+    def resend(){
+        [userInstance: new User()]
+    }
+
+    def resendRegistrationEmail(){
+        def userInstance = User.findByUsername(params?.username)
+
+        if(!userInstance){
+//            userInstance.errors.rejectValue('username', "user.not.found")
+            render g.message(code: 'user.not.found', args: [params?.username, createLink(controller:'registration',action:'index')])
+            return
+        }
+
+        if(!RegistrationCode.findByUsername(userInstance?.username)) {
+            def registrationCode = userService.createRegistrationCode(userInstance)
+            sendRegistrationEmail(userInstance, registrationCode)
+        }
+
+        render g.message(code: 'user.email.sent', args: [params?.username])
+    }
+
+    private String sendRegistrationEmail(User user, RegistrationCode registrationCode) {
 
         def url = generateLink('confirmation', [t: registrationCode.token])
         def body = grailsApplication.config.security.ui.register.emailBody
@@ -130,8 +157,6 @@ class RegistrationController {
 
         return body.toString()
     }
-
-
 
     private String generateLink(String action, linkParams) {
         createLink(base: "$request.scheme://$request.serverName:$request.serverPort$request.contextPath",

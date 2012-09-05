@@ -1,5 +1,5 @@
 <%@ page import="com.tgid.tri.auth.State" %>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <meta name="layout" content="bootstrap"/>
   <title><g:message code="springSecurity.login.title"/></title>
@@ -18,6 +18,8 @@
 
       <p>Sign up and enter your username (email), password, dob & state (used to help find results at athlinks).  You will next be asked to confirm any matching
       users found at <a href="http://athlinks.com/" target="_blank">Athlinks.com</a> to start your initial results import process.</p>
+<br />
+      <p>If you have already registered but you have not recieved your confirmation email <g:link controller="registration" action="resend">click here</g:link></p>
     </div>
 
     <div class="span1">&nbsp;</div>

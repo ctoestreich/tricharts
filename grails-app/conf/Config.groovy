@@ -233,27 +233,27 @@ security {
             emailBody = '''\
 Hi $user.username,<br/>
 <br/>
-An account was created at TriCharts.com with this email address.<br/>
+An account was created at <a href="$url">TriCharts.com</a> with this email address.<br/>
 <br/>
 If you made the request, please click&nbsp;<a href="$url">here</a> to finish the registration.
 '''
-            emailFrom = 'admin@tricharts.com'
+            emailFrom = 'noreply@tricharts.com'
             emailSubject = 'New Account'
             defaultRoleNames = ['ROLE_USER']
-            postRegisterUrl = null // use defaultTargetUrl if not set
+            postRegisterUrl = '/dashboard/index'
         }
 
         forgotPassword {
             emailBody = '''\
 Hi $user.username,<br/>
 <br/>
-You requested that your password be reset for TriCharts.com.<br/>
+You requested that your password be reset for <a href="$url">TriCharts.com</a>.<br/>
 <br/>
 If you didn't make this request then ignore the email; no changes have been made.<br/>
 <br/>
 If you did make the request, then click <a href="$url">here</a> to reset your password.
 '''
-            emailFrom = 'admin@tricharts.com'
+            emailFrom = 'noreply@tricharts.com'
             emailSubject = 'Password Reset'
             postResetUrl = null // use defaultTargetUrl if not set
         }

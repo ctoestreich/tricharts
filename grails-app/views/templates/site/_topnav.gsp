@@ -19,6 +19,7 @@
           <li><a <%=request.forwardURI == "${createLink(uri: '/')}" ? 'class="btn disabled"' : ''%> href="${createLink(uri: '/')}">Home</a></li>
           <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'aboutus')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'aboutus', params: paramMap)}">About Us</a></li>
           <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'contact')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'contact', params: paramMap)}">Contact</a></li>
+          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'faq')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'faq', params: paramMap)}">FAQ</a></li>
           <sec:ifNotLoggedIn>
             <li><a <%=request.forwardURI == "${createLink(controller: 'registration', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'registration', action: 'index')}">Register</a></li>
             <li><a <%=request.forwardURI == "${createLink(controller: 'login', action: 'auth')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'login', action: 'auth')}">Login</a></li>
