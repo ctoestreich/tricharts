@@ -10,9 +10,9 @@
   <div class="container">
     <h1>Race Results Tracking</h1>
     <br>
-
+    <sec:ifNotLoggedIn>
     <p><a href="${createLink(controller: 'login', action: 'auth')}">Login</a> or <a href="${createLink(controller: 'registration', action: 'index')}">create account</a> to get started.</p>
-
+    </sec:ifNotLoggedIn>
     <p>${com.tgid.tri.results.RaceResult.count()} Results & Counting</p>
   </div>
 </div>
