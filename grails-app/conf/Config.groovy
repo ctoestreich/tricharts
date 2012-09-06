@@ -1,3 +1,5 @@
+import org.apache.log4j.DailyRollingFileAppender
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -123,40 +125,51 @@ log4j = { root ->
 }
 
 // log4j configuration
-//log4j = { root ->
-//    appenders {
-//        console name: 'stdout', threshold: org.apache.log4j.Level.INFO
-//        //rollingFile name: 'fdbErrorLog', file: logDirectory + '/fdbError.log', threshold: org.apache.log4j.Level.ERROR, maxFileSize: "32MB", maxBackupIndex: 10, 'append': true
-////        appender new DailyRollingFileAppender(
-////                name: 'dailyAppender',
-////                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
-////                fileName: "${logDirectory}/trichartsError.log",
-////                threshold: org.apache.log4j.Level.ERROR,
-////                append: true,
-////                layout: pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
-////        )
-//    }
-//
-//    error 'org.codehaus.groovy.grails.web.servlet',        // controllers
-//          'org.codehaus.groovy.grails.web.pages',          // GSP
-//          'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-//          'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-//          'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-//          'org.codehaus.groovy.grails.commons',            // core / classloading
-//          'org.codehaus.groovy.grails.plugins',            // plugins
-//          'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-//          'org.springframework',
-//          'org.hibernate',
-//          'net.sf.ehcache.hibernate'
-//
-//    info 'com.tgid.tri'
-////    info "grails.app"
-//
-////    root {
-////        error 'dailyAppender'
-////        additivity = true
-////    }
-//}
+log4j = { root ->
+    appenders {
+        //console name: 'stdout', threshold: org.apache.log4j.Level.INFO
+        //rollingFile name: 'fdbErrorLog', file: logDirectory + '/fdbError.log', threshold: org.apache.log4j.Level.ERROR, maxFileSize: "32MB", maxBackupIndex: 10, 'append': true
+        appender new DailyRollingFileAppender(
+                name: 'dailyAppender',
+                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
+                fileName: "${logDirectory}/trichartsError.log",
+                threshold: org.apache.log4j.Level.ERROR,
+                append: true,
+                layout: pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+        )
+
+        appender new DailyRollingFileAppender(
+                name: 'dailyAppender',
+                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
+                fileName: "${logDirectory}/trichartsInfo.log",
+                threshold: org.apache.log4j.Level.INFO,
+                append: true,
+                layout: pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+        )
+    }
+
+    error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+          'org.codehaus.groovy.grails.web.pages', //  GSP
+          'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+          'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+          'org.codehaus.groovy.grails.web.mapping', // URL mapping
+          'org.codehaus.groovy.grails.commons', // core / classloading
+          'org.codehaus.groovy.grails.plugins', // plugins
+          'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+          'org.springframework',
+          'org.hibernate',
+          'net.sf.ehcache.hibernate',
+          'com.uhg.fdb'
+
+    info 'com.tgid.tri'
+
+    warn 'org.mortbay.log'
+
+    root {
+        error 'dailyAppender'
+        additivity = true
+    }
+}
 
 grails.plugin.cloudfoundry.appname = 'tricharts'
 
