@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.auth.State; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -19,20 +19,39 @@
 </g:if>
 <div class="row-fluid">
   <div class="span4 well">
-    <ul class="nav nav-list">
-      <li class="nav-header">Tricharts Account</li>
-      <li <%=request.forwardURI == "${createLink(controller: 'account', action: 'index')}" ? ' class="active"' : ''%>><a href="#">User Profile</a></li>
-      <li><a href="#">Email Preferences</a></li>
-      <li class="nav-header">External Accounts</li>
-      <li><a href="#">Athlinks Accounts</a></li>
-    </ul>
+   <cache:render template="/templates/account/accountNav" key="${request.forwardURI}" />
   </div>
 
   <div class="span8">
-    this is the content area
+    Your account information is below.  You may update your account at any time.  Your linked accounts will currently not be affected by any changes you make below.
+    <p>&nbsp;</p>
+    <g:form class="form-horizontal" controller="account" action="index">
+      <fieldset>
+      <f:field bean="${user}" property="username" input-class="span10" input-readonly="readonly" />
+      <f:field bean="${user}" property="firstName" input-class="span10" />
+      <f:field bean="${user}" property="lastName" input-class="span10" />
+      <f:field bean="${user}" property="dob" />
+        <div class="control-group ">
+          <label class="control-label" for="states">State(s) <a href="javascript:void(0);" class="autopop" rel="popover" data-content="Select the state(s) in which you currently reside and race in. Hold CTRL to select multiple." data-original-title="State(s)"><i class="icon-question-sign"></i></a></label>
+          <div class="controls">
+            <g:select class="span10" optionKey="id" value="${user?.states}" optionValue="name" id="states" name="states" from="${State?.list()?.sort {a, b -> a.name <=> b.name}}" multiple="true" size="8"/>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-ok icon-white"></i>
+            <g:message code="default.button.update.label" default="Update"/>
+          </button>
+        </div>
+      </fieldset>
+    </g:form>
 
   </div>
 </div>
-
+<script type="text/javascript">
+  $(function(){
+    $('.autopop').popover();
+  });
+</script>
 </body>
 </html>
