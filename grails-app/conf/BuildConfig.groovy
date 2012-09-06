@@ -57,7 +57,7 @@ grails.project.dependency.resolution = {
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
         compile ":google-visualization:0.5.3"
-        compile ":cloud-foundry:1.2.3"
+//        compile ":cloud-foundry:1.2.3"
         compile ':webxml:1.4.1'
         compile ":mail:1.0"
 //        compile ':sendgrid:0.4'
@@ -73,7 +73,7 @@ grails.project.dependency.resolution = {
 
         test ":spock:0.6"
         build ":tomcat:$grailsVersion"
-        runtime ":database-migration:1.1"
+//        runtime ":database-migration:1.1"
         compile ':cache:1.0.0'
     }
 }

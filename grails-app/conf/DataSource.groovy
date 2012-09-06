@@ -1,11 +1,13 @@
 dataSource {
     pooled = true
+//    logSql = true
 }
 hibernate {
 //    dialect = org.hibernate.dialect.MySQLInnoDBDialect
     cache.use_second_level_cache = true
     cache.use_query_cache = true
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
+//    format_sql = true
 }
 // environment specific settings
 environments {
@@ -15,17 +17,24 @@ environments {
             jndi = "java:comp/env/jdbc/trichartsDB"
         }
     }
-    test {
-        dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        }
-    }
     production {
         dataSource {
             pooled = true
             dbCreate = "update"
-            jndi = "java:comp/env/jdbc/trichartsDB"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:mysql://prod.cryau4uda2kb.us-east-1.rds.amazonaws.com:3306/tricharts"
+            username = "admin"
+            password = '!Chris$4'
+            properties {
+                maxActive = 100
+                maxIdle = 25
+                minIdle = 5
+                initialSize = 10
+                minEvictableIdleTimeMillis = 60000
+                timeBetweenEvictionRunsMillis = 60000
+                maxWait = 10000
+            }
         }
     }
 }

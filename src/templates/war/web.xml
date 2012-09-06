@@ -108,7 +108,7 @@
         <res-ref-name>jdbc/trichartsDB</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Application</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
+        <res-sharing-scope>Container</res-sharing-scope>
     </resource-ref>
 
 </web-app>

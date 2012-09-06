@@ -26,7 +26,7 @@
 
     <div class='span7'>
 
-      <g:form id="registrationForm" class="form-horizontal" action="index">
+      <g:form id="registrationForm" class="form-horizontal" action="index"  autocomplete="off">
         <fieldset>
           <f:field property="username" bean="userInstance" input-class="span10"/>
           <f:field property="firstName" bean="userInstance" input-class="span10"/>
