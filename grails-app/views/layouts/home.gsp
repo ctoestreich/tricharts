@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
-  <meta name="description" content="">
+  <meta name="description" content="Web-based race performance graphing and tracking for running, biking, triathlon and multisports.">
+  <meta name="keywords" content="triathlon, graph, tracking, graphing, charts, biking, running, swimming, swim, run, bike, multisport, multisports, results, result tracking">
   <meta name="author" content="Christian Oestreich">
   %{--<meta name="viewport" content="initial-scale = 1.0">--}%
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
