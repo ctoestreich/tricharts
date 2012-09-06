@@ -1,3 +1,5 @@
+if(!window.console) console = {log:function () {}};
+
 if (typeof jQuery !== 'undefined') {
     (function ($) {
         $('#spinner').ajaxStart(function () {

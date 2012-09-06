@@ -18,7 +18,7 @@
   <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 </g:if>
 
-<cache:render key="${user.id}" template="/templates/admin/userSelect"/>
+<g:render template="/templates/admin/userSelect"/>
 
 <script type="text/javascript">
   app.loadRunRecords = function () {

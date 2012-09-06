@@ -1,5 +1,5 @@
 <%@ page import="com.tgid.tri.race.RaceType" %>
-<g:set var="paramMap" value="${[]}" />
+<g:set var="paramMap" value="${[:]}" />
 <sec:ifAllGranted roles="ROLE_ADMIN">
   <g:set var="paramMap" value="${['user.id': params?.user?.id]}" />
 </sec:ifAllGranted>
