@@ -97,33 +97,6 @@ environments {
     }
 }
 
-log4j = { root ->
-    appenders {
-        rollingFile name: 'stdout', file: "${logDirectory}/tricharts.log".toString(), maxFileSize: '1024KB'
-        rollingFile name: 'stacktrace', file: "${logDirectory}/tricharts_stack.log".toString(), maxFileSize: '1024KB'
-    }
-
-    error 'org.hibernate.SQL',
-          'org.hibernate.transaction',
-          'org.codehaus.groovy.grails.orm.hibernate',
-          'grails.app.services',
-          'grails.app.controllers',
-          'grails.app.taglibs'
-
-    error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
-          'org.codehaus.groovy.grails.web.pages', //  GSP
-          'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-          'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-          'org.codehaus.groovy.grails.web.mapping', // URL mapping
-          'org.codehaus.groovy.grails.commons', // core / classloading
-          'org.codehaus.groovy.grails.plugins', // plugins
-          'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-          'org.springframework',
-          'org.hibernate'
-
-    root.level = org.apache.log4j.Level.ERROR
-}
-
 // log4j configuration
 log4j = { root ->
     appenders {
