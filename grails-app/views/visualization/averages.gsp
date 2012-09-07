@@ -4,7 +4,7 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>User Dashboard</title>
-  <r:require modules="dashboard,results, progression"/>
+  <r:require modules="dashboard,results, progression, jquery-ui"/>
   <gvisualization:apiImport/>
 </head>
 
@@ -15,6 +15,8 @@
 </div>
 
 <g:render template="/templates/admin/userSelect"/>
+
+%{--<g:render template="/templates/visualization/dateSelection"/>--}%
 
 <g:render template="/templates/visualization/chartSelection"/>
 

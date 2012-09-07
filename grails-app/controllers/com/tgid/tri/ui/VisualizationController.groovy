@@ -18,11 +18,10 @@ import java.text.DecimalFormat
 class VisualizationController extends BaseController {
 
     def paceService
+    def visualizationService
 
     def prs() {
         User user = requestedUser
-
-        def races = getRaceCategoriesByType(params?.raceType)
 
         render view: 'prs', model: [user: user]
     }
@@ -43,6 +42,7 @@ class VisualizationController extends BaseController {
         render view: 'progression', model: [raceResult: new RaceResult(), user: user, races: races]
     }
 
+    @Cacheable('siteCache')
     private List<RaceCategoryType> getRaceCategoriesByType(String raceType) {
         if(raceType == 'Running')
             return [RaceCategoryType.OneMile, RaceCategoryType.FiveKilometer, RaceCategoryType.EightKilometer, RaceCategoryType.TenKilometer, RaceCategoryType.TenMile, RaceCategoryType.HalfMarathon, RaceCategoryType.Marathon]
@@ -88,6 +88,7 @@ class VisualizationController extends BaseController {
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
+    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
     def runningAverages() {
         User user = requestedUser
         def userId = user.id
@@ -97,6 +98,7 @@ class VisualizationController extends BaseController {
         renderRunAveragesChart(resultDiv, userId, queryRaceType)
     }
 
+    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
     def triathlonAverages() {
         User user = requestedUser
         def userId = user.id
@@ -117,6 +119,7 @@ class VisualizationController extends BaseController {
         renderRunningPrsChart(resultDiv, userId, queryRaceType)
     }
 
+    @Cacheable("runningRecordsCache")
     private void renderRunningPrsChart(String div, long userId, RaceType raceType) {
         def data = [:]
         def minYear = 0
@@ -136,7 +139,7 @@ class VisualizationController extends BaseController {
             types.each { RaceCategoryType raceCategoryType ->
                 def year = minYear
                 while(year <= maxYear) {
-                    data.putAll(retrieveRunRecord(userId, raceCategoryType, RaceType.Running, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
+                    data.putAll(visualizationService.retrieveRunRecord(userId, raceCategoryType, RaceType.Running, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
                     year++
                 }
             }
@@ -155,6 +158,7 @@ class VisualizationController extends BaseController {
         renderTriathlonPrsChart(resultDiv, userId, queryRaceType)
     }
 
+    @Cacheable("triathlonRecordsCache")
     private void renderTriathlonPrsChart(String div, long userId, RaceType raceType) {
         def data = [:]
         def minYear = 0
@@ -174,9 +178,9 @@ class VisualizationController extends BaseController {
             types.each { RaceCategoryType raceCategoryType ->
                 def year = minYear
                 while(year <= maxYear) {
-                    data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
-                    data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
-                    data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
+                    data.putAll(visualizationService.retrieveTriathlonRecord(userId, SegmentType.Swim, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
+                    data.putAll(visualizationService.retrieveTriathlonRecord(userId, SegmentType.Bike, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
+                    data.putAll(visualizationService.retrieveTriathlonRecord(userId, SegmentType.Run, raceCategoryType, RaceType.Triathlon, new Date(year, 0, 1), new Date(year + 1, 0, 1)))
                     year++
                 }
             }
@@ -185,38 +189,18 @@ class VisualizationController extends BaseController {
         render template: '/templates/charts/triathlonPrs', model: [types: types, data: data, minYear: minYear, maxYear: maxYear]
     }
 
-    @Cacheable("triathlonRecordsCache")
     def triathlonRecords() {
         User user = requestedUser
         def userId = user?.id
-        def data = [:]
-
-        if(userId) {
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Sprint, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Sprint, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Sprint, RaceType.Triathlon))
-
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Swim, RaceCategoryType.Olympic, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Bike, RaceCategoryType.Olympic, RaceType.Triathlon))
-            data.putAll(retrieveTriathlonRecord(userId, SegmentType.Run, RaceCategoryType.Olympic, RaceType.Triathlon))
-        }
+        def data = visualizationService.mapTriathlonRecords(userId)
 
         render template: "triathlonRecord", model: [data: data]
     }
 
-    @Cacheable("runningRecordsCache")
     def runningRecords() {
         User user = requestedUser
         def userId = user.id
-        def data = [:]
-
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.OneMile, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.FiveKilometer, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenKilometer, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenMile, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
-        data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
-
+        def data = visualizationService.mapRunningRecords(userId)
         render template: "runningRecord", model: [data: data, user: user]
     }
 
@@ -256,15 +240,11 @@ class VisualizationController extends BaseController {
         renderDashboardChart(columnName, resultTitle, resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
-    private void renderRunProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
+    @Cacheable('chartCache')
+    private void renderRunProgressionChart(String resultDiv, Long userId, RaceType raceType, RaceCategoryType raceCategoryType) {
+        def results = visualizationService.getRaceResults(userId, raceType, raceCategoryType)
 
-        def results = RaceResult.where {
-            user.id == userId
-            race.raceType == queryRaceType
-            race.raceCategoryType == queryRaceCategoryType
-        }
-
-        def sortedResults = results.list().sort {a, b -> a.date <=> b.date}
+        def sortedResults = results.sort {a, b -> a.date <=> b.date}
         def data = [:]
         sortedResults.each { result ->
             def key = result.date.year + 1900
@@ -277,24 +257,21 @@ class VisualizationController extends BaseController {
         }
 
         render template: "/templates/charts/runProgression",
-               model: [height: 200, width: 200, data: data, id: resultDiv, type: queryRaceCategoryType]
+               model: [height: 200, width: 200, data: data, id: resultDiv, type: raceCategoryType]
     }
 
-    private renderTriathlonAveragesChart(String resultDiv, userId, RaceType queryRaceType, SegmentType segmentType) {
+    @Cacheable('chartCache')
+    private renderTriathlonAveragesChart(String resultDiv, Long userId, RaceType queryRaceType, SegmentType segmentType) {
         def races = getRaceCategoriesByType('Triathlon')
         def data = new HashMap<Integer, HashMap<String, List>>()
         def categories = []
         def totalRaces = []
 
-        races.each { raceCategoryType ->
+        races.each { RaceCategoryType raceCategoryType ->
             categories << "'${raceCategoryType.raceCategoryType}'"
-            def results = RaceResult.where {
-                user.id == userId
-                race.raceType == queryRaceType
-                race.raceCategoryType == raceCategoryType
-            }
+            def results = visualizationService.getRaceResults(userId, queryRaceType, raceCategoryType)
 
-            def sortedResults = results.list().sort {a, b -> a?.date <=> b?.date}
+            def sortedResults = results?.sort {a, b -> a?.date <=> b?.date}
 
             totalRaces << "{name: '${raceCategoryType.raceCategoryType}', y: ${sortedResults?.size() ?: 0}}"
 
@@ -362,7 +339,8 @@ class VisualizationController extends BaseController {
         results
     }
 
-    private renderRunAveragesChart(String resultDiv, userId, RaceType queryRaceType) {
+    @Cacheable('chartCache')
+    private renderRunAveragesChart(String resultDiv, Long userId, RaceType queryRaceType) {
         def races = getRaceCategoriesByType('Running')
         def data = new HashMap<Integer, HashMap<String, List>>()
         def categories = []
@@ -420,6 +398,7 @@ class VisualizationController extends BaseController {
         return result
     }
 
+    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
     private void renderTriathlonProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
 
         def segmentData = new HashMap<SegmentType, HashMap<Integer, StringBuilder>>()
@@ -474,58 +453,8 @@ class VisualizationController extends BaseController {
         "Date.parse('1-1-1 00:${result.pace}')-timeToSubtract"
     }
 
-    private Map retrieveTriathlonRecord(long userId, SegmentType segmentType, RaceCategoryType raceCategoryType, RaceType raceType, Date minDate = null, Date maxDate = null) {
-        def pr
-        def c = SegmentResult.createCriteria()
-        def results = c.list {
-//            gt('duration', Duration.standardSeconds(120))
-            raceResult {
-                user {
-                    eq('id', userId)
-                }
-                race {
-                    eq('raceType', raceType)
-                    eq('raceCategoryType', raceCategoryType)
-                    if(minDate && maxDate) {
-                        between('date', minDate, maxDate)
-                    }
-                }
-            }
-            raceSegment {
-                segment {
-                    eq('segmentType', segmentType)
-                }
-            }
-        }
-
-        //filter out results under 2min for now
-        results = results.findAll { it.duration > Duration.standardSeconds(120)}.collect()
-
-
-        if(segmentType == SegmentType.Bike) {
-            pr = results?.sort {a, b -> b?.pace?.speed <=> a?.pace?.speed}?.getAt(0)
-        } else {
-            pr = results?.sort {a, b -> a?.pace?.duration <=> b?.pace?.duration}?.getAt(0)
-        }
-
-        ["'${minDate?.year ? minDate.year + 1900 + '_' : ''}${raceCategoryType}_${segmentType}'": pr]
-    }
-
-    private Map retrieveRunRecord(long userId, RaceCategoryType raceCategoryType, RaceType raceType, Date minDate = null, Date maxDate = null) {
-        def results = RaceResult.where {
-            user.id == userId
-            race.raceType == raceType
-            race.raceCategoryType == raceCategoryType
-            if(minDate && maxDate) {
-                race.date > minDate
-                race.date <= maxDate
-            }
-        }
-        def pr = results?.list()?.sort {a, b -> a.duration <=> b.duration}?.getAt(0)
-        ["'${minDate?.year ? minDate.year + 1900 + '_' : ''}${raceCategoryType}'": pr]
-    }
-
-    private void renderDashboardChart(String columnName, String resultTitle, String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
+    @Cacheable('chartCache')
+    private void renderDashboardChart(String columnName, String resultTitle, String resultDiv, Long userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
         def columns = [[type: 'string', name: 'Date'], [type: 'timeofday', name: columnName]]
 
         def results = RaceResult.where {

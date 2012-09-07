@@ -9,6 +9,7 @@ import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
 import com.tgid.tri.race.*
+import net.sf.ehcache.CacheManager
 
 @Secured(["ROLE_USER"])
 class DashboardController extends BaseController {
@@ -32,7 +33,6 @@ class DashboardController extends BaseController {
         def triathlons = results.where {
             race.raceType == RaceType.Triathlon
         }.max(params.int('max') ?: 500)
-
 
         render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
     }

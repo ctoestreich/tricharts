@@ -32,6 +32,10 @@
 
 </script>
 
+<div class="row">
+
+</div>
+
 <div class="row well_clear">
   %{--<div class="span12">--}%
   <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>

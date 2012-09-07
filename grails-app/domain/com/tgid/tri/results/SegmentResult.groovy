@@ -9,7 +9,9 @@ import org.joda.time.Duration
 import org.joda.time.format.PeriodFormatter
 
 import java.math.RoundingMode
+import groovy.transform.EqualsAndHashCode
 
+@EqualsAndHashCode
 class SegmentResult {
 
     transient paceService

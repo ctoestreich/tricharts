@@ -54,6 +54,7 @@ grails.project.dependency.resolution = {
         runtime ":gsp-resources:0.4.1"
         runtime ":spring-security-core:1.2.7.3"
 
+        compile ":grails-melody:1.13"
         compile ":svn:1.0.2"
         compile ":joda-time:1.4"
         compile ":google-visualization:0.5.3"

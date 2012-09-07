@@ -1,7 +1,9 @@
 package com.tgid.tri.auth
 
 import com.tgid.tri.race.Race
+import groovy.transform.EqualsAndHashCode
 
+@EqualsAndHashCode
 class User {
 
     transient springSecurityService
