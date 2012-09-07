@@ -8,4 +8,10 @@
     </div>
   </g:form>
 
+  <script>
+    $(function () {
+      $("#userId").combobox();
+    });
+  </script>
+
 </sec:ifAnyGranted>
