@@ -27,11 +27,14 @@ class AthlinksUserResultsImportJob {
 
         def userId = context.mergedJobDataMap.get('userId')
 
+
         if(userId) {
             def user = User.get(userId)
             if(user) {
-                log.trace "Running AthlinksUserResultsImportJob ${new Date()}"
+                log.info "Running AthlinksUserResultsImportJob ${new Date()} for user ${user}"
                 athlinksResultsParsingService.retrieveResults(user)
+            } else {
+                log.info "user was not valid for $userId"
             }
         }
     }
