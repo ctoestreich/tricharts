@@ -6,7 +6,7 @@
     %{--<div class="span12">--}%
     <g:render template="/templates/dashboardHeader" model="[sport: year + 1901 + ' Personal Records', user: params?.user, showButtons: 'no']"/>
 
-    <div id="results-run" class="accordion in">
+    <div id="results-run" class="accordion">
       <g:each in="${types}" var="type">
         <h5>${type}</h5>
         <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
@@ -29,7 +29,7 @@
               </div>
             </div>
 
-            <div id="result-collapse-${result?.id}" class="accordion-body collapse in collapse-triathlon" style="height:0px">
+            <div id="result-collapse-${result?.id}" class="accordion-body collapse collapse-triathlon" style="height:0px">
               <g:render template="/templates/triathlonResultTable" model="[result: result?.raceResult]"/>
             </div>
           </g:if>

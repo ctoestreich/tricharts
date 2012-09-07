@@ -16,7 +16,7 @@
               <g:render template="/templates/resultsHeading" model="[result: result]"/>
             </div>
 
-            <div id="result-collapse-${result?.id}" class="accordion-body collapse in collapse-run" style="height:0px">
+            <div id="result-collapse-${result?.id}" class="accordion-body collapse collapse-run" style="height:0px">
               <g:render template="/templates/runResultTable" model="[result: result]"/>
             </div>
           </div>
