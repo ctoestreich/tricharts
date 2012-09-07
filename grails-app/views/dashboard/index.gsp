@@ -4,7 +4,7 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>User Dashboard</title>
-  <r:require modules="dashboard,results"/>
+  <r:require modules="dashboard,results, widgets"/>
   <gvisualization:apiImport/>
 </head>
 

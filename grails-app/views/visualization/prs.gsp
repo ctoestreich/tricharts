@@ -4,7 +4,7 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>User Dashboard</title>
-  <r:require modules="dashboard,results, progression"/>
+  <r:require modules="dashboard,results, progression,widgets"/>
   <gvisualization:apiImport/>
 </head>
 
@@ -22,7 +22,7 @@
   <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Run PRs</div>
 </g:if>
 <g:elseif test="${params?.raceType == 'Triathlon'}">
-    <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Triathlon PRs</div>
+  <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Triathlon PRs</div>
 </g:elseif>
 
 <script>
