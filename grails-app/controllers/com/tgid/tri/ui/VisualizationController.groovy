@@ -348,13 +348,9 @@ class VisualizationController extends BaseController {
 
         races.each { raceCategoryType ->
             categories << "'${raceCategoryType.raceCategoryType}'"
-            def results = RaceResult.where {
-                user.id == userId
-                race.raceType == queryRaceType
-                race.raceCategoryType == raceCategoryType
-            }
+            def results = visualizationService.getRaceResults(userId, queryRaceType, raceCategoryType)
 
-            def sortedResults = results.list().sort {a, b -> a?.date <=> b?.date}
+            def sortedResults = results?.sort {a, b -> a?.date <=> b?.date}
 
             totalRaces << "{name: '${raceCategoryType.raceCategoryType}', y: ${sortedResults?.size() ?: 0}}"
 
@@ -457,13 +453,9 @@ class VisualizationController extends BaseController {
     private void renderDashboardChart(String columnName, String resultTitle, String resultDiv, Long userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
         def columns = [[type: 'string', name: 'Date'], [type: 'timeofday', name: columnName]]
 
-        def results = RaceResult.where {
-            user.id == userId
-            race.raceType == queryRaceType
-            race.raceCategoryType == queryRaceCategoryType
-        }
+        def results = visualizationService.getRaceResults(userId, queryRaceType, queryRaceCategoryType)
 
-        def sortedResults = results.list().sort {a, b -> a.date <=> b.date}
+        def sortedResults = results?.sort {a, b -> a.date <=> b.date}
         def data = []
         sortedResults.each { result ->
             def period = result.duration.toPeriod()
