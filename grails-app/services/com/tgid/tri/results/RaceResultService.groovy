@@ -6,6 +6,7 @@ import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap
 import org.joda.time.Duration
+import com.tgid.tri.race.SegmentType
 
 class RaceResultService {
 
@@ -41,9 +42,13 @@ class RaceResultService {
 
     private void createSegmentResult(Race race, RaceResult raceResult, Map segment, Integer i) {
         try {
+            def mapSegment = null
             def raceSegment = race?.segments?.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
+            if(segment.ActionCatName == 'Swim'){ mapSegment = raceSegment.find{ it.segmentType == SegmentType.Swim } }
+            if(segment.ActionCatName == 'Bike/Cycle'){ mapSegment= raceSegment.find{ it.segmentType == SegmentType.Bike } }
+            if(segment.ActionCatName == 'Run'){ mapSegment = raceSegment.find{ it.segmentType == SegmentType.Run } }
             if(raceSegment?.get(i)) {
-                def segmentResult = new SegmentResult(raceSegment: raceSegment.get(i),
+                def segmentResult = new SegmentResult(raceSegment: mapSegment ?: raceSegment.get(i),
                                                       duration: Duration.millis(segment.Ticks as Long),
                                                       placeAgeGroup: segment.RankA,
                                                       placeOverall: segment.RankO,
