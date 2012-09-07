@@ -5,13 +5,14 @@
     <div class="row">
       <button class="close" data-dismiss="alert">×</button>
       <g:select onchange="app.changeUser()" name="user.id" from="${User.listOrderByFirstName()}" id="userId" optionKey="id" value="${user?.id}"/>
+      %{--&nbsp;<a href="javascript:app.changeUser()" class="btn btn-primary">switch</a>--}%
     </div>
   </g:form>
 
   <script>
-    $(function () {
-      $("#userId").combobox();
-    });
+//    $(function () {
+//      $("#userId").combobox();
+//    });
   </script>
 
 </sec:ifAnyGranted>

@@ -27,6 +27,7 @@ class AthlinksResultsParsingService {
             racer.save(lastImport: new Date())
         } catch(Exception e) {
             log.error e
+            println e
         }
     }
 
@@ -40,7 +41,7 @@ class AthlinksResultsParsingService {
 
     private void importRacerRaces(Racer racer, User user) {
         def racesUrl = "http://api.athlinks.com/athletes/results/${racer.racerID}?key=${grailsApplication.config.athlinks.key}&format=json"
-        def races = null
+        def races
         try {
             String apiString = new URL(racesUrl).text
             races = new JsonSlurper().parseText(apiString)
@@ -48,7 +49,7 @@ class AthlinksResultsParsingService {
             throw e
         }
 
-        races.each { raceMap ->
+        races?.each { raceMap ->
             importRaces(user, raceMap)
         }
 

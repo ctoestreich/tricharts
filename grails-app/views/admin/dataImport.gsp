@@ -27,7 +27,7 @@
       <fieldset>
         <div class="control-group">
           <label for='enabled' class="control-label">User:</label>
-          <div class="controls"> <g:select name="id" optionValue="username" optionKey="id" from="${User.listOrderByFirstName()}" /></div>
+          <div class="controls"> <g:select name="id"  optionKey="id" from="${User.listOrderByFirstName()}" /></div>
         </div>
 
         <div class="form-actions">
