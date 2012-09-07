@@ -66,6 +66,7 @@
                 <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
+                <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
                 <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
                 <li><a href="${createLink(controller: 'state', action: 'index')}">States</a></li>
               </ul>
@@ -76,6 +77,8 @@
                 <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
+                <li><hr></li>
+                <li><a href="${createLink(controller: 'admin', action: 'dataImport')}">Import User Results</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
                 <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>

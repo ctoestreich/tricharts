@@ -1,5 +1,6 @@
 package com.tgid.tri.admin
 
+import com.tgid.tri.auth.User
 import com.tgid.tri.data.AthlinksCoursePatternsImportJob
 import com.tgid.tri.data.AthlinksRaceCategoryImportJob
 import com.tgid.tri.data.AthlinksResultsImportJob
@@ -12,15 +13,16 @@ import grails.plugins.springsecurity.Secured
 class AdminController {
 
     def grailsApplication
+    def athlinksResultsParsingService
 
-    def jobSettings(){
+    def jobSettings() {
     }
 
-    def updateSettings(){
+    def updateSettings() {
         grailsApplication.config.jobs.enabled = params.boolean('enabled')
         grailsApplication.config.jobs.AthlinksResultsImportJob.enabled = params.boolean('AthlinksResultsImportJob')
         redirect action: 'jobSettings'
-     }
+    }
 
     @CacheFlush(["triathlonRecordsCache", "runningRecordsCache"])
     def clearRecordsCaches() {
@@ -66,5 +68,25 @@ class AdminController {
             race.save()
         }
         redirect action: 'raceList', params: params
+    }
+
+    def dataImport() {
+        render view: 'dataImport'
+    }
+
+    def dataImportProcess() {
+        def user = User.get(params?.id)
+
+        if(user) {
+            runAsync {
+                user.racers.each {
+                    athlinksResultsParsingService.retrieveResults(it)
+                }
+            }
+            flash.message = g.message(code: 'user.running.import', args: [user.username])
+        } else {
+            flash.message = g.message(code: 'user.running.import.failed', args: [user.username])
+        }
+        redirect action: 'dataImport'
     }
 }
