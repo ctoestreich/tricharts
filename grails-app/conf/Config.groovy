@@ -98,7 +98,7 @@ environments {
 }
 
 // log4j configuration
-log4j = { root ->
+log4j = {
     appenders {
         //console name: 'stdout', threshold: org.apache.log4j.Level.INFO
         //rollingFile name: 'fdbErrorLog', file: logDirectory + '/fdbError.log', threshold: org.apache.log4j.Level.ERROR, maxFileSize: "32MB", maxBackupIndex: 10, 'append': true

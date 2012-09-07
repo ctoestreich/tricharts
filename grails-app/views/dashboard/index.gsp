@@ -34,7 +34,7 @@
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <cache:render key="${user.id}Triathlon" template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
 
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
@@ -52,7 +52,7 @@
 
 <div class="row well_clear">
   %{--<div class="span12">--}%
-  <cache:render key="${user.id}Running" template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
+  <g:render template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
 
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 

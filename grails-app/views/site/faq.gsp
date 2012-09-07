@@ -34,5 +34,9 @@
   <h5>I have not received my confirmation email, now what?</h5>
   <p>Sometimes the email gremlins steal outbound emails.  You should <g:link controller="registration" action="resend">click here</g:link> and have your registration email resent to you.</p>
 </div>
+<div class="row-fluid well">
+  <h5>My results look off, my PRs are too fast/slow, or my graphs show an odd result.</h5>
+  <p>Sometimes during the import something can go awry and the wrong value can be entered.  Also there are times when the data available is just wrong.  Simply go to the dashboard, expand the race by clicking on the title and click the edit button to modify the results to fix the result in question.</p>
+</div>
 </body>
 </html>
