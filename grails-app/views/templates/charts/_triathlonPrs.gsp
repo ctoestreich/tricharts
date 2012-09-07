@@ -40,6 +40,9 @@
 </g:while>
 <script type="text/javascript">
   $(function () {
-    $(".collapse").collapse();
+    $('.collapse').collapse({
+                              toggle: false
+                            });
+
   });
 </script>

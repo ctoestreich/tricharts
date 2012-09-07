@@ -2,13 +2,13 @@
 
 <div class="accordion-group">
   <div class="accordion-heading">
-    <g:render template="/templates/resultsHeading" model="[result:result]"/>
+    <g:render template="/templates/resultsHeading" model="[result: result]"/>
   </div>
 
-  <div id="result-collapse-${result?.id}" class="accordion-body collapse in collapse-triathlon" style="height:0px">
-    <g:render template="/templates/triathlonResultTable" model="[result: result]" />
+  <div id="result-collapse-${result?.id}" class="accordion-body collapse collapse-triathlon">
+    <g:render template="/templates/triathlonResultTable" model="[result: result]"/>
 
-      <g:render template="/templates/dashboard/raceResultsButtons" model="[result: result]" />
+    <g:render template="/templates/dashboard/raceResultsButtons" model="[result: result]"/>
   </div>
 </div>
 

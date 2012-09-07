@@ -36,7 +36,10 @@
 <g:render template="/templates/site/footer"/>
 <r:script>
   $(function () {
-    $(".collapse").collapse();
+    $('.collapse').collapse({
+                              toggle:false
+                            });
+
   });
 </r:script>
 <r:layoutResources/>

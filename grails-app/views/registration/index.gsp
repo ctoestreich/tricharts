@@ -28,7 +28,7 @@
 
       <g:form id="registrationForm" class="form-horizontal" action="index"  autocomplete="off">
         <fieldset>
-          <f:field property="username" bean="userInstance" input-class="span10"/>
+          <f:field label="Email/Username" property="username" bean="userInstance" input-class="span10"/>
           <f:field property="firstName" bean="userInstance" input-class="span10"/>
           <f:field property="lastName" bean="userInstance" input-class="span10"/>
           <f:field property="password" bean="userInstance" input-type="password"/>

@@ -40,10 +40,10 @@
 
   <div id="results-triathlon" class="accordion">
     <g:if test="${params?.srt == "type"}">
-      <cache:render key="${user.id}_${params?.srt?:''}_${triathlons?.list()?.size()}" template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>
-      <cache:render key="${user.id}_${params?.srt?:''}_${triathlons?.list()?.size()}" template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
     </g:else>
   </div>
 </div>
@@ -58,10 +58,10 @@
 
   <div id="results-run" class="accordion">
     <g:if test="${params?.srt == "type"}">
-      <cache:render key="${user.id}_${params?.srt?:''}_${runs?.list()?.size()}" template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
     </g:if>
     <g:else>
-      <cache:render key="${user.id}_${params?.srt?:''}_${runs?.list()?.size()}" template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
     </g:else>
   </div>
   %{--</div>--}%

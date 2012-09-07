@@ -27,7 +27,7 @@
       <form action='${postUrl}' method='POST' id='loginForm' class='form-horizontal' autocomplete='off'>
         <fieldset>
           <div class="control-group">
-            <label for='username' class="control-label"><g:message code="springSecurity.login.username.label"/>:</label>
+            <label for='username' class="control-label"><g:message code="user.username.label"/>:</label>
 
             <div class="controls"><input type='text' name='j_username' id='username'/></div>
           </div>
