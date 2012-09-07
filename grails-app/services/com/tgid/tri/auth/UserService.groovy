@@ -8,7 +8,7 @@ class UserService {
 
     List<Map<String, String>> lookupAthlinkRacers(User user) {
         def racers = [], users = null
-        def searchUrl = "http://api.athlinks.com/athletes/search/${user?.firstName}%20${user?.lastName}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0&state=${user?.states?.collect { it?.provID?.toLowerCase()}?.join(",")}"
+        def searchUrl = "http://api.athlinks.com/athletes/search/${user?.firstName}%20${user?.lastName}?key=${grailsApplication.config.athlinks.key}&format=json&LimitToMembers=0&states=${user?.states?.collect { it?.provID?.toLowerCase()}?.join(",")}"
         log.info searchUrl
 
         if(user) {
