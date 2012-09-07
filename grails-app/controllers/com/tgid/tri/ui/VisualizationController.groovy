@@ -213,6 +213,7 @@ class VisualizationController extends BaseController {
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.OneMile, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.FiveKilometer, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenKilometer, RaceType.Running))
+        data.putAll(retrieveRunRecord(userId, RaceCategoryType.TenMile, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.HalfMarathon, RaceType.Running))
         data.putAll(retrieveRunRecord(userId, RaceCategoryType.Marathon, RaceType.Running))
 

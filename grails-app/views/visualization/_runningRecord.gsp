@@ -23,7 +23,7 @@
 <div class="span2"><div id="halfRecord" class="personalBestDiv">
     <div class="btn-group-wrap">
         <h3><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${RaceCategoryType.TenMile}'")?.race} @ ${data?.get("'${RaceCategoryType.TenMile}'")?.result?.pace}" data-content=""><tri:formatDuration duration="${data?.get("'${RaceCategoryType.TenMile}'")?.duration}" /></a></h3>
-        <h5>10 Mile PR  <tri:displayPace pace="${data?.get("'${RaceCategoryType.TenMile}'")?.result?.pace}"/></h5>
+        <h5>10m PR <tri:displayPace pace="${data?.get("'${RaceCategoryType.TenMile}'")?.result?.pace}"/></h5>
     </div>
 </div></div>
 
