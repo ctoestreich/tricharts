@@ -29,7 +29,7 @@
           <div class="control-group">
             <label for='username' class="control-label"><g:message code="user.username.label"/>:</label>
 
-            <div class="controls"><input type='text' name='j_username' id='username'/></div>
+            <div class="controls"><input type='email' name='j_username' id='username'/></div>
           </div>
 
           <div class="control-group">

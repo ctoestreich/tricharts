@@ -77,6 +77,8 @@ class PaceService {
 
     private swimMultiplier(RaceSegment segment) {
         switch(segment.distanceType) {
+            case DistanceType.Kilometers:
+                return 0.0914107
             case DistanceType.Meters:
                 return 91.44
             case DistanceType.Miles:
