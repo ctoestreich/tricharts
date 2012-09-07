@@ -78,11 +78,11 @@ class AdminController {
         def user = User.get(params?.id)
 
         if(user) {
-            runAsync {
-                user.racers.each {
-                    athlinksResultsParsingService.retrieveResults(it)
-                }
+//            runAsync {
+            user.racers.each {
+                athlinksResultsParsingService.retrieveResults(it)
             }
+//            }
             flash.message = g.message(code: 'user.running.import', args: [user.username])
         } else {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])
