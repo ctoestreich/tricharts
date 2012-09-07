@@ -53,5 +53,7 @@ class TriHarderTagLibSpec extends Specification {
         Duration.standardSeconds(60 * 3)      | SegmentType.Swim | 200      | DistanceType.Yards | true   | ' @ 01:30'
         Duration.standardSeconds(60 * 3)      | SegmentType.Swim | 200      | DistanceType.Yards | false  | ' 01:30'
         Duration.standardSeconds(60 * 22)      | SegmentType.Swim | 1.5f      | DistanceType.Kilometers | false  | ' 01:20'
+        Duration.standardSeconds(60 * 7 + 59)      | SegmentType.Swim | 0.5f      | DistanceType.Kilometers | false  | ' 01:27'
+        Duration.standardSeconds(60 * 7 + 59)      | SegmentType.Swim | 1500      | DistanceType.Feet | false  | ' 01:27'
     }
 }

@@ -83,6 +83,8 @@ class PaceService {
                 return 91.44
             case DistanceType.Miles:
                 return 0.0568
+            case DistanceType.Feet:
+                return 300
             default:
                 return 100
         }
