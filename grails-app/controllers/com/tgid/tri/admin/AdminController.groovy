@@ -8,6 +8,7 @@ import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugins.springsecurity.Secured
+import com.tgid.tri.data.AthlinksUserResultsImportJob
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
@@ -21,6 +22,7 @@ class AdminController {
     def updateSettings() {
         grailsApplication.config.jobs.enabled = params.boolean('enabled')
         grailsApplication.config.jobs.AthlinksResultsImportJob.enabled = params.boolean('AthlinksResultsImportJob')
+        grailsApplication.config.jobs.AthlinksUserResultsImportJob.enabled = params.boolean('AthlinksUserResultsImportJob')
         redirect action: 'jobSettings'
     }
 
@@ -78,11 +80,7 @@ class AdminController {
         def user = User.get(params?.id)
 
         if(user) {
-//            runAsync {
-            user.racers.each {
-                athlinksResultsParsingService.retrieveResults(it)
-            }
-//            }
+            AthlinksUserResultsImportJob.triggerNow([userId: "${user.id}"])
             flash.message = g.message(code: 'user.running.import', args: [user.username])
         } else {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])

@@ -196,6 +196,16 @@ cache.headers.presets = [
 
 jobs {
     enabled = true
+    AthlinksUserResultsImportJob {
+        environments {
+            development {
+                enabled = false
+            }
+            production {
+                enabled = true
+            }
+        }
+    }
     AthlinksResultsImportJob {
         environments {
             development {
