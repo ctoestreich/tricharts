@@ -77,6 +77,7 @@
                 <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
+                <li><a href="${createLink(controller: 'jobLog', action: 'index')}">Job Log</a></li>
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'dataImport')}">Import User Results</a></li>
                 <li><hr></li>

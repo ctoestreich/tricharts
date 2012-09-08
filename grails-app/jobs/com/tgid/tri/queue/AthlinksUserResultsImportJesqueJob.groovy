@@ -3,7 +3,7 @@ package com.tgid.tri.queue
 import com.tgid.tri.auth.User
 
 
-class AthlinksUserResultsImportJesqueJob {
+class AthlinksUserResultsImportJesqueJob extends LoggableJob {
 
     static queue = 'importAthlinksUserResults'
     static workerPool = 'athlinksUserResultsImportWorkerPool'
@@ -13,17 +13,18 @@ class AthlinksUserResultsImportJesqueJob {
 
     def perform(userId) {
         if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled) {
-            log.info "AthlinksUserResultsImportJesqueJob disabled!"
+            withLog(this.class.simpleName, "AthlinksUserResultsImportJesqueJob disabled!")
             return
         }
 
         if(userId) {
             def user = User.get(userId as Long)
             if(user) {
-                log.info "Running AthlinksUserResultsImportJesqueJob ${new Date()} for user ${user}"
-                athlinksResultsParsingService.retrieveResults(user)
+                withLog(this.class.simpleName, "Running AthlinksUserResultsImportJesqueJob ${new Date()} for user ${user}") {
+                    athlinksResultsParsingService.retrieveResults(user)
+                }
             } else {
-                log.info "user was not valid for $userId"
+                withLog(this.class.simpleName, "user was not valid for $userId")
             }
         }
     }

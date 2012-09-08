@@ -4,7 +4,7 @@ import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.UserService
 import com.tgid.tri.data.parsing.AthlinksResultsParsingService
 
-class AthlinksResultsImportJesqueJob {
+class AthlinksResultsImportJesqueJob extends LoggableJob {
 
     def grailsApplication
 
@@ -16,7 +16,7 @@ class AthlinksResultsImportJesqueJob {
 
     def perform(racerId) {
         if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.athlinksResultsImportJob.enabled) {
-            log.info "AthlinksResultsImportJob disabled!"
+            withLog(this.class.simpleName, 'AthlinksResultsImportJob disabled!')
             return
         }
 
@@ -24,8 +24,9 @@ class AthlinksResultsImportJesqueJob {
             log.trace "Running AthlinksResultsImportJob ${new Date()}"
             def racer = Racer.findByRacerID(racerId as Long)
             if(racer) {
-                log.info "Retrieving races & results for ${racer.user} using id: ${racer.racerID}"
-                athlinksResultsParsingService.retrieveResults(racer)
+                withLog(this.class.simpleName, "Retrieving races & results for ${racer.user} using id: ${racer.racerID}") {
+                    athlinksResultsParsingService.retrieveResults(racer)
+                }
             }
         }
     }

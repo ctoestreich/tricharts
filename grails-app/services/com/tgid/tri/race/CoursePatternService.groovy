@@ -92,21 +92,23 @@ class CoursePatternService {
     }
 
     void importCoursePattern(Map course) {
-        if(!com.tgid.tri.race.CoursePattern.get(course?.ID)) {
-            def coursePattern = new com.tgid.tri.race.CoursePattern(parentID: course?.OuterID, name: course?.Name, weight: course?.CourseCount)
-            coursePattern.id = course?.ID
-            if(coursePattern.validate()) {
-                try {
-                    coursePattern.save(flush: true)
-                } catch(Exception e) {
-                    log.error course
-                    log.error e
-                }
-            } else {
-                println "CoursePatternLocal Validation Errors! ${course}"
-                coursePattern?.errors?.allErrors?.each {
-                    println it
-                    log.error it
+        CoursePattern.withTransaction {
+            if(!com.tgid.tri.race.CoursePattern.get(course?.ID)) {
+                def coursePattern = new com.tgid.tri.race.CoursePattern(parentID: course?.OuterID, name: course?.Name, weight: course?.CourseCount)
+                coursePattern.id = course?.ID
+                if(coursePattern.validate()) {
+                    try {
+                        coursePattern.save(flush: true)
+                    } catch(Exception e) {
+                        log.error course
+                        log.error e
+                    }
+                } else {
+                    println "CoursePatternLocal Validation Errors! ${course}"
+                    coursePattern?.errors?.allErrors?.each {
+                        println it
+                        log.error it
+                    }
                 }
             }
         }

@@ -2,7 +2,7 @@ package com.tgid.tri.queue
 
 import com.tgid.tri.data.parsing.AthlinksResultsParsingService
 
-class AthlinksCoursePatternsImportJesqueJob {
+class AthlinksCoursePatternsImportJesqueJob extends LoggableJob {
 
     static queue = 'importAthlinksReferenceData'
     static workerPool = 'athlinksReferenceImportWorkerPool'
@@ -11,15 +11,16 @@ class AthlinksCoursePatternsImportJesqueJob {
     def grailsApplication
 
     static triggers = {
-        cron name:'coursePatternWeeklyTrigger', jesqueJobName:AthlinksCoursePatternsImportJesqueJob.simpleName, jesqueQueue:'importAthlinksReferenceData', cronExpression: "0 0 0 ? * 6", timeZone: 'Pacific/Honolulu'
+        cron name: 'coursePatternWeeklyTrigger', jesqueJobName: AthlinksCoursePatternsImportJesqueJob.simpleName, jesqueQueue: 'importAthlinksReferenceData', cronExpression: "0 0 0 ? * 6", timeZone: 'Pacific/Honolulu'
     }
 
-    def perform(){
+    def perform() {
         if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.athlinksCoursePatternsImportJob.enabled) {
             log.info "AthlinksCoursePatternsImportJesqueJob disabled!"
             return
         }
-
-        athlinksResultsParsingService.importCoursePatterns()
+        withLog(this.class.simpleName, '') {
+            athlinksResultsParsingService.importCoursePatterns()
+        }
     }
 }
