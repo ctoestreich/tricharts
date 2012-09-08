@@ -50,6 +50,8 @@
 						
 							<g:sortableColumn property="complete" title="${message(code: 'jobLog.complete.label', default: 'Complete')}" />
 						
+							<g:sortableColumn property="createDate" title="${message(code: 'jobLog.createDate.label', default: 'Create Date')}" />
+						
 							<th></th>
 						</tr>
 					</thead>
@@ -62,6 +64,8 @@
 							<td>${fieldValue(bean: jobLogInstance, field: "description")}</td>
 						
 							<td><g:formatBoolean boolean="${jobLogInstance.complete}" /></td>
+						
+							<td><g:formatDate date="${jobLogInstance.createDate}" /></td>
 						
 							<td class="link">
 								<g:link action="show" id="${jobLogInstance.id}" class="btn btn-small">Show &raquo;</g:link>

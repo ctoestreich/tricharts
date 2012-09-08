@@ -63,6 +63,13 @@
 						
 					</g:if>
 				
+					<g:if test="${jobLogInstance?.createDate}">
+						<dt><g:message code="jobLog.createDate.label" default="Create Date" /></dt>
+						
+							<dd><g:formatDate date="${jobLogInstance?.createDate}" /></dd>
+						
+					</g:if>
+				
 				</dl>
 
 				<g:form>

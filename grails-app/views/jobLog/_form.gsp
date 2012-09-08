@@ -26,3 +26,11 @@
 	<g:checkBox name="complete" value="${jobLogInstance?.complete}" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: jobLogInstance, field: 'createDate', 'error')} required">
+	<label for="createDate">
+		<g:message code="jobLog.createDate.label" default="Create Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="createDate" precision="day"  value="${jobLogInstance?.createDate}"  />
+</div>
+

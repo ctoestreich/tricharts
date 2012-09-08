@@ -5,6 +5,7 @@ class JobLog {
     String jobName
     String description
     Boolean complete = false
+    Date createDate = new Date()
 
     static constraints = {
         jobName blank: false
@@ -13,6 +14,6 @@ class JobLog {
 
     static mapping = {
         autoTimestamp true
-        sort dateCreated: 'desc'
+        sort createDate: 'desc'
     }
 }
