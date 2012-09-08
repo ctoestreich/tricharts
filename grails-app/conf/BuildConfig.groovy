@@ -71,6 +71,8 @@ grails.project.dependency.resolution = {
         compile ":springcache:1.3.1"
         compile ":quartz:1.0-RC2"
         compile ":executor:0.3"
+        compile ":jesque:0.4.0"
+        compile ":redis:1.3.2"
 
         test ":spock:0.6"
         build ":tomcat:$grailsVersion"

@@ -1,3 +1,7 @@
+import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
+import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
+import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
+import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
 import org.apache.log4j.DailyRollingFileAppender
 
 // locations to search for config files that get merged into the main config;
@@ -201,10 +205,16 @@ cache.headers.presets = [
 
 jobs {
     enabled = true
-    AthlinksUserResultsImportJob {
+    athlinksUserResultsImportJob {
         enabled = true
     }
-    AthlinksResultsImportJob {
+    athlinksResultsImportJob {
+        enabled = true
+    }
+    athlinksRaceCategoryImportJob {
+        enabled = true
+    }
+    athlinksCoursePatternsImportJob {
         enabled = true
     }
 }
@@ -266,3 +276,39 @@ If you did make the request, then click <a href="$url">here</a> to reset your pa
 tomcat.deploy.username = "ctoestreich"
 tomcat.deploy.password = "Acetrike1"
 tomcat.deploy.url = "http://www.tricharts.com/manager"
+
+grails {
+    redis {
+        poolConfig {
+            // jedis pool specific tweaks here, see jedis docs & src
+            // ex: testWhileIdle = true
+        }
+        port = 6379
+        host = "localhost"
+        timeout = 2000 //default in milliseconds
+        password = 'a!s@d#f4qwert!' //defaults to no password
+    }
+}
+
+grails {
+    jesque {
+        workers {
+            athlinksUserResultsImportWorkerPool {
+                workers = 1 //defaults to 1
+                queueNames = 'importAthlinksUserResults' //or a list
+                jobTypes = [(AthlinksUserResultsImportJesqueJob.simpleName): AthlinksUserResultsImportJesqueJob]
+            }
+            athlinksReferenceImportWorkerPool {
+                workers = 1 //defaults to 1
+                queueNames = 'importAthlinksReferenceData' //or a list
+                jobTypes = [(AthlinksCoursePatternsImportJesqueJob.simpleName): AthlinksCoursePatternsImportJesqueJob,
+                        (AthlinksRaceCategoryImportJesqueJob.simpleName): AthlinksRaceCategoryImportJesqueJob]
+            }
+            athlinksResultsImportWorkerPool {
+                workers = 3 //defaults to 1
+                queueNames = 'importAthlinksResults' //or a list
+                jobTypes = [(AthlinksResultsImportJesqueJob.simpleName): AthlinksResultsImportJesqueJob]
+            }
+        }
+    }
+}

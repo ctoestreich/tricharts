@@ -32,11 +32,19 @@
         </div>
         <div class="control-group">
           <label for='enabled' class="control-label">Enable Athlinks Results Import Job:</label>
-          <div class="controls"> <g:select name="AthlinksResultsImportJob" value="${grailsApplication.config.jobs.AthlinksResultsImportJob.enabled}" from="${[true, false]}" /></div>
+          <div class="controls"> <g:select name="athlinksResultsImportJob" value="${grailsApplication.config.jobs.athlinksResultsImportJob.enabled}" from="${[true, false]}" /></div>
         </div>
         <div class="control-group">
           <label for='enabled' class="control-label">Enable User Results Import Job:</label>
-          <div class="controls"> <g:select name="AthlinksUserResultsImportJob" value="${grailsApplication.config.jobs.AthlinksUserResultsImportJob.enabled}" from="${[true, false]}" /></div>
+          <div class="controls"> <g:select name="athlinksUserResultsImportJob" value="${grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled}" from="${[true, false]}" /></div>
+        </div>
+        <div class="control-group">
+          <label for='enabled' class="control-label">Enable Course Patterns Import Job:</label>
+          <div class="controls"> <g:select name="athlinksCoursePatternsImportJob" value="${grailsApplication.config.jobs.athlinksCoursePatternsImportJob.enabled}" from="${[true, false]}" /></div>
+        </div>
+        <div class="control-group">
+          <label for='enabled' class="control-label">Enable Race Categories Import Job:</label>
+          <div class="controls"> <g:select name="athlinksRaceCategoryImportJob" value="${grailsApplication.config.jobs.athlinksRaceCategoryImportJob.enabled}" from="${[true, false]}" /></div>
         </div>
 
 

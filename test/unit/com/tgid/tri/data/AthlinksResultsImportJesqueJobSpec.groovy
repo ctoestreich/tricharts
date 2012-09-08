@@ -10,7 +10,7 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
  */
 @TestMixin(GrailsUnitTestMixin)
-class AthlinksResultsImportJobSpec {
+class AthlinksResultsImportJesqueJobSpec {
 
     void setUp() {
         // Setup logic here

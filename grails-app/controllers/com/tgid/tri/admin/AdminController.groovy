@@ -1,10 +1,10 @@
 package com.tgid.tri.admin
 
 import com.tgid.tri.auth.User
-import com.tgid.tri.data.AthlinksCoursePatternsImportJob
-import com.tgid.tri.data.AthlinksRaceCategoryImportJob
 import com.tgid.tri.data.AthlinksResultsImportJob
-import com.tgid.tri.data.AthlinksUserResultsImportJob
+import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
+import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
+import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
@@ -14,15 +14,18 @@ import grails.plugins.springsecurity.Secured
 class AdminController {
 
     def grailsApplication
-    def athlinksResultsParsingService
+    def jesqueService
 
     def jobSettings() {
+        render view: 'jobSettings'
     }
 
     def updateSettings() {
         grailsApplication.config.jobs.enabled = params.boolean('enabled')
-        grailsApplication.config.jobs.AthlinksResultsImportJob.enabled = params.boolean('AthlinksResultsImportJob')
-        grailsApplication.config.jobs.AthlinksUserResultsImportJob.enabled = params.boolean('AthlinksUserResultsImportJob')
+        grailsApplication.config.jobs.athlinksResultsImportJob.enabled = params.boolean('athlinksResultsImportJob')
+        grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled = params.boolean('athlinksUserResultsImportJesqueJob')
+        grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled = params.boolean('athlinksUserResultsImportJesqueJob')
+        grailsApplication.config.jobs.athlinksCoursePatternsImportJob.enabled = params.boolean('athlinksCoursePatternsImportJob')
         redirect action: 'jobSettings'
     }
 
@@ -39,13 +42,13 @@ class AdminController {
     }
 
     def importAthlinksRaceCategories() {
-        AthlinksRaceCategoryImportJob.triggerNow()
+        jesqueService.enqueue('importAthlinksReferenceData', AthlinksRaceCategoryImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Categories'])
         redirect(controller: 'dashboard', action: 'index')
     }
 
     def importAthlinksCoursePatterns() {
-        AthlinksCoursePatternsImportJob.triggerNow()
+        jesqueService.enqueue('importAthlinksReferenceData', AthlinksCoursePatternsImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Courses'])
         redirect(controller: 'dashboard', action: 'index')
     }
@@ -80,7 +83,7 @@ class AdminController {
         def user = User.get(params?.id)
 
         if(user) {
-            AthlinksUserResultsImportJob.triggerNow([userId: "${user.id}"])
+            jesqueService.enqueue('importAthlinksUserResults', AthlinksUserResultsImportJesqueJob.simpleName, user.id)
             flash.message = g.message(code: 'user.running.import', args: [user.username])
         } else {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])
