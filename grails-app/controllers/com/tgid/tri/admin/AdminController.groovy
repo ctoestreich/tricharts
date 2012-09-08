@@ -10,12 +10,15 @@ import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugins.springsecurity.Secured
 import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
+import com.tgid.tri.auth.Racer
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
 
     def grailsApplication
     def jesqueService
+    def userService
+    def athlinksResultsParsingService
 
     def jobSettings() {
         render view: 'jobSettings'
@@ -100,5 +103,31 @@ class AdminController {
     def viewErrorLog() {
         def file = new File(grailsApplication.config.logg.dir.toString() + "/trichartsError.log")
         render view: 'viewLog', model: [name: 'Error', data: file]
+    }
+
+    def importRacers(){
+        def user = User.get(params?.userID)
+        def racers = userService.lookupAthlinkRacers(user)
+
+        render view: 'importRacers', model: [user: user, userID: user.id, racers: racers]
+    }
+
+    def completeImport(){
+        def user = User.get(params?.userID)
+        def save = false
+        def racers = params.list('racers')
+        racers?.each { String racerId ->
+            if(!Racer.findByUserAndRacerID(user, racerId as Long)) {
+                save = true
+                user.addToRacers(new Racer(racerID: racerId as Long, lastImport: new Date() - 2))
+            }
+        }
+        if(save) {user.save(flush: true)}
+
+        runAsync {
+            athlinksResultsParsingService.retrieveResults(user)
+        }
+
+        redirect controller: 'user', action: 'show', id: user.id
     }
 }

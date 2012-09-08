@@ -54,8 +54,6 @@ class SiteController extends BaseController {
                         .withHtml(comment)
                         .build()
 
-                println gridEmail.toMap()
-
                 sendGridService.send(gridEmail)
             }
 //        }

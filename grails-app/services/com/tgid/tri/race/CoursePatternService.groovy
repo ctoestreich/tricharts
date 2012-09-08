@@ -106,7 +106,6 @@ class CoursePatternService {
                 } else {
                     println "CoursePatternLocal Validation Errors! ${course}"
                     coursePattern?.errors?.allErrors?.each {
-                        println it
                         log.error it
                     }
                 }

@@ -1,10 +1,9 @@
 package com.tgid.tri.auth
 
-import groovy.text.SimpleTemplateEngine
-import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
-import uk.co.desirableobjects.sendgrid.SendGridEmail
 import grails.plugin.springcache.annotations.Cacheable
-import grails.plugins.springsecurity.SpringSecurityService
+import groovy.text.SimpleTemplateEngine
+import uk.co.desirableobjects.sendgrid.SendGridEmail
+import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
 
 class RegistrationController {
 
@@ -45,7 +44,7 @@ class RegistrationController {
         def userInstance = User.get(params?.id)
         def body = ''
 
-        if(!userInstance){
+        if(!userInstance) {
             redirect uri: "/"
             return
         }
@@ -87,10 +86,10 @@ class RegistrationController {
     def complete() {
         def user = User.get(params?.userID)
         def save = false
-        params['racers'].each {
-            if(!Racer.findByUserAndRacerID(user, it)) {
+        params.list('racers')?.each { Long racerId ->
+            if(!Racer.findByUserAndRacerID(user, racerId)) {
                 save = true
-                user.addToRacers(new Racer(racerID: it, lastImport: new Date() - 2))
+                user.addToRacers(new Racer(racerID: racerId, lastImport: new Date() - 2))
             }
         }
         if(save) {user.save(flush: true)}
@@ -105,16 +104,16 @@ class RegistrationController {
     }
 
     @Cacheable("siteCache")
-    def resend(){
+    def resend() {
         [userInstance: new User()]
     }
 
-    def resendRegistrationEmail(){
+    def resendRegistrationEmail() {
         def userInstance = User.findByUsername(params?.username)
 
-        if(!userInstance){
+        if(!userInstance) {
 //            userInstance.errors.rejectValue('username', "user.not.found")
-            render g.message(code: 'user.not.found', args: [params?.username, createLink(controller:'registration',action:'index')])
+            render g.message(code: 'user.not.found', args: [params?.username, createLink(controller: 'registration', action: 'index')])
             return
         }
 
