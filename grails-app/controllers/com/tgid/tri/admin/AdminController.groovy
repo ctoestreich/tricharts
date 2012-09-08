@@ -4,11 +4,11 @@ import com.tgid.tri.auth.User
 import com.tgid.tri.data.AthlinksCoursePatternsImportJob
 import com.tgid.tri.data.AthlinksRaceCategoryImportJob
 import com.tgid.tri.data.AthlinksResultsImportJob
+import com.tgid.tri.data.AthlinksUserResultsImportJob
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugins.springsecurity.Secured
-import com.tgid.tri.data.AthlinksUserResultsImportJob
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
@@ -86,5 +86,15 @@ class AdminController {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])
         }
         redirect action: 'dataImport'
+    }
+
+    def viewDebugLog() {
+        def file = new File(grailsApplication.config.logg.dir.toString() + "/trichartsInfo.log")
+        render view: 'viewLog', model: [name: 'Info', data: file]
+    }
+
+    def viewErrorLog() {
+        def file = new File(grailsApplication.config.logg.dir.toString() + "/trichartsError.log")
+        render view: 'viewLog', model: [name: 'Error', data: file]
     }
 }

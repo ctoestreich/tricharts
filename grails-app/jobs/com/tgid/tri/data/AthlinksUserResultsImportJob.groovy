@@ -20,16 +20,15 @@ class AthlinksUserResultsImportJob {
     }
 
     def execute(context) {
-        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs["${this.class.name}"].enabled) {
+        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.AthlinksUserResultsImportJob.enabled) {
             log.info "AthlinksResultsImportJob disabled!"
             return
         }
 
         def userId = context.mergedJobDataMap.get('userId')
 
-
         if(userId) {
-            def user = User.get(userId)
+            def user = User.get(userId as Long)
             if(user) {
                 log.info "Running AthlinksUserResultsImportJob ${new Date()} for user ${user}"
                 athlinksResultsParsingService.retrieveResults(user)

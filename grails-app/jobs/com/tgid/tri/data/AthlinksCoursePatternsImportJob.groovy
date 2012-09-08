@@ -10,7 +10,7 @@ class AthlinksCoursePatternsImportJob {
     AthlinksResultsParsingService athlinksResultsParsingService
 
     static triggers = {
-        simple name: 'coursePatternBootTrigger', startDelay: 1000, repeatCount: 1, repeatInterval: 10000
+        simple name: 'coursePatternBootTrigger', startDelay: 1000, repeatCount: 0, repeatInterval: 10000
         cron name: 'coursePatternWeeklyTrigger', cronExpression: "0 0 0 ? * 6"
     }
 

@@ -80,6 +80,9 @@
                 <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'dataImport')}">Import User Results</a></li>
                 <li><hr></li>
+                <li><a href="${createLink(controller: 'admin', action: 'viewDebugLog')}">View Info Log</a></li>
+                <li><a href="${createLink(controller: 'admin', action: 'viewErrorLog')}">View Error Log</a></li>
+                <li><hr></li>
                 <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
                 <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
                 <li><a href="${createLink(controller: 'admin', action: 'importAthlinksResults')}">Import Athlinks Results</a></li>

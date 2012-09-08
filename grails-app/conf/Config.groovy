@@ -97,6 +97,10 @@ environments {
     }
 }
 
+logg {
+    dir = logDirectory
+}
+
 // log4j configuration
 log4j = {
     appenders {
@@ -146,7 +150,8 @@ log4j = {
     environments {
         development {
             root {
-                error 'stdout'
+                error 'stdout', 'dailyAppender'
+                additivity = true
             }
         }
     }
@@ -197,24 +202,10 @@ cache.headers.presets = [
 jobs {
     enabled = true
     AthlinksUserResultsImportJob {
-        environments {
-            development {
-                enabled = false
-            }
-            production {
-                enabled = true
-            }
-        }
+        enabled = true
     }
     AthlinksResultsImportJob {
-        environments {
-            development {
-                enabled = false
-            }
-            production {
-                enabled = true
-            }
-        }
+        enabled = true
     }
 }
 

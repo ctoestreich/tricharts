@@ -15,12 +15,12 @@ class AthlinksResultsImportJob {
     AthlinksResultsParsingService athlinksResultsParsingService
 
     static triggers = {
-        simple name: 'resultsBootTrigger', startDelay: 120000, repeatCount: 1, repeatInterval: 10000
+        simple name: 'resultsBootTrigger', startDelay: 120000, repeatCount: 0, repeatInterval: 10000
         cron name: 'resultsDailyTrigger', cronExpression: "0 0 6 * * ?"
     }
 
     def execute() {
-        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs["${this.class.name}"].enabled){
+        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.AthlinksResultsImportJob.enabled){
             log.info "AthlinksResultsImportJob disabled!"
             return
         }
