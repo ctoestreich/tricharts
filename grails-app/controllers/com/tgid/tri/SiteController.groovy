@@ -8,6 +8,15 @@ import grails.plugin.springcache.annotations.Cacheable
 class SiteController extends BaseController {
 
     def sendGridService
+    def redisService
+
+    @Cacheable('siteCache')
+    def index(){
+        def resultCount = redisService.memoize('resultCount', 3600){
+            com.tgid.tri.results.RaceResult.count()
+        }
+        render view: '/index', model: [resultCount: resultCount]
+    }
 
     @Cacheable('siteCache')
     def faq() { }

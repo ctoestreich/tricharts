@@ -9,7 +9,6 @@ import com.tgid.tri.results.SegmentResult
 import grails.plugins.springsecurity.Secured
 import org.joda.time.Duration
 import com.tgid.tri.race.*
-import net.sf.ehcache.CacheManager
 
 @Secured(["ROLE_USER"])
 class DashboardController extends BaseController {
@@ -37,7 +36,7 @@ class DashboardController extends BaseController {
         render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
     }
 
-    def runCharts(){
+    def runCharts() {
         User user = requestedUser
 
         render view: 'runCharts', model: [user: user]
@@ -64,7 +63,7 @@ class DashboardController extends BaseController {
     }
 
     def addRace() {
-        if(params?.raceType){
+        if(params?.raceType) {
             params["raceType"] = RaceType.getRaceType(params.raceType)
         }
         switch(request.method) {
@@ -145,10 +144,10 @@ class DashboardController extends BaseController {
             params.clear()
             params.setProperty('user.id', user.id)
             params.setProperty('raceType', raceType)
-            if(!params.int('race.id')){
+            if(!params.int('race.id')) {
                 flash.message = g.message(code: 'raceResult.race.null')
             }
-            raceResult.errors.rejectValue('race','raceResult.races.none.approved')
+            raceResult.errors.rejectValue('race', 'raceResult.races.none.approved')
             redirect action: 'createResult', params: params, model: [race: race, user: user, raceResult: raceResult]
             return
         }
@@ -200,7 +199,9 @@ class DashboardController extends BaseController {
     def deleteRaceResult() {
         User user = requestedUser
         try {
-            raceResultService.deleteRaceResult(params?.int('raceResultId') ?: 0, user);
+            if(user && params?.int('raceResultDeleteId')) {
+                raceResultService.deleteRaceResult(params.int('raceResultDeleteId'), user);
+            }
             redirect action: 'index'
         } catch(RaceResultException failed) {
             flash.message = failed.message

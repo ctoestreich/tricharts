@@ -20,9 +20,8 @@ $(function () {
         my.deleteRaceResultConfirmation = function () {
             console.log('val',raceResultId);
             if (raceResultId) {
-               $('#raceResultId').val(raceResultId);
-                $('#raceResultEdit').val("false");
-               $('#modifyRaceResultsForm').submit();
+                $('#raceResultDeleteId').val(raceResultId);
+                $('#raceResultDeleteForm').submit();
             }
         };
         return my;

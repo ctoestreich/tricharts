@@ -172,6 +172,11 @@ grails.plugins.springsecurity.authority.className = 'com.tgid.tri.auth.Role'
 grails.plugins.springsecurity.facebook.domain.classname = 'com.tgid.tri.auth.FacebookUser'
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/dashboard/index'
 
+grails.plugins.springsecurity.controllerAnnotations.staticRules = [
+        '/monitoring': ['ROLE_ADMIN'],
+        '/monitoring/**': ['ROLE_ADMIN']
+]
+
 jodatime.format.html5 = true
 
 // Added by the Joda-Time plugin:

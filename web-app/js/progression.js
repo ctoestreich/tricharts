@@ -12,11 +12,7 @@ $(function () {
         };
 
         my.deleteRaceResultConfirmation = function () {
-            console.log('val',raceResultId);
-            if (raceResultId) {
-                $('#raceResultId').val(raceResultId);
-                $('#raceResultDeleteForm').submit();
-            }
+            tri.results.deleteRaceResultConfirmation();
         };
         return my;
     }(jQuery));

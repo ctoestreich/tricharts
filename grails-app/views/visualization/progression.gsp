@@ -11,7 +11,7 @@
 <body>
 
 <div class="page-header">
-  <h1>Progression For ${user.firstName} <small>make me faster</small></h1>
+  <h1>Trending For ${user.firstName} <small>getting faster</small></h1>
 </div>
 
 <g:render template="/templates/admin/userSelect" />

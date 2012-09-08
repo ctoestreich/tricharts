@@ -11,7 +11,7 @@
 <body>
 
 <div class="page-header">
-  <h1>Results For ${user.firstName} <small>results at a glance</small></h1>
+  <h1>Results For ${user.firstName} <small> you are fast</small></h1>
 </div>
 
 <g:if test="${flash.message}">
@@ -85,6 +85,10 @@
   <g:hiddenField name="raceResultId" value=""/>
   <g:hiddenField name="user.id" value="${user?.id}"/>
   <g:hiddenField name="raceResultEdit" value="false"/>
+</g:form>
+<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult">
+  <g:hiddenField name="raceResultDeleteId" value=""/>
+  <g:hiddenField name="user.id" value="${user?.id}"/>
 </g:form>
 
 <script type="text/javascript">
