@@ -16,7 +16,7 @@ class AthlinksCoursePatternsImportJesqueJob {
 
     def perform(){
         if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.athlinksCoursePatternsImportJob.enabled) {
-            log.info "AthlinksCoursePatternsImportJob disabled!"
+            log.info "AthlinksCoursePatternsImportJesqueJob disabled!"
             return
         }
 

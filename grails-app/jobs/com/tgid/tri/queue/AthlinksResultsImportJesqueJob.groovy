@@ -22,7 +22,7 @@ class AthlinksResultsImportJesqueJob {
 
         if(racerId) {
             log.trace "Running AthlinksResultsImportJob ${new Date()}"
-            def racer = Racer.get(racerId as Long)
+            def racer = Racer.findByRacerID(racerId as Long)
             if(racer) {
                 log.info "Retrieving races & results for ${racer.user} using id: ${racer.racerID}"
                 athlinksResultsParsingService.retrieveResults(racer)

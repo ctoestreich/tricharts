@@ -299,7 +299,7 @@ grails {
                 jobTypes = [(AthlinksUserResultsImportJesqueJob.simpleName): AthlinksUserResultsImportJesqueJob]
             }
             athlinksReferenceImportWorkerPool {
-                workers = 1 //defaults to 1
+                workers = 2 //defaults to 1
                 queueNames = 'importAthlinksReferenceData' //or a list
                 jobTypes = [(AthlinksCoursePatternsImportJesqueJob.simpleName): AthlinksCoursePatternsImportJesqueJob,
                         (AthlinksRaceCategoryImportJesqueJob.simpleName): AthlinksRaceCategoryImportJesqueJob]

@@ -9,6 +9,7 @@ import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugins.springsecurity.Secured
+import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {

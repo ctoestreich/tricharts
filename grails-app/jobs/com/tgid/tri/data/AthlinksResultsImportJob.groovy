@@ -19,7 +19,7 @@ class AthlinksResultsImportJob {
     }
 
     def execute() {
-        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.AthlinksResultsImportJob.enabled){
+        if(!grailsApplication.config.jobs.enabled || !grailsApplication.config.jobs.athlinksResultsImportJob.enabled){
             log.info "AthlinksResultsImportJob disabled!"
             return
         }
