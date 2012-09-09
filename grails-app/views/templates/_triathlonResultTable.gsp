@@ -3,11 +3,11 @@
   <tbody>
   <tr>
     <th width="20%" class="clsResultHK"><div>&nbsp;</div></th>
-    <th class="clsResultHK"><div id="resH_0"><div>Swim</div></div></th>
+    <th class="clsResultHK"><div id="resH_0"><div>Swim&nbsp;<a href="javascript:void(0);" class="autopop" rel="popover" data-content="Swim pace is per 100 yards.  May differ from results page due to usage of 100 meters or rounding." data-original-title="Pace"><i class="icon-question-sign"></i></a></div></div></th>
     <th class="clsResultHK"><div id="resH_1"><div>Transition</div></div></th>
-    <th class="clsResultHK"><div id="resH_2"><div>Bike/Cycle</div></div></th>
+    <th class="clsResultHK"><div id="resH_2"><div>Bike/Cycle&nbsp;<a href="javascript:void(0);" class="autopop" rel="popover" data-content="Bike pace is in mph." data-original-title="Pace"><i class="icon-question-sign"></i></a></div></div></th>
     <th class="clsResultHK"><div id="resH_3"><div>Transition</div></div></th>
-    <th class="clsResultHK"><div id="resH_4"><div>Run</div></div></th>
+    <th class="clsResultHK"><div id="resH_4"><div>Run&nbsp;<a href="javascript:void(0);" class="autopop" rel="popover" data-content="Run pace is per mile." data-original-title="Pace"><i class="icon-question-sign"></i></a></div></div></th>
     <th class="clsResultHK" colspan="3"><div id="finH">Final Time &amp; Place (A/G/O)</div></th>
   </tr>
   <tr class="clsResultBig">

@@ -91,11 +91,5 @@
   <g:hiddenField name="user.id" value="${user?.id}"/>
 </g:form>
 
-<script type="text/javascript">
-  $(function () {
-    $('.autopop').popover();
-  });
-</script>
-
 </body>
 </html>

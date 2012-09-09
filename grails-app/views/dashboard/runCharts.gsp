@@ -13,6 +13,5 @@
   <h1>Results For ${user.firstName} <small>give me the data</small></h1>
 </div>
 
-
 </body>
 </html>

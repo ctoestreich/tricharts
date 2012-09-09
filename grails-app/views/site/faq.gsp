@@ -31,6 +31,10 @@
   <p>Yes, you can <g:link controller="dashboard" action="addRace">create races</g:link> that are missing.  These races will go into review status and will need to be approved by an admin before you can enter results.  This process should only take a day or two.</p>
 </div>
 <div class="row-fluid well">
+  <h5>Can I delete my results?</h5>
+  <p>Yes, you can delete your results.  Just know that any results from athlinks will be imported again and may reappear in your list within a week.  The only results that will stay deleted will be the ones you create manually.  If the imported ones are incorrectly affecting your PRs, simply modify the results to fix or remove them from showing up as a PR.</p>
+</div>
+<div class="row-fluid well">
   <h5>I have not received my confirmation email, now what?</h5>
   <p>Sometimes the email gremlins steal outbound emails.  You should <g:link controller="registration" action="resend">click here</g:link> and have your registration email resent to you.</p>
 </div>

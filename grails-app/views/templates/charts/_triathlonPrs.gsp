@@ -43,6 +43,6 @@
     $('.collapse').collapse({
                               toggle: false
                             });
-
+    $('.autopop').popover();
   });
 </script>

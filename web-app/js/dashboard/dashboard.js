@@ -1,6 +1,6 @@
 var app = {
     initialize:function () {
-        //anything common to pages
+        $('.autopop').popover();
     },
     changeUser:function () {
         if($('#userForm').size() > 0) {
