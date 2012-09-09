@@ -53,7 +53,8 @@ class AthlinksResultsParsingService {
             importRaces(user, raceMap)
         }
 
-        racer.save(lastImport: new Date())
+        racer.lastImport = new Date()
+        racer.save(flush:  true)
     }
 
     private void importRaces(User user, Map raceMap) {

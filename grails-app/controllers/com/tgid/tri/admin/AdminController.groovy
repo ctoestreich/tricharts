@@ -1,5 +1,6 @@
 package com.tgid.tri.admin
 
+import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.User
 import com.tgid.tri.data.AthlinksResultsImportJob
 import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
@@ -9,8 +10,6 @@ import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
 import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugins.springsecurity.Secured
-import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
-import com.tgid.tri.auth.Racer
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
@@ -105,14 +104,14 @@ class AdminController {
         render view: 'viewLog', model: [name: 'Error', data: file]
     }
 
-    def importRacers(){
+    def importRacers() {
         def user = User.get(params?.userID)
         def racers = userService.lookupAthlinkRacers(user)
 
         render view: 'importRacers', model: [user: user, userID: user.id, racers: racers]
     }
 
-    def completeImport(){
+    def completeImport() {
         def user = User.get(params?.userID)
         def save = false
         def racers = params.list('racers')
