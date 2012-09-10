@@ -137,7 +137,7 @@
           <i class="icon-trash icon-white"></i>
           <g:message code="default.button.delete.label" default="Delete"/>
         </button>
-        <a href="${createLink(controller: 'admin', action: 'importRacers', params: [userID: userInstance?.id])}" class="btn">
+        <a href="${createLink(controller: 'admin', action: 'importRacers', params: [userID: userInstance?.id])}" class="btn"><i class="icon-download-alt"></i>
           Import Racers
         </a>
       </div>

@@ -88,7 +88,7 @@ class CoursePatternService {
     private boolean testForSprintKeys(String name) {
         name.contains('SWIM') && ((name =~ /3\.1\s*MI/).find() ||
                                   (name =~ /5\s*K\s*RUN/).find() ||
-                                  (name =~ /RUN[ -]*[3\.*1*|5]*/).find())
+                                  (name =~ /RUN[ -]*[3\.*1*|5]+/).find())
     }
 
     void importCoursePattern(Map course) {

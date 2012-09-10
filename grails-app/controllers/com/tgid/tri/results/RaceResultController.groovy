@@ -2,6 +2,7 @@ package com.tgid.tri.results
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import com.tgid.tri.auth.User
 
 @Secured(["ROLE_ADMIN"])
 class RaceResultController {
@@ -13,8 +14,33 @@ class RaceResultController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [raceResultInstanceList: RaceResult.list(params), raceResultInstanceTotal: RaceResult.count()]
+        def query = {
+            if(params.firstName) {
+                user {
+                ilike('firstName', '%' + params.firstName + '%')
+                }
+            }
+            if(params.lastName) {
+                user {
+                ilike('lastName', '%' + params.lastName + '%')
+                }
+            }
+            if(params.username) {
+                race {
+                ilike('name', '%' + params.name + '%')
+                }
+            }
+            if(params.sort) {
+                order(params.sort, params.order)
+            }
+        }
+
+        def criteria = RaceResult.createCriteria()
+        params.max = Math.min(params.max ? params.int('max') : 20, 100)
+        def raceResults = criteria.list(query, max: params.max, offset: params.offset)
+        def filters = [firstName: params.firstName, lastName: params.lastName, name: params.name]
+
+        [raceResultInstanceList: raceResults, raceResultInstanceTotal: raceResults.totalCount, filters: filters]
     }
 
     def create() {

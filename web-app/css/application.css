@@ -347,3 +347,10 @@ h1, h2, h3, h4, h5 {
 #dob_year {
     width: 90px;
 }
+
+.filters form {
+    margin-bottom: 0px !important;
+}
+.filters .nav-header {
+    padding: 0px 5px !important;
+}

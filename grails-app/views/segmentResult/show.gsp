@@ -33,7 +33,7 @@
 			<div class="span9">
 
 				<div class="page-header">
-					<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+					<h1><g:message code="default.show.label" args="['Segment Result']" /></h1>
 				</div>
 
 				<g:if test="${flash.message}">
@@ -83,6 +83,13 @@
 							<dd><g:link controller="raceResult" action="show" id="${segmentResultInstance?.raceResult?.id}">${segmentResultInstance?.raceResult?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
+
+              <g:if test="${segmentResultInstance?.raceResult?.user}">
+                <dt><g:message code="segmentResult.raceResult.user.label" default="User" /></dt>
+
+                <dd><g:link controller="user" action="show" id="${segmentResultInstance?.raceResult?.user?.id}">${segmentResultInstance?.raceResult?.user?.encodeAsHTML()}</g:link></dd>
+
+              </g:if>
 				
 				</dl>
 

@@ -34,7 +34,7 @@
         <div class="control-group ">
           <label class="control-label" for="states">State(s) <a href="javascript:void(0);" class="autopop" rel="popover" data-content="Select the state(s) in which you currently reside and race in. Hold CTRL to select multiple." data-original-title="State(s)"><i class="icon-question-sign"></i></a></label>
           <div class="controls">
-            <g:select class="span10" optionKey="id" value="${user?.states}" optionValue="name" id="states" name="states" from="${State?.list()?.sort {a, b -> a.name <=> b.name}}" multiple="true" size="8"/>
+            <g:select class="span10" optionKey="id" value="${user?.states}" optionValue="name" id="states" name="states" from="${State?.list()?.sort {it.name}}" multiple="true" size="8"/>
           </div>
         </div>
         <div class="form-actions">

@@ -16,8 +16,30 @@ class RaceController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [raceInstanceList: Race.list(params), raceInstanceTotal: Race.count()]
+        def query = {
+            if(params.name){
+                ilike('name','%'+params.name+'%')
+            }
+            if (params.raceType) {
+                eq('raceType', params.raceType as RaceType)
+            }
+            if(params.statusType){
+                eq('statusType', params.statusType as StatusType)
+            }
+            if(params.raceCategoryType){
+                eq('raceCategoryType', params.raceCategoryType as RaceCategoryType)
+            }
+            if (params.sort){
+                order(params.sort, params.order)
+            }
+        }
+
+        def criteria = Race.createCriteria()
+        params.max = Math.min(params.max ? params.int('max') : 20, 100)
+        def races = criteria.list(query, max: params.max, offset: params.offset)
+        def filters = [raceType: params.raceType, name: params.name, raceCategoryType: params.raceCategoryType]
+
+        [raceInstanceList: races, raceInstanceTotal: races.totalCount, filters: filters]
     }
 
     def create() {

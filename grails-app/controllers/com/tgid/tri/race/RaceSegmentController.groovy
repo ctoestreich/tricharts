@@ -1,7 +1,7 @@
 package com.tgid.tri.race
 
-import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import org.springframework.dao.DataIntegrityViolationException
 
 @Secured(["ROLE_ADMIN"])
 class RaceSegmentController {
@@ -13,8 +13,33 @@ class RaceSegmentController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [raceSegmentInstanceList: RaceSegment.list(params), raceSegmentInstanceTotal: RaceSegment.count()]
+        def query = {
+            if(params.name) {
+                race {
+                    ilike('name', '%' + params.name + '%')
+                }
+            }
+            if(params.raceType) {
+                race {
+                    eq('raceType', params.raceType as RaceType)
+                }
+            }
+            if(params.raceCategoryType) {
+                race {
+                    eq('raceCategoryType', params.raceCategoryType as RaceCategoryType)
+                }
+            }
+            if(params.sort) {
+                order(params.sort, params.order)
+            }
+        }
+
+        def criteria = RaceSegment.createCriteria()
+        params.max = Math.min(params.max ? params.int('max') : 20, 100)
+        def raceSegments = criteria.list(query, max: params.max, offset: params.offset)
+        def filters = [raceType: params.raceType, name: params.name, raceCategoryType: params.raceCategoryType]
+
+        [raceSegmentInstanceList: raceSegments, raceSegmentInstanceTotal: raceSegments.totalCount, filters: filters]
     }
 
     def create() {
