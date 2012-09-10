@@ -6,7 +6,7 @@
       <button class="close" data-dismiss="alert">×</button>
       %{--<g:select onchange="app.changeUser()" name="user.id" from="${User.listOrderByFirstName()}" id="userId" optionKey="id" value="${user?.id}"/>--}%
       %{--&nbsp;<a href="javascript:app.changeUser()" class="btn btn-primary">switch</a>--}%
-      <input id="userSelect" class="span4" name="userSelect">
+      <input id="userSelect" class="span4" name="userSelect" value="${user?.toString()}">
       <input type="hidden" id="userId" value="${user?.id}" name="user.id" />
     </div>
   </g:form>
@@ -38,8 +38,8 @@
                                         });
                                       },
                                       select:function (event, ui) {
-                                        $("#userId").val(ui.item.value);
-                                        $("#userSelect").val(ui.item.label);
+                                        $("#userId").val(ui.item.userId);
+                                        $("#userSelect").val(ui.item.value);
                                         app.changeUser();
                                         return false;
                                       }

@@ -1,25 +1,28 @@
 package com.tgid.tri.auth
 
-import org.springframework.dao.DataIntegrityViolationException
-import grails.plugins.springsecurity.Secured
 import grails.converters.JSON
+import grails.plugins.springsecurity.Secured
+import org.springframework.dao.DataIntegrityViolationException
 
 @Secured(["ROLE_ADMIN"])
 class UserController {
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
-    def search(){
+    def search() {
         def query = {
             if(params.term) {
-                ilike('firstName', '%' + params.term + '%')
+                or {
+                    ilike('firstName', '%' + params.term + '%')
+                    ilike('lastName', '%' + params.term + '%')
+                }
             }
         }
         def response = []
         def criteria = User.createCriteria()
-        def users = criteria.list(query, max: params.max, offset: params.offset)
+        def users = criteria.list(query)
         users.each {
-            response << [label: it.toString(), value: it.id]
+            response << [label: it.toString(), value: it.toString(), userId: it.id]
         }
         render response as JSON
     }
