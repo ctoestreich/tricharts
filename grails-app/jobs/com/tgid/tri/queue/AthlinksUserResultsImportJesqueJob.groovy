@@ -5,8 +5,8 @@ import com.tgid.tri.auth.User
 
 class AthlinksUserResultsImportJesqueJob extends LoggableJob {
 
-    static queue = 'importAthlinksUserResults'
-    static workerPool = 'athlinksUserResultsImportWorkerPool'
+    static queue = 'athlinksGenericImport'
+    static workerPool = 'athlinksGenericImportWorkerPool'
 
     def grailsApplication
     def athlinksResultsParsingService

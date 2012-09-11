@@ -46,6 +46,10 @@
           <label for='enabled' class="control-label">Enable Race Categories Import Job:</label>
           <div class="controls"> <g:select name="athlinksRaceCategoryImportJob" value="${grailsApplication.config.jobs.athlinksRaceCategoryImportJob.enabled}" from="${[true, false]}" /></div>
         </div>
+        <div class="control-group">
+          <label for='enabled' class="control-label">Enable Race Import Job:</label>
+          <div class="controls"> <g:select name="athlinksRaceImportJob" value="${grailsApplication.config.jobs.athlinksRaceImportJob.enabled}" from="${[true, false]}" /></div>
+        </div>
 
 
         <div class="form-actions">

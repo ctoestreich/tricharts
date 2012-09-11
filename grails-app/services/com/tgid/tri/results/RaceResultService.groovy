@@ -25,7 +25,10 @@ class RaceResultService {
                         placeOverall: result.RankO,
                         participantsAgeGroup: result.CountA,
                         participantsGender: result.CountG,
-                        participantsOverall: result.CountO)
+                        participantsOverall: result.CountO,
+                        age: result.Age,
+                        ageGroup: result.ClassName,
+                        bibNumber: result.BibNum)
 
                 Integer index = 0
                 result.LegEntries.each { segment ->

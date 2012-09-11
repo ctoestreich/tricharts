@@ -1,5 +1,8 @@
 package com.tgid.tri.race
 
+import com.tgid.tri.auth.Country
+import com.tgid.tri.auth.State
+
 class Race {
 
     String name
@@ -11,9 +14,13 @@ class Race {
     Float distance = 0.00f
     String resultsUrl
     StatusType statusType = StatusType.Pending
+    Long courseID
     Long eventCourseID
     RaceCategory raceCategory
     CoursePattern coursePattern
+    State state
+    Country country
+    String city
 
     static hasMany = [segments: RaceSegment]
 
@@ -28,8 +35,12 @@ class Race {
         statusType nullable: false
         athlinkRaceID nullable: true
         eventCourseID nullable: true
+        courseID nullable: true
         raceCategory nullable: true
-        coursePattern nullable:  true
+        coursePattern nullable: true
+        state nullable: true
+        country nullable: true
+        city nullable: true
     }
 
     static mapping = {
@@ -40,6 +51,6 @@ class Race {
 
     @Override
     String toString() {
-        "${name ?: 'Unknown'}${(raceCategoryType) ?" ($raceCategoryType) ": ' '}${date?.format("yyyy")}"
+        "${name ?: 'Unknown'}${(raceCategoryType) ? " ($raceCategoryType) " : ' '}${date?.format("yyyy")}"
     }
 }

@@ -1,12 +1,32 @@
 package com.tgid.tri.race
 
 import grails.validation.ValidationException
+import jodd.servlet.tag.ElseTag
 
 class RaceService {
 
     SegmentService segmentService
 
-    Race saveRace(Race race, Map course = [:]) {
+    Race saveRace(Race race){
+        if(race.validate()) {
+            try {
+                race.save(flush: true)
+            } catch(ValidationException e) {
+                log.error "error saving race: ${race.name}"
+                throw e
+            }
+        } else {
+            println 'Race Validation Errors!'
+            race?.errors?.allErrors?.each {
+                log.error it
+            }
+            return null
+        }
+
+        return race
+    }
+
+    Race createRace(Race race, Map course = [:]) {
         if(race.raceType == RaceType.Running) { createRunSegments(race) }
         if(race.raceType == RaceType.Biking) { createBikeSegments(race) }
         if(race.raceType == RaceType.Triathlon || race.raceType == RaceType.Aquathon) { createTriathlonSegments(race, course) }
@@ -34,15 +54,15 @@ class RaceService {
 
     void createBikeSegments(Race race) {
         def segment = Segment.findOrSaveWhere(segmentType: SegmentType.Bike, distanceType: race?.distanceType, distance: race?.distance)
-        if(segment.validate()) {
+        if(segment.validate()){
             race.addToSegments(new RaceSegment(segment: segment))
         }
     }
 
     void createRunSegments(Race race) {
         def segment = Segment.findOrSaveWhere(segmentType: SegmentType.Run, distanceType: race?.distanceType, distance: race?.distance)
-        if(segment.validate()) {
-            race.addToSegments(new RaceSegment(segment: segment))
+        if(segment.validate()){
+                race.addToSegments(new RaceSegment(segment: segment))
         } else {
             println 'Validation Errors!'
             race?.errors?.allErrors?.each {

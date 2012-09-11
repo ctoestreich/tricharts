@@ -113,6 +113,9 @@
           <i class="icon-trash icon-white"></i>
           <g:message code="default.button.delete.label" default="Delete"/>
         </button>
+        <a href="${createLink(controller: 'race', action: 'reimportRace', id: raceInstance?.id)}" class="btn"><i class="icon-download-alt"></i>
+          Import Race
+        </a>
       </div>
     </g:form>
 

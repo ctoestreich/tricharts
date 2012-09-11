@@ -3,11 +3,15 @@ package com.tgid.tri.race
 import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import com.tgid.tri.data.parsing.AthlinksResultsParsingService
+import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
+import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
 
 @Secured(["ROLE_ADMIN"])
 class RaceController {
 
     def raceService
+    def jesqueService
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
@@ -161,5 +165,20 @@ class RaceController {
         def race = Race.findById(params.id)
         bindData(race, request.JSON)
         render(race.save() as JSON)
+    }
+
+    def reimportRace(){
+        def race = Race.get(params?.id)
+
+        println race
+
+        if(race){
+            jesqueService.enqueue('athlinksGenericImport', AthlinksRaceImportJesqueJob.simpleName, race.athlinkRaceID)
+            flash.message = message(code: 'import.started.message', args: ['Import Race'])
+            redirect(action: 'show', id: race.id)
+            return
+        }
+
+        redirect(action: 'list')
     }
 }

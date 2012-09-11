@@ -17,6 +17,9 @@ class RaceResult {
     Integer participantsAgeGroup
     Integer participantsGender
     Integer participantsOverall
+    String bibNumber
+    Integer age
+    String ageGroup
 
     static belongsTo = [user: User]
 
@@ -36,6 +39,9 @@ class RaceResult {
         participantsOverall nullable: true
         participantsGender nullable: true
         athlinkEntryID nullable: true
+        bibNumber nullable: true
+        age nullable: true
+        ageGroup nullable: true
     }
 
     @Override

@@ -14,6 +14,8 @@
     %{--<tri:periodPicker id="${raceResult?.id}" value="${raceResult?.duration}" prefix="${prefix}"/>--}%
     %{--<BR />--}%
     <f:field property="duration" bean="raceResult" prefix="${prefix}" />
+    <f:field property="age" bean="raceResult" prefix="${prefix}" />
+    <f:field property="bibNumber" bean="raceResult" prefix="${prefix}" />
   </g:elseif>
 
   %{--<joda:periodPicker name="${prefix ?: ''}duration" value="${segmentResult?.duration}" fields="hours,minutes,seconds" />--}%

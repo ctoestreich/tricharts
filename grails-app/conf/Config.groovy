@@ -2,6 +2,7 @@ import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
 import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
 import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
 import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
+import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
 import org.apache.log4j.DailyRollingFileAppender
 
 // locations to search for config files that get merged into the main config;
@@ -222,6 +223,9 @@ jobs {
     athlinksCoursePatternsImportJob {
         enabled = true
     }
+    athlinksRaceImportJob {
+        enabled = true
+    }
 }
 
 sendgrid {
@@ -298,10 +302,12 @@ grails {
 grails {
     jesque {
         workers {
-            athlinksUserResultsImportWorkerPool {
+            athlinksGenericImportWorkerPool {
                 workers = 1 //defaults to 1
-                queueNames = 'importAthlinksUserResults' //or a list
-                jobTypes = [(AthlinksUserResultsImportJesqueJob.simpleName): AthlinksUserResultsImportJesqueJob]
+                queueNames = 'athlinksGenericImport'
+                jobTypes = [
+                        (AthlinksUserResultsImportJesqueJob.simpleName): AthlinksUserResultsImportJesqueJob,
+                        (AthlinksRaceImportJesqueJob.simpleName): AthlinksRaceImportJesqueJob]
             }
             athlinksReferenceImportWorkerPool {
                 workers = 2 //defaults to 1

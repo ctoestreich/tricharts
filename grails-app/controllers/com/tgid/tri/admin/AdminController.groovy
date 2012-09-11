@@ -29,6 +29,7 @@ class AdminController {
         grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled = params.boolean('athlinksUserResultsImportJesqueJob')
         grailsApplication.config.jobs.athlinksUserResultsImportJob.enabled = params.boolean('athlinksUserResultsImportJesqueJob')
         grailsApplication.config.jobs.athlinksCoursePatternsImportJob.enabled = params.boolean('athlinksCoursePatternsImportJob')
+        grailsApplication.config.jobs.athlinksRaceImportJob.enabled = params.boolean('athlinksRaceImportJob')
         redirect action: 'jobSettings'
     }
 
@@ -86,7 +87,7 @@ class AdminController {
         def user = User.get(params?.id)
 
         if(user) {
-            jesqueService.enqueue('importAthlinksUserResults', AthlinksUserResultsImportJesqueJob.simpleName, user.id)
+            jesqueService.enqueue('athlinksGenericImport', AthlinksUserResultsImportJesqueJob.simpleName, user.id)
             flash.message = g.message(code: 'user.running.import', args: [user.username])
         } else {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])

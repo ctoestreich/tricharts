@@ -31,6 +31,46 @@ class AthlinksResultsParsingService {
         }
     }
 
+    def updateAthlinksRace(Race race) {
+        def racesUrl = "http://api.athlinks.com/races/${race.athlinkRaceID}?key=${grailsApplication.config.athlinks.key}&format=json"
+
+        def raceMap = [:]
+        try {
+            String apiString = new URL(racesUrl).text
+            raceMap = new JsonSlurper().parseText(apiString)
+        } catch(Exception e) {
+            throw e
+        }
+
+        raceMap?.Courses?.each { course ->
+            def coursePatternLocal = coursePatternService.lookup(course)
+            def raceUpdate = Race.findByAthlinkRaceIDAndCourseID(race.athlinkRaceID, course.CourseID)
+            Race.withTransaction {
+                try {
+                    if(raceUpdate) {
+                        raceUpdate.name = raceMap.Race.RaceName
+                        raceUpdate.date = new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long)
+                        raceUpdate.raceType = mapRaceType(course)
+                        raceUpdate.raceCategoryType = coursePatternLocal?.raceCategoryType
+                        raceUpdate.distanceType = coursePatternLocal?.distanceType
+                        raceUpdate.distance = coursePatternLocal?.distance
+                        raceUpdate.athlinkRaceID = raceMap.Race.RaceID
+                        raceUpdate.eventCourseID = course.EventCourseID
+                        raceUpdate.courseID = course.CourseID
+                        raceUpdate.coursePattern = com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID)
+                        raceUpdate.raceCategory = com.tgid.tri.race.RaceCategory.get(course?.RaceCatID)
+                        raceUpdate.state = com.tgid.tri.auth.State.findByProvID(raceMap.StateProvID)
+                        raceUpdate.country = com.tgid.tri.auth.Country.findByCountryID(raceMap.CountryID)
+
+                        raceUpdate = raceService.saveRace(raceUpdate)
+                    }
+                } catch(Exception e) {
+                    throw e
+                }
+            }
+        }
+    }
+
     private void importAthlinkRaces(User user) {
         user?.racers?.each {
             if(it.lastImport < new Date() - 1) {
@@ -54,7 +94,7 @@ class AthlinksResultsParsingService {
         }
 
         racer.lastImport = new Date()
-        racer.save(flush:  true)
+        racer.save(flush: true)
     }
 
     private void importRaces(User user, Map raceMap) {
@@ -89,11 +129,12 @@ class AthlinksResultsParsingService {
                         distance: coursePatternLocal?.distance,
                         athlinkRaceID: raceMap.Race.RaceID,
                         eventCourseID: course.EventCourseID,
+                        courseID: course.CourseID,
                         coursePattern: com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID),
                         raceCategory: com.tgid.tri.race.RaceCategory.get(course?.RaceCatID),
                         statusType: StatusType.Approved
                 )
-                race = raceService.saveRace(race, course)
+                race = raceService.createRace(race, course)
             }
             if(race) {
                 importResult(user, raceMap.EntryID, course.EventCourseID)

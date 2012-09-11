@@ -6,6 +6,7 @@ class BootStrap {
     def segmentService
     def stateService
     def bootStrapService
+    def countryService
 
     def init = { servletContext ->
 
@@ -17,6 +18,7 @@ class BootStrap {
 
     private void createInitialRacesAndResults() {
         segmentService.seedSegments()
+        countryService.seedCountries()
         stateService.seedStates()
         if(Environment.current == Environment.DEVELOPMENT) {
             bootStrapService.createDefaultUsers()
