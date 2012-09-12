@@ -13,12 +13,13 @@ class BootStrapService {
 
     void createDefaultUsers() {
         //create dome dummy users to test
-        createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true), true)
-        createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true), false)
-        createUser(new User(username: 'bugurlu@hotmail.com', password: 'bugurlu', firstName: 'Bulent', lastName: 'Ugurlu', dob: new Date(70, 10, 18), enabled: true), true)
+        createUser(new User(username: 'acetrike@yahoo.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true, genderType: GenderType.Male), true)
+        createUser(new User(username: 'acetrike@gmail.com', password: 'acetrike', firstName: 'Christian', lastName: 'Oestreich', dob: new Date(79, 4, 23), enabled: true, genderType: GenderType.Male), false)
+        createUser(new User(username: 'mitchtalbot@yahoo.com', password: 'mitchtalbot', firstName: 'Mitchel', lastName: 'Talbot', dob: new Date(79, 4, 18), enabled: true, genderType: GenderType.Male), false)
+        createUser(new User(username: 'bugurlu@hotmail.com', password: 'bugurlu', firstName: 'Bulent', lastName: 'Ugurlu', dob: new Date(70, 10, 18), enabled: true, genderType: GenderType.Male), true)
 //        createUser(new User(username: 'kwschulz@gmail.com', password: 'kwschulz', firstName: 'Ken', lastName: 'Schulz', dob: new Date(77, 5, 18), enabled: true), true)
-        createUser(new User(username: 'patrick.parish@gmail.com', password: 'pparish', firstName: 'Patrick', lastName: 'Parish', dob: new Date(85, 5, 18), enabled: true), false)
-        createUser(new User(username: 'derek.haag@gmail.com', password: 'dhaag', firstName: 'Derek', lastName: 'Haag', dob: new Date(78, 8, 18), enabled: true), false)
+        createUser(new User(username: 'patrick.parish@gmail.com', password: 'pparish', firstName: 'Patrick', lastName: 'Parish', dob: new Date(85, 5, 18), enabled: true, genderType: GenderType.Male), false)
+        createUser(new User(username: 'derek.haag@gmail.com', password: 'dhaag', firstName: 'Derek', lastName: 'Haag', dob: new Date(78, 8, 18), enabled: true, genderType: GenderType.Male), false)
     }
 
     void createUser(User user, boolean isAdmin = false) {
@@ -172,7 +173,7 @@ class BootStrapService {
         def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(t2Seconds))
         def runResults = new SegmentResult(raceSegment: runSegment, duration: Duration.standardSeconds(runSeconds), placeOverall: runPlaceOverall, placeAgeGroup: runPlaceAgeGroup)
 
-        def raceResult = new RaceResult(race: race, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall, user: user,
+        def raceResult = new RaceResult(age: 33,race: race, placeAgeGroup: placeAgeGroup, placeOverall: placeOverall, user: user,
                                         participantsAgeGroup: participantsAgeGroup, participantsGender: participantsGender, participantsOverall: participantsOverall,
                                         duration: Duration.standardSeconds(raceSeconds)).save()
         raceResult.addToSegmentResults(swimResults)
@@ -216,7 +217,7 @@ class BootStrapService {
         def t2Results = new SegmentResult(raceSegment: t2Segment, duration: Duration.standardSeconds(52))
         def runResults = new SegmentResult(raceSegment: fiveKilometerRunSegment, duration: Duration.standardSeconds(60 * 20 + 17), placeOverall: 27, placeAgeGroup: 5)
 
-        def raceResult = new RaceResult(race: race, placeAgeGroup: 3, placeOverall: 12, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds(83 * 60 + 17)).save()
+        def raceResult = new RaceResult(age: 31,race: race, placeAgeGroup: 3, placeOverall: 12, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds(83 * 60 + 17)).save()
         raceResult.addToSegmentResults(swimResults)
         raceResult.addToSegmentResults(t1Results)
         raceResult.addToSegmentResults(bikeResults)
@@ -226,36 +227,36 @@ class BootStrapService {
     }
 
     private void createRiceStreetMile() {
-        def riceStreetMile = new Race(name: 'Rice Street Mile', date: new Date(112, 6, 26),
+        def riceStreetMile = new Race(state: State.findByAbbrev('MN'), name: 'Rice Street Mile', date: new Date(112, 6, 26),
                                       raceType: RaceType.Running, distanceType: DistanceType.Miles,
                                       distance: 1, raceCategoryType: RaceCategoryType.OneMile, statusType: StatusType.Approved).save()
         def oneMileRunSegment = RaceSegment.findOrSaveWhere(race: riceStreetMile, segment: segmentService.findOrSaveSegment(1, DistanceType.Miles, SegmentType.Run))
 
         def rsmResults = new SegmentResult(raceSegment: oneMileRunSegment, duration: Duration.standardSeconds((60 * 5) + 28))
-        def rsmRaceResult = new RaceResult(race: riceStreetMile, placeAgeGroup: 20, placeOverall: 50, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 5) + 28)).save()
+        def rsmRaceResult = new RaceResult(age: 30,race: riceStreetMile, placeAgeGroup: 20, placeOverall: 50, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 5) + 28)).save()
         rsmRaceResult.addToSegmentResults(rsmResults)
         rsmRaceResult.save()
     }
 
     private void createTcOneMile() {
-        def twinCitiesMile = new Race(name: 'Medtronic TC1 Mile', date: new Date(112, 5, 17), raceType: RaceType.Running,
+        def twinCitiesMile = new Race(state: State.findByAbbrev('MN'), name: 'Medtronic TC1 Mile', date: new Date(112, 5, 17), raceType: RaceType.Running,
                                       distanceType: DistanceType.Miles, distance: 1,
                                       raceCategoryType: RaceCategoryType.OneMile, statusType: StatusType.Approved).save()
         def raceSegment = RaceSegment.findOrSaveWhere(race: twinCitiesMile, segment: segmentService.findOrSaveSegment(1, DistanceType.Miles, SegmentType.Run))
 
         def segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 5) + 31))
-        def raceResult = new RaceResult(race: twinCitiesMile, placeAgeGroup: 29, placeGender: 179, placeOverall: 192, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 5) + 31)).save()
+        def raceResult = new RaceResult(age: 34,race: twinCitiesMile, placeAgeGroup: 29, placeGender: 179, placeOverall: 192, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 5) + 31)).save()
         raceResult.addToSegmentResults(segmentResult)
         raceResult.save()
     }
 
     private void createVictoryDay() {
-        def race = new Race(name: 'MDRA Victory 5K', date: new Date(111, 8, 5), raceType: RaceType.Running,
+        def race = new Race(state: State.findByAbbrev('MN'), name: 'MDRA Victory 5K', date: new Date(111, 8, 5), raceType: RaceType.Running,
                             distanceType: DistanceType.Kilometers, distance: 5,
                             raceCategoryType: RaceCategoryType.FiveKilometer, statusType: StatusType.Approved).save()
         def raceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(5, DistanceType.Kilometers, SegmentType.Run))
         def segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 19) + 05))
-        def raceResult = new RaceResult(race: race, placeAgeGroup: 2, placeGender: 20, placeOverall: 20, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 19) + 05)).save()
+        def raceResult = new RaceResult(age: 35,race: race, placeAgeGroup: 2, placeGender: 20, placeOverall: 20, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 19) + 05)).save()
         raceResult.addToSegmentResults(segmentResult)
         raceResult.save()
 
@@ -264,7 +265,7 @@ class BootStrapService {
                         raceCategoryType: RaceCategoryType.TenKilometer, statusType: StatusType.Approved).save()
         raceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(10, DistanceType.Kilometers, SegmentType.Run))
         segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 45) + 52))
-        raceResult = new RaceResult(race: race, placeAgeGroup: 24, placeGender: 150, placeOverall: 154, user: User.findByUsername('bugurlu@hotmail.com'), duration: Duration.standardSeconds((60 * 45) + 52)).save()
+        raceResult = new RaceResult(age: 36,race: race, placeAgeGroup: 24, placeGender: 150, placeOverall: 154, user: User.findByUsername('bugurlu@hotmail.com'), duration: Duration.standardSeconds((60 * 45) + 52)).save()
         raceResult.addToSegmentResults(segmentResult)
         raceResult.save()
     }
@@ -275,7 +276,7 @@ class BootStrapService {
                                   raceCategoryType: RaceCategoryType.FiveKilometer, statusType: StatusType.Approved).save()
         def raceSegment = RaceSegment.findOrSaveWhere(race: torchlight, segment: segmentService.findOrSaveSegment(5, DistanceType.Kilometers, SegmentType.Run))
         def segmentResult = new SegmentResult(raceSegment: raceSegment, duration: Duration.standardSeconds((60 * 19) + 32))
-        def raceResult = new RaceResult(race: torchlight, placeAgeGroup: 16, placeGender: 90, placeOverall: 116, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 19) + 32)).save()
+        def raceResult = new RaceResult(age: 37,race: torchlight, placeAgeGroup: 16, placeGender: 90, placeOverall: 116, user: User.findByUsername('acetrike@yahoo.com'), duration: Duration.standardSeconds((60 * 19) + 32)).save()
         raceResult.addToSegmentResults(segmentResult)
         raceResult.save()
     }

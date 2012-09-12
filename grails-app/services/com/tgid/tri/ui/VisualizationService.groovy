@@ -1,14 +1,54 @@
 package com.tgid.tri.ui
 
-import grails.plugin.springcache.annotations.Cacheable
-import com.tgid.tri.race.SegmentType
+import com.tgid.tri.auth.GenderType
 import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
-import com.tgid.tri.results.SegmentResult
-import org.joda.time.Duration
+import com.tgid.tri.race.SegmentType
 import com.tgid.tri.results.RaceResult
+import com.tgid.tri.results.SegmentResult
+import grails.plugin.springcache.annotations.Cacheable
+import org.joda.time.Duration
+import com.tgid.tri.common.JodaTimeHelper
 
 class VisualizationService {
+
+    @Cacheable("chartCache")
+    def mapRunningScatter(long userId) {
+        def pr
+        def c = SegmentResult.createCriteria()
+        def queryRaceCategoryType = RaceCategoryType.OneMile
+        def queryRaceType = RaceType.Running
+        def segmentType = SegmentType.Run
+        def results = RaceResult.where {
+//            user.id == userId
+            race.raceType == queryRaceType
+            race.raceCategoryType == queryRaceCategoryType
+        }
+
+        def males = []
+        def females = []
+
+        //filter out results under 2min for now
+       // results = results.list().findAll { it.duration > Duration.standardSeconds(120)}.collect()
+
+        results.list().each { RaceResult raceResult ->
+            if(raceResult?.age && raceResult.result) {
+                def data = ["${raceResult.result.raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
+                switch(raceResult.result.raceResult.user.genderType) {
+                    case GenderType.Female:
+                        females << data
+                        break
+                    case GenderType.Male:
+                    default:
+                        males << data
+                        break
+                }
+            }
+
+        }
+
+        [males: males, females: females]
+    }
 
     @Cacheable("triathlonRecordsCache")
     Map mapTriathlonRecords(long userId) {

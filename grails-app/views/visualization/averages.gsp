@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <title>User Dashboard</title>
+  <title>Averages</title>
   <r:require modules="dashboard,results, progression, widgets"/>
   <gvisualization:apiImport/>
 </head>

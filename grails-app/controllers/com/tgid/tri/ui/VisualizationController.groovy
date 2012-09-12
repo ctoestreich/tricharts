@@ -466,4 +466,17 @@ class VisualizationController extends BaseController {
         render template: "chart",
                model: [height: 200, width: 200, columns: columns, data: data, title: resultTitle, id: resultDiv]
     }
+
+    def runScatter(){
+        User user = requestedUser
+        def userId = user.id
+        def results = visualizationService.mapRunningScatter(userId)
+        render template: "/templates/charts/runScatter", div: "scatter", model: [males: results.males, females: results.females, user: user]
+    }
+
+    def mileAverageByState(){
+        User user = requestedUser
+
+        render view: 'mileAverageByState', model: [user: user]
+    }
 }
