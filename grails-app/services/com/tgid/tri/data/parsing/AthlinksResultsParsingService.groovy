@@ -132,7 +132,10 @@ class AthlinksResultsParsingService {
                         courseID: course.CourseID,
                         coursePattern: com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID),
                         raceCategory: com.tgid.tri.race.RaceCategory.get(course?.RaceCatID),
-                        statusType: StatusType.Approved
+                        statusType: StatusType.Approved,
+                        state:  com.tgid.tri.auth.State.findByAbbrev(raceMap.Race.StateProvAbbrev),
+                        country:  com.tgid.tri.auth.Country.findByCountryID(raceMap.Race.CountryID),
+                        city: raceMap?.Race?.City
                 )
                 race = raceService.createRace(race, course)
             }

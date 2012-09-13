@@ -6,6 +6,19 @@
 <head>
   <meta name="layout" content="bootstrap">
   <title>Site Admin</title>
+  <style>
+    .stats h5{ margin-bottom: 5px;}
+    .stats div {
+      text-align:center; /* center horizontally */
+      /*vertical-align:middle; *//* center vertically */
+    }
+    .stat {
+      color: #2e90ff;
+      font-weight: bolder;
+      font-family: "Verdana, Geneva, sans-serif";
+      font-size: 1.5em;
+    }
+  </style>
 </head>
 
 <body>
@@ -24,7 +37,12 @@
       <br/>
     </g:if>
 
-    Admin Dashboard
+    <div class="row-fluid stats">
+      <div class="span3 well"><h5>Users</h5><redis:memoize key="admin-Users" expire="3600"><span class="stat">${com.tgid.tri.auth.User.count()}</span></redis:memoize> </div>
+      <div class="span3 well"><h5>Races</h5><redis:memoize key="admin-Races" expire="3600"><span class="stat">${com.tgid.tri.race.Race.count()}</span></redis:memoize> </div>
+      <div class="span3 well"><h5>Patterns</h5><redis:memoize key="admin-Patterns" expire="3600"><span class="stat">${com.tgid.tri.race.CoursePattern.count()}</span></redis:memoize> </div>
+      <div class="span3 well"><h5>Results</h5><redis:memoize key="admin-Results" expire="3600"><span class="stat">${com.tgid.tri.results.RaceResult.count()}</span></redis:memoize> </div>
+    </div>
 
   </div>
 

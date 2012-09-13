@@ -1,11 +1,9 @@
 package com.tgid.tri.race
 
-import grails.converters.JSON
-import org.springframework.dao.DataIntegrityViolationException
-import grails.plugins.springsecurity.Secured
-import com.tgid.tri.data.parsing.AthlinksResultsParsingService
-import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
 import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
+import grails.converters.JSON
+import grails.plugins.springsecurity.Secured
+import org.springframework.dao.DataIntegrityViolationException
 
 @Secured(["ROLE_ADMIN"])
 class RaceController {
@@ -21,19 +19,24 @@ class RaceController {
 
     def list() {
         def query = {
-            if(params.name){
-                ilike('name','%'+params.name+'%')
+            if(params.name) {
+                ilike('name', '%' + params.name + '%')
             }
-            if (params.raceType) {
+            if(params.raceType) {
                 eq('raceType', params.raceType as RaceType)
             }
-            if(params.statusType){
+            if(params.statusType) {
                 eq('statusType', params.statusType as StatusType)
             }
-            if(RaceCategoryType.getRaceCategoryType(params.raceCategoryType)){
+            if(RaceCategoryType.getRaceCategoryType(params.raceCategoryType)) {
                 eq('raceCategoryType', RaceCategoryType.getRaceCategoryType(params.raceCategoryType))
             }
-            if (params.sort){
+            if(params.state) {
+                state {
+                    eq('abbrev', params.state)
+                }
+            }
+            if(params.sort) {
                 order(params.sort, params.order)
             }
         }
@@ -41,7 +44,7 @@ class RaceController {
         def criteria = Race.createCriteria()
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
         def races = criteria.list(query, max: params.max, offset: params.offset)
-        def filters = [raceType: params.raceType, name: params.name, raceCategoryType: params.raceCategoryType]
+        def filters = [raceType: params.raceType, name: params.name, raceCategoryType: params.raceCategoryType, state: params.state]
 
         [raceInstanceList: races, raceInstanceTotal: races.totalCount, filters: filters]
     }
@@ -55,9 +58,9 @@ class RaceController {
                 def raceInstance = new Race(params)
                 if(raceInstance.raceType == RaceType.Triathlon) {
                     raceService.createTriathlonSegments(raceInstance)
-                } else if(raceInstance.raceType == RaceType.Running){
+                } else if(raceInstance.raceType == RaceType.Running) {
                     raceService.createRunSegments(raceInstance)
-                } else if(raceInstance.raceType == RaceType.Biking){
+                } else if(raceInstance.raceType == RaceType.Biking) {
                     raceService.createBikeSegments(raceInstance)
                 }
 
@@ -167,12 +170,12 @@ class RaceController {
         render(race.save() as JSON)
     }
 
-    def reimportRace(){
+    def reimportRace() {
         def race = Race.get(params?.id)
 
         println race
 
-        if(race){
+        if(race) {
             jesqueService.enqueue('athlinksGenericImport', AthlinksRaceImportJesqueJob.simpleName, race.athlinkRaceID)
             flash.message = message(code: 'import.started.message', args: ['Import Race'])
             redirect(action: 'show', id: race.id)

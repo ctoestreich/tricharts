@@ -8,7 +8,7 @@ class CountryService {
         def countries = new JsonSlurper().parseText(countryJson)
         countries.each {
             try {
-                Country.findOrSaveWhere(countryID: it.CountryID3.trim(), countryID3: it.CountryID3.trim(), countryName: it.CountryName.trim() )
+                Country.findOrSaveWhere(countryID: it.CountryID.trim(), countryID3: it.CountryID3.trim(), countryName: it.CountryName.trim() )
             } catch(Exception e) {
                 log.error e
             }

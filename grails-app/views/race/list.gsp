@@ -46,6 +46,10 @@
           <div class="row-fluid">
             <label for="raceCategoryType">Race Category Type</label><g:select class="span12" from="${com.tgid.tri.race.RaceCategoryType}" noSelection="['': '']" name="raceCategoryType" value="${filters?.raceCategoryType}"/>
           </div>
+
+          <div class="row-fluid">
+            <label for="raceCategoryType">State</label><g:select class="span12" from="${com.tgid.tri.auth.State.list()}" optionKey="abbrev" optionValue="name" noSelection="['': '']" name="state" value="${filters?.state}"/>
+          </div>
         </div>
 
         <div class="row-fluid">

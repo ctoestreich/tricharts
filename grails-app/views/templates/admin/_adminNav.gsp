@@ -14,6 +14,7 @@
   <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
   <li><a href="${createLink(controller: 'state', action: 'index')}">States</a></li>
+  <li><a href="${createLink(controller: 'country', action: 'index')}">Countries</a></li>
   <li class="nav-header">Cache Admin</li>
   <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'clearChartCaches')}">Clear Chart Caches</a></li>

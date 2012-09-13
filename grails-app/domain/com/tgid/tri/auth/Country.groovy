@@ -1,7 +1,10 @@
 package com.tgid.tri.auth
 
+import groovy.transform.EqualsAndHashCode
+
 /**
  */
+@EqualsAndHashCode
 class Country {
 
     String countryID
@@ -12,5 +15,10 @@ class Country {
         countryID blank: false
         countryID3 blank: false
         countryName blank: false
+    }
+
+    @Override
+    public String toString() {
+        countryName
     }
 }

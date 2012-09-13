@@ -478,7 +478,7 @@ class VisualizationController extends BaseController {
         def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
         def results = visualizationService.mapRunningScatter(userId, ageMin, ageMax, state, raceCategoryType)
 
-        render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, males: results.males, females: results.females, user: user, raceCategoryType: raceCategoryType]
+        render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, you: results.you, males: results.males, females: results.females, user: user, raceCategoryType: raceCategoryType]
     }
 
     def mileAverageByState() {

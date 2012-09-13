@@ -15,19 +15,14 @@ class VisualizationService {
 
     @Cacheable("chartCache")
     def mapRunningScatter(Long userId, Integer ageMin, Integer ageMax, State state, RaceCategoryType queryRaceCategoryType = RaceCategoryType.OneMile) {
-        println ageMin
-        println ageMax
-        println state
-        println queryRaceCategoryType
-
         def queryRaceType = RaceType.Running
         def queryState = state
         def results = RaceResult.where {
-//            race.state == queryState
-//            race.raceType == queryRaceType
+            race.state == queryState
+            race.raceType == queryRaceType
             race.raceCategoryType == queryRaceCategoryType
-//            age >= ageMin
-//            age <= ageMax
+            age >= ageMin
+            age <= ageMax
         }
 
         def males = []
@@ -40,23 +35,23 @@ class VisualizationService {
         results.list().each { RaceResult raceResult ->
             if(raceResult?.age && raceResult.result) {
                 def data = ["${raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
-                switch(raceResult.genderType) {
-                    case GenderType.Female:
-                        females << data
-                        break
-                    case GenderType.Male:
-                    default:
-                        males << data
-                        break
-                }
-                if(raceResult.user.id == userId){
+                if(raceResult.user.id == userId) {
                     you << data
+                } else {
+                    switch(raceResult.genderType) {
+                        case GenderType.Female:
+                            females << data
+                            break
+                        case GenderType.Male:
+                        default:
+                            males << data
+                            break
+                    }
                 }
             }
-
         }
 
-        [males: males, females: females]
+        [males: males, females: females, you: you]
     }
 
     @Cacheable("triathlonRecordsCache")

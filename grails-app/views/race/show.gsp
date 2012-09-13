@@ -96,6 +96,12 @@
       <dd><g:fieldValue bean="${raceInstance}" field="state"/></dd>
 
     </g:if>
+    <g:if test="${raceInstance?.country}">
+      <dt><g:message code="race.country.label" default="Country"/></dt>
+
+      <dd><g:fieldValue bean="${raceInstance}" field="country"/></dd>
+
+    </g:if>
 
       <g:if test="${raceInstance?.segments}">
         <dt><g:message code="race.segments.label" default="Segments"/></dt>

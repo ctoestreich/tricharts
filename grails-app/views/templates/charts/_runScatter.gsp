@@ -87,6 +87,10 @@
                                      name: 'Male',
                                      color: 'rgba(119, 152, 191, .5)',
                                      data: ${males}
+                                   }, {
+                                     name: 'You',
+                                     color: 'rgba(102, 255, 0, .5)',
+                                     data: ${you}
                                    }]
                                  });
     %{--chart${id} = new Highcharts.Chart({--}%
