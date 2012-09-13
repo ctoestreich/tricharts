@@ -12,8 +12,11 @@
 <body>
 
 <div class="row-fluid">
+  <div class="span4 well">
+    <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
+  </div>
 
-  <div class="span12">
+  <div class="span8">
 
     <div class="page-header">
       <h1>${statusTypeText} <g:message code="default.list.label" args="[entityName]"/></h1>

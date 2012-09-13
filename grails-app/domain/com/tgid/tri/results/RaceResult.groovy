@@ -3,6 +3,7 @@ package com.tgid.tri.results
 import com.tgid.tri.auth.User
 import com.tgid.tri.race.Race
 import org.joda.time.Duration
+import com.tgid.tri.auth.GenderType
 
 class RaceResult {
 
@@ -20,6 +21,7 @@ class RaceResult {
     String bibNumber
     Integer age
     String ageGroup
+    GenderType genderType
 
     static belongsTo = [user: User]
 
@@ -42,6 +44,7 @@ class RaceResult {
         bibNumber nullable: true
         age nullable: true
         ageGroup nullable: true
+        genderType nullable: true
     }
 
     @Override

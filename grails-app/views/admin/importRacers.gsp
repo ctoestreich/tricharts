@@ -10,10 +10,12 @@
   <h1>Registration <small>I want this!</small></h1>
 </div>
 
-<div class="container-fluid">
-  <div class="row-fluid">
+<div class="row-fluid">
+  <div class="span4 well">
+    <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
+  </div>
 
-    <div class='span7'>
+  <div class="span8">
       <g:if test="${flash.message}">${flash.message}<br /></g:if>
 
       <h2>Matched Users</h2>

@@ -1,4 +1,10 @@
 modules = {
+    overrides {
+        'jquery-theme' {
+            resource id:'theme', url:'css/trichart/jquery-ui-1.8.23.custom.css'
+        }
+    }
+
     application {
         dependsOn 'backbone', 'handlebars', 'underscore'
         resource url: 'js/application.js', disposition: 'head'
@@ -46,11 +52,13 @@ modules = {
     }
 
     widgets {
-        dependsOn 'jquery, jquery-ui'
+        dependsOn 'jquery, jquery-ui, jquery-theme'
         resource url: 'js/jquery/widgets.js'
     }
 
     analytics {
         resource url: 'js/google.js', disposition: 'head'
     }
+
+
 }

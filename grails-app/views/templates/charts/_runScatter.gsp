@@ -18,7 +18,7 @@
   $(function () {
     chart = new Highcharts.Chart({
                                    chart: {
-                                     renderTo: 'averagesDiv',
+                                     renderTo: '${div}',
                                      type: 'scatter',
                                      zoomType: 'xy'
                                    },
@@ -26,7 +26,7 @@
                                      text: 'Race Times By Gender'
                                    },
                                    subtitle: {
-                                     text: 'In States: MN'
+                                     text: '${raceCategoryType} in state ${state.name}'
                                    },
                                    xAxis: {
                                      title: {
@@ -174,6 +174,6 @@
   </g:if>
 
   if(!hasData) {
-    $("#${id}").html('No data for ${type} races.')
+    $("#${div}").html('No data for ${raceCategoryType} races.')
   }
 </script>

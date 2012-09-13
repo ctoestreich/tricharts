@@ -5,10 +5,13 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap">
-  <title>User Data Import</title>
+  <title>Site Admin</title>
 </head>
 
 <body>
+<div class="page-header">
+  <h1>Admin <small>bash$ su root</small></h1>
+</div>
 
 <div class="row-fluid">
   <div class="span4 well">
@@ -16,21 +19,15 @@
   </div>
 
   <div class="span8">
+    <g:if test="${flash.message}">
+      <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+      <br/>
+    </g:if>
 
-    <div class="page-header">
-      <h1>${name} Log</h1>
-    </div>
-
-    <g:textArea name="logFile" id="logFile" class="span12" rows="30" cols="10">${data?.text}</g:textArea>
+    Admin Dashboard
 
   </div>
 
 </div>
-<script>
-  $(function () {
-    var textarea = document.getElementById('logFile');
-    textarea.scrollTop = textarea.scrollHeight;
-  });
-</script>
 </body>
 </html>

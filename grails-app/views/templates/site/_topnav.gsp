@@ -1,7 +1,7 @@
 <%@ page import="com.tgid.tri.race.RaceType" %>
-<g:set var="paramMap" value="${[:]}" />
+<g:set var="paramMap" value="${[:]}"/>
 <sec:ifAllGranted roles="ROLE_ADMIN">
-  <g:set var="paramMap" value="${['user.id': params?.user?.id]}" />
+  <g:set var="paramMap" value="${['user.id': params?.user?.id]}"/>
 </sec:ifAllGranted>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -32,7 +32,7 @@
                 <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running] << paramMap)}">Run Trending</a></li>
                 <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running] << paramMap)}">Run Averages</a></li>
                 <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running] << paramMap)}">Run PRs</a></li>
-             <li><hr></li>
+                <li><hr></li>
                 <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Trending</a></li>
                 <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Averages</a></li>
                 <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon PRs</a></li>
@@ -51,44 +51,7 @@
             </li>
           </sec:ifLoggedIn>
           <sec:ifAnyGranted roles="ROLE_ADMIN">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Data Admin <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
-                <li><a href="${createLink(controller: 'raceSegment', action: 'index')}">Race Segments</a></li>
-                <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
-                <li><a href="${createLink(controller: 'raceCategory', action: 'index')}">Race Categories</a></li>
-                <li><a href="${createLink(controller: 'coursePattern', action: 'index')}">Course Patterns</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
-                <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
-                <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
-                <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
-                <li><a href="${createLink(controller: 'state', action: 'index')}">States</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site Admin <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
-                <li><a href="${createLink(controller: 'jobLog', action: 'index')}">Job Log</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'admin', action: 'dataImport')}">Import User Results</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'admin', action: 'viewDebugLog')}">View Info Log</a></li>
-                <li><a href="${createLink(controller: 'admin', action: 'viewErrorLog')}">View Error Log</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
-                <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
-                <li><a href="${createLink(controller: 'admin', action: 'importAthlinksResults')}">Import Athlinks Results</a></li>
-              </ul>
-            </li>
+            <li><a <%=request.forwardURI == "${createLink(controller: 'admin')}" ? 'class="btn disabled"' : ''%> href="${createLink(controller: 'admin', action: 'index')}">Site Admin</a></li>
           </sec:ifAnyGranted>
         </ul>
       </div>

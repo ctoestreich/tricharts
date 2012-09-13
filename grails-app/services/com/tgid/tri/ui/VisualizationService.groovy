@@ -1,6 +1,8 @@
 package com.tgid.tri.ui
 
 import com.tgid.tri.auth.GenderType
+import com.tgid.tri.auth.State
+import com.tgid.tri.common.JodaTimeHelper
 import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.SegmentType
@@ -8,33 +10,37 @@ import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.SegmentResult
 import grails.plugin.springcache.annotations.Cacheable
 import org.joda.time.Duration
-import com.tgid.tri.common.JodaTimeHelper
 
 class VisualizationService {
 
     @Cacheable("chartCache")
-    def mapRunningScatter(long userId) {
-        def pr
-        def c = SegmentResult.createCriteria()
-        def queryRaceCategoryType = RaceCategoryType.OneMile
+    def mapRunningScatter(Long userId, Integer ageMin, Integer ageMax, State state, RaceCategoryType queryRaceCategoryType = RaceCategoryType.OneMile) {
+        println ageMin
+        println ageMax
+        println state
+        println queryRaceCategoryType
+
         def queryRaceType = RaceType.Running
-        def segmentType = SegmentType.Run
+        def queryState = state
         def results = RaceResult.where {
-//            user.id == userId
-            race.raceType == queryRaceType
+//            race.state == queryState
+//            race.raceType == queryRaceType
             race.raceCategoryType == queryRaceCategoryType
+//            age >= ageMin
+//            age <= ageMax
         }
 
         def males = []
         def females = []
+        def you = []
 
         //filter out results under 2min for now
-       // results = results.list().findAll { it.duration > Duration.standardSeconds(120)}.collect()
+        // results = results.list().findAll { it.duration > Duration.standardSeconds(120)}.collect()
 
         results.list().each { RaceResult raceResult ->
             if(raceResult?.age && raceResult.result) {
-                def data = ["${raceResult.result.raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
-                switch(raceResult.result.raceResult.user.genderType) {
+                def data = ["${raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
+                switch(raceResult.genderType) {
                     case GenderType.Female:
                         females << data
                         break
@@ -42,6 +48,9 @@ class VisualizationService {
                     default:
                         males << data
                         break
+                }
+                if(raceResult.user.id == userId){
+                    you << data
                 }
             }
 

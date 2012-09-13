@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.race.Race" %>
+<%@ page import="com.tgid.tri.auth.State; com.tgid.tri.race.Race" %>
 <!doctype html>
 <html>
 	<head>
@@ -65,6 +65,13 @@
                             <f:field property="statusType"  />
                             <f:field property="athlinkRaceID"  />
                             <f:field property="eventCourseID"  />
+                            <div class="control-group ">
+                              <label class="control-label" for="states">State(s) <a href="javascript:void(0);" class="autopop" rel="popover" data-content="Select the state(s) in which you currently reside and race in. Hold CTRL to select multiple." data-original-title="State(s)"><i class="icon-question-sign"></i></a></label>
+
+                              <div class="controls">
+                                <g:select class="span6" optionKey="id" value="${raceInstance?.state}" optionValue="name" id="state" name="state" from="${State?.list()?.sort {it.name}}"/>
+                              </div>
+                            </div>
                             <div class="control-group">
                               <label class="control-label" for="coursePattern">Course Pattern</label>
                               <div class="controls">

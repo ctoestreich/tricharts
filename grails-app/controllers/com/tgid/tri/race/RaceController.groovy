@@ -30,8 +30,8 @@ class RaceController {
             if(params.statusType){
                 eq('statusType', params.statusType as StatusType)
             }
-            if(params.raceCategoryType){
-                eq('raceCategoryType', params.raceCategoryType as RaceCategoryType)
+            if(RaceCategoryType.getRaceCategoryType(params.raceCategoryType)){
+                eq('raceCategoryType', RaceCategoryType.getRaceCategoryType(params.raceCategoryType))
             }
             if (params.sort){
                 order(params.sort, params.order)

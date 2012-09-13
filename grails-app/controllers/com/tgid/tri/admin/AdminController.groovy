@@ -36,25 +36,37 @@ class AdminController {
     @CacheFlush(["triathlonRecordsCache", "runningRecordsCache"])
     def clearRecordsCaches() {
         flash.message = message(code: 'clear.cache', args: ['PRs Cache'])
-        redirect(controller: 'dashboard', action: 'index')
+        redirect(controller: 'admin', action: 'index')
+    }
+
+    @CacheFlush(["chartCache"])
+    def clearChartCaches() {
+        flash.message = message(code: 'clear.cache', args: ['Chart Cache'])
+        redirect(controller: 'admin', action: 'index')
+    }
+
+    @CacheFlush(["siteCache"])
+    def clearSiteCaches() {
+        flash.message = message(code: 'clear.cache', args: ['Site Cache'])
+        redirect(controller: 'admin', action: 'index')
     }
 
     def importAthlinksResults() {
         AthlinksResultsImportJob.triggerNow()
         flash.message = message(code: 'import.started.message', args: ['Import Results'])
-        redirect(controller: 'dashboard', action: 'index')
+        redirect(controller: 'admin', action: 'index')
     }
 
     def importAthlinksRaceCategories() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksRaceCategoryImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Categories'])
-        redirect(controller: 'dashboard', action: 'index')
+        redirect(controller: 'admin', action: 'index')
     }
 
     def importAthlinksCoursePatterns() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksCoursePatternsImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Courses'])
-        redirect(controller: 'dashboard', action: 'index')
+        redirect(controller: 'admin', action: 'index')
     }
 
     def index() { }

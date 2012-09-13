@@ -90,11 +90,17 @@
         <dd><g:fieldValue bean="${raceInstance}" field="statusType"/></dd>
 
       </g:if>
+    <g:if test="${raceInstance?.state}">
+      <dt><g:message code="race.state.label" default="State"/></dt>
+
+      <dd><g:fieldValue bean="${raceInstance}" field="state"/></dd>
+
+    </g:if>
 
       <g:if test="${raceInstance?.segments}">
         <dt><g:message code="race.segments.label" default="Segments"/></dt>
 
-        <g:each in="${raceInstance.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}}" var="s">
+        <g:each in="${raceInstance.segments.sort {it.segmentOrder}}" var="s">
           <dd><g:link controller="raceSegment" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></dd>
         </g:each>
 

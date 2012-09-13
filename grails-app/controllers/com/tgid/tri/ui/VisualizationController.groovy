@@ -1,6 +1,7 @@
 package com.tgid.tri.ui
 
 import com.tgid.tri.BaseController
+import com.tgid.tri.auth.State
 import com.tgid.tri.auth.User
 import com.tgid.tri.common.JodaTimeHelper
 import com.tgid.tri.race.RaceCategoryType
@@ -88,7 +89,7 @@ class VisualizationController extends BaseController {
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
-    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
+    @Cacheable(cache = 'chartCache', keyGenerator = 'authenticationAwareKeyGenerator')
     def runningAverages() {
         User user = requestedUser
         def userId = user.id
@@ -98,7 +99,7 @@ class VisualizationController extends BaseController {
         renderRunAveragesChart(resultDiv, userId, queryRaceType)
     }
 
-    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
+    @Cacheable(cache = 'chartCache', keyGenerator = 'authenticationAwareKeyGenerator')
     def triathlonAverages() {
         User user = requestedUser
         def userId = user.id
@@ -394,7 +395,7 @@ class VisualizationController extends BaseController {
         return result
     }
 
-    @Cacheable(cache='chartCache', keyGenerator='authenticationAwareKeyGenerator')
+    @Cacheable(cache = 'chartCache', keyGenerator = 'authenticationAwareKeyGenerator')
     private void renderTriathlonProgressionChart(String resultDiv, userId, RaceType queryRaceType, RaceCategoryType queryRaceCategoryType) {
 
         def segmentData = new HashMap<SegmentType, HashMap<Integer, StringBuilder>>()
@@ -467,16 +468,24 @@ class VisualizationController extends BaseController {
                model: [height: 200, width: 200, columns: columns, data: data, title: resultTitle, id: resultDiv]
     }
 
-    def runScatter(){
+    def runScatter() {
         User user = requestedUser
         def userId = user.id
-        def results = visualizationService.mapRunningScatter(userId)
-        render template: "/templates/charts/runScatter", div: "scatter", model: [males: results.males, females: results.females, user: user]
+        def ageMin = params.int('ageMin') ?: 30
+        def ageMax = params.int('ageMax') ?: 35
+        def div = params.div
+        def state = State.findByAbbrev(params?.state ?: 'MN')
+        def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
+        def results = visualizationService.mapRunningScatter(userId, ageMin, ageMax, state, raceCategoryType)
+
+        render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, males: results.males, females: results.females, user: user, raceCategoryType: raceCategoryType]
     }
 
-    def mileAverageByState(){
+    def mileAverageByState() {
         User user = requestedUser
+        def races = getRaceCategoriesByType('Running')
+        def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
 
-        render view: 'mileAverageByState', model: [user: user]
+        render view: 'mileAverageByState', model: [user: user, races: races, raceCategoryType: raceCategoryType]
     }
 }

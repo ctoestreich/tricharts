@@ -1,6 +1,7 @@
 package com.tgid.tri.results
 
 import com.tgid.tri.auth.User
+import com.tgid.tri.auth.GenderType
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
@@ -28,7 +29,9 @@ class RaceResultService {
                         participantsOverall: result.CountO,
                         age: result.Age,
                         ageGroup: result.ClassName,
-                        bibNumber: result.BibNum)
+                        bibNumber: result.BibNum,
+                        genderType: result?.Gender?.toString()?.toUpperCase()?.startsWith('F') ? GenderType.Female : GenderType.Male
+                )
 
                 Integer index = 0
                 result.LegEntries.each { segment ->
