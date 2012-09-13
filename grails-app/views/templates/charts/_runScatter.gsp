@@ -11,7 +11,7 @@
 <script>
   var hasData = false;
 
-  <g:if test="${males.size() > 0 || females.size() > 0}">
+  <g:if test="${males.size() > 0 || females.size() > 0 || you.size() > 0}">
   hasData = true;
   var chart;
   var timeToSubtract = Date.parse("1-1-1 0:00:00");
@@ -81,16 +81,16 @@
                                    series: [{
                                      name: 'Female',
                                      color: 'rgba(223, 83, 83, .5)',
-                                     data: ${females}
+                                     data: ${showFemale ? females : []}
 
                                    }, {
                                      name: 'Male',
                                      color: 'rgba(119, 152, 191, .5)',
-                                     data: ${males}
+                                     data: ${showMale ? males : []}
                                    }, {
                                      name: 'You',
                                      color: 'rgba(102, 255, 0, .5)',
-                                     data: ${you}
+                                     data: ${showYou ? you : []}
                                    }]
                                  });
     %{--chart${id} = new Highcharts.Chart({--}%

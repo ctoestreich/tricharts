@@ -26,18 +26,19 @@
           </sec:ifNotLoggedIn>
           <sec:ifLoggedIn>
             <li><a <%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'dashboard', action: 'index', params: paramMap)}">Dashboard</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running] << paramMap)}">Run Trending</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running] << paramMap)}">Run Averages</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running] << paramMap)}">Run PRs</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Trending</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Averages</a></li>
-                <li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon PRs</a></li>
-              </ul>
-            </li>
+            <li><a <%=request.forwardURI.contains('visualization') ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'visualization', action: 'progression', params: paramMap)}">Charts</a></li>
+            %{--<li class="dropdown">--}%
+              %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>--}%
+              %{--<ul class="dropdown-menu">--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Running] << paramMap)}">Run Trending</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Running] << paramMap)}">Run Averages</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Running] << paramMap)}">Run PRs</a></li>--}%
+                %{--<li><hr></li>--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'progression', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Trending</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'averages', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon Averages</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon PRs</a></li>--}%
+              %{--</ul>--}%
+            %{--</li>--}%
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Results <b class="caret"></b></a>
               <ul class="dropdown-menu">

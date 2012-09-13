@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.auth.State; com.tgid.tri.race.SegmentType; com.tgid.tri.race.RaceCategoryType; com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.auth.GenderType; com.tgid.tri.auth.State; com.tgid.tri.race.SegmentType; com.tgid.tri.race.RaceCategoryType; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -15,11 +15,13 @@
 
 <body>
 
+<g:set var="num" value="${Math.floor((new Date().year - user?.dob?.year)/5)*5}" />
+
 <div class="page-header">
   <h1>Running Averages By State <small>dots...</small></h1>
 </div>
 
-<g:render template="/templates/admin/userSelect"/>
+%{--<g:render template="/templates/admin/userSelect"/>--}%
 
 %{--<g:render template="/templates/visualization/dateSelection"/>--}%
 
@@ -30,8 +32,12 @@
     <label for="slider-range">Age Range: <span id="age" style="border:0; color:#59BEDC; font-weight:bold;"></span></label>
 
     <div id="slider-range"></div>
-    <g:hiddenField name="ageMin" value="${ageMin ?: 30}"/>
-    <g:hiddenField name="ageMax" value="${ageMax ?: 35}"/>
+    <label for="">&nbsp;</label>
+    <g:checkBox value="1" name="male" checked="${user.genderType == GenderType.Male}"/> <label class="label-inline" for="male">Males</label>&nbsp;
+    <g:checkBox value="1" name="female" checked="${user.genderType == GenderType.Female}"/> <label class="label-inline" for="female">Females</label>&nbsp;
+    <g:checkBox value="1" name="you" checked="true"/> <label class="label-inline" for="you">You</label>&nbsp;
+    <g:hiddenField  name="ageMin" id="ageMin" value="${(ageMin ?: num) as Integer}"/>
+    <g:hiddenField name="ageMax" id="ageMax" value="${(ageMax ?: num + 5) as Integer}"/>
   </div>
 
   <div class="span4">
@@ -42,13 +48,13 @@
   </div>
 
   <div class="span2">
-    <label form="submit">Refresh Data:</label>
+    <label form="submit">Refresh Data</label>
     <button onclick="loadScatterPlot()" type="submit" class="btn btn-action">Submit</button>
   </div>
 </div>
 
 
-<div class="row-fluid" id="averages"></div>
+<div class="row-fluid" id="averages" style="height: 500px;"></div>
 
 <script>
   $(function () {
@@ -60,8 +66,11 @@
     jQuery.ajax({
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'runScatter', params:['user.id',params?.user?.id])}',
-                  data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv', ageMin:$("#ageMin").val(), ageMax:$("#ageMax").val(), state:$("#state").val(), r:$("#raceCategoryType").val()},
+                  data:{ 'user.id':'${user?.id}', div:'averagesDiv', ageMin:$("#ageMin").val(), ageMax:$("#ageMax").val(),
+                    state:$("#state").val(), r:$("#raceCategoryType").val(),m:$("#male").is(":checked"),f:$("#female").is(":checked"),y:$("#you").is(":checked")
+                  },
                   beforeSend:function ( xhr ) {
+                    console.log($("#ageMin").val());
                     $('#averages').html('<g:img dir="/images" file="spinner.gif"/> Loading Chart times');
                   },
                   success:function (data, textStatus) {
@@ -79,7 +88,7 @@
                                 range:true,
                                 min:16,
                                 max:85,
-                                values:[ 30, 35 ],
+                                values:[ ${num}, ${num+5} ],
                                 slide:function (event, ui) {
                                   $("#age").text(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
                                   $("#ageMin").val(ui.values[0]);

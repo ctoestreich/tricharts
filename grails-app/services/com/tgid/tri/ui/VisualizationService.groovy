@@ -21,8 +21,7 @@ class VisualizationService {
             race.state == queryState
             race.raceType == queryRaceType
             race.raceCategoryType == queryRaceCategoryType
-            age >= ageMin
-            age <= ageMax
+            age in ageMin..ageMax
         }
 
         def males = []
@@ -33,6 +32,8 @@ class VisualizationService {
         // results = results.list().findAll { it.duration > Duration.standardSeconds(120)}.collect()
 
         results.list().each { RaceResult raceResult ->
+            println raceResult.age
+            println raceResult.result
             if(raceResult?.age && raceResult.result) {
                 def data = ["${raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
                 if(raceResult.user.id == userId) {

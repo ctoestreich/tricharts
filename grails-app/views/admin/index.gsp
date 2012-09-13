@@ -41,7 +41,7 @@
       <div class="span3 well"><h5>Users</h5><redis:memoize key="admin-Users" expire="3600"><span class="stat">${com.tgid.tri.auth.User.count()}</span></redis:memoize> </div>
       <div class="span3 well"><h5>Races</h5><redis:memoize key="admin-Races" expire="3600"><span class="stat">${com.tgid.tri.race.Race.count()}</span></redis:memoize> </div>
       <div class="span3 well"><h5>Patterns</h5><redis:memoize key="admin-Patterns" expire="3600"><span class="stat">${com.tgid.tri.race.CoursePattern.count()}</span></redis:memoize> </div>
-      <div class="span3 well"><h5>Results</h5><redis:memoize key="admin-Results" expire="3600"><span class="stat">${com.tgid.tri.results.RaceResult.count()}</span></redis:memoize> </div>
+      <div class="span3 well"><h5>Results</h5><redis:memoize key="admin-Results" expire="60"><span class="stat">${com.tgid.tri.results.RaceResult.count()}</span></redis:memoize> </div>
     </div>
 
   </div>

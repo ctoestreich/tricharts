@@ -14,7 +14,7 @@
   <h1>Records For ${user.firstName} <small> my best efforts</small></h1>
 </div>
 
-<g:render template="/templates/admin/userSelect"/>
+%{--<g:render template="/templates/admin/userSelect"/>--}%
 
 <g:render template="/templates/visualization/chartSelection"/>
 

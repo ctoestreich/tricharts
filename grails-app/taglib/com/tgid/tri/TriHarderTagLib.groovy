@@ -12,6 +12,7 @@ import org.joda.time.format.PeriodFormatter
 import static org.joda.time.DurationFieldType.months
 import static org.joda.time.DurationFieldType.years
 import com.tgid.tri.race.Pace
+import com.tgid.tri.race.RaceType
 
 class TriHarderTagLib {
 
@@ -97,6 +98,14 @@ class TriHarderTagLib {
         def formatter = PeriodFormat.default
 
         out << formatter.print(value)
+    }
+
+    def chartButtons = {attrs->
+        def title = attrs.title ?: ''
+        def raceTypes = attrs.raceTypes ?: []
+        def action = attrs.action ?: ''
+        def controller = attrs.controller ?: 'visualization'
+        out << render(template: '/templates/site/chartButtons', params: params, model: [controller: controller, action: action, raceTypes: raceTypes, title: title])
     }
 
     private PeriodType getPeriodType(String fields, PeriodType defaultPeriodType) {

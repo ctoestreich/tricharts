@@ -471,14 +471,21 @@ class VisualizationController extends BaseController {
     def runScatter() {
         User user = requestedUser
         def userId = user.id
-        def ageMin = params.int('ageMin') ?: 30
-        def ageMax = params.int('ageMax') ?: 35
+        def ageMin = params.int("ageMin") ?: 30
+        def ageMax = params.int("ageMax") ?: 35
         def div = params.div
+        def showMale = params.boolean('m')
+        def showFemale = params.boolean('f')
+        def showYou = params.boolean('y')
         def state = State.findByAbbrev(params?.state ?: 'MN')
         def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
         def results = visualizationService.mapRunningScatter(userId, ageMin, ageMax, state, raceCategoryType)
 
-        render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, you: results.you, males: results.males, females: results.females, user: user, raceCategoryType: raceCategoryType]
+        render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, you: results.you, males: results.males, females: results.females,
+                user: user, raceCategoryType: raceCategoryType,
+                showMale: showMale,
+                showFemale: showFemale,
+                showYou: showYou]
     }
 
     def mileAverageByState() {

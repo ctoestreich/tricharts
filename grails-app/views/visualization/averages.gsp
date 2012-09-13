@@ -14,7 +14,7 @@
   <h1>Averages For ${user.firstName} <small>above average</small></h1>
 </div>
 
-<g:render template="/templates/admin/userSelect"/>
+%{--<g:render template="/templates/admin/userSelect"/>--}%
 
 %{--<g:render template="/templates/visualization/dateSelection"/>--}%
 

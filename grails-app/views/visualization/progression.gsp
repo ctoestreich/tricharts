@@ -14,7 +14,7 @@
   <h1>Trending For ${user.firstName} <small>getting faster</small></h1>
 </div>
 
-<g:render template="/templates/admin/userSelect" />
+%{--<g:render template="/templates/admin/userSelect" />--}%
 
 <g:render template="/templates/visualization/chartSelection" />
 
