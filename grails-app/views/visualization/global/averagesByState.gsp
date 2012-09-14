@@ -4,7 +4,7 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>Averages</title>
-  <r:require modules="dashboard,results, progression, widgets"/>
+  <r:require modules="dashboard,results, charting, widgets"/>
   <gvisualization:apiImport/>
   <style>
     /*.ui-autocomplete-input {width: 250px !important;}*/
@@ -15,11 +15,11 @@
 
 <body>
 
-<g:set var="num" value="${Math.floor((new Date().year - user?.dob?.year)/5)*5}" />
+<g:set var="num" value="${Math.floor((new Date().year - user?.dob?.year) / 5) * 5}"/>
 
-<div class="page-header">
-  <h1>Running Averages By State <small>dots...</small></h1>
-</div>
+%{--<div class="page-header">--}%
+  %{--<h1>Mile Pace By State <small>dots...</small></h1>--}%
+%{--</div>--}%
 
 %{--<g:render template="/templates/admin/userSelect"/>--}%
 
@@ -34,10 +34,10 @@
     <div id="slider-range"></div>
     <label for="">&nbsp;</label>
     <g:checkBox value="1" name="male" checked="${user.genderType == GenderType.Male}"/> <label class="label-inline" for="male">Males</label>&nbsp;
-    <g:checkBox value="1" name="female" checked="${user.genderType == GenderType.Female}"/> <label class="label-inline" for="female">Females</label>&nbsp;
-    <g:checkBox value="1" name="you" checked="true"/> <label class="label-inline" for="you">You</label>&nbsp;
-    <g:hiddenField  name="ageMin" id="ageMin" value="${(ageMin ?: num) as Integer}"/>
-    <g:hiddenField name="ageMax" id="ageMax" value="${(ageMax ?: num + 5) as Integer}"/>
+  <g:checkBox value="1" name="female" checked="${user.genderType == GenderType.Female}"/> <label class="label-inline" for="female">Females</label>&nbsp;
+  <g:checkBox value="1" name="you" checked="true"/> <label class="label-inline" for="you">You</label>&nbsp;
+  <g:hiddenField name="ageMin" id="ageMin" value="${(ageMin ?: num) as Integer}"/>
+  <g:hiddenField name="ageMax" id="ageMax" value="${(ageMax ?: num + 5) as Integer}"/>
   </div>
 
   <div class="span4">
@@ -67,9 +67,9 @@
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'runScatter', params:['user.id',params?.user?.id])}',
                   data:{ 'user.id':'${user?.id}', div:'averagesDiv', ageMin:$("#ageMin").val(), ageMax:$("#ageMax").val(),
-                    state:$("#state").val(), r:$("#raceCategoryType").val(),m:$("#male").is(":checked"),f:$("#female").is(":checked"),y:$("#you").is(":checked")
+                    state:$("#state").val(), t: '${raceType}',r:$("#raceCategoryType").val(), m:$("#male").is(":checked"), f:$("#female").is(":checked"), y:$("#you").is(":checked")
                   },
-                  beforeSend:function ( xhr ) {
+                  beforeSend:function (xhr) {
                     console.log($("#ageMin").val());
                     $('#averages').html('<g:img dir="/images" file="spinner.gif"/> Loading Chart times');
                   },

@@ -48,7 +48,7 @@
                                  },
                                  yAxis:{
                                    type:'datetime',
-                                   title:{text:'Running Pace'}
+                                   title:{text:'Race Time'}
 
                                  },
                                  tooltip:{

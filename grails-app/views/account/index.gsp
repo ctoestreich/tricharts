@@ -18,11 +18,11 @@
   <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 </g:if>
 <div class="row-fluid">
-  <div class="span4 well">
+  <div class="span3 well">
    <cache:render template="/templates/account/accountNav" key="${request.forwardURI}" />
   </div>
 
-  <div class="span8">
+  <div class="span9">
     Your account information is below.  You may update your account at any time.  Your linked accounts will currently not be affected by any changes you make below.
     <p>&nbsp;</p>
     <g:form class="form-horizontal" controller="account" action="index">

@@ -26,7 +26,8 @@
           </sec:ifNotLoggedIn>
           <sec:ifLoggedIn>
             <li><a <%=request.forwardURI == "${createLink(controller: 'dashboard', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'dashboard', action: 'index', params: paramMap)}">Dashboard</a></li>
-            <li><a <%=request.forwardURI.contains('visualization') ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'visualization', action: 'progression', params: paramMap)}">Charts</a></li>
+            <li><a <%=request.forwardURI == "${createLink(controller: 'results', action: 'index')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'results', action: 'index', params: paramMap)}">My Results</a></li>
+            <li><a <%=request.forwardURI.contains('visualization') ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'visualization', action: 'index', params: paramMap)}">Charts</a></li>
             %{--<li class="dropdown">--}%
               %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>--}%
               %{--<ul class="dropdown-menu">--}%
@@ -39,17 +40,17 @@
                 %{--<li><a href="${createLink(controller: 'visualization', action: 'prs', params: ['raceType': RaceType.Triathlon] << paramMap)}">Triathlon PRs</a></li>--}%
               %{--</ul>--}%
             %{--</li>--}%
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Results <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon] << paramMap)}">Add Triathlon Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running] << paramMap)}">Add Running Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking] << paramMap)}">Add Biking Result</a></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming] << paramMap)}">Add Swimming Result</a></li>
-                <li><hr></li>
-                <li><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race Course</a></li>
-              </ul>
-            </li>
+            %{--<li class="dropdown">--}%
+              %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Results <b class="caret"></b></a>--}%
+              %{--<ul class="dropdown-menu">--}%
+                %{--<li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Triathlon] << paramMap)}">Add Triathlon Result</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Running] << paramMap)}">Add Running Result</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Biking] << paramMap)}">Add Biking Result</a></li>--}%
+                %{--<li><a href="${createLink(controller: 'dashboard', action: 'createResult', params: ['raceType': RaceType.Swimming] << paramMap)}">Add Swimming Result</a></li>--}%
+                %{--<li><hr></li>--}%
+                %{--<li><a href="${createLink(controller: 'dashboard', action: 'addRace')}">Add Race Course</a></li>--}%
+              %{--</ul>--}%
+            %{--</li>--}%
           </sec:ifLoggedIn>
           <sec:ifAnyGranted roles="ROLE_ADMIN">
             <li><a <%=request.forwardURI == "${createLink(controller: 'admin')}" ? 'class="btn disabled"' : ''%> href="${createLink(controller: 'admin', action: 'index')}">Site Admin</a></li>

@@ -21,6 +21,12 @@ class VisualizationController extends BaseController {
     def paceService
     def visualizationService
 
+    def index(){
+        User user = requestedUser
+
+        render view: 'index', model: [user: user]
+    }
+
     def prs() {
         User user = requestedUser
 
@@ -479,20 +485,30 @@ class VisualizationController extends BaseController {
         def showYou = params.boolean('y')
         def state = State.findByAbbrev(params?.state ?: 'MN')
         def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
-        def results = visualizationService.mapRunningScatter(userId, ageMin, ageMax, state, raceCategoryType)
+        def raceType = RaceType.getRaceType(params.t) ?: RaceType.Running
+        def results = visualizationService.mapRunningScatter(userId, ageMin, ageMax, state, raceCategoryType, raceType)
 
         render template: "/templates/charts/runScatter", div: "scatter", model: [div: div, state: state, you: results.you, males: results.males, females: results.females,
-                user: user, raceCategoryType: raceCategoryType,
+                user: user,
+                raceCategoryType: raceCategoryType,
                 showMale: showMale,
                 showFemale: showFemale,
                 showYou: showYou]
     }
 
-    def mileAverageByState() {
+    def runMileAverageByState() {
         User user = requestedUser
         def races = getRaceCategoriesByType('Running')
         def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.OneMile
 
-        render view: 'mileAverageByState', model: [user: user, races: races, raceCategoryType: raceCategoryType]
+        render view: 'global/averagesByState', model: [raceType: RaceType.Running, user: user, races: races, raceCategoryType: raceCategoryType]
+    }
+
+    def triMileAverageByState() {
+        User user = requestedUser
+        def races = getRaceCategoriesByType('Triathlon')
+        def raceCategoryType = RaceCategoryType?.getRaceCategoryType(params.r) ?: RaceCategoryType.Sprint
+
+        render view: 'global/averagesByState', model: [raceType: RaceType.Triathlon, user: user, races: races, raceCategoryType: raceCategoryType]
     }
 }

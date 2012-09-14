@@ -4,14 +4,14 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>User Dashboard</title>
-  <r:require modules="dashboard,results, widgets"/>
+  <r:require modules="dashboard, results, widgets, charting"/>
   <gvisualization:apiImport/>
 </head>
 
 <body>
 
 <div class="page-header">
-  <h1>Results For ${user.firstName} <small> you are fast</small></h1>
+  <h1>Results For ${user.firstName} <small>you are fast</small></h1>
 </div>
 
 <g:if test="${flash.message}">
@@ -32,64 +32,168 @@
 
 </script>
 
-<div class="row">
-
+<div class="row-fluid">
+  <div class="span4 well"><div id="raceTypes" name="raceTypes" style="height: 300px"></div></div>
+  <div class="span4 well"><div id="raceTypes2012" name="raceTypes2012" style="height: 300px"></div></div>
+  <div class="span4 well"><div id="raceTypeYearly" name="raceTypeYearly" style="height: 300px"></div></div>
 </div>
 
-<div class="row well_clear">
-  %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Triathlon']"/>
+<br />
 
+
+
+<div class="row-fluid well_clear">
+  <div class="row-fluid"><h3>Triathlon Records</h3></div>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
-  <div id="results-triathlon" class="accordion">
-    <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
-  </div>
 </div>
 
 <br/>
 
-<div class="row well_clear">
-  %{--<div class="span12">--}%
-  <g:render template="/templates/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
-
+<div class="row-fluid well_clear">
+  <div class="row-fluid"><h3>Running Records</h3></div>
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
-
-  <div id="results-run" class="accordion">
-    <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
-  </div>
-  %{--</div>--}%
 </div>
 
-<div class="modal hide" id="deleteConfirmation">
-  <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+<r:script>
+  $(function () {
+    var racesCompletedChart;
+    var racesCompleted2012Chart;
+    var racesCompletedYearlyChart;
 
-    <h3>Delete Results</h3></div>
+    $(document).ready(function () {
+      var options = {
+        chart:{
+          renderTo:'raceTypes',
+          plotBackgroundColor:null,
+          plotBorderWidth:null,
+          plotShadow:true
+        },
+        credits:{
+          enabled:false
+        },
+        title:{
+          text:'Race Types'
+        },
+        tooltip:{
+          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          percentageDecimals:1
+        },
+        exporting:{
+          enabled:false
+        },
+        plotOptions:{
+          pie:{
+            allowPointSelect:true,
+            cursor:'pointer',
+            dataLabels:{
+              enabled:false
+            },
+            showInLegend:true
+          }
+        }
+      };
 
-  <div class="modal-body"><p>Are you really sure you want to delete your results for this race?</p></div>
+      var options2 = {
+        chart:{
+          renderTo:'raceTypes2012',
+          plotBackgroundColor:null,
+          plotBorderWidth:null,
+          plotShadow:true
+        },
+        credits:{
+          enabled:false
+        },
+        title:{
+          text:'Race Types ${new java.util.Date().year + 1900}'
+        },
+        tooltip:{
+          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          percentageDecimals:1
+        },
+        exporting:{
+          enabled:false
+        },
+        plotOptions:{
+          pie:{
+            allowPointSelect:true,
+            cursor:'pointer',
+            dataLabels:{
+              enabled:false
+            },
+            showInLegend:true
+          }
+        }
+      };
 
-  <div class="modal-footer"><a href="javascript:void(0);" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
-</div>
+      var options3 = {
+        chart:{
+          renderTo:'raceTypeYearly',
+          plotBackgroundColor:null,
+          plotBorderWidth:null,
+          plotShadow:true
+        },
+        credits:{
+          enabled:false
+        },
+        title:{
+          text:'Races Per Year'
+        },
+        tooltip:{
+          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          percentageDecimals:1
+        },
+        exporting:{
+          enabled:false
+        },
+        plotOptions:{
+          pie:{
+            allowPointSelect:true,
+            cursor:'pointer',
+            dataLabels:{
+              enabled:false
+            },
+            showInLegend:true
+          }
+        }
+      };
 
-<g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="dashboard" action="modifyRaceResults">
-  <g:hiddenField name="raceResultId" value=""/>
-  <g:hiddenField name="user.id" value="${user?.id}"/>
-  <g:hiddenField name="raceResultEdit" value="false"/>
-</g:form>
-<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="dashboard" action="deleteRaceResult">
-  <g:hiddenField name="raceResultDeleteId" value=""/>
-  <g:hiddenField name="user.id" value="${user?.id}"/>
-</g:form>
+      jQuery.ajax({
+                    type:'POST',
+                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
+                    data:{ 'user.id':'${params?.user?.id}'},
+                    success:function (data, textStatus) {
+                      console.log(data);
+                      options.series = data;
+                      racesCompletedChart = new Highcharts.Chart(options);
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    }});
+
+      jQuery.ajax({
+                    type:'POST',
+                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
+                    data:{ 'user.id':'${params?.user?.id}', year: ${new java.util.Date().year +1900}},
+                    success:function (data, textStatus) {
+                      options2.series = data;
+                      racesCompleted2012Chart = new Highcharts.Chart(options2);
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    }});
+      jQuery.ajax({
+                    type:'POST',
+                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
+                    data:{ 'user.id':'${params?.user?.id}', yearly: 'true'},
+                    success:function (data, textStatus) {
+                      options3.series = data;
+                      racesCompletedYearlyChart = new Highcharts.Chart(options3);
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    }});
+    });
+
+  });
+</r:script>
 
 </body>
 </html>

@@ -14,15 +14,40 @@ import org.joda.time.Duration
 class VisualizationService {
 
     @Cacheable("chartCache")
-    def mapRunningScatter(Long userId, Integer ageMin, Integer ageMax, State state, RaceCategoryType queryRaceCategoryType = RaceCategoryType.OneMile) {
-        def queryRaceType = RaceType.Running
+    def mapRunningScatter(Long userId, Integer ageMin, Integer ageMax, State state, RaceCategoryType queryRaceCategoryType = RaceCategoryType.OneMile, RaceType queryRaceType = RaceType.Running) {
         def queryState = state
+        def querySegmentType = SegmentType.Run
+
+//        def c = SegmentResult.createCriteria()
+//        def results = c.list {
+//            raceResult {
+//                race {
+//                    eq('raceType', queryRaceType)
+//                    eq('raceCategoryType', queryRaceCategoryType)
+//                }
+//                between('age', ageMin, ageMax)
+//            }
+//            raceSegment {
+//                segment {
+//                    eq('segmentType', querySegmentType)
+//                }
+//            }
+//        }
+
         def results = RaceResult.where {
-            race.state == queryState
             race.raceType == queryRaceType
             race.raceCategoryType == queryRaceCategoryType
+            race.state == queryState
             age in ageMin..ageMax
         }
+
+//        def results = SegmentResult.where {
+//            raceResult.race.state == queryState
+//            raceResult.race.raceType == queryRaceType
+//            raceResult.race.raceCategoryType == queryRaceCategoryType
+//            raceSegment?.segment?.segmentType == querySegmentType
+//            raceResult.age in ageMin..ageMax
+//        }
 
         def males = []
         def females = []
@@ -32,21 +57,22 @@ class VisualizationService {
         // results = results.list().findAll { it.duration > Duration.standardSeconds(120)}.collect()
 
         results.list().each { RaceResult raceResult ->
-            println raceResult.age
-            println raceResult.result
-            if(raceResult?.age && raceResult.result) {
-                def data = ["${raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(raceResult.result.pace?.duration?.toPeriod())}')-timeToSubtract"]
-                if(raceResult.user.id == userId) {
-                    you << data
-                } else {
-                    switch(raceResult.genderType) {
-                        case GenderType.Female:
-                            females << data
-                            break
-                        case GenderType.Male:
-                        default:
-                            males << data
-                            break
+            def segments = raceResult.segmentResults.findAll {it.segmentType == querySegmentType}
+            segments.each { SegmentResult segmentResult ->
+                if(raceResult?.age && segmentResult.duration?.isLongerThan(Duration.standardSeconds(120))) {
+                    def data = ["${raceResult.age}", "Date.parse('1-1-1 ${ JodaTimeHelper.getPeriodFormat(true, true, true).print(segmentResult.pace?.duration?.toPeriod())}')-timeToSubtract"]
+                    if(raceResult.user.id == userId) {
+                        you << data
+                    } else {
+                        switch(raceResult.genderType) {
+                            case GenderType.Female:
+                                females << data
+                                break
+                            case GenderType.Male:
+                            default:
+                                males << data
+                                break
+                        }
                     }
                 }
             }

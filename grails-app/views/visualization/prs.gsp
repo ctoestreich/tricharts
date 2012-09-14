@@ -4,15 +4,15 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>Records</title>
-  <r:require modules="dashboard,results, progression,widgets"/>
+  <r:require modules="dashboard,results, charting,widgets"/>
   <gvisualization:apiImport/>
 </head>
 
 <body>
 
-<div class="page-header">
-  <h1>Records For ${user.firstName} <small> my best efforts</small></h1>
-</div>
+%{--<div class="page-header">--}%
+  %{--<h1>Records For ${user.firstName} <small> my best efforts</small></h1>--}%
+%{--</div>--}%
 
 %{--<g:render template="/templates/admin/userSelect"/>--}%
 

@@ -33,7 +33,7 @@
   <g:layoutBody/>
 
 </div>
-<cache:render template="/templates/site/footer"/>
+<cache:render template="/templates/site/footer" key="${request.forwardURI}"/>
 <r:script>
   $(function () {
     $('.collapse').collapse({

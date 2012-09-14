@@ -41,7 +41,7 @@ modules = {
         resource url: 'js/highcharts/modules/exporting.js'
     }
 
-    progression {
+    charting {
         dependsOn 'highcharts'
         resource url: 'js/highcharts/highchart.theme.js'
     }

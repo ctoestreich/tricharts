@@ -4,15 +4,15 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>Averages</title>
-  <r:require modules="dashboard,results, progression, widgets"/>
+  <r:require modules="dashboard,results, charting, widgets"/>
   <gvisualization:apiImport/>
 </head>
 
 <body>
 
-<div class="page-header">
-  <h1>Averages For ${user.firstName} <small>above average</small></h1>
-</div>
+%{--<div class="page-header">--}%
+  %{--<h1>Averages For ${user.firstName} <small>above average</small></h1>--}%
+%{--</div>--}%
 
 %{--<g:render template="/templates/admin/userSelect"/>--}%
 

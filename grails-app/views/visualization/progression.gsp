@@ -4,15 +4,15 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>Trrending</title>
-  <r:require modules="dashboard,results, progression,widgets"/>
+  <r:require modules="dashboard,results, charting,widgets"/>
   <gvisualization:apiImport/>
 </head>
 
 <body>
 
-<div class="page-header">
-  <h1>Trending For ${user.firstName} <small>getting faster</small></h1>
-</div>
+%{--<div class="page-header">--}%
+  %{--<h1>Trending For ${user.firstName} <small>getting faster</small></h1>--}%
+%{--</div>--}%
 
 %{--<g:render template="/templates/admin/userSelect" />--}%
 
