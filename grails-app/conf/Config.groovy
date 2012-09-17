@@ -211,6 +211,9 @@ cache.headers.presets = [
 
 jobs {
     enabled = true
+    athlinksUberImportJesqueJob {
+        enabled = false
+    }
     athlinksUserResultsImportJob {
         enabled = true
     }
@@ -303,7 +306,7 @@ grails {
     jesque {
         workers {
             athlinksGenericImportWorkerPool {
-                workers = 1 //defaults to 1
+                workers = 3 //defaults to 1
                 queueNames = 'athlinksGenericImport'
                 jobTypes = [
                         (AthlinksUserResultsImportJesqueJob.simpleName): AthlinksUserResultsImportJesqueJob,

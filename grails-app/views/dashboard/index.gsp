@@ -39,19 +39,17 @@
 </div>
 
 <br />
-
-
+<hr>
 
 <div class="row-fluid well_clear">
-  <div class="row-fluid"><h3>Triathlon Records</h3></div>
+  <div class="row-fluid"><h4>Triathlon Records</h4></div>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
-
 </div>
 
 <br/>
 
 <div class="row-fluid well_clear">
-  <div class="row-fluid"><h3>Running Records</h3></div>
+  <div class="row-fluid"><h4>Running Records</h4></div>
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 </div>
 
@@ -76,7 +74,7 @@
           text:'Race Types'
         },
         tooltip:{
-          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          pointFormat:'{series.name} - {point.y}: <b>{point.percentage}%</b>',
           percentageDecimals:1
         },
         exporting:{
@@ -108,7 +106,7 @@
           text:'Race Types ${new java.util.Date().year + 1900}'
         },
         tooltip:{
-          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          pointFormat:'{series.name} - {point.y}: <b>{point.percentage}%</b>',
           percentageDecimals:1
         },
         exporting:{
@@ -140,7 +138,7 @@
           text:'Races Per Year'
         },
         tooltip:{
-          pointFormat:'{series.name}: <b>{point.percentage}%</b>',
+          pointFormat:'{series.name} - {point.y}: <b>{point.percentage}%</b>',
           percentageDecimals:1
         },
         exporting:{
