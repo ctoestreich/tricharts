@@ -11,7 +11,7 @@
 <g:each in="${keys}" var="key">
     <div class="span2"><div id="${key.key}" class="personalBestDiv">
         <div class="btn-group-wrap">
-            <h3><a href="javascript:void(0);" class="tooltips" rel="popover" title="${data?.get("'${key.key}'")?.raceResult?.race}"
+            <h3><a href="${createLink(controller:'results', action:'index')}" class="tooltips" rel="popover" title="${data?.get("'${key.key}'")?.raceResult?.race}"
                    data-content="">${data?.get("'${key.key}'")?.pace}&nbsp;</a></h3>
             <h5>${key.value}</h5>
         </div>

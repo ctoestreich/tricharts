@@ -38,15 +38,10 @@
   <div class="span4 well"><div id="raceTypeYearly" name="raceTypeYearly" style="height: 300px"></div></div>
 </div>
 
-<br />
-<hr>
-
 <div class="row-fluid well_clear">
   <div class="row-fluid"><h4>Triathlon Records</h4></div>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 </div>
-
-<br/>
 
 <div class="row-fluid well_clear">
   <div class="row-fluid"><h4>Running Records</h4></div>

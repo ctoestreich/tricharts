@@ -109,7 +109,7 @@ td.clsResultBL {
 
 .clsResultMed, .clsResultMedMutual, .clsResultMedMutualExtended, .clsResultMedrv, .clsResultMedAlt, .clsResultMedActive {
     color: #565D6C;
-    font-size: .9em;
+    font-size: 1em;
     font-weight: bold;
 }
 
