@@ -22,9 +22,8 @@
   <div class="row-fluid">
 
     <div class="span3">
-      <p>If you have any questions of comments feel free to use the form to contact us.</p>
+      <p>If you have any questions of comments feel free to use the form to contact me.</p>
     </div>
-
 
     <div class='span9'>
 

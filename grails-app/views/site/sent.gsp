@@ -15,7 +15,7 @@
 </div>
 
 <div class="row well_clear">
-  <p>Thank you for contact us.  We will do our best to answer you in a timely manner!
+  <p>Thank you for contact me.  I will do my best to answer you in a timely manner!
     <br><br>
     &nbsp;&nbsp;&nbsp;Christian
   </p>

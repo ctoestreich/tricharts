@@ -18,31 +18,30 @@
   <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 </g:if>
 
-<div class="row well_clear">
-  <div class="row-fluid">
-    <h3>Tricharts.com</h3>
+<div class="row-fluid">
+  <h3>Tricharts.com</h3>
 
-    <p>Christian started this site after he had been keeping results in a spreadsheet for many years.  He took his technical talents combined with his love for racing and created
-    this site to help himself and others create meaningful statistics for themselves to be able to track year to year progress.</p>
+  <p>I started development on this site after I had been keeping results in a spreadsheet for many years and wanted a more automated and better tool to view and graph my progress.  My love for racing and ability to give back to the athletic communities through my technical skills prompted me to make this site a useful tool for others to enjoy as well.</p>
 
-    <p>There were some sites that already provide race results, but he took it a step further in allowing athletes to correct known mistakes and see graphical representations of their year to year progression.</p>
+  <p>While there are sites that already provide race results, I took it this record keeping a step further in allowing athletes to correct known mistakes with results, add their own results and to see graphical representations of their year to year progression, averages and placements.</p>
 
-    <p>We will continually be adding more graphs and features as time goes on.  Make sure to check back for more details!</p>
+  <p>I am continually adding more graphs and features all the time.  Make sure to check back often!</p>
 
-    <p>&nbsp;</p>
-    <h3>Donations</h3>
+  <p>&nbsp;</p>
 
-    <p>This work is currently being done pro bono, if you wish to contribute to the cost in hosting the site and development feel free to donate at the link below!
+  <h3>Donations</h3>
 
-    &nbsp;<br /><br />
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-      <input type="hidden" name="cmd" value="_s-xclick">
-      <input type="hidden" name="hosted_button_id" value="WSJ4YPZN378PS">
-      <input style="border:0px;" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-      <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-    </form></p>
+  <p>This work is currently being done pro bono. if you wish to contribute to the cost in hosting the site and development time, feel free to donate any amount at the link below!
 
-  </div>
+  &nbsp;<br/><br/>
+
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="WSJ4YPZN378PS">
+    <input style="border:0px;" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form></p>
+
 </div>
 </body>
 </html>
