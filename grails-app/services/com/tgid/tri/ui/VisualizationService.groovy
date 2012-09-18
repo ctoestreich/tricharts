@@ -168,6 +168,6 @@ class VisualizationService {
             race.raceType == queryRaceType
             race.raceCategoryType == queryRaceCategoryType
         }
-        results?.list()
+        results?.list()?.sort{it.date}
     }
 }

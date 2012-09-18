@@ -1,6 +1,7 @@
 package com.tgid.tri
 
 import com.tgid.tri.common.JodaTimeHelper
+import com.tgid.tri.race.Pace
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.joda.time.Duration
 import org.joda.time.DurationFieldType
@@ -11,8 +12,6 @@ import org.joda.time.format.PeriodFormatter
 
 import static org.joda.time.DurationFieldType.months
 import static org.joda.time.DurationFieldType.years
-import com.tgid.tri.race.Pace
-import com.tgid.tri.race.RaceType
 
 class TriHarderTagLib {
 
@@ -22,7 +21,7 @@ class TriHarderTagLib {
         Pace pace = attrs?.pace ?: null
         def showAt = attrs.containsKey('showAt') ? attrs.showAt : true
 
-        if(pace && !pace.toString()?.trim()?.equals('')){
+        if(pace && !pace.toString()?.trim()?.equals('')) {
             out << "${showAt ? ' @ ' : ' '}$pace"
         }
     }
@@ -32,14 +31,17 @@ class TriHarderTagLib {
         def overall = attrs.overall
         def percentOnly = attrs?.percentOnly ?: false
 
-        if(place){
-            def value = Math.round((place / (overall ?: 1)) * 100 as float)
-
-            def red = (188 * (value / 100))
-            def green = 188 - red
-            out << "<font style=\"color: rgb(${red.toInteger()}, ${green.toInteger()}, 0);\">"
-            out << ((percentOnly) ? "${value}%" : "${place} (${value}%)")
-            out << "</font>"
+        if(place) {
+            if(overall) {
+                def value = Math.round((place / overall) * 100 as float)
+                def red = (188 * (value / 100))
+                def green = 188 - red
+                out << "<font style=\"color: rgb(${red.toInteger()}, ${green.toInteger()}, 0);\">"
+                out << ((percentOnly) ? "${value}%" : "${place} (${value}%)")
+                out << "</font>"
+            } else {
+                out << "${place}"
+            }
         } else {
             out << "N/A"
         }
@@ -100,7 +102,7 @@ class TriHarderTagLib {
         out << formatter.print(value)
     }
 
-    def chartButtons = {attrs->
+    def chartButtons = {attrs ->
         def title = attrs.title ?: ''
         def raceTypes = attrs.raceTypes ?: []
         def action = attrs.action ?: ''

@@ -18,5 +18,28 @@
 
 <g:render template="/templates/visualization/chartSelection"/>
 
+<div class="row-fluid well">
+  <div>
+    <h3>Sample Content</h3>
+    <br>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span6"><g:img dir="images/home" file="chart.png"/></div>
+
+    <div class="span6"><g:img dir="images/home" file="chart2.png"/></div>
+  </div>
+
+  <div class="row-fluid">
+    &nbsp;
+  </div>
+
+  <div class="row-fluid">
+    <div class="span6"><g:img dir="images/home" file="chart3.png"/></div>
+
+    <div class="span6"><g:img dir="images/home" file="chart4.png"/></div>
+  </div>
+</div>
+
 </body>
 </html>

@@ -6,7 +6,7 @@
     %{--<div class="span12">--}%
     <g:render template="/templates/dashboardHeader" model="[sport: year + 1901 + ' Personal Records', user: params?.user, showButtons: 'no']"/>
 
-    <div id="results-run" class="accordion">
+    <div id="results-${year}" class="accordion">
       <g:each in="${types}" var="type">
         <h5>${type}</h5>
         <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
@@ -16,15 +16,15 @@
             <div class="accordion-group">
               <div class="accordion-heading">
                 <div class="row-fluid">
-                  <div class="span4 clsResultBig"><a class="accordion-toggle" data-toggle="collapse" href="#result-collapse-${result?.id}">${result?.raceResult?.race}</a></div>
+                  <div class="span4 clsResultMed"><a class="accordion-toggle" data-toggle="collapse" href="#result-collapse-${result?.id}">${result?.raceResult?.race}</a></div>
 
-                  <div class="span2 clsResultBig"><span class="accordion-toggle">${segmentType}</span></div>
+                  <div class="span2 clsResultMed"><span class="accordion-toggle">${segmentType}</span></div>
 
-                  <div class="span2 clsResultBig"><span class="accordion-toggle">${result?.raceResult?.date?.format("M/dd/yyyy")}</span></div>
+                  <div class="span2 clsResultMed"><span class="accordion-toggle">${result?.raceResult?.date?.format("M/dd/yyyy")}</span></div>
 
-                  <div class="span2 clsResultBig"><span class="accordion-toggle">${result?.placeAgeGroup}/${result?.placeGender ?: '?'}/${result?.placeOverall}</span></div>
+                  <div class="span2 clsResultMed"><span class="accordion-toggle">${result?.placeAgeGroup}/${result?.placeGender ?: '?'}/${result?.placeOverall}</span></div>
 
-                  <div class="span2 clsResultBig"><span class="accordion-toggle"><tri:formatDuration duration="${result?.duration}"/> <tri:displayPace pace="${result?.pace}"/></span></div>
+                  <div class="span2 clsResultMed"><span class="accordion-toggle"><tri:formatDuration duration="${result?.duration}"/> <tri:displayPace pace="${result?.pace}"/></span></div>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
 <script type="text/javascript">
   $(function () {
     $('.collapse').collapse({
-                              toggle: false
+                              toggle:false
                             });
     $('.autopop').popover();
   });

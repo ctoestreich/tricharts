@@ -116,7 +116,7 @@ class BaseChartingController extends BaseController {
         def totalRaces = []
         def dataByCategory = new HashMap<String, List>()
 
-        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory)
+        mapPlacementSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, segmentType)
 
         //def sortedData = data.keySet().toList().sort { a, b -> a <=> b}.collect()
 
@@ -134,7 +134,7 @@ class BaseChartingController extends BaseController {
         def totalRaces = []
         def dataByCategory = new HashMap<String, List>()
 
-        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory)
+        mapPlacementSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, SegmentType.Run)
 
         //def sortedData = dataByCategory.keySet().toList().sort { a, b -> a <=> b}.collect()
 
@@ -152,7 +152,7 @@ class BaseChartingController extends BaseController {
         def totalRaces = []
         def dataByCategory = new HashMap<String, List>()
 
-        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory)
+        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, segmentType)
 
         def results = createAveragesPaceChartData(dataByCategory, dataByCategoryByYear, races, segmentType)
 
@@ -162,6 +162,30 @@ class BaseChartingController extends BaseController {
         } else if(segmentType == SegmentType.Bike) {
             render template: "/templates/charts/bikeAverages",
                    model: [title: 'Average Bike Speed Per Year', height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+        }
+    }
+
+    protected void mapRaceResults(RaceResult result, HashMap<String, HashMap<Integer, List>> data, String key, HashMap<String, List> dataByCategory) {
+        if(result) {
+            if(dataByCategory.containsKey(key)) {
+                dataByCategory.get(key) << result
+            } else {
+                dataByCategory.put(key, [])
+                dataByCategory.get(key) << result
+            }
+
+            def childKey = result.race.date.year + 1900
+            if(data.containsKey(key)) {
+                def childMap = data.get(key)
+                if(childMap.containsKey(childKey)) {
+                    childMap.get(childKey) << result
+                } else {
+                    childMap.put(childKey, [result])
+                }
+            } else {
+                data.put(key, [:])
+                data.get(key).put(childKey, [result])
+            }
         }
     }
 
@@ -262,7 +286,7 @@ class BaseChartingController extends BaseController {
         def totalRaces = []
         def dataByCategory = new HashMap<String, List>()
 
-        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory)
+        mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, SegmentType.Run)
 
         def results = createAveragesPaceChartData(dataByCategory, dataByCategoryByYear, races, SegmentType.Run)
 
@@ -270,7 +294,7 @@ class BaseChartingController extends BaseController {
                model: [height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
     }
 
-    private void mapAverageSegmentResults(List<RaceCategoryType> races, categories, long userId, RaceType queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory) {
+    private void mapAverageSegmentResults(List<RaceCategoryType> races, categories, long userId, RaceType queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, SegmentType segmentType) {
         races.each { raceCategoryType ->
             categories << "'${raceCategoryType.raceCategoryType}'"
             def results = visualizationService.getRaceResults(userId, queryRaceType, raceCategoryType)
@@ -281,8 +305,28 @@ class BaseChartingController extends BaseController {
 
             sortedResults.each { result ->
                 def key = raceCategoryType.raceCategoryType
-                def segmentResult = result?.segmentResults?.toList()?.get(0)
+                def segmentResult = result?.segmentResults?.find{it.segmentType == segmentType}
                 mapSegmentResults(segmentResult, dataByCategoryByYear, key, result, dataByCategory)
+            }
+        }
+    }
+
+    private void mapPlacementSegmentResults(List<RaceCategoryType> races, categories, long userId, RaceType queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, SegmentType segmentType) {
+        races.each { raceCategoryType ->
+            categories << "'${raceCategoryType.raceCategoryType}'"
+            def results = visualizationService.getRaceResults(userId, queryRaceType, raceCategoryType)
+            def key = raceCategoryType.raceCategoryType
+            def sortedResults = results?.sort {it?.date}
+
+            totalRaces << "{name: '${raceCategoryType.raceCategoryType}', y: ${sortedResults?.size() ?: 0}}"
+
+            sortedResults.each { result ->
+                if(!segmentType) {
+                    mapRaceResults(result, dataByCategoryByYear, key, dataByCategory)
+                } else {
+                    def segmentResult = result?.segmentResults?.find {it.segmentType == segmentType}
+                    mapSegmentResults(segmentResult, dataByCategoryByYear, key, result, dataByCategory)
+                }
             }
         }
     }
@@ -303,8 +347,8 @@ class BaseChartingController extends BaseController {
             place += segmentPlace
             total += (segmentPlace > 0) ? 1 : 0
         }
-        println "${races?.size()} - ${place}/${total}=${Math.round(place / (total ?:1))}"
-        def result = Math.round(place / (total ?:1))
+        println "${races?.size()} - ${place}/${total}=${Math.round(place / (total ?: 1))}"
+        def result = Math.round(place / (total ?: 1))
         return result
     }
 
@@ -317,7 +361,7 @@ class BaseChartingController extends BaseController {
                 total++
             }
         }
-        if(total > 0 && speed > 0){
+        if(total > 0 && speed > 0) {
             return Double.valueOf(new DecimalFormat("#.##").format(speed / total));
         } else {
             return 0
