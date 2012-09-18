@@ -1,43 +1,99 @@
-<p><h3>${title}</h3></p>
+<p>
+
+<h3>${title}</h3></p>
 <div id="${id}"></div>
 <br>
 
 <script>
-  var hasData = false;
+  var hasData${id} = false;
   <g:if test="${data}">
-  hasData = true;
-  var chart;
+  hasData${id} = true;
+  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+  var chart${id};
   $(function () {
-    chart = new Highcharts.Chart({
+
+    function setChart(name, categories, data, color) {
+      chart${id}.xAxis[0].setCategories(categories, false);
+      chart${id}.series[1].remove(false);
+      chart${id}.addSeries({
+                        name:name,
+                        data:data,
+                        color:color || 'white'
+                      }, false);
+      chart${id}.redraw();
+    }
+
+    var colors = Highcharts.getOptions().colors,
+            categories = ${categories},
+            name = 'Mile Pace Averages',
+            data = [<g:each in="${data}" var="barData" status="i"><g:if test="${barData.hasData}">
+              {
+                y: ${barData.y},
+                color:colors[${i}],
+                drilldown:{
+                  name:'${barData?.drilldown?.name}',
+                  categories: ${barData?.drilldown?.categories ?: []},
+                  data: ${barData?.drilldown?.data ?: []},
+                  color:colors[${i}]
+                }
+              }
+              </g:if><g:else>{}</g:else>
+              <g:if test="${data.size() > i+1}">,</g:if></g:each>
+            ];
+
+
+    chart${id} = new Highcharts.Chart({
                                    plotOptions:{
                                      series:{
                                        animation:{
-                                         duration:1500
+                                         duration:500
                                        }
                                      },
                                      column:{
                                        stacking:null,
                                        dataLabels:{
-                                         enabled:true
+                                         enabled:true,
+                                         color:colors[0],
+                                         style:{
+                                           fontWeight:'bold'
+                                         }
+                                       },
+                                       point:{
+                                         events:{
+                                           click:function () {
+                                             var drilldown = this.drilldown;
+                                             if(drilldown) { // drill down
+                                               app.setChart(chart${id}, drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                                             } else { // restore
+                                               app.setChart(chart${id}, name, categories, data);
+                                             }
+                                           }
+                                         }
                                        }
                                      }
                                    },
                                    chart:{
-                                     renderTo:'${id}'
+                                     renderTo:'${id}',
+                                     type:'column'
                                    },
                                    title:{
-                                     text: '${title ?: "Bike Average Pace By Year"}'
+                                     text:'${title ?: "Bike Average Pace By Year"}'
                                    },
                                    xAxis:{
                                      categories: ${categories}
                                    },
-                                   yAxis:[{
-                                     title: 'Average Pace'
-                                   }],
+                                   yAxis:[
+                                     {
+                                       title:'Average Pace'
+                                     }
+                                   ],
                                    tooltip:{
                                      formatter:function () {
+                                       var point = this.point;
                                        var s;
-                                       if(this.point.name) { // the pie chart
+                                       if(point.drilldown) {
+                                         s = '<b>' + this.x + '</b><br/>' + this.y + '<br/>Click to view ' + point.category + ' by year';
+                                       } else if(this.point.name) { // the pie chart
                                          s = '' + this.point.name + ': ' + this.y + ' races';
                                        } else {
                                          s = '<b>' + this.x + '</b><br/>' + this.y;
@@ -58,13 +114,6 @@
                                      ]
                                    },
                                    series:[
-                                     <g:each in="${data.sort{a,b-> a.key <=> b.key}}" var="result">
-                                     {
-                                       type:'column',
-                                       name:'${result.key}',
-                                       data: ${result.value}
-                                     },
-                                     </g:each>
                                      {
                                        type:'pie',
                                        name:'Total Races',
@@ -75,13 +124,18 @@
                                        dataLabels:{
                                          enabled:false
                                        }
+                                     },
+                                     {
+                                       name:name,
+                                       data:data,
+                                       color:'white'
                                      }
                                    ]
                                  });
   });
   </g:if>
 
-  if(!hasData) {
+  if(!hasData${id}) {
     $("#${id}").html('No data to average.')
   }
 </script>

@@ -51,7 +51,7 @@
 
 <h3>Add segments to ${raceInstance}</h3>
 <br/>
-<g:form controller="dashboard" action="addSegments" name="addSegmentsForm" id="addSegmentsForm">
+<g:form controller="results" action="addSegments" name="addSegmentsForm" id="addSegmentsForm">
   <g:hiddenField name="segments" id="segments" value=""/>
   <g:hiddenField name="raceId" value="${raceInstance.id}"/>
 

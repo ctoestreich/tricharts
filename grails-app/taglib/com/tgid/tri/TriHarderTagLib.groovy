@@ -32,8 +32,8 @@ class TriHarderTagLib {
         def overall = attrs.overall
         def percentOnly = attrs?.percentOnly ?: false
 
-        if(place && overall){
-            def value = Math.round((place / overall) * 100 as float)
+        if(place){
+            def value = Math.round((place / (overall ?: 1)) * 100 as float)
 
             def red = (188 * (value / 100))
             def green = 188 - red

@@ -30,7 +30,7 @@
 
 <g:if test="${!race}">
   <h3>Add ${params?.raceType} Result</h3>
-  <g:form id="createResult" class="form-inline well" controller="dashboard" action="selectRace">
+  <g:form id="createResult" class="form-inline well" controller="results" action="selectRace">
     <g:hiddenField name="user.id" id="user.id" value="${params.get('user.id')}"/>
     <g:hiddenField name="raceType" id="raceType" value="${params?.raceType}"/>
     <g:if test="${races}">
