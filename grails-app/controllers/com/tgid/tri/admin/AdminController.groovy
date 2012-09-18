@@ -5,6 +5,7 @@ import com.tgid.tri.auth.User
 import com.tgid.tri.data.AthlinksResultsImportJob
 import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
 import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
+import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
 import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
 import com.tgid.tri.race.Race
 import com.tgid.tri.race.StatusType
@@ -53,23 +54,37 @@ class AdminController {
 
     def importAthlinksResults() {
         AthlinksResultsImportJob.triggerNow()
-        flash.message = message(code: 'import.started.message', args: ['Import Results'])
-        redirect(controller: 'admin', action: 'index')
+        flash.message = message(code: 'import.started.message', args: ['Import Results', ''])
+        redirect(controller: 'admin', action: 'runJob')
     }
 
     def importAthlinksRaceCategories() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksRaceCategoryImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Categories'])
-        redirect(controller: 'admin', action: 'index')
+        redirect(controller: 'admin', action: 'runJob')
     }
 
     def importAthlinksCoursePatterns() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksCoursePatternsImportJesqueJob.simpleName)
         flash.message = message(code: 'import.started.message', args: ['Import Courses'])
-        redirect(controller: 'admin', action: 'index')
+        redirect(controller: 'admin', action: 'runJob')
+    }
+
+    def importAllAthlinksRaces() {
+        def count = 0
+        Race.list().each {
+            if(it?.athlinkRaceID) {
+                count++
+                jesqueService.enqueue('athlinksGenericImport', AthlinksRaceImportJesqueJob.simpleName, it.athlinkRaceID)
+            }
+        }
+        flash.message = g.message(code: 'import.started.message', args: [AthlinksRaceImportJesqueJob.simpleName, " ${count} Records"])
+        redirect action: 'runJob'
     }
 
     def index() { }
+
+    def runJob(){}
 
     def raceList() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -95,6 +110,10 @@ class AdminController {
         render view: 'dataImport'
     }
 
+    def dataImportRace(){
+        render view: 'dataImportRace'
+    }
+
     def dataImportProcess() {
         def user = User.get(params?.id)
 
@@ -105,6 +124,18 @@ class AdminController {
             flash.message = g.message(code: 'user.running.import.failed', args: [user.username])
         }
         redirect action: 'dataImport'
+    }
+
+    def dataImportRaceProcess(){
+        def race = Race.get(params?.id)
+
+        if(race?.athlinkRaceID) {
+            jesqueService.enqueue('athlinksGenericImport', AthlinksRaceImportJesqueJob.simpleName, race.athlinkRaceID)
+            flash.message = g.message(code: 'race.running.import', args: [race.name])
+        } else {
+            flash.message = g.message(code: 'race.running.import.failed', args: [race])
+        }
+        redirect action: 'dataImportRace'
     }
 
     def viewDebugLog() {

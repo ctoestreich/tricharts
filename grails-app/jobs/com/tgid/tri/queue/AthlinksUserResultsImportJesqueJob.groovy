@@ -26,6 +26,8 @@ class AthlinksUserResultsImportJesqueJob extends LoggableJob {
             } else {
                 withLog(this.class.simpleName, "user was not valid for $userId")
             }
+        } else {
+            withLog(this.class.simpleName, "userId param was not provided.")
         }
     }
 }

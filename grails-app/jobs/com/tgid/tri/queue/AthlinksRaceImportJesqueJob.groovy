@@ -1,6 +1,5 @@
 package com.tgid.tri.queue
 
-import com.tgid.tri.auth.UserService
 import com.tgid.tri.data.parsing.AthlinksResultsParsingService
 import com.tgid.tri.race.Race
 
@@ -21,13 +20,22 @@ class AthlinksRaceImportJesqueJob extends LoggableJob {
             return
         }
 
-        if(courseID) {
+        if(athlinkRaceID) {
             def race = Race.findByAthlinkRaceID(athlinkRaceID as Long)
             if(race) {
-                withLog(this.class.simpleName, "Retrieving race ${race.id}") {
-                    athlinksResultsParsingService.updateAthlinksRace(race)
+                withLog(this.class.simpleName, "Retrieving race ${race?.id} - ${race?.name}") {
+                    try {
+                        athlinksResultsParsingService.updateAthlinksRace(race)
+                    } catch(Exception e) {
+                        log.error e
+                        withLog(this.class.simpleName, "Error: ${e}")
+                    }
                 }
+            } else {
+                withLog(this.class.simpleName, "Race not found using athlinkRaceID:${athlinkRaceID}!")
             }
+        } else {
+            withLog(this.class.simpleName, "AthlinkRaceID was not provided!")
         }
     }
 }

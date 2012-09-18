@@ -12,7 +12,11 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            jndi = "java:comp/env/jdbc/trichartsDB"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:mysql://localhost:3306/tricharts"
+            username = "tricharts"
+            password = 'Tr1Ch4rt5'
         }
     }
     production {

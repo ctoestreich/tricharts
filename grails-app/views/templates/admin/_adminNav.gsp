@@ -21,12 +21,8 @@
   <li><a href="${createLink(controller: 'admin', action: 'clearSiteCaches')}">Clear Site Caches</a></li>
   <li class="nav-header">Job Admin</li>
   <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
+  <li><a href="${createLink(controller: 'admin', action: 'runJob')}">Run Jobs</a></li>
   <li><a href="${createLink(controller: 'jobLog', action: 'index')}">Job Log</a></li>
-  <li class="nav-header">Data Admin</li>
-  <li><a href="${createLink(controller: 'admin', action: 'dataImport')}">Import Single User Results</a></li>
-  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
-  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
-  <li><a href="${createLink(controller: 'admin', action: 'importAthlinksResults')}">Import Athlinks Results</a></li>
   <li class="nav-header">Logs</li>
   <li><a href="${createLink(controller: 'admin', action: 'viewDebugLog')}">View Info Log</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'viewErrorLog')}">View Error Log</a></li>

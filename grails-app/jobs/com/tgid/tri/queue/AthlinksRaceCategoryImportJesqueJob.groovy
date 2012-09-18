@@ -11,7 +11,7 @@ class AthlinksRaceCategoryImportJesqueJob extends LoggableJob {
     def grailsApplication
 
     static triggers = {
-        cron name: 'raceCategoryWeeklyTrigger', jesqueJobName: AthlinksRaceCategoryImportJesqueJob.simpleName, jesqueQueue: 'importAthlinksReferenceData', cronExpression: "0 0 0 ? * 6", timeZone: 'Pacific/Honolulu'
+        cron name: 'raceCategoryWeeklyTrigger', jesqueJobName: AthlinksRaceCategoryImportJesqueJob.simpleName, jesqueQueue: 'importAthlinksReferenceData', cronExpression: "0 0 1 ? * SUN *", timeZone: 'Pacific/Honolulu'
     }
 
     def perform() {
@@ -21,7 +21,7 @@ class AthlinksRaceCategoryImportJesqueJob extends LoggableJob {
         }
 
         log.info "Running AthlinksRaceCategoryImportJob ${new Date()}"
-        withLog(this.class.simpleName, '') {
+        withLog(this.class.simpleName, 'Importing race categories') {
             athlinksResultsParsingService.importRaceCategories()
         }
     }

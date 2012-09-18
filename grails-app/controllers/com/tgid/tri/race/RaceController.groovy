@@ -177,7 +177,7 @@ class RaceController {
 
         if(race) {
             jesqueService.enqueue('athlinksGenericImport', AthlinksRaceImportJesqueJob.simpleName, race.athlinkRaceID)
-            flash.message = message(code: 'import.started.message', args: ['Import Race'])
+            flash.message = message(code: 'import.started.message', args: ['Import Race', '1 record'])
             redirect(action: 'show', id: race.id)
             return
         }

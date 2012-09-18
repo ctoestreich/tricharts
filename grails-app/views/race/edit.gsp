@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.auth.State; com.tgid.tri.race.Race" %>
+<%@ page import="com.tgid.tri.auth.Country; com.tgid.tri.auth.State; com.tgid.tri.race.Race" %>
 <!doctype html>
 <html>
 	<head>
@@ -65,20 +65,31 @@
                             <f:field property="statusType"  />
                             <f:field property="athlinkRaceID"  />
                             <f:field property="eventCourseID"  />
-                            <div class="control-group ">
-                              <label class="control-label" for="states">State(s) <a href="javascript:void(0);" class="autopop" rel="popover" data-content="Select the state(s) in which you currently reside and race in. Hold CTRL to select multiple." data-original-title="State(s)"><i class="icon-question-sign"></i></a></label>
+                            <f:field property="city"  />
+                            <f:field property="state"  />
+                            <f:field property="country"  />
+                            %{--<div class="control-group ">--}%
+                              %{--<label class="control-label" for="states">State</label>--}%
 
-                              <div class="controls">
-                                <g:select class="span6" optionKey="id" value="${raceInstance?.state}" optionValue="name" id="state" name="state" from="${State?.list()?.sort {it.name}}"/>
-                              </div>
-                            </div>
+                              %{--<div class="controls">--}%
+                                %{--<g:select class="span6" optionKey="id" value="${raceInstance?.state?.id}" optionValue="name" id="state" name="state" from="${State?.list()?.sort {it.name}}"/>--}%
+                              %{--</div>--}%
+                            %{--</div>--}%
+                            %{--<div class="control-group ">--}%
+                              %{--<label class="control-label" for="states">Country</label>--}%
+
+                              %{--<div class="controls">--}%
+                                %{--<g:select class="span6" optionKey="id" value="${raceInstance?.country?.id}" optionValue="countryName" id="country" name="country" from="${Country?.list()?.sort {it.countryName}}"/>--}%
+                              %{--</div>--}%
+                            %{--</div>--}%
+
                             <div class="control-group">
                               <label class="control-label" for="coursePattern">Course Pattern</label>
                               <div class="controls">
-                                <f:display property="coursePattern"   />
+                                <f:display property="coursePattern" />
                               </div>
                             </div>
-                            <f:field property="segments"  />
+                            <f:field property="segments" />
                           </f:with>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">

@@ -48,13 +48,14 @@ class AthlinksResultsParsingService {
             Race.withTransaction {
                 try {
                     if(raceUpdate) {
-                        raceUpdate.name = raceMap.Race.RaceName
-                        raceUpdate.date = new Date(raceMap.Race.RaceDate.toString().replaceAll(/\/Date\((\d+)\)\//, '$1') as Long)
+                        raceUpdate.resultsUrl = getUrl(raceMap?.WebSite)
+                        raceUpdate.name = raceMap?.RaceName
+                        raceUpdate.date = new Date(raceMap?.RaceDate?.toString()?.replaceAll(/\/Date\((\d+)\)\//, '$1') as Long)
                         raceUpdate.raceType = mapRaceType(course)
                         raceUpdate.raceCategoryType = coursePatternLocal?.raceCategoryType
                         raceUpdate.distanceType = coursePatternLocal?.distanceType
                         raceUpdate.distance = coursePatternLocal?.distance
-                        raceUpdate.athlinkRaceID = raceMap.Race.RaceID
+                        raceUpdate.athlinkRaceID = raceMap.RaceID
                         raceUpdate.eventCourseID = course.EventCourseID
                         raceUpdate.courseID = course.CourseID
                         raceUpdate.coursePattern = com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID)
@@ -68,6 +69,16 @@ class AthlinksResultsParsingService {
                     throw e
                 }
             }
+        }
+    }
+
+    private String getUrl(String url) {
+        try {
+            new URL(url)
+            return url
+        } catch(MalformedURLException e) {
+            log.error e
+            return ''
         }
     }
 
@@ -133,9 +144,10 @@ class AthlinksResultsParsingService {
                         coursePattern: com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID),
                         raceCategory: com.tgid.tri.race.RaceCategory.get(course?.RaceCatID),
                         statusType: StatusType.Approved,
-                        state:  com.tgid.tri.auth.State.findByAbbrev(raceMap.Race.StateProvAbbrev),
-                        country:  com.tgid.tri.auth.Country.findByCountryID(raceMap.Race.CountryID),
-                        city: raceMap?.Race?.City
+                        state: com.tgid.tri.auth.State.findByAbbrev(raceMap.Race.StateProvAbbrev),
+                        country: com.tgid.tri.auth.Country.findByCountryID(raceMap.Race.CountryID),
+                        city: raceMap?.Race?.City,
+                        resultsUrl: raceMap?.Race?.WebSite
                 )
                 race = raceService.createRace(race, course)
             }

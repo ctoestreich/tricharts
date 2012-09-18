@@ -18,19 +18,19 @@
   <div class="span8">
 
     <div class="page-header">
-      <h1>Manually Import User Races</h1>
+      <h1>Manually Import Race</h1>
     </div>
 
     <g:if test="${flash.message}">
       <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
     </g:if>
 
-    <g:form controller="admin" action="dataImportProcess" class="form-horizontal">
+    <g:form controller="admin" action="dataImportRaceProcess" class="form-horizontal">
 
       <fieldset>
         <div class="control-group">
           <label for='enabled' class="control-label">User:</label>
-          <div class="controls"> <g:select name="id"  optionKey="id" from="${User.listOrderByFirstName()}" /></div>
+          <div class="controls"> <g:select name="id"  optionKey="id" from="${Race.listOrderByName()}" /></div>
         </div>
 
         <div class="form-actions">

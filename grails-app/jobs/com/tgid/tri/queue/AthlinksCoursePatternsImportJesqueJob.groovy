@@ -11,7 +11,7 @@ class AthlinksCoursePatternsImportJesqueJob extends LoggableJob {
     def grailsApplication
 
     static triggers = {
-        cron name: 'coursePatternWeeklyTrigger', jesqueJobName: AthlinksCoursePatternsImportJesqueJob.simpleName, jesqueQueue: 'importAthlinksReferenceData', cronExpression: "0 0 0 ? * 6", timeZone: 'Pacific/Honolulu'
+        cron name: 'coursePatternWeeklyTrigger', jesqueJobName: AthlinksCoursePatternsImportJesqueJob.simpleName, jesqueQueue: 'importAthlinksReferenceData', cronExpression: "0 0 3 ? * SUN *", timeZone: 'Pacific/Honolulu'
     }
 
     def perform() {
@@ -19,7 +19,7 @@ class AthlinksCoursePatternsImportJesqueJob extends LoggableJob {
             log.info "AthlinksCoursePatternsImportJesqueJob disabled!"
             return
         }
-        withLog(this.class.simpleName, '') {
+        withLog(this.class.simpleName, 'Importing course patterns') {
             athlinksResultsParsingService.importCoursePatterns()
         }
     }

@@ -27,7 +27,11 @@ class AthlinksResultsImportJesqueJob extends LoggableJob {
                 withLog(this.class.simpleName, "Retrieving races & results for ${racer.user} using id: ${racer.racerID}") {
                     athlinksResultsParsingService.retrieveResults(racer)
                 }
+            } else {
+                withLog(this.class.simpleName, "Racer was not found using racerId: ${racerId}")
             }
+        } else {
+            withLog(this.class.simpleName, "RacerId param was not provided.")
         }
     }
 }
