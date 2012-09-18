@@ -45,6 +45,8 @@ class AthlinksResultsParsingService {
         raceMap?.Courses?.each { course ->
             def coursePatternLocal = coursePatternService.lookup(course)
             def raceUpdate = Race.findByAthlinkRaceIDAndCourseID(race.athlinkRaceID, course.CourseID)
+            def state = com.tgid.tri.auth.State.findByProvID(raceMap.StateProvID)
+            def country = com.tgid.tri.auth.Country.findByCountryID(raceMap.CountryID)
             Race.withTransaction {
                 try {
                     if(raceUpdate) {
@@ -60,9 +62,8 @@ class AthlinksResultsParsingService {
                         raceUpdate.courseID = course.CourseID
                         raceUpdate.coursePattern = com.tgid.tri.race.CoursePattern.get(course?.CoursePatternID)
                         raceUpdate.raceCategory = com.tgid.tri.race.RaceCategory.get(course?.RaceCatID)
-                        raceUpdate.state = com.tgid.tri.auth.State.findByProvID(raceMap.StateProvID)
-                        raceUpdate.country = com.tgid.tri.auth.Country.findByCountryID(raceMap.CountryID)
-
+                        raceUpdate.state = state
+                        raceUpdate.country = country
                         raceUpdate = raceService.saveRace(raceUpdate)
                     }
                 } catch(Exception e) {

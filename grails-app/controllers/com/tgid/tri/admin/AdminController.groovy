@@ -19,6 +19,8 @@ class AdminController {
     def jesqueService
     def userService
     def redisService
+    def countryService
+    def stateService
     def athlinksResultsParsingService
 
     def jobSettings() {
@@ -53,6 +55,18 @@ class AdminController {
         redirect(controller: 'admin', action: 'index')
     }
 
+    def importCountries() {
+        countryService.seedCountries()
+        flash.message = message(code: 'import.started.message', args: ['Import Countries', ''])
+        redirect(controller: 'admin', action: 'runJob')
+    }
+
+    def importStates() {
+        stateService.seedStates()
+        flash.message = message(code: 'import.started.message', args: ['Import States', ''])
+        redirect(controller: 'admin', action: 'runJob')
+    }
+
     def importAthlinksResults() {
         AthlinksResultsImportJob.triggerNow()
         flash.message = message(code: 'import.started.message', args: ['Import Results', ''])
@@ -61,13 +75,13 @@ class AdminController {
 
     def importAthlinksRaceCategories() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksRaceCategoryImportJesqueJob.simpleName)
-        flash.message = message(code: 'import.started.message', args: ['Import Categories',''])
+        flash.message = message(code: 'import.started.message', args: ['Import Categories', ''])
         redirect(controller: 'admin', action: 'runJob')
     }
 
     def importAthlinksCoursePatterns() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksCoursePatternsImportJesqueJob.simpleName)
-        flash.message = message(code: 'import.started.message', args: ['Import Courses',''])
+        flash.message = message(code: 'import.started.message', args: ['Import Courses', ''])
         redirect(controller: 'admin', action: 'runJob')
     }
 

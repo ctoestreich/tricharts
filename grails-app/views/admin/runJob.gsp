@@ -28,6 +28,8 @@
     <li class="nav-header">Reference Import</li>
     <li><a href="${createLink(controller: 'admin', action: 'importAthlinksCoursePatterns')}">Import Athlinks Courses</a></li>
     <li><a href="${createLink(controller: 'admin', action: 'importAthlinksRaceCategories')}">Import Athlinks Categories</a></li>
+    <li><a href="${createLink(controller: 'admin', action: 'importStates')}">Import States</a></li>
+    <li><a href="${createLink(controller: 'admin', action: 'importCountries')}">Import Countries</a></li>
     <li class="nav-header">Run These With Caution</li>
     <li><a class="btn-danger" style="color: #fff;" href="${createLink(controller: 'admin', action: 'importAllAthlinksRaces')}">Re-Import All Athlinks Races</a></li>
   </ul>

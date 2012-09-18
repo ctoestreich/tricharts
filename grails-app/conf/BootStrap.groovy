@@ -22,7 +22,7 @@ class BootStrap {
         stateService.seedStates()
         if(Environment.current == Environment.DEVELOPMENT) {
             bootStrapService.createDefaultUsers()
-            bootStrapService.seedResults()
+            //bootStrapService.seedResults()
         }
     }
 }
