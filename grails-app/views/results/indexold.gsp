@@ -73,7 +73,7 @@
   <div class="modal-footer"><a href="javascript:void(0);" class="btn" data-dismiss="modal">Cancel</a><a href="javascript:tri.results.deleteRaceResultConfirmation()" class="btn btn-danger">DELETE</a></div>
 </div>
 
-<g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="dashboard" action="modifyRaceResults">
+<g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="results" action="modifyRaceResults">
   <g:hiddenField name="raceResultId" value=""/>
   <g:hiddenField name="raceResultEdit" value="false"/>
 </g:form>

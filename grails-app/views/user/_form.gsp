@@ -42,14 +42,6 @@
 	<g:datePicker name="dob" precision="day"  value="${userInstance?.dob}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'athlinkRacerId', 'error')} ">
-	<label for="athlinkRacerId">
-		<g:message code="user.athlinkRacerId.label" default="Athlink Racer Id" />
-		
-	</label>
-	<g:field type="number" name="athlinkRacerId" value="${fieldValue(bean: userInstance, field: 'athlinkRacerId')}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'stateCode', 'error')} required">
 	<label for="stateCode">
 		<g:message code="user.stateCode.label" default="State Code" />

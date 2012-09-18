@@ -71,13 +71,6 @@
 
       </g:if>
 
-      <g:if test="${userInstance?.athlinkRacerId}">
-        <dt><g:message code="user.athlinkRacerId.label" default="Athlink Racer Id"/></dt>
-
-        <dd><g:fieldValue bean="${userInstance}" field="athlinkRacerId"/></dd>
-
-      </g:if>
-
       <g:if test="${userInstance?.accountExpired}">
         <dt><g:message code="user.accountExpired.label" default="Account Expired"/></dt>
 

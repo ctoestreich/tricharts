@@ -28,7 +28,7 @@
 </div>
 <div class="row-fluid well">
   <h5>Can I add races that are not listed?</h5>
-  <p>Yes, you can <g:link controller="dashboard" action="addRace">create races</g:link> that are missing.  These races will go into review status and will need to be approved by an admin before you can enter results.  This process should only take a day or two.</p>
+  <p>Yes, you can <g:link controller="results" action="addRace">create races</g:link> that are missing.  These races will go into review status and will need to be approved by an admin before you can enter results.  This process should only take a day or two.</p>
 </div>
 <div class="row-fluid well">
   <h5>Can I delete my results?</h5>

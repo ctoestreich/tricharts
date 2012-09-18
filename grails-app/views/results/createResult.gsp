@@ -40,7 +40,7 @@
     </g:if>
     <g:else>
       <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved"/></bootstrap:alert>
-      <a href="<g:createLink controller="dashboard" action="addRace" params='[raceType: "${params?.raceType}"]'/>" class="btn">Add Race</a>
+      <a href="<g:createLink controller="results" action="addRace" params='[raceType: "${params?.raceType}"]'/>" class="btn">Add Race</a>
     </g:else>
   </g:form>
   <script>
@@ -50,7 +50,7 @@
   </script>
 </g:if>
 <g:else>
-  <g:form id="saveResult" class="form-horizontal well" controller="dashboard" action="saveResult">
+  <g:form id="saveResult" class="form-horizontal well" controller="results" action="saveResult">
     <g:hiddenField name="user.id" if="user.id" value="${user?.id}"/>
     <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
