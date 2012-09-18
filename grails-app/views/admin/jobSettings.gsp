@@ -4,19 +4,13 @@
 <!doctype html>
 <html>
 <head>
-  <meta name="layout" content="bootstrap">
+  <meta name="layout" content="admin">
   <g:set var="entityName" value="${message(code: 'race.label', default: 'Race')}"/>
   <title><g:message code="default.list.label" args="[entityName]"/></title>
 </head>
 
 <body>
 
-<div class="row-fluid">
-  <div class="span4 well">
-    <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
-  </div>
-
-  <div class="span8">
 
     <div class="page-header">
       <h1>${statusTypeText} <g:message code="default.list.label" args="[entityName]"/></h1>
@@ -65,8 +59,5 @@
 
     </g:form>
 
-  </div>
-
-</div>
 </body>
 </html>

@@ -4,28 +4,19 @@
 <!doctype html>
 <html>
 <head>
-  <meta name="layout" content="bootstrap">
+  <meta name="layout" content="admin">
   <title>User Data Import</title>
 </head>
 
 <body>
 
-<div class="row-fluid">
-  <div class="span4 well">
-    <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
-  </div>
-
-  <div class="span8">
-
-    <div class="page-header">
-      <h1>${name} Log</h1>
-    </div>
-
-    <g:textArea name="logFile" id="logFile" class="span12" rows="30" cols="10">${data?.text}</g:textArea>
-
-  </div>
-
+<div class="page-header">
+  <h1>${name} Log</h1>
 </div>
+
+<g:textArea name="logFile" id="logFile" class="span12" rows="30" cols="10">${data?.text}</g:textArea>
+
+
 <script>
   $(function () {
     var textarea = document.getElementById('logFile');

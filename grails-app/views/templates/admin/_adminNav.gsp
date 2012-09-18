@@ -1,4 +1,6 @@
 <ul class="nav nav-list">
+  <li class="nav-header">Admin</li>
+  <li><a href="${createLink(controller: 'admin', action: 'index')}">Admin Dashboard</a></li>
   <li class="nav-header">Race Admin</li>
   <li><a href="${createLink(controller: 'admin', action: 'raceList')}">Approve Races</a></li>
   <li><a href="${createLink(controller: 'race', action: 'index')}">Races</a></li>
@@ -6,10 +8,10 @@
   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
   <li><a href="${createLink(controller: 'raceCategory', action: 'index')}">Race Categories</a></li>
   <li><a href="${createLink(controller: 'coursePattern', action: 'index')}">Course Patterns</a></li>
-  <li class="nav-header">Results Admin</li>
+  %{--<li class="nav-header">Results Admin</li>--}%
   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
-  <li class="nav-header">User Admin</li>
+  %{--<li class="nav-header">User Admin</li>--}%
   <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
   <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>

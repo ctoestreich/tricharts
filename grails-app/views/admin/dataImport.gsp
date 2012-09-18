@@ -4,47 +4,38 @@
 <!doctype html>
 <html>
 <head>
-  <meta name="layout" content="bootstrap">
+  <meta name="layout" content="admin">
   <title>User Data Import</title>
 </head>
 
 <body>
 
-<div class="row-fluid">
-  <div class="span4 well">
-    <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
-  </div>
+<div class="page-header">
+  <h1>Manually Import User Races</h1>
+</div>
 
-  <div class="span8">
+<g:if test="${flash.message}">
+  <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+</g:if>
 
-    <div class="page-header">
-      <h1>Manually Import User Races</h1>
+<g:form controller="admin" action="dataImportProcess" class="form-horizontal">
+
+  <fieldset>
+    <div class="control-group">
+      <label for='enabled' class="control-label">User:</label>
+
+      <div class="controls"><g:select name="id" optionKey="id" from="${User.listOrderByFirstName()}"/></div>
     </div>
 
-    <g:if test="${flash.message}">
-      <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
-    </g:if>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-ok icon-white"></i>
+        <g:message code="default.button.import.label" default="Import"/>
+      </button>
+    </div>
+  </fieldset>
 
-    <g:form controller="admin" action="dataImportProcess" class="form-horizontal">
+</g:form>
 
-      <fieldset>
-        <div class="control-group">
-          <label for='enabled' class="control-label">User:</label>
-          <div class="controls"> <g:select name="id"  optionKey="id" from="${User.listOrderByFirstName()}" /></div>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            <i class="icon-ok icon-white"></i>
-            <g:message code="default.button.import.label" default="Import" />
-          </button>
-        </div>
-      </fieldset>
-
-    </g:form>
-
-  </div>
-
-</div>
 </body>
 </html>

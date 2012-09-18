@@ -18,6 +18,7 @@ class AdminController {
     def grailsApplication
     def jesqueService
     def userService
+    def redisService
     def athlinksResultsParsingService
 
     def jobSettings() {
@@ -60,13 +61,13 @@ class AdminController {
 
     def importAthlinksRaceCategories() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksRaceCategoryImportJesqueJob.simpleName)
-        flash.message = message(code: 'import.started.message', args: ['Import Categories'])
+        flash.message = message(code: 'import.started.message', args: ['Import Categories',''])
         redirect(controller: 'admin', action: 'runJob')
     }
 
     def importAthlinksCoursePatterns() {
         jesqueService.enqueue('importAthlinksReferenceData', AthlinksCoursePatternsImportJesqueJob.simpleName)
-        flash.message = message(code: 'import.started.message', args: ['Import Courses'])
+        flash.message = message(code: 'import.started.message', args: ['Import Courses',''])
         redirect(controller: 'admin', action: 'runJob')
     }
 
@@ -82,9 +83,14 @@ class AdminController {
         redirect action: 'runJob'
     }
 
-    def index() { }
+    def index() {
+        if(params?.clearCache) {
+            redisService.deleteKeysWithPattern("admin-*")
+        }
+        render view: 'index'
+    }
 
-    def runJob(){}
+    def runJob() {}
 
     def raceList() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -110,7 +116,7 @@ class AdminController {
         render view: 'dataImport'
     }
 
-    def dataImportRace(){
+    def dataImportRace() {
         render view: 'dataImportRace'
     }
 
@@ -126,7 +132,7 @@ class AdminController {
         redirect action: 'dataImport'
     }
 
-    def dataImportRaceProcess(){
+    def dataImportRaceProcess() {
         def race = Race.get(params?.id)
 
         if(race?.athlinkRaceID) {

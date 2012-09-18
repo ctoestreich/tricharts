@@ -23,19 +23,32 @@
   <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">
   <g:layoutHead/>
   <r:layoutResources/>
-  <script type="text/javascript">if(!window.console) console = {log:function () {}}; </script>
+  <script type="text/javascript">if(!window.console) console = {log:function () {
+  }}; </script>
 </head>
+
 <body>
 <g:render template="/templates/site/topnav"/>
 <div class="container content">
-  <g:render template="/templates/site/topuser" />
-  <g:layoutBody/>
+  <g:render template="/templates/site/topuser"/>
+  <div class="page-header">
+    <h1>Admin <small>bash$ su root</small></h1>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span3 well">
+      <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
+    </div>
+    <div class="span9">
+      <g:layoutBody/>
+    </div>
+  </div>
 </div>
 <cache:render template="/templates/site/footer" key="${request.forwardURI}"/>
 <r:script>
   $(function () {
     $('.collapse').collapse({
-                              toggle: false
+                              toggle:false
                             });
 
   });
