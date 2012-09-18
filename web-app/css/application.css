@@ -6,6 +6,10 @@ body {
     /*background-image: url('../images/site/bg.png') !important;*/
 }
 
+.topuser p {
+ font-size: .9em;
+}
+
 .navbar, .navbar-inner {
     background: #fff;
 }

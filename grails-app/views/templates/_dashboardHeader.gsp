@@ -11,10 +11,10 @@
           </a>
           <ul class="dropdown-menu">
             <li><a
-                    href="${createLink(controller: 'dashboard', action: 'index', params: [srt: "date", 'user.id': params?.user?.id])}"
+                    href="${createLink(controller: 'results', action: 'index', params: [srt: "date", 'user.id': params?.user?.id])}"
                     id="view-progression"><i class="icon-calendar"></i>&nbsp;Date</a></li>
             <li><a
-                    href="${createLink(controller: 'dashboard', action: 'index', params: [srt: "type", 'user.id': params?.user?.id])}"
+                    href="${createLink(controller: 'results', action: 'index', params: [srt: "type", 'user.id': params?.user?.id])}"
                     id="view-progression"><i class="icon-film"></i>&nbsp;Type</a></li>
           </ul>
         </div>
@@ -27,7 +27,7 @@
              href="${createLink(controller: 'visualization', action: 'progression', params: [raceType: sport, 'user.id': params?.user?.id])}"
              id="view-progression"><i class="icon-camera"></i>&nbsp;${sport} Charts</a>
           <a class="btn btn-small"
-             href="${createLink(controller: 'dashboard', action: 'createResult', params: [raceType: sport, 'user.id': params?.user?.id])}"
+             href="${createLink(controller: 'results', action: 'createResult', params: [raceType: sport, 'user.id': params?.user?.id])}"
              id="add-race"><i class="icon-tag"></i>&nbsp;Add Result</a>
         </div>
 

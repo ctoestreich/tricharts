@@ -32,6 +32,15 @@
 
 </script>
 
+<div class="row-fluid well_clear">
+  <div class="span12">
+    <g:link class="btn" controller="dashboard" action="index">View My Dashboard</g:link>&nbsp;
+    <g:link class="btn" controller="results" action="index">View All My Results</g:link>&nbsp;
+    <g:link class="btn" controller="visualization" action="index">View My Charts</g:link>&nbsp;
+    <g:link class="btn" controller="account" action="index">View My Account</g:link>&nbsp;
+  </div>
+</div>
+
 <div class="row-fluid">
   <div class="span4 well"><div id="raceTypes" name="raceTypes" style="height: 300px"></div></div>
   <div class="span4 well"><div id="raceTypes2012" name="raceTypes2012" style="height: 300px"></div></div>

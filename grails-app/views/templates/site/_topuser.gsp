@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row topuser">
   <p align="right">
     <sec:ifNotGranted roles="ROLE_USER">
       <g:link controller="registration" action="index">register</g:link>&nbsp;|&nbsp;<g:link controller="login" action="index">login</g:link>
