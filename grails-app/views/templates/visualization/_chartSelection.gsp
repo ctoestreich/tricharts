@@ -5,7 +5,7 @@
       <ul class="nav nav-tabs">
         <li <g:if test="${request.forwardURI == createLink(controller: 'visualization', action: 'index')}">class="active"</g:if>><a href="#tab0" data-toggle="tab">Overview</a></li>
         <li <g:if test="${request.forwardURI == createLink(controller: 'visualization', action: 'progression')}">class="active"</g:if>><a href="#tab1" data-toggle="tab">Trending</a></li>
-        <li <g:if test="${request.forwardURI == createLink(controller: 'visualization', action: 'averages')}">class="active"</g:if>><a href="#tab2" data-toggle="tab">Averages</a></li>
+        <li <g:if test="${request.forwardURI.toString().toUpperCase().contains('VISUALIZATION/AVERAGE')}">class="active"</g:if>><a href="#tab2" data-toggle="tab">Averages</a></li>
         <li <g:if test="${request.forwardURI == createLink(controller: 'visualization', action: 'prs')}">class="active"</g:if>><a href="#tab3" data-toggle="tab">PRs</a></li>
         <li <g:if test="${request.forwardURI.toString().toUpperCase().contains('BYSTATE')}">class="active"</g:if>><a href="#tab4" data-toggle="tab">Comparison</a></li>
       </ul>

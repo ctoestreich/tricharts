@@ -4,7 +4,7 @@
 <g:while test="${year-- >= (minYear ?: 0)}">
   <div class="row well_clear">
     %{--<div class="span12">--}%
-    <g:render template="/templates/dashboardHeader" model="[sport: year + 1901 + ' Personal Records', user: params?.user, showButtons: 'no']"/>
+    <g:render template="/templates/dashboard/dashboardHeader" model="[sport: year + 1901 + ' Personal Records', user: params?.user, showButtons: 'no']"/>
 
     <div id="results-${year}" class="accordion">
       <g:each in="${types}" var="type">
@@ -30,7 +30,7 @@
             </div>
 
             <div id="result-collapse-${result?.id}" class="accordion-body collapse collapse-triathlon" style="height:0px">
-              <g:render template="/templates/triathlonResultTable" model="[result: result?.raceResult]"/>
+              <g:render template="/templates/results/triathlonResultTable" model="[result: result?.raceResult]"/>
             </div>
           </g:if>
         </g:each>

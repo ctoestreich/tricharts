@@ -4,11 +4,11 @@
 
 <div class="accordion-group">
   <div class="accordion-heading">
-    <g:render template="/templates/resultsHeading" model="[result: result]"/>
+    <g:render template="/templates/results/resultsHeading" model="[result: result]"/>
   </div>
 
   <div id="result-collapse-${result?.id}" class="accordion-body collapse collapse-running">
-    <g:render template="/templates/runResultTable" model="[result: result]"/>
+    <g:render template="/templates/results/runResultTable" model="[result: result]"/>
     <g:render template="/templates/dashboard/raceResultsButtons" model="[result: result]"/>
   </div>
 </div>

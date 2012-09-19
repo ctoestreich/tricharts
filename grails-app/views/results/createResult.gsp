@@ -78,13 +78,13 @@
     <fieldset>
     %{--<legend></legend>--}%
 
-      <g:render template="/templates/resultsInput" model="[name: 'Race', isRaceResults: true, raceResult: raceResult]"/>
+      <g:render template="/templates/results/resultsInput" model="[name: 'Race', isRaceResults: true, raceResult: raceResult]"/>
 
       <g:set var="hidden" value="${raceResult.segmentResults?.size() == 1}"/>
       <g:each in="${raceResult.segmentResults?.sort {a, b -> a.segmentOrder <=> b.segmentOrder}}"
               var="segmentResult" status="i">
         <div class="well ${segmentResult?.raceSegment?.segment?.segmentType}" style="${hidden ? 'display:none' : ''}">
-          <g:render template="/templates/resultsInput"
+          <g:render template="/templates/results/resultsInput"
                     model='[name: "Segment", prefix: "segmentResult[${i}].", segmentResult: segmentResult, isSegmentResults: true]'/>
         </div>
       </g:each>
