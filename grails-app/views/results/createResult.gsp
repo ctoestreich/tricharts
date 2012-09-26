@@ -30,27 +30,59 @@
 
 <g:if test="${!race}">
   <h3>Add ${params?.raceType} Result</h3>
-  <g:form id="createResult" class="form-inline well" controller="results" action="selectRace">
+  <div class="row-fluid well-white">
+  <g:form id="createResult" class="form-inline" controller="results" action="selectRace">
     <g:hiddenField name="user.id" id="user.id" value="${params.get('user.id')}"/>
     <g:hiddenField name="raceType" id="raceType" value="${params?.raceType}"/>
     <g:if test="${races}">
       <p>Search For Race By Name</p>
-      <g:select noSelection="${['': '']}" optionKey="id" id="race" from="${races.sort {a, b -> b.date <=> a.date}}" name="race.id"/>
+      %{--<g:select noSelection="${['': '']}" optionKey="id" id="race" from="${races.sort {a, b -> a.toString() <=> b.toString()}}" name="race.id"/>--}%
+      <input id="raceSelect" class="span6" name="raceSelect" value="${race?.toString()}">
+      <input type="hidden" id="raceId" value="${race?.id}" name="race.id" />
       <button type="submit" class="btn">Next -></button>
     </g:if>
     <g:else>
       <bootstrap:alert class="alert-info"><g:message code="raceResult.races.none.approved"/></bootstrap:alert>
-      <a href="<g:createLink controller="results" action="addRace" params='[raceType: "${params?.raceType}"]'/>" class="btn">Add Race</a>
     </g:else>
   </g:form>
+  </div>
+  <br />
+  <div class="well-white row-fluid">
+    <p>If you can't find the race you may add one.</p>
+  <a href="<g:createLink controller="results" action="addRace" params='[raceType: "${params?.raceType}"]'/>" class="btn">Add Race</a>
+  </div>
   <script>
     $(function () {
-      $("#race").combobox();
+      var cache = {},
+              lastXhr;
+      $("#raceSelect").autocomplete({
+                                      minLength:2,
+                                      source:function (request, response) {
+                                        var term = request.term;
+                                        if(term in cache) {
+                                          response(cache[ term ]);
+                                          return;
+                                        }
+
+                                        lastXhr = $.getJSON("${createLink(controller:'race',action:'search')}", {term: request.term, raceType: '${params?.raceType}'}, function (data, status, xhr) {
+                                          cache[ term ] = data;
+                                          if(xhr === lastXhr) {
+                                            response(data);
+                                          }
+                                        });
+                                      },
+                                      select:function (event, ui) {
+                                        $("#raceId").val(ui.item.raceId);
+                                        $("#raceSelect").val(ui.item.value);
+                                        return false;
+                                      }
+                                    });
     });
   </script>
 </g:if>
 <g:else>
-  <g:form id="saveResult" class="form-horizontal well" controller="results" action="saveResult">
+  <div class="row-fluid well-white">
+  <g:form id="saveResult" class="form-horizontal" controller="results" action="saveResult">
     <g:hiddenField name="user.id" if="user.id" value="${user?.id}"/>
     <input type="hidden" name="race.id" value="${race.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
@@ -95,6 +127,7 @@
       </div>
     </fieldset>
   </g:form>
+  </div>
 </g:else>
 
 <r:script>

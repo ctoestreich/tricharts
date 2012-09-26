@@ -31,30 +31,30 @@
   <br/>
 </g:if>
 
-<div class="row-fluid stats">
+<div class="row-fluid">
   <div class="overview">
     <ul>
       <li>
         <h5>Users</h5>
-        <h3><redis:memoize key="admin-Users" expire="3600"><span class="stat">${com.tgid.tri.auth.User.count()}</span></redis:memoize></h3>
+        <h3><redis:memoize key="admin-Users" expire="3600">${com.tgid.tri.auth.User.count()}</redis:memoize></h3>
       </li>
       <li>
         <h5>Races</h5>
-        <h3><redis:memoize key="admin-Races" expire="3600"><span class="stat">${com.tgid.tri.race.Race.count()}</span></redis:memoize></h3>
+        <h3><redis:memoize key="admin-Races" expire="3600">${com.tgid.tri.race.Race.count()}</redis:memoize></h3>
       </li>
       <li>
         <h5>Patterns</h5>
-        <h3><redis:memoize key="admin-Patterns" expire="3600"><span class="stat">${com.tgid.tri.race.CoursePattern.count()}</span></redis:memoize></h3>
+        <h3><redis:memoize key="admin-Patterns" expire="3600">${com.tgid.tri.race.CoursePattern.count()}</redis:memoize></h3>
       </li>
       <li>
         <h5>Results</h5>
-        <h3><redis:memoize key="admin-Results" expire="60"><span class="stat">${com.tgid.tri.results.RaceResult.count()}</span></redis:memoize></h3>
+        <h3><redis:memoize key="admin-Results" expire="60">${com.tgid.tri.results.RaceResult.count()}</redis:memoize></h3>
       </li>
     </ul>
   </div>
 </div>
 
-<div class="row-fluid stats">
+<div class="row-fluid">
   <g:link class="btn btn-info" controller="admin" action="index" params="[clearCache: true]">Clear Stats Cache</g:link>
 </div>
 

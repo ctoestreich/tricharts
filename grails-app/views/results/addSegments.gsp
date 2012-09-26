@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.race.SegmentType; com.tgid.tri.race.Segment; com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.common.SegmentComparator; com.tgid.tri.race.SegmentType; com.tgid.tri.race.Segment; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -56,16 +56,17 @@
   <g:hiddenField name="raceId" value="${raceInstance.id}"/>
 
   <div class="row-fluid">
-    <div class="span4">
-
+    <div class="span6">
+      <div class="row">
       <h5>Segments In Race (drag right to remove)</h5>
-      <ul id="segmentOptIn" class="connectedSortable">
-
-      </ul>
-<br /><br />
+      <ul id="segmentOptIn" class="connectedSortable"><br/></ul>
+      </div>
+      <br />
+            <div class="row">
       <p><a href="#" id="saveSegments" class="btn">Save Segments</a></p>
+      </div>
     </div>
-    <div class="span7">
+    <div class="span6">
       <h5>Available Segments (drag left to add)</h5>
 
       <ul class="nav nav-tabs" id="myTab">
@@ -77,7 +78,7 @@
 
       <div class="tab-content"><div class="tab-pane active" id="swim">
         <ul id="segmentSwim" class="connectedSortable">
-          <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Swim).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+          <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Swim).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
             <li class="well" data-id="${segment.id}">${segment}</li>
           </g:each>
         </ul>
@@ -85,7 +86,7 @@
 
         <div class="tab-pane" id="bike">
           <ul id="segmentBike" class="connectedSortable">
-            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Bike).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Bike).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>
@@ -93,7 +94,7 @@
 
         <div class="tab-pane" id="run">
           <ul id="segmentRun" class="connectedSortable">
-            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Run).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Run).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>
@@ -103,7 +104,7 @@
           <ul id="segmentTransition" class="connectedSortable">
             <g:each in="${com.tgid.tri.race.Segment.where {
               segmentType == SegmentType.T1 || segmentType == SegmentType.T2
-            }.list().sort {a, b -> a.toString() <=> b.toString()}}" var="segment">
+            }.list().unique(new SegmentComparator()).sort {a, b -> a.toString() <=> b.toString()}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>

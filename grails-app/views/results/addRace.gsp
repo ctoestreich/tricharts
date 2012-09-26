@@ -36,8 +36,8 @@
       <fieldset>
 
         <f:with bean="raceInstance">
-          <f:field property="resultsUrl" />
-          <f:field property="name" />
+          <f:field property="resultsUrl" input-class="span8"/>
+          <f:field property="name" input-class="span8" />
           <f:field property="date" />
           <f:field property="raceType" />
           <f:field property="distanceType" />

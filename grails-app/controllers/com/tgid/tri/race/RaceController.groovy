@@ -4,6 +4,7 @@ import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import org.springframework.dao.DataIntegrityViolationException
+import com.tgid.tri.auth.User
 
 @Secured(["ROLE_ADMIN"])
 class RaceController {
@@ -12,6 +13,24 @@ class RaceController {
     def jesqueService
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
+
+    def search() {
+        def query = {
+            eq('raceType',RaceType.getRaceType(params?.raceType))
+            if(params.term) {
+                or {
+                    ilike('name', '%' + params.term + '%')
+                }
+            }
+        }
+        def response = []
+        def criteria = Race.createCriteria()
+        def races = criteria.list(query)
+        races.each {
+            response << [label: it.toString(), value: it.toString(), raceId: it.id]
+        }
+        render response as JSON
+    }
 
     def index() {
         redirect action: 'list', params: params
