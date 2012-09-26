@@ -1,10 +1,12 @@
-<h3>${title}</h3>
+<g:set var="hasData" value="${data.findAll{it.hasData}}" />
+<h4 id="ttl${id}">${title}</h4>
 <div id="${id}"></div>
 <br>
 
 <script>
   var hasData${id} = false;
-  <g:if test="${data}">
+  <g:if test="${hasData}">
+  $('#ttl${id}').hide();
   hasData${id} = true;
   var chart${id};
   var timeToSubtract = Date.parse("1-1-1 0:00:00");
@@ -131,7 +133,7 @@
   });
   </g:if>
 
-  if(!hasData${id}) {
-    $("#${id}").html('No data to average.')
+  if(!hasData${id}){
+    $("#${id}").parent('div').addClass("nodata");
   }
 </script>

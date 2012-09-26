@@ -19,10 +19,10 @@
 <g:render template="/templates/visualization/chartSelection"/>
 
 <g:if test="${params?.raceType == 'Running'}">
-  <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Run PRs</div>
+  <div class="row-fluid chart loading-small" id="averages"><h5>Loading Run PRs</h5></div>
 </g:if>
 <g:elseif test="${params?.raceType == 'Triathlon'}">
-  <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Triathlon PRs</div>
+  <div class="row-fluid chart loading-small" id="averages"><h5>Loading Triathlon PRs</h5></div>
 </g:elseif>
 
 <script>
@@ -32,6 +32,9 @@
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'runningPrs', params:['user.id',params?.user?.id])}',
                   data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv'},
+                  complete:function () {
+                    app.removeLoadingClasses($('#averages'));
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averages').html(data);
@@ -44,6 +47,9 @@
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'triathlonPrs', params:['user.id',params?.user?.id])}',
                   data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv'},
+                  complete:function () {
+                    app.removeLoadingClasses($('#averages'));
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averages').html(data);

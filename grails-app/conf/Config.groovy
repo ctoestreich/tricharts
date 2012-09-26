@@ -254,6 +254,15 @@ grails {
 
 security {
     ui {
+        password {
+            emailBody = '''\
+Hi $user.username,<br/>
+<br/>
+You requested a password reset <a href="$url">TriCharts.com</a> with this email address.<br/>
+<br/>
+If you made the request, please click&nbsp;<a href="$url">here</a> to finish the registration.
+'''
+        }
         register {
             emailBody = '''\
 Hi $user.username,<br/>

@@ -25,7 +25,7 @@ environments {
             dbCreate = "update"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://prod.cryau4uda2kb.us-east-1.rds.amazonaws.com:3306/tricharts"
+            url = "jdbc:mysql://tricharts.cryau4uda2kb.us-east-1.rds.amazonaws.com:3306/tricharts"
             username = "admin"
             password = '!Chris$4'
             properties {

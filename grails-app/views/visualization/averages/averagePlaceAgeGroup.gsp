@@ -21,14 +21,14 @@
 <g:render template="/templates/visualization/chartSelection"/>
 
 <g:if test="${params?.raceType == 'Running'}">
-  <div class="row-fluid" id="averages"><g:img dir="/images" file="spinner.gif"/> Loading Chart Run Placement</div>
+  <div class="row-fluid chart loading-large" style="height:400px;" id="averages"><h4>Loading Chart Run Placement</h4></div>
 </g:if>
 <g:elseif test="${params?.raceType == 'Triathlon'}">
-  <div class="row-fluid" id="averagesOverall"><g:img dir="/images" file="spinner.gif"/> Loading Chart Overall Age Group Placement</div>
-  <br />
+  <div class="row-fluid chart loading-large" style="height:400px;" id="averagesOverall"><h4>Loading Chart Overall Age Group Placement</h4></div>
+  <br/>
   <g:each in="${[SegmentType.Swim, SegmentType.Bike, SegmentType.Run]}" var="segmentType">
-    <div class="row-fluid" id="averages${segmentType}"><g:img dir="/images" file="spinner.gif"/> Loading Chart ${segmentType} Age Group Placement</div>
-    <br />
+    <div class="row-fluid chart loading-large" style="height:400px;" id="averages${segmentType}"><h4>Loading Chart ${segmentType} Age Group Placement</h4></div>
+    <br/>
   </g:each>
 </g:elseif>
 
@@ -38,7 +38,10 @@
     jQuery.ajax({
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'runningAveragePlaces', params:['user.id',params?.user?.id])}',
-                  data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv', type: 'ag'},
+                  data:{ 'user.id':'${params?.user?.id}', div:'averagesDiv', type:'ag'},
+                  complete:function () {
+                    app.removeLoadingClasses($('#averages'));
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averages').html(data);
@@ -50,7 +53,10 @@
     jQuery.ajax({
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'triathlonAveragePlaces', params:['user.id',params?.user?.id])}',
-                  data:{ 'user.id':'${params?.user?.id}', div:'averagesOverallDiv', segmentType:'Overall', type: 'ag'},
+                  data:{ 'user.id':'${params?.user?.id}', div:'averagesOverallDiv', segmentType:'Overall', type:'ag'},
+                  complete:function () {
+                    app.removeLoadingClasses($('#averagesOverall'));
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averagesOverall').html(data);
@@ -61,7 +67,10 @@
     jQuery.ajax({
                   type:'POST',
                   url:'${createLink(controller: 'visualization', action:'triathlonAveragePlaces', params:['user.id',params?.user?.id])}',
-                  data:{ 'user.id':'${params?.user?.id}', div:'averages${segmentType}Div', segmentType:'${segmentType}', type: 'ag'},
+                  data:{ 'user.id':'${params?.user?.id}', div:'averages${segmentType}Div', segmentType:'${segmentType}', type:'ag'},
+                  complete:function () {
+                    app.removeLoadingClasses($('#averages${segmentType}'));
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#averages${segmentType}').html(data);

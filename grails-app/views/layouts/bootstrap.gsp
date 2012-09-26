@@ -27,6 +27,7 @@
 </head>
 <body>
 <g:render template="/templates/site/topnav"/>
+<a name="top"></a>
 <div class="container content">
   <g:render template="/templates/site/topuser" />
   <g:layoutBody/>

@@ -27,7 +27,7 @@
 
 <g:render template="/templates/visualization/chartSelection"/>
 
-<div class="row-fluid well">
+<div class="row-fluid well-white">
   <div class="span6">
     <label for="slider-range">Age Range: <span id="age" style="border:0; color:#59BEDC; font-weight:bold;"></span></label>
 
@@ -54,7 +54,7 @@
 </div>
 
 
-<div class="row-fluid" id="averages" style="height: 500px;"></div>
+<div class="row-fluid chart loading-large" id="averages" style="height: 500px;"></div>
 
 <script>
   $(function () {
@@ -71,7 +71,10 @@
                   },
                   beforeSend:function (xhr) {
                     console.log($("#ageMin").val());
-                    $('#averages').html('<g:img dir="/images" file="spinner.gif"/> Loading Chart times');
+                    $('#averages').html('<h4>Loading Chart</h4>');
+                  },
+                  complete:function () {
+                    $('#averages').removeClass('loading-large');
                   },
                   success:function (data, textStatus) {
                     $('#averages').html(data);

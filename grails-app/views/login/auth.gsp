@@ -43,6 +43,9 @@
 
             <div class="controls"><input type='checkbox' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/></div>
           </div>
+          <div class="control-group">
+            <p style="text-align: center;">Forgot Password? <g:link controller="registration" action="forgotPassword">Click here</g:link> to reset.</p>
+            </div>
 
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">${message(code: "springSecurity.login.button")}</button>

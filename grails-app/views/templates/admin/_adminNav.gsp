@@ -11,12 +11,13 @@
   %{--<li class="nav-header">Results Admin</li>--}%
   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
-  %{--<li class="nav-header">User Admin</li>--}%
+  <li class="nav-header">User Admin</li>
   <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
   <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
   <li><a href="${createLink(controller: 'racer', action: 'index')}">Racers</a></li>
   <li><a href="${createLink(controller: 'state', action: 'index')}">States</a></li>
   <li><a href="${createLink(controller: 'country', action: 'index')}">Countries</a></li>
+  <li><a href="${createLink(controller: 'registrationCode', action: 'index')}">Reg Code</a></li>
   <li class="nav-header">Cache Admin</li>
   <li><a href="${createLink(controller: 'admin', action: 'clearRecordsCaches')}">Clear PR Caches</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'clearChartCaches')}">Clear Chart Caches</a></li>

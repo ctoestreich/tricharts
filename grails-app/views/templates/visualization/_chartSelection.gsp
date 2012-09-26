@@ -1,5 +1,5 @@
 <%@ page import="com.tgid.tri.race.RaceType" %>
-<div class="row-fluid">
+<div class="row-fluid well-white">
   <div class="span12">
     <div class="tabbable tabs">
       <ul class="nav nav-tabs">

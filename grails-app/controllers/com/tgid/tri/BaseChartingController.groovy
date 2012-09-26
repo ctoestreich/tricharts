@@ -40,8 +40,8 @@ class BaseChartingController extends BaseController {
                                             [userId: userId, raceType: raceType])
 
         years.each {
-            maxYear = it[1].year
-            minYear = it[0].year
+            maxYear = it[1]?.year
+            minYear = it[0]?.year
         }
 
         if(minYear > 0 && maxYear > 0) {
@@ -98,9 +98,9 @@ class BaseChartingController extends BaseController {
             def key = result.date.year + 1900
             def period = result.duration.toPeriod()
             if(data.containsKey(key)) {
-                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}")
+                data.get(key).append(",{x: Date.UTC(${result.date.format('1970, M-1, d')}), y: Date.parse('1/1/1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}")
             } else {
-                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, dd')}), y: Date.parse('1-1-1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}"))
+                data.put(key, new StringBuilder("{x: Date.UTC(${result.date.format('1970, M-1, d')}), y: Date.parse('1/1/1 ${period.hours}:${(period.minutes.toString().length() == 1 ? '0' : '') + period.minutes}:${period.seconds}')-timeToSubtract, name:'${result.race.name.replace('\'', '\\\'')} ${result.race.date.format("M-dd-yyyy")}'}"))
             }
         }
 
@@ -141,7 +141,7 @@ class BaseChartingController extends BaseController {
         def results = createAveragePlacementChartData(dataByCategory, dataByCategoryByYear, races, SegmentType.Run, type)
 
         render template: "/templates/charts/runAveragePlaces",
-               model: [title: "Average ${type == "oa" ? 'Overall' : 'Age Group'} Placement By Year", height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+               model: [title: "Average ${type == "oa" ? 'Overall' : 'Age Group'} Placement By Year", data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
     }
 
     @Cacheable('chartCache')
@@ -155,6 +155,11 @@ class BaseChartingController extends BaseController {
         mapAverageSegmentResults(races, categories, userId, queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, segmentType)
 
         def results = createAveragesPaceChartData(dataByCategory, dataByCategoryByYear, races, segmentType)
+
+        def hasData = true
+        results.each {hasData &= it.hasData}
+        results.each {println it?.drilldown?.data?.size() > 0}
+        println "has Data $hasData"
 
         if(segmentType == SegmentType.Run || segmentType == SegmentType.Swim) {
             render template: "/templates/charts/runAverages",
@@ -213,7 +218,7 @@ class BaseChartingController extends BaseController {
         }
     }
 
-    protected createAveragesPaceChartData(HashMap<String, List> sortedData, HashMap<String, HashMap<Integer, List>> data, List<RaceCategoryType> races, SegmentType segmentType) {
+    protected List<BarChartSeriesData> createAveragesPaceChartData(HashMap<String, List> sortedData, HashMap<String, HashMap<Integer, List>> data, List<RaceCategoryType> races, SegmentType segmentType) {
         def drilldowns = []
 
         races.eachWithIndex { race, i ->
@@ -242,7 +247,7 @@ class BaseChartingController extends BaseController {
         switch(segmentType) {
             case SegmentType.Run:
             case SegmentType.Swim:
-                return "Date.parse('1-1-1 ${tri.formatDuration(duration: averageTime(segments), formatter: JodaTimeHelper.getPeriodFormat(true, true, true))}')-timeToSubtract"
+                return "Date.parse('1/1/1 ${tri.formatDuration(duration: averageTime(segments), formatter: JodaTimeHelper.getPeriodFormat(true, true, true))}')-timeToSubtract"
                 break
             case SegmentType.Bike:
             default:
@@ -291,7 +296,7 @@ class BaseChartingController extends BaseController {
         def results = createAveragesPaceChartData(dataByCategory, dataByCategoryByYear, races, SegmentType.Run)
 
         render template: "/templates/charts/runAverages",
-               model: [height: 200, width: 200, data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
+               model: [title: 'Average Mile Pace Per Year', data: results, id: resultDiv, categories: categories, totalRaces: totalRaces]
     }
 
     private void mapAverageSegmentResults(List<RaceCategoryType> races, categories, long userId, RaceType queryRaceType, totalRaces, dataByCategoryByYear, dataByCategory, SegmentType segmentType) {
@@ -347,7 +352,6 @@ class BaseChartingController extends BaseController {
             place += segmentPlace
             total += (segmentPlace > 0) ? 1 : 0
         }
-        println "${races?.size()} - ${place}/${total}=${Math.round(place / (total ?: 1))}"
         def result = Math.round(place / (total ?: 1))
         return result
     }
@@ -429,7 +433,7 @@ class BaseChartingController extends BaseController {
     }
 
     protected StringBuilder getTriathlonGraphData(SegmentResult result, SegmentType segmentType) {
-        def x = "Date.UTC(${result.date.format('1970, M-1, dd')})"
+        def x = "Date.UTC(${result.date.format('1970, M-1, d')})"
         def y = (segmentType == SegmentType.Bike) ? result.pace : getSwimRunPaceGraph(result)
         def name = "${result.raceResult.race.name} ${result.raceResult.race.date.format("M-dd-yyyy")}"
 
@@ -437,7 +441,7 @@ class BaseChartingController extends BaseController {
     }
 
     protected String getSwimRunPaceGraph(SegmentResult result) {
-        "Date.parse('1-1-1 00:${result.pace}')-timeToSubtract"
+        "Date.parse('1/1/1 00:${result.pace}')-timeToSubtract"
     }
 
     @Cacheable('chartCache')

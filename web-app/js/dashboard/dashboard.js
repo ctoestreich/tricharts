@@ -21,6 +21,11 @@ var app = {
     getGetOrdinal:function (n) {
         var s = ["th", "st", "nd", "rd"], v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    },
+    removeLoadingClasses: function(o){
+        if(o){
+            o.removeClass('loading-large loading-small');
+        }
     }
 };
 

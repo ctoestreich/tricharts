@@ -57,6 +57,13 @@ class DashboardController extends BaseController {
         series.put("name", "Races")
         series.put("data", pieData)
 
-        render ([series] as JSON)
+        println pieData
+
+        if(pieData.get(0)) {
+            render ([series] as JSON)
+        } else {
+            render ""
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 <%@ page import="com.tgid.tri.race.SegmentType" %>
-<h3>Race Times By State</h3>
+<h4>Race Times By State</h4>
 <div id="averagesDiv"></div>
 <BR>
 
@@ -90,7 +90,11 @@
   });
   </g:if>
 
-  if(!hasData) {
-    $("#${div}").html('No data for ${raceCategoryType} races.')
+  if(!hasData){
+    $("#${div}").parent('div').addClass("nodata");
   }
+
+  %{--if(!hasData) {--}%
+    %{--$("#${div}").html('No data for ${raceCategoryType} races.')--}%
+  %{--}--}%
 </script>

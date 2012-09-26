@@ -32,8 +32,8 @@
 
 </script>
 
-<div class="row-fluid well_clear">
-  <div class="span12">
+<div class="row-fluid well-white">
+  <div class="span12" style="text-align: center">
     <g:link class="btn" controller="dashboard" action="index">View My Dashboard</g:link>&nbsp;
     <g:link class="btn" controller="results" action="index">View All My Results</g:link>&nbsp;
     <g:link class="btn" controller="visualization" action="index">View My Charts</g:link>&nbsp;
@@ -42,18 +42,20 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span4 well"><div id="raceTypes" name="raceTypes" style="height: 300px"></div></div>
-  <div class="span4 well"><div id="raceTypes2012" name="raceTypes2012" style="height: 300px"></div></div>
-  <div class="span4 well"><div id="raceTypeYearly" name="raceTypeYearly" style="height: 300px"></div></div>
+  <div class="span4"><div class="chart smallchart loading-large" id="raceTypes" name="raceTypes" style="height: 300px"><h4>Race Types</h4></div></div>
+
+  <div class="span4"><div class="chart smallchart loading-large" id="raceTypes2012" name="raceTypes2012" style="height: 300px"><h4>Race Types ${new java.util.Date().year + 1900}</h4></div></div>
+
+  <div class="span4"><div class="chart smallchart loading-large" id="raceTypeYearly" name="raceTypeYearly" style="height: 300px"><h4>Races Per Year</h4></div></div>
 </div>
 
-<div class="row-fluid well_clear">
-  <div class="row-fluid"><h4>Triathlon Records</h4></div>
+<div class="row-fluid">
+  <h2>Triathlon Records</h2>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 </div>
 
-<div class="row-fluid well_clear">
-  <div class="row-fluid"><h4>Running Records</h4></div>
+<div class="row-fluid">
+  <h2>Running Records</h2>
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 </div>
 
@@ -162,33 +164,52 @@
 
       jQuery.ajax({
                     type:'POST',
-                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
+                    url:'${createLink(controller: 'dashboard', action: 'racesCompleted', params: ['user.id', params?.user?.id])}',
                     data:{ 'user.id':'${params?.user?.id}'},
-                    success:function (data, textStatus) {
-                      console.log(data);
-                      options.series = data;
-                      racesCompletedChart = new Highcharts.Chart(options);
+                     complete:function(){
+                    $('#raceTypes').removeClass('loading-large');
                     },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) {
-                    }});
-
-      jQuery.ajax({
-                    type:'POST',
-                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
-                    data:{ 'user.id':'${params?.user?.id}', year: ${new java.util.Date().year +1900}},
                     success:function (data, textStatus) {
-                      options2.series = data;
-                      racesCompleted2012Chart = new Highcharts.Chart(options2);
+                        if(data){
+                            options.series = data;
+                            racesCompletedChart = new Highcharts.Chart(options);
+                        } else {
+                            $('#raceTypes').addClass('nodata');
+                        }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
                     }});
       jQuery.ajax({
                     type:'POST',
-                    url:'${createLink(controller: 'dashboard', action:'racesCompleted', params:['user.id',params?.user?.id])}',
+                    url:'${createLink(controller: 'dashboard', action: 'racesCompleted', params: ['user.id', params?.user?.id])}',
+                    data:{ 'user.id':'${params?.user?.id}', year: ${new java.util.Date().year + 1900}},
+                    complete:function(){
+                    $('#raceTypes2012').removeClass('loading-large');
+                    },
+                    success:function (data, textStatus) {
+                        if(data){
+                            options2.series = data;
+                            racesCompleted2012Chart = new Highcharts.Chart(options2);
+                            } else {
+                            $('#raceTypes2012').addClass('nodata');
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    }});
+      jQuery.ajax({
+                    type:'POST',
+                    url:'${createLink(controller: 'dashboard', action: 'racesCompleted', params: ['user.id', params?.user?.id])}',
                     data:{ 'user.id':'${params?.user?.id}', yearly: 'true'},
+                     complete:function(){
+                        $('#raceTypeYearly').removeClass('loading-large');
+                    },
                     success:function (data, textStatus) {
-                      options3.series = data;
-                      racesCompletedYearlyChart = new Highcharts.Chart(options3);
+                    if(data){
+                        options3.series = data;
+                        racesCompletedYearlyChart = new Highcharts.Chart(options3);
+                        } else {
+                            $('#raceTypeYearly').addClass('nodata');
+                        }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
                     }});

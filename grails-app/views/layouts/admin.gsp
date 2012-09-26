@@ -36,8 +36,8 @@
   </div>
 
   <div class="row-fluid">
-    <div class="span3 well">
-      <cache:render template="/templates/admin/adminNav" key="${request.forwardURI}"/>
+    <div class="span3 well-white">
+      <g:render template="/templates/admin/adminNav" />
     </div>
     <div class="span9">
       <g:layoutBody/>

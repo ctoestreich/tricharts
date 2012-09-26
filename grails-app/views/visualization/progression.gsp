@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <title>Trrending</title>
+  <title>Trending</title>
   <r:require modules="dashboard,results, charting,widgets"/>
   <gvisualization:apiImport/>
 </head>
@@ -31,8 +31,8 @@
 </div>
 
 <g:each in="${races}" var="race">
-  <div class="row-fluid" id="${race.raceCategoryType.replace(" ", "_")}"><g:img dir="/images" file="spinner.gif" /></div>
-  <br>
+  <div class="row-fluid chart loading-small" id="${race.raceCategoryType.replace(" ", "_")}"><h3>${race.raceCategoryType} Results</h3></div>
+  <br><p style="text-align: right"><a href="#top"><small>top</small></a></p>
 </g:each>
 <script>
   $(function () {
@@ -46,6 +46,9 @@
                   url:'${createLink(controller: 'visualization', action:'triathlonProgression', params:['user.id',params?.user?.id])}',
                   </g:elseif>
                   data:{ 'user.id': '${params?.user?.id}', raceCategoryType:'${race.raceCategoryType}', div:'${race.raceCategoryType.replace(" ", "_")}Div'},
+                  beforeSend: function(){
+                    %{--$('#${race.raceCategoryType.replace(" ", "_")}').height(400);--}%
+                  },
                   success:function (data, textStatus) {
                     console.log('success');
                     $('#${race.raceCategoryType.replace(" ", "_")}').html(data);

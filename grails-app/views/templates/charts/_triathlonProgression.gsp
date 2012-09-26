@@ -1,7 +1,6 @@
 <%@ page import="com.tgid.tri.race.SegmentType" %>
-<p>
+<h3 class="section" id="ttl${id}">${type} Results</h3>
 
-<h3>${type} Results</h3></p>
 <div id="${id}_Swim"></div>
 <BR>
 
@@ -14,9 +13,15 @@
 %{--<div id="${id}Records" class="span3"></div>--}%
 
 <script>
+  app.removeLoadingClasses($("#${id}_Bike").parent('div'));
+
   var hasData = false;
   <g:each in="${[SegmentType.Swim , SegmentType.Bike, SegmentType.Run]}" var="segmentType">
   <g:if test="${data.get(segmentType)}">
+  $('#${id}_${segmentType}').parent('div').removeClass('chart');
+  $('#${id}_${segmentType}').addClass('chart');
+  $("#${id}_${segmentType}").height(400);
+  %{--$('#ttl${id}').hide();--}%
   hasData = true;
   var chart${segmentType};
   var timeToSubtract = Date.parse("1-1-1 0:00:00");
@@ -39,9 +44,6 @@
                                                  },
                                                  title:{
                                                    text:'${segmentType} Pace ${type}'
-                                                 },
-                                                 subtitle:{
-                                                   text:'How was my progression'
                                                  },
                                                  xAxis:{
                                                    type:'datetime',
@@ -85,6 +87,6 @@
   </g:each>
 
   if(!hasData){
-    $("#${id}_Bike").html('No data for ${type} races.')
+    $("#${id}_Bike").parent('div').height(300).addClass("chart").addClass("nodata");
   }
 </script>

@@ -1,6 +1,6 @@
 package com.tgid.tri.auth
 
-class RegistrationCode {
+class PasswordCode {
 
     String username
     String token = UUID.randomUUID().toString().replaceAll('-', '')
@@ -9,7 +9,7 @@ class RegistrationCode {
 
     static mapping = {
         version false
-        username index: 'UserName_Index', email: true
+        username index: 'UserNamePassword_Index', email: true
     }
 
     static constraints = {

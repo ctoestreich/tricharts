@@ -42,6 +42,26 @@ class UserService {
         }
     }
 
+
+    PasswordCode createPasswordCode(User user) {
+        def passwordCode = PasswordCode.findByUsername(user.username)
+        if(passwordCode){
+            PasswordCode.withNewTransaction {
+                def codes = PasswordCode.findAllByUsername(user.username)
+                codes*.delete()
+            }
+        }
+
+        passwordCode = new PasswordCode(username: user.username)
+
+        if(passwordCode.validate()) {
+            passwordCode.save(flush: true)
+            return passwordCode
+        }
+
+        return null
+    }
+
     RegistrationCode createRegistrationCode(User user) {
         def registrationCode = RegistrationCode.findOrCreateWhere(username: user.username)
         if(registrationCode.validate()) {

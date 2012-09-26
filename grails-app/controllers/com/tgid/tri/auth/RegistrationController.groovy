@@ -49,18 +49,61 @@ class RegistrationController {
             return
         }
 
-        if(!RegistrationCode.findByUsername(userInstance?.username)) {
-            def registrationCode = userService.createRegistrationCode(userInstance)
+//        def registrationCode = RegistrationCode.findByUsername(userInstance?.username)
+//        if(!registrationCode) {
+        def registrationCode = userService.createRegistrationCode(userInstance)
+//        }
+
+        if(registrationCode) {
             sendRegistrationEmail(userInstance, registrationCode)
         }
 
         render view: 'newuser', model: [userInstance: userInstance]
     }
 
+    def password() {
+        def passwordCode = PasswordCode.findByToken(params?.t)
+        def userInstance = User.findByUsername(passwordCode?.username)
+        def racers = []
+        switch(request.method) {
+            case 'GET':
+                if(!passwordCode) {
+                    flash.message = message(code: 'confirmation.code.notfound')
+                } else {
+                    passwordCode.dateFulfilled = new Date()
+                    passwordCode.save(flush: true)
+                }
+                break;
+            case 'POST':
+                if(params?.password != params?.password2) {
+                    userInstance.errors.rejectValue('password', "user.password.not.match", "Passwords do not match")
+                    render view: 'resetPassword', model: [userInstance: userInstance], params: [t: params.t]
+                    return
+                }
+
+                userInstance.password = params.password
+
+                if(!userInstance.validate()) {
+                    render view: 'resetPassword', model: [userInstance: userInstance], params: [t: params.t]
+                    return
+                }
+
+                userInstance.save(flush: true)
+
+                springSecurityService.reauthenticate userInstance.username
+
+                redirect controller: 'dashboard', action: 'index'
+                return
+        }
+
+        render view: 'resetPassword', model: [userInstance: userInstance], params: [t: params.t]
+    }
+
     def confirmation() {
         def registrationCode = RegistrationCode.findByToken(params?.t)
         def racers = [], user = null
         if(registrationCode) {
+            registrationCode.save(dateFulfilled: new Date())
             user = User.findByUsername(registrationCode.username)
             user.enabled = true
             user.accountExpired = false
@@ -86,10 +129,11 @@ class RegistrationController {
     def complete() {
         def user = User.get(params?.userID)
         def save = false
-        params.list('racers')?.each { Long racerId ->
-            if(!Racer.findByUserAndRacerID(user, racerId)) {
+        params.list('racers')?.each { racerId ->
+            def rid = convertRacerId(racerId)
+            if(rid && !Racer.findByUserAndRacerID(user, rid)) {
                 save = true
-                user.addToRacers(new Racer(racerID: racerId, lastImport: new Date() - 2))
+                user.addToRacers(new Racer(racerID: rid, lastImport: new Date() - 2))
             }
         }
         if(save) {user.save(flush: true)}
@@ -103,9 +147,35 @@ class RegistrationController {
         redirect controller: 'dashboard', action: 'index'
     }
 
+    private long convertRacerId(racerId) {
+        try {
+            return Long.parseLong(racerId.toString())
+        } catch(NumberFormatException e) {
+            log.error e
+            return 0
+        }
+    }
+
+    def forgotPassword() {
+        render view: 'forgotPassword', model: [userInstance: new User()]
+    }
+
     @Cacheable("siteCache")
     def resend() {
         [userInstance: new User()]
+    }
+
+    def resendPasswordEmail() {
+        def userInstance = User.findByUsername(params?.username)
+        if(!userInstance) {
+            render g.message(code: 'user.not.found', args: [params?.username, createLink(controller: 'registration', action: 'index')])
+            return
+        }
+
+        def passwordCode = userService.createPasswordCode(userInstance)
+        sendPasswordEmail(userInstance, passwordCode)
+
+        render g.message(code: 'user.email.sent', args: [params?.username])
     }
 
     def resendRegistrationEmail() {
@@ -117,12 +187,44 @@ class RegistrationController {
             return
         }
 
-        if(!RegistrationCode.findByUsername(userInstance?.username)) {
-            def registrationCode = userService.createRegistrationCode(userInstance)
+        def registrationCode = userService.createRegistrationCode(userInstance)
+
+        if(registrationCode) {
             sendRegistrationEmail(userInstance, registrationCode)
         }
 
         render g.message(code: 'user.email.sent', args: [params?.username])
+    }
+
+    private String sendPasswordEmail(User user, PasswordCode passwordCode) {
+        def url = generateLink('password', [t: passwordCode.token])
+        def body = grailsApplication.config.security.ui.password.emailBody
+        if(body.contains('$')) {
+            body = evaluate(body, [user: user, url: url])
+        }
+
+        log.info body.toString()
+
+        runAsync {
+
+            SendGridEmail email = new SendGridEmailBuilder()
+                    .from("christian@tricharts.com")
+                    .to(passwordCode.username)
+                    .subject("TriCharts.com Password Reset Link")
+                    .withHtml(body.toString())
+                    .build()
+
+            sendGridService.send(email)
+
+//            sendMail {
+//                to registrationCode.username
+//                from "acetrike@gmail.com"
+//                subject "Registration Link"
+//                html body.toString()
+//            }
+        }
+
+        return body.toString()
     }
 
     private String sendRegistrationEmail(User user, RegistrationCode registrationCode) {

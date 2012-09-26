@@ -1,8 +1,8 @@
 <div class="row-fluid">
-  <div class="<g:if test="${showButtons != "no"}">span4</g:if><g:else>span9</g:else>"><h3>${sport}</h3></div>
+  <div class="<g:if test="${showButtons != "no"}">span6</g:if><g:else>span12</g:else>"><h4>${sport}</h4></div>
 
-  <div class="<g:if test="${showButtons != "no"}">span8</g:if><g:else>span3</g:else>">
-    <g:if test="${showButtons != "no"}">
+  <g:if test="${showButtons != "no"}">
+    <div class="span6">
       <div class="btn-group-wrap-right">
         <div class="btn-group">
           <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
@@ -32,8 +32,8 @@
         </div>
 
       </div>
-    </g:if>
-  </div>
+    </div>
+  </g:if>
 </div>
 
 <g:if test="${showButtons != "no"}">

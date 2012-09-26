@@ -1,15 +1,23 @@
-<p><h3>${type} Results</h3></p>
+<h4 id="ttl${id}">${type} Results</h4>
 <div id="${id}"></div>
 <br>
 %{--Maybe do records here?--}%
 %{--<div id="${id}Records" class="span3"></div>--}%
 
 <script>
+  var timeToSubtract = Date.parse("1/1/1 0:00:00");
+  console.log(timeToSubtract);
+  console.log(Date.parse('1/1/1 0:05:31'));
+  console.log(Date.parse('1/1/1 0:05:31') - timeToSubtract);
+  app.removeLoadingClasses($("#${id}").parent('div'));
   var hasData = false;
   <g:if test="${data}">
+  $('#${id}').parent('div').removeClass('chart');
+  $('#${id}').addClass('chart');
+  $('#ttl${id}').hide();
   hasData = true;
   var chart;
-  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+//  var timeToSubtract = Date.parse("1-1-1 0:00:00");
     $(function(){
   chart = new Highcharts.Chart({
                                  plotOptions:{
@@ -34,9 +42,6 @@
                                  },
                                  title:{
                                    text:'${type} Results'
-                                 },
-                                 subtitle:{
-                                   text:'How was my progression'
                                  },
                                  xAxis:{
                                    type:'datetime',
@@ -72,6 +77,7 @@
   </g:if>
 
   if(!hasData){
-    $("#${id}").html('No data for ${type} races.')
+    $("#${id}").parent('div').height(300).addClass("chart").addClass("nodata");
   }
+
 </script>

@@ -33,30 +33,27 @@
     </div>
   </div>
   <br />
-  <div class="row-fluid">
+  <div class="row-fluid well-white">
     <div class="span4">
       <g:img dir="/images/site" file="glyphicons_042_group.png" class="hp-icon"/>
-      <h2>Athletes</h2>
-
+      <h3>Athletes</h3>
       <p>Whether you are a runner, swimmer, cyclist or triathlete this site will aggregate your results.</p>
     </div>
 
     <div class="span4">
       <g:img dir="/images/site" file="glyphicons_079_podium.png" class="hp-icon"/>
-      <h2>Results</h2>
-
+      <h3>Results</h3>
       <p>Results will be imported automatically from Athlinks when you register and then weekly there after.  You may also manually input results which is easy and quick.</p>
     </div>
 
     <div class="span4">
       <g:img dir="/images/site" file="glyphicons_082_roundabout.png" class="hp-icon"/>
-      <h2>Graphs!</h2>
-
+      <h3>Graphs!</h3>
       <p>After your results are entered, you will be able to see stats and graphs at a glance that you have been tracking in spreadsheets for years.  We are adding new graphs ALL THE TIME!</p>
     </div>
   </div>
   <br />
-  <div class="row-fluid well">
+  <div class="row-fluid  well-white">
     <div>
       <h3>Sample Content</h3>
       <br>
