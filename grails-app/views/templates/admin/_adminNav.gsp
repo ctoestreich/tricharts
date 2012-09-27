@@ -8,11 +8,11 @@
   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
   <li><a href="${createLink(controller: 'raceCategory', action: 'index')}">Race Categories</a></li>
   <li><a href="${createLink(controller: 'coursePattern', action: 'index')}">Course Patterns</a></li>
-  <li><a href="${createLink(controller: 'coursePatternLocal', action: 'index')}">Course Pattern Local</a></li>
-  <li><a href="${createLink(controller: 'coursePatternLocalMap', action: 'index')}">Course Pattern Maps</a></li>
   %{--<li class="nav-header">Results Admin</li>--}%
   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
+  <li><a href="${createLink(controller: 'coursePatternLocal', action: 'index')}">Course Pattern Local</a></li>
+  <li><a href="${createLink(controller: 'coursePatternLocalMap', action: 'index')}">Course Pattern Maps</a></li>
   <li class="nav-header">User Admin</li>
   <li><a href="${createLink(controller: 'user', action: 'index')}">Users</a></li>
   <li><a href="${createLink(controller: 'userRole', action: 'index')}">User Role</a></li>
