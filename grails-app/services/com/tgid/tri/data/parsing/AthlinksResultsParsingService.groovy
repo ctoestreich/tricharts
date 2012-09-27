@@ -132,7 +132,7 @@ class AthlinksResultsParsingService {
             Race.withNewTransaction {
                 def coursePatternLocal = coursePatternService.lookup(course)
                 if(!coursePatternLocal) {
-                    log.info "!! Can't resolve pattern for ${course?.CoursePattern} - skipping"
+                    log.info "Can't resolve pattern for ${course?.CoursePattern} - skipping"
                     return;
                 }
                 race = new Race(
@@ -159,7 +159,7 @@ class AthlinksResultsParsingService {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
 
-            importLoggingService.save(ImportLog(importName: 'Race Import', error: false, description: "Race imported ${race}", complete: true))
+            importLoggingService.save(new ImportLog(importName: 'Race Import', error: false, description: "Race imported ${race}", complete: true))
 
         } catch(Exception e) {
             importLoggingService.save(new ImportLog(importName: 'Race Import', error: true, description: e.message, complete: true))

@@ -7,6 +7,7 @@ class BootStrap {
     def stateService
     def bootStrapService
     def countryService
+    def coursePatternService
 
     def init = { servletContext ->
 
@@ -17,6 +18,7 @@ class BootStrap {
     }
 
     private void createInitialRacesAndResults() {
+        coursePatternService.seedPatternMaps()
         segmentService.seedSegments()
         countryService.seedCountries()
         stateService.seedStates()

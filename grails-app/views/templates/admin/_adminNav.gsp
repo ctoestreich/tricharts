@@ -8,6 +8,8 @@
   <li><a href="${createLink(controller: 'segment', action: 'index')}">Segments</a></li>
   <li><a href="${createLink(controller: 'raceCategory', action: 'index')}">Race Categories</a></li>
   <li><a href="${createLink(controller: 'coursePattern', action: 'index')}">Course Patterns</a></li>
+  <li><a href="${createLink(controller: 'coursePatternLocal', action: 'index')}">Course Pattern Local</a></li>
+  <li><a href="${createLink(controller: 'coursePatternLocalMap', action: 'index')}">Course Pattern Maps</a></li>
   %{--<li class="nav-header">Results Admin</li>--}%
   <li><a href="${createLink(controller: 'raceResult', action: 'index')}">Race Results</a></li>
   <li><a href="${createLink(controller: 'segmentResult', action: 'index')}">Segment Results</a></li>
@@ -23,10 +25,11 @@
   <li><a href="${createLink(controller: 'admin', action: 'clearChartCaches')}">Clear Chart Caches</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'clearSiteCaches')}">Clear Site Caches</a></li>
   <li class="nav-header">Job Admin</li>
-  <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'runJob')}">Run Jobs</a></li>
-  <li><a href="${createLink(controller: 'jobLog', action: 'index')}">Job Log</a></li>
+  <li><a href="${createLink(controller: 'admin', action: 'jobSettings')}">Update Job Settings</a></li>
   <li class="nav-header">Logs</li>
+  <li><a href="${createLink(controller: 'jobLog', action: 'index')}">Job Log</a></li>
+  <li><a href="${createLink(controller: 'importLog', action: 'index')}">Import Log</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'viewDebugLog')}">View Info Log</a></li>
   <li><a href="${createLink(controller: 'admin', action: 'viewErrorLog')}">View Error Log</a></li>
 </ul>

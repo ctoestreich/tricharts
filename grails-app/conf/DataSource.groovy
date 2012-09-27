@@ -14,7 +14,7 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://localhost:3306/tricharts"
+            url = "jdbc:mysql://localhost:3306/tricharts?useUnicode=yes&characterEncoding=UTF-8"
             username = "tricharts"
             password = 'Tr1Ch4rt5'
         }
@@ -25,7 +25,7 @@ environments {
             dbCreate = "update"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://tricharts.cryau4uda2kb.us-east-1.rds.amazonaws.com:3306/tricharts"
+            url = "jdbc:mysql://tricharts.cryau4uda2kb.us-east-1.rds.amazonaws.com:3306/tricharts?useUnicode=yes&characterEncoding=UTF-8"
             username = "admin"
             password = '!Chris$4'
             properties {
