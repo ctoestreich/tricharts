@@ -1,7 +1,8 @@
 package com.tgid.tri.common
 
-import org.springframework.dao.DataIntegrityViolationException
+import com.tgid.tri.data.ImportLog
 import grails.plugins.springsecurity.Secured
+import org.springframework.dao.DataIntegrityViolationException
 
 @Secured(['ROLE_ADMIN'])
 class CoursePatternLocalMapController {
@@ -20,13 +21,24 @@ class CoursePatternLocalMapController {
     def create() {
         switch(request.method) {
             case 'GET':
-                [coursePatternLocalMapInstance: new CoursePatternLocalMap(params)]
+                render view: 'create', model: [coursePatternLocalMapInstance: new CoursePatternLocalMap(params)], params: [importLogId: params?.importLogId]
                 break
             case 'POST':
                 def coursePatternLocalMapInstance = new CoursePatternLocalMap(params)
-                if(!coursePatternLocalMapInstance.save(flush: true)) {
-                    render view: 'create', model: [coursePatternLocalMapInstance: coursePatternLocalMapInstance]
-                    return
+                if(!CoursePatternLocalMap.findByMapKey(params?.mapKey)) {
+                    if(!coursePatternLocalMapInstance.save(flush: true)) {
+                        render view: 'create', model: [coursePatternLocalMapInstance: coursePatternLocalMapInstance], params: [importLogId: params?.importLogId]
+                        return
+                    }
+                }
+
+                if(params?.importLogId) {
+                    def importLog = ImportLog.get(params.long('importLogId'))
+                    if(importLog) {
+                        importLog.delete();
+                    }
+                    redirect controller: 'importLog', action: 'list', params: [error: true]
+                    break
                 }
 
                 flash.message = message(code: 'default.created.message', args: [message(code: 'coursePatternLocalMap.label', default: 'CoursePatternLocalMap'), coursePatternLocalMapInstance.id])

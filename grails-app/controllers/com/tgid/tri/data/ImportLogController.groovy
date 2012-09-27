@@ -2,6 +2,10 @@ package com.tgid.tri.data
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import com.tgid.tri.race.RaceType
+import com.tgid.tri.race.StatusType
+import com.tgid.tri.race.RaceCategoryType
+import com.tgid.tri.race.Race
 
 @Secured(['ROLE_ADMIN'])
 class ImportLogController {
@@ -13,8 +17,27 @@ class ImportLogController {
     }
 
     def list() {
+        def query = {
+            if(params.name) {
+                ilike('importName', '%' + params.name + '%')
+            }
+            if(params.error) {
+                eq('error', params.boolean('error'))
+            }
+            if(params.sort) {
+                order(params.sort, params.order)
+            }
+            if(params.minDate){
+                gte('createDate', params.date('minDate', 'MM/dd/yyyy'))
+            }
+        }
+
+        def criteria = ImportLog.createCriteria()
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [importLogInstanceList: ImportLog.list(params), importLogInstanceTotal: ImportLog.count()]
+        def logs = criteria.list(query, max: params.max, offset: params.offset)
+        def filters = [name: params.name, error: params.error, minDate: params.minDate]
+
+        [importLogInstanceList: logs, importLogInstanceTotal: logs.totalCount, filters: filters]
     }
 
     def create() {

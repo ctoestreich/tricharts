@@ -13,6 +13,12 @@ class CoursePatternLocalMap {
     static mapping = {
         autoTimestamp true
         version true
-        mapKey index: 'CoursePatternMapKey_Index'
+        mapKey index: 'CoursePatternMapKey_Index', unique: true
+        sort 'mapKey'
+    }
+
+    @Override
+    String toString() {
+        "$mapKey = $coursePatternLocal"
     }
 }

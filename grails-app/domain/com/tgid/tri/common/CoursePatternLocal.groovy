@@ -8,7 +8,6 @@ class CoursePatternLocal {
     RaceCategoryType raceCategoryType
     DistanceType distanceType
 
-
     static constraints = {
         distance min: 0.0d
     }
@@ -16,5 +15,11 @@ class CoursePatternLocal {
     static mapping = {
         autoTimestamp true
         version true
+        sort 'raceCategoryType'
+    }
+
+    @Override
+    String toString() {
+        "${raceCategoryType?.raceCategoryType} $distance ${distanceType}"
     }
 }

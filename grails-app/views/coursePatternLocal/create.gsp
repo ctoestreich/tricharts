@@ -51,6 +51,8 @@
 
 				<fieldset>
 					<g:form class="form-horizontal" action="create" >
+                      <g:hiddenField name="returnToMap" value="${params?.returnToMap}" />
+                      <g:hiddenField name="mapKey" value="${params?.mapKey}" />
 						<fieldset>
 							<f:all bean="coursePatternLocalInstance"/>
 							<div class="form-actions">

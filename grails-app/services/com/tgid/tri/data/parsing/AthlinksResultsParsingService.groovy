@@ -159,7 +159,7 @@ class AthlinksResultsParsingService {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
 
-            importLoggingService.save(new ImportLog(importName: 'Race Import', error: false, description: "Race imported ${race}", complete: true))
+            importLoggingService.save(new ImportLog(importName: 'Race Import', error: false, description: "Race imported ${race.toString()}", complete: true))
 
         } catch(Exception e) {
             importLoggingService.save(new ImportLog(importName: 'Race Import', error: true, description: e.message, complete: true))

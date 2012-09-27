@@ -30,7 +30,7 @@ class CoursePatternService {
         else if(testForTenKilometer(name)) { return CoursePatternLocal.findOrSaveWhere(distance: 10d, raceCategoryType: RaceCategoryType.TenKilometer, distanceType: DistanceType.Kilometers) }
         else if(testForDuathlon(name)) { return CoursePatternLocal.findOrSaveWhere(distance: 45d, raceCategoryType: RaceCategoryType.Duathlon, distanceType: DistanceType.Kilometers) }
 
-        importLoggingService.save(new ImportLog(importName: 'Pattern Lookup', error: true, description: "Lookup failed for Pattern: (${course?.CoursePattern}) Name: (${name})", complete: true))
+        importLoggingService.save(new ImportLog(importName: 'Pattern Lookup Failure', error: true, description: "${course?.CoursePattern}", complete: true))
 
         return null
     }
