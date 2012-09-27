@@ -2,6 +2,8 @@ package com.tgid.tri.data.parsing
 
 import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.User
+import com.tgid.tri.data.ImportLog
+import com.tgid.tri.data.ImportLoggingService
 import com.tgid.tri.results.RaceResult
 import com.tgid.tri.results.RaceResultService
 import groovy.json.JsonSlurper
@@ -16,6 +18,7 @@ class AthlinksResultsParsingService {
     RaceResultService raceResultService
     CoursePatternService coursePatternService
     RaceCategoryService raceCategoryService
+    ImportLoggingService importLoggingService
 
     def retrieveResults(User user) {
         importAthlinkRaces(user)
@@ -155,7 +158,11 @@ class AthlinksResultsParsingService {
             if(race) {
                 importResult(user, raceMap.EntryID, course.EventCourseID)
             }
+
+            importLoggingService.save(ImportLog(importName: 'Race Import', error: false, description: "Race imported ${race}", complete: true))
+
         } catch(Exception e) {
+            importLoggingService.save(new ImportLog(importName: 'Race Import', error: true, description: e.message, complete: true))
             throw e
         }
     }
@@ -173,7 +180,7 @@ class AthlinksResultsParsingService {
         log.info "Creating result for ${eventCourseID} entry: ${entryID}"
 
         def racesUrl = "http://api.athlinks.com/results/${entryID}?key=${grailsApplication.config.athlinks.key}&format=json"
-        def result = null
+        def result
 
         try {
             String apiString = new URL(racesUrl).text

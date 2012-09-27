@@ -1,15 +1,16 @@
-package com.tgid.tri.job
+package com.tgid.tri.data
 
-class JobLog {
+class ImportLog {
 
-    String jobName
+    String importName
     String description
     Boolean complete = false
+    Boolean error = false
     Date createDate = new Date()
 
     static constraints = {
-        jobName blank: false
-        description blank: true, nullable: true
+        importName blank: false
+        description blank: true, nullable: true, maxSize: 1000
     }
 
     static mapping = {

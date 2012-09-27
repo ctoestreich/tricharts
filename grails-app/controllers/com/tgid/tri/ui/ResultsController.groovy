@@ -50,9 +50,11 @@ class ResultsController extends BaseController {
         switch(request.method) {
             case 'POST':
                 def raceInstance = Race.get(params?.raceId)
+                def segments = params.list("segments")
 
-                params?.segments?.toString()?.split(',')?.each {
-                    raceInstance.addToSegments(new RaceSegment(segment: Segment.get(it)))
+                segments?.each {
+                    println it
+                    raceInstance.addToSegments(new RaceSegment(segment: Segment.get(it.toString())))
                 }
 
                 if(!raceInstance.save(flush: true)) {
@@ -90,11 +92,11 @@ class ResultsController extends BaseController {
                     raceInstance.save(flush: true)
                 }
 
-                flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
                 if(raceInstance.raceType == RaceType.Triathlon) {
                     render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance]
                     break
                 } else {
+                    flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
                     redirect action: 'index', id: raceInstance.id
                     break
                 }

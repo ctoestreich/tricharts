@@ -1,15 +1,19 @@
 package com.tgid.tri.auth
 
+import com.tgid.tri.data.ImportLog
 import groovy.json.JsonSlurper
 
 class CountryService {
+
+    def importLoggingService
 
     void seedCountries() {
         def countries = new JsonSlurper().parseText(countryJson)
         countries.each {
             try {
-                Country.findOrSaveWhere(countryID: it.CountryID.trim(), countryID3: it.CountryID3.trim(), countryName: it.CountryName.trim() )
+                Country.findOrSaveWhere(countryID: it.CountryID.trim(), countryID3: it.CountryID3.trim(), countryName: it.CountryName.trim())
             } catch(Exception e) {
+                importLoggingService.save(new ImportLog(importName: 'Seed Countries', error: true, description: e.message, complete: true))
                 log.error e
             }
         }

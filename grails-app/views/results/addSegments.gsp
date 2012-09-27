@@ -52,7 +52,7 @@
 <h3>Add segments to ${raceInstance}</h3>
 <br/>
 <g:form controller="results" action="addSegments" name="addSegmentsForm" id="addSegmentsForm">
-  <g:hiddenField name="segments" id="segments" value=""/>
+  %{--<g:hiddenField name="segments" id="segments" value=""/>--}%
   <g:hiddenField name="raceId" value="${raceInstance.id}"/>
 
   <div class="row-fluid">
@@ -78,7 +78,7 @@
 
       <div class="tab-content"><div class="tab-pane active" id="swim">
         <ul id="segmentSwim" class="connectedSortable">
-          <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Swim).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+          <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Swim).sort {a, b -> a.distance <=> b.distance}}" var="segment">
             <li class="well" data-id="${segment.id}">${segment}</li>
           </g:each>
         </ul>
@@ -86,7 +86,7 @@
 
         <div class="tab-pane" id="bike">
           <ul id="segmentBike" class="connectedSortable">
-            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Bike).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Bike).sort {a, b -> a.distance <=> b.distance}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>
@@ -94,7 +94,7 @@
 
         <div class="tab-pane" id="run">
           <ul id="segmentRun" class="connectedSortable">
-            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Run).unique(new SegmentComparator()).sort {a, b -> a.distance <=> b.distance}}" var="segment">
+            <g:each in="${com.tgid.tri.race.Segment.findAllBySegmentType(SegmentType.Run).sort {a, b -> a.distance <=> b.distance}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>
@@ -104,7 +104,7 @@
           <ul id="segmentTransition" class="connectedSortable">
             <g:each in="${com.tgid.tri.race.Segment.where {
               segmentType == SegmentType.T1 || segmentType == SegmentType.T2
-            }.list().unique(new SegmentComparator()).sort {a, b -> a.toString() <=> b.toString()}}" var="segment">
+            }.list().sort {a, b -> a.toString() <=> b.toString()}}" var="segment">
               <li class="well" data-id="${segment.id}">${segment}</li>
             </g:each>
           </ul>
@@ -132,9 +132,10 @@
     $('#saveSegments').on('click', function () {
       var ids = [];
       $('#segmentOptIn li').each(function (i, o) {
+        $('#addSegmentsForm').append("<input type='hidden' name='segments' value=" + $(o).data('id') + ">")
         ids.push($(o).data('id'));
       });
-      $('#segments').val(ids);
+      //$('#segments').val(ids);
       console.log($('#segments').val());
       if(ids.length > 0) {
         $('#addSegmentsForm').submit()

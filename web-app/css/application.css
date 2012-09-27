@@ -353,11 +353,15 @@ h2 {
     padding-right: 10px;
 }
 
-#dob_day {
+#dob_day, #date_day {
     width: 60px;
 }
 
-#dob_year {
+#dob_month, #date_month {
+    width: 120px;
+}
+
+#dob_year, #date_year {
     width: 90px;
 }
 
