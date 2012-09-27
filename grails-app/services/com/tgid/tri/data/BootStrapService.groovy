@@ -66,9 +66,9 @@ class BootStrapService {
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/mnman11b.html').save()
 
-        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.3f, DistanceType.Miles, SegmentType.Swim))
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.3, DistanceType.Miles, SegmentType.Swim))
         def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
-        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13f, DistanceType.Miles, SegmentType.Bike))
+        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13, DistanceType.Miles, SegmentType.Bike))
         def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()
         def fiveKilometerRun = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(3, DistanceType.Miles, SegmentType.Run))
 
@@ -88,9 +88,9 @@ class BootStrapService {
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results11/man11b.html').save()
 
-        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5f, DistanceType.Miles, SegmentType.Swim))
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5, DistanceType.Miles, SegmentType.Swim))
         def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
-        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13.5f, DistanceType.Miles, SegmentType.Bike))
+        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13.5, DistanceType.Miles, SegmentType.Bike))
         def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()
         def fiveKilometerRun = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(5, DistanceType.Kilometers, SegmentType.Run))
 
@@ -117,9 +117,9 @@ class BootStrapService {
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.pigmantri.com/jmsracing/results12/man12b.html').save()
 
-        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5f, DistanceType.Miles, SegmentType.Swim))
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5, DistanceType.Miles, SegmentType.Swim))
         def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
-        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13.5f, DistanceType.Miles, SegmentType.Bike))
+        def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(13.5, DistanceType.Miles, SegmentType.Bike))
         def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()
         def fiveKilometerRun = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(5, DistanceType.Kilometers, SegmentType.Run))
 
@@ -139,7 +139,7 @@ class BootStrapService {
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://www.onlineraceresults.com/race/view_plain_text.php?race_id=15976').save()
 
-        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.33f, DistanceType.Miles, SegmentType.Swim))
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.33, DistanceType.Miles, SegmentType.Swim))
         def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
         def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(10, DistanceType.Miles, SegmentType.Bike))
         def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()
@@ -205,7 +205,7 @@ class BootStrapService {
                             raceCategoryType: RaceCategoryType.Sprint, statusType: StatusType.Approved,
                             resultsUrl: 'http://live.mtecresults.com/race/show/942').save()
 
-        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5f, DistanceType.Miles, SegmentType.Swim))
+        def swimRaceSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0.5, DistanceType.Miles, SegmentType.Swim))
         def t1Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T1))
         def fifteenMileBikeSegment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(15, DistanceType.Miles, SegmentType.Bike))
         def t2Segment = RaceSegment.findOrSaveWhere(race: race, segment: segmentService.findOrSaveSegment(0, DistanceType.Yards, SegmentType.T2)).save()

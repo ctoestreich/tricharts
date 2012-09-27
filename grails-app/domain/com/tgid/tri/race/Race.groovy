@@ -11,7 +11,7 @@ class Race {
     RaceType raceType
     DistanceType distanceType
     RaceCategoryType raceCategoryType
-    Float distance = 0.00f
+    Double distance = 0.00
     String resultsUrl
     StatusType statusType = StatusType.Pending
     Long courseID
@@ -30,7 +30,7 @@ class Race {
         date nullable: false
         raceType nullable: false
         distanceType nullable: false
-        distance nullable: false, min: 0.01F
+        distance nullable: false, min: 0.01 as Double
         raceCategoryType nullable: false
         statusType nullable: false
         athlinkRaceID nullable: true

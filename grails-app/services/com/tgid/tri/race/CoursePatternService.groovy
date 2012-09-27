@@ -6,45 +6,46 @@ class CoursePatternService {
 
 //    static transactional = true
 
-    private static final CoursePatternLocal sprint = new CoursePatternLocal(distance: 25.75f, raceCategoryType: RaceCategoryType.Sprint, distanceType: DistanceType.Kilometers)
-    private static final CoursePatternLocal olympic = new CoursePatternLocal(distance: 51.5f, raceCategoryType: RaceCategoryType.Olympic, distanceType: DistanceType.Kilometers)
-    private static final CoursePatternLocal halfIronman = new CoursePatternLocal(distance: 70.3f, raceCategoryType: RaceCategoryType.HalfIronman, distanceType: DistanceType.Miles)
-    private static final CoursePatternLocal ironman = new CoursePatternLocal(distance: 140.6f, raceCategoryType: RaceCategoryType.Ironman, distanceType: DistanceType.Miles)
-    private static final CoursePatternLocal tenKilomter = new CoursePatternLocal(distance: 10, raceCategoryType: RaceCategoryType.TenKilometer, distanceType: DistanceType.Kilometers)
-    private static final CoursePatternLocal halfMarathon = new CoursePatternLocal(distance: 13.1f, raceCategoryType: RaceCategoryType.HalfMarathon, distanceType: DistanceType.Miles)
-    private static final CoursePatternLocal duathlon = new CoursePatternLocal(distance: 45f, raceCategoryType: RaceCategoryType.Duathlon, distanceType: DistanceType.Kilometers)
+    private static final CoursePatternLocal sprint = new CoursePatternLocal(distance: 25.75d, raceCategoryType: RaceCategoryType.Sprint, distanceType: DistanceType.Kilometers)
+    private static final CoursePatternLocal olympic = new CoursePatternLocal(distance: 51.5d, raceCategoryType: RaceCategoryType.Olympic, distanceType: DistanceType.Kilometers)
+    private static final CoursePatternLocal halfIronman = new CoursePatternLocal(distance: 70.3d, raceCategoryType: RaceCategoryType.HalfIronman, distanceType: DistanceType.Miles)
+    private static final CoursePatternLocal ironman = new CoursePatternLocal(distance: 140.6d, raceCategoryType: RaceCategoryType.Ironman, distanceType: DistanceType.Miles)
+    private static final CoursePatternLocal tenKilomter = new CoursePatternLocal(distance: 10d, raceCategoryType: RaceCategoryType.TenKilometer, distanceType: DistanceType.Kilometers)
+    private static final CoursePatternLocal halfMarathon = new CoursePatternLocal(distance: 13.1d, raceCategoryType: RaceCategoryType.HalfMarathon, distanceType: DistanceType.Miles)
+    private static final CoursePatternLocal duathlon = new CoursePatternLocal(distance: 45d, raceCategoryType: RaceCategoryType.Duathlon, distanceType: DistanceType.Kilometers)
 
     private static final HashMap<String, CoursePatternLocal> map = [
-            '1Mi Run': new CoursePatternLocal(distance: 1, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
-            '3Mi Run': new CoursePatternLocal(distance: 3, raceCategoryType: RaceCategoryType.ThreeMile, distanceType: DistanceType.Miles),
-            '5Mi Run': new CoursePatternLocal(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
-            '8Mi Run': new CoursePatternLocal(distance: 8, raceCategoryType: RaceCategoryType.EightMile, distanceType: DistanceType.Miles),
-            '5K': new CoursePatternLocal(distance: 5, raceCategoryType: RaceCategoryType.FiveKilometer, distanceType: DistanceType.Kilometers),
+            '1Mi Run': new CoursePatternLocal(distance: 1d, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
+            '3Mi Run': new CoursePatternLocal(distance: 3d, raceCategoryType: RaceCategoryType.ThreeMile, distanceType: DistanceType.Miles),
+            '5Mi Run': new CoursePatternLocal(distance: 5d, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '8Mi Run': new CoursePatternLocal(distance: 8d, raceCategoryType: RaceCategoryType.EightMile, distanceType: DistanceType.Miles),
+            '5K': new CoursePatternLocal(distance: 5d, raceCategoryType: RaceCategoryType.FiveKilometer, distanceType: DistanceType.Kilometers),
             '10K': tenKilomter,
-            '10Mi Run': new CoursePatternLocal(distance: 10, raceCategoryType: RaceCategoryType.TenMile, distanceType: DistanceType.Miles),
-            '20Mi Run': new CoursePatternLocal(distance: 20, raceCategoryType: RaceCategoryType.TwentyMile, distanceType: DistanceType.Miles),
-            '8K Run': new CoursePatternLocal(distance: 8, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
-            '25K Run': new CoursePatternLocal(distance: 25, raceCategoryType: RaceCategoryType.TwentyFiveKilometer, distanceType: DistanceType.Kilometers),
-            '8K': new CoursePatternLocal(distance: 8, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
-            'Marathon': new CoursePatternLocal(distance: 26.2f, raceCategoryType: RaceCategoryType.Marathon, distanceType: DistanceType.Miles),
+            '10Mi Run': new CoursePatternLocal(distance: 10d, raceCategoryType: RaceCategoryType.TenMile, distanceType: DistanceType.Miles),
+            '20Mi Run': new CoursePatternLocal(distance: 20d, raceCategoryType: RaceCategoryType.TwentyMile, distanceType: DistanceType.Miles),
+            '8K Run': new CoursePatternLocal(distance: 8d, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
+            '25K Run': new CoursePatternLocal(distance: 25d, raceCategoryType: RaceCategoryType.TwentyFiveKilometer, distanceType: DistanceType.Kilometers),
+            '8K': new CoursePatternLocal(distance: 8d, raceCategoryType: RaceCategoryType.EightKilometer, distanceType: DistanceType.Kilometers),
+            'Marathon': new CoursePatternLocal(distance: 26.2d, raceCategoryType: RaceCategoryType.Marathon, distanceType: DistanceType.Miles),
             '13.1Mi Run': halfMarathon,
-            '13.1K Run': new CoursePatternLocal(distance: 13.1f, raceCategoryType: RaceCategoryType.HalfMarathon, distanceType: DistanceType.Kilometers),
+            '13.1K Run': new CoursePatternLocal(distance: 13.1d, raceCategoryType: RaceCategoryType.HalfMarathon, distanceType: DistanceType.Kilometers),
             '1/2 Mara': halfMarathon,
-            '26.2Mi Run': new CoursePatternLocal(distance: 26.2f, raceCategoryType: RaceCategoryType.Marathon, distanceType: DistanceType.Miles),
+            '26.2Mi Run': new CoursePatternLocal(distance: 26.2d, raceCategoryType: RaceCategoryType.Marathon, distanceType: DistanceType.Miles),
             'Half Iron': halfIronman,
             'Ironman': ironman,
             '0.5Mi Swim, 15Mi Bike/Cycle, 3Mi Run': sprint,
             '0.5Mi Swim, 0.5Mi Swim, 15Mi Bike/Cycle, 15Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
             '0.5Mi Swim, 0.5Mi Swim, 13.3Mi Bike/Cycle, 13.3Mi Bike/Cycle, 3.1Mi Run, 3.1Mi Run': sprint,
             '0.5Mi Swim, 21Mi Bike/Cycle, 5.3Mi Run': sprint,
-            '0.5Mi Swim': new CoursePatternLocal(distance: 0.5f, raceCategoryType: RaceCategoryType.HalfMile, distanceType: DistanceType.Miles),
-            '5Mi Mountain Bike': new CoursePatternLocal(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
-            '5Mi Swim': new CoursePatternLocal(distance: 5, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
-            '7.3Mi Run': new CoursePatternLocal(distance: 7.3f, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
-            '1Mi Swim': new CoursePatternLocal(distance: 1, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
-            '2.8Mi Run': new CoursePatternLocal(distance: 2.8f, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
-            '4Mi Run': new CoursePatternLocal(distance: 4f, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
-            '8.2Mi Run': new CoursePatternLocal(distance: 8.2f, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '0.5Mi Swim': new CoursePatternLocal(distance: 0.5d, raceCategoryType: RaceCategoryType.HalfMile, distanceType: DistanceType.Miles),
+            '5Mi Mountain Bike': new CoursePatternLocal(distance: 5d, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '5Mi Swim': new CoursePatternLocal(distance: 5d, raceCategoryType: RaceCategoryType.FiveMile, distanceType: DistanceType.Miles),
+            '7.3Mi Run': new CoursePatternLocal(distance: 7.3d, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '1Mi Swim': new CoursePatternLocal(distance: 1d, raceCategoryType: RaceCategoryType.OneMile, distanceType: DistanceType.Miles),
+            '2.8Mi Run': new CoursePatternLocal(distance: 2.8d, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '4Mi Run': new CoursePatternLocal(distance: 4d, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '8.2Mi Run': new CoursePatternLocal(distance: 8.2d, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Miles),
+            '5.7K Trail Run': new CoursePatternLocal(distance: 5.7d, raceCategoryType: RaceCategoryType.Run, distanceType: DistanceType.Kilometers)
     ]
 
     CoursePatternLocal lookup(Map course) {

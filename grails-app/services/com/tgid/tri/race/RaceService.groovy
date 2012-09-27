@@ -80,8 +80,8 @@ class RaceService {
                 if(segment.contains('RUN') && !runSegment1) {runSegment1 = mapSegment(segment, 'RUN', SegmentType.DuRun1)}
                 else if(segment.contains('BIKE') && !bikeSegment) {bikeSegment = mapSegment(segment, 'BIKE', SegmentType.Bike)}
                 else if(segment.contains('RUN') && !runSegment2 && runSegment1) {runSegment2 = mapSegment(segment, 'RUN', SegmentType.DuRun2)}
-                if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400f) }
-                if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f) }
+                if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400d) }
+                if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400d) }
             }
             addSegmentsToRace(race, [runSegment1, t1Segment, bikeSegment, t2Segment, runSegment2])
         }
@@ -96,8 +96,8 @@ class RaceService {
                 if(segment.contains('SWIM') && !swimSegment) {swimSegment = mapSegment(segment, 'SWIM', SegmentType.Swim)}
                 if(segment.contains('BIKE') && !bikeSegment) {bikeSegment = mapSegment(segment, 'BIKE', SegmentType.Bike)}
                 if(segment.contains('RUN') && !runSegment) {runSegment = mapSegment(segment, 'RUN', SegmentType.Run)}
-                if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400f) }
-                if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f) }
+                if(!t1Segment) { t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400d) }
+                if(!t2Segment) { t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400d) }
             }
             addSegmentsToRace(race, [swimSegment, t1Segment, bikeSegment, t2Segment, runSegment])
         } else {
@@ -115,40 +115,44 @@ class RaceService {
     }
 
     private void mapTriathlonRaceSegments(Race race, Segment swimSegment, Segment runSegment, Segment t1Segment, Segment t2Segment, Segment bikeSegment) {
-        def swimDistance = [distance: 750, distanceType: DistanceType.Meters]
-        def bikeDistance = [distance: 20, distanceType: DistanceType.Kilometers]
-        def runDistance = [distance: 5, distanceType: DistanceType.Kilometers]
+        def swimDistance = [distance: 750d, distanceType: DistanceType.Meters]
+        def bikeDistance = [distance: 20d, distanceType: DistanceType.Kilometers]
+        def runDistance = [distance: 5d, distanceType: DistanceType.Kilometers]
 
         //map known race distances
         if(race.raceCategoryType == RaceCategoryType.Olympic) {
-            swimDistance = [distance: 1.5f, distanceType: DistanceType.Kilometers]
-            bikeDistance = [distance: 40, distanceType: DistanceType.Kilometers]
-            runDistance = [distance: 10, distanceType: DistanceType.Kilometers]
+            swimDistance = [distance: 1.5d, distanceType: DistanceType.Kilometers]
+            bikeDistance = [distance: 40d, distanceType: DistanceType.Kilometers]
+            runDistance = [distance: 10d, distanceType: DistanceType.Kilometers]
         } else if(race.raceCategoryType == RaceCategoryType.Ironman) {
-            swimDistance = [distance: 2.4f, distanceType: DistanceType.Miles]
-            bikeDistance = [distance: 112, distanceType: DistanceType.Miles]
-            runDistance = [distance: 26.2f, distanceType: DistanceType.Miles]
+            swimDistance = [distance: 2.4d, distanceType: DistanceType.Miles]
+            bikeDistance = [distance: 112d, distanceType: DistanceType.Miles]
+            runDistance = [distance: 26.2d, distanceType: DistanceType.Miles]
         } else if(race.raceCategoryType == RaceCategoryType.HalfIronman) {
-            swimDistance = [distance: 1.2f, distanceType: DistanceType.Miles]
-            bikeDistance = [distance: 56, distanceType: DistanceType.Miles]
-            runDistance = [distance: 13.1f, distanceType: DistanceType.Miles]
+            swimDistance = [distance: 1.2d, distanceType: DistanceType.Miles]
+            bikeDistance = [distance: 56d, distanceType: DistanceType.Miles]
+            runDistance = [distance: 13.1d, distanceType: DistanceType.Miles]
         }
 
-        if(!swimSegment) {swimSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Swim, distanceType: swimDistance.distanceType, distance: swimDistance.distance.floatValue())}
-        if(!t1Segment) {t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400f)}
-        if(!bikeSegment) {bikeSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Bike, distanceType: bikeDistance.distanceType, distance: bikeDistance.distance.floatValue())}
-        if(!t2Segment) {t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400f)}
-        if(!runSegment) {runSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Run, distanceType: runDistance.distanceType, distance: runDistance.distance.floatValue())}
+        if(!swimSegment) {swimSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Swim, distanceType: swimDistance.distanceType, distance: swimDistance.distance)}
+        if(!t1Segment) {t1Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T1, distanceType: DistanceType.Meters, distance: 400d)}
+        if(!bikeSegment) {bikeSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Bike, distanceType: bikeDistance.distanceType, distance: bikeDistance.distance)}
+        if(!t2Segment) {t2Segment = Segment.findOrSaveWhere(segmentType: SegmentType.T2, distanceType: DistanceType.Meters, distance: 400d)}
+        if(!runSegment) {runSegment = Segment.findOrSaveWhere(segmentType: SegmentType.Run, distanceType: runDistance.distanceType, distance: runDistance.distance)}
 
         addSegmentsToRace(race, [swimSegment, t1Segment, bikeSegment, t2Segment, runSegment])
-
     }
 
     private Segment mapSegment(String segment, String search, SegmentType segmentType) {
         segment = segment.replaceAll(/[ ]*${search}.*/, '')
         def distance = segment.replaceAll(/(\d+\.*\d*).*/, '$1')
         def distanceType = mapDistanceType(segment.replaceAll(/\d+\.*\d*([ A-Z]+)/, '$1'))
-        return Segment.findOrSaveWhere(segmentType: segmentType, distanceType: distanceType, distance: Float.parseFloat(distance))
+        try {
+            return Segment.findOrSaveWhere(segmentType: segmentType, distanceType: distanceType, distance: Double.parseDouble(distance))
+        } catch(Exception e){
+            log.error e
+            return null
+        }
     }
 
     private DistanceType mapDistanceType(String distanceType) {

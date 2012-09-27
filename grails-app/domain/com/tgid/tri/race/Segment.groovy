@@ -4,7 +4,7 @@ class Segment {
 
     SegmentType segmentType
     DistanceType distanceType
-    Float distance = 0.00f
+    Double distance = 0.00
 
     static constraints = {
         segmentType nullable: false, unique: ['distanceType', 'distance']

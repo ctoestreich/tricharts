@@ -45,8 +45,8 @@ class PaceService {
         if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
             return ['', '']
         }
-        def distance = result.raceSegment.distance / swimMultiplier(result.raceSegment)
-        Duration swimPace = Duration.standardSeconds(new Duration(Math.round(result.duration.millis / distance)).standardSeconds)
+        BigDecimal distance = result.raceSegment.distance / swimMultiplier(result.raceSegment)
+        Duration swimPace = Duration.standardSeconds(new Duration(Math.round(result.duration.millis / (distance ?: 1))).standardSeconds)
         def paceDuration = swimPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
 
@@ -59,7 +59,7 @@ class PaceService {
             return ['', '']
         }
         def distance = result.raceSegment.distance / runAndBikeMultiplier(result.raceSegment)
-        Duration runPace = Duration.standardSeconds(new Duration(Math.round(result.duration.millis / distance)).standardSeconds)
+        Duration runPace = Duration.standardSeconds(new Duration(Math.round(result.duration.millis / (distance?:1))).standardSeconds)
         def paceDuration = runPace
         PeriodFormatter formatter = JodaTimeHelper.periodFormat
         def display = formatter.print(runPace.toPeriod())

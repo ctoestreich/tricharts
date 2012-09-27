@@ -6,7 +6,7 @@ import com.tgid.tri.race.DistanceType
 /**
  */
 class CoursePatternLocal {
-    Float distance
+    Double distance
     RaceCategoryType raceCategoryType
     DistanceType distanceType
 }
