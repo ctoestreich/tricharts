@@ -91,6 +91,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/redis.clients/jedis/jars/jedis-2.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-pool/commons-pool/jars/commons-pool-1.6.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.bull.javamelody/javamelody-core/jars/javamelody-core-1.37.0.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

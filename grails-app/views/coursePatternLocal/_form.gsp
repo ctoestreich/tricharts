@@ -7,7 +7,7 @@
 		<g:message code="coursePatternLocal.distance.label" default="Distance" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="distance" min="0.0" required="" value="${fieldValue(bean: coursePatternLocalInstance, field: 'distance')}"/>
+	<g:field type="number" name="distance" min="0.0" step="any" required="" value="${fieldValue(bean: coursePatternLocalInstance, field: 'distance')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: coursePatternLocalInstance, field: 'distanceType', 'error')} required">

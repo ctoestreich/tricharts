@@ -52,7 +52,11 @@
 				<fieldset>
 					<g:form class="form-horizontal" action="create" >
 						<fieldset>
-							<f:all bean="segmentInstance"/>
+							<f:with bean="segmentInstance">
+                              <f:field property="segmentType" />
+                              <f:field property="distanceType" />
+                              <f:field property="distance" input-step="any" input-min="0"/>
+							</f:with>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

@@ -29,6 +29,7 @@ enum RaceCategoryType implements Serializable {
     Training('Training'),
     Duathlon('Duathlon'),
     Run('Run'),
+    Swim('Swim'),
     Unknown('?')
 
     String raceCategoryType

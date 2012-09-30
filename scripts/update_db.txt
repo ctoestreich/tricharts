@@ -1,0 +1,3 @@
+grails prod dbm-gorm-diff update-float-column-types.groovy --add
+
+grails prod dbm-update

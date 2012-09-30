@@ -158,8 +158,6 @@ class BaseChartingController extends BaseController {
 
         def hasData = true
         results.each {hasData &= it.hasData}
-        results.each {println it?.drilldown?.data?.size() > 0}
-        println "has Data $hasData"
 
         if(segmentType == SegmentType.Run || segmentType == SegmentType.Swim) {
             render template: "/templates/charts/runAverages",

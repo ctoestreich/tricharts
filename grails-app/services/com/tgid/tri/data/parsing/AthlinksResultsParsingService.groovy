@@ -30,7 +30,6 @@ class AthlinksResultsParsingService {
             racer.save(lastImport: new Date())
         } catch(Exception e) {
             log.error e
-            println e
         }
     }
 
@@ -197,6 +196,7 @@ class AthlinksResultsParsingService {
     private RaceType mapRaceType(Map course) {
         switch(course?.RaceCatDesc) {
             case 'Mountain Biking':
+            case 'Cycling':
                 return RaceType.Biking
             case 'Swimming':
                 return RaceType.Swimming

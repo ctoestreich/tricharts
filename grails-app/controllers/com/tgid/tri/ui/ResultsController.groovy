@@ -53,7 +53,6 @@ class ResultsController extends BaseController {
                 def segments = params.list("segments")
 
                 segments?.each {
-                    println it
                     raceInstance.addToSegments(new RaceSegment(segment: Segment.get(it.toString())))
                 }
 

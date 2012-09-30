@@ -53,6 +53,7 @@ grails.project.dependency.resolution = {
         runtime ":zipped-resources:1.0"
         runtime ":gsp-resources:0.4.1"
         runtime ":spring-security-core:1.2.7.3"
+        runtime ":database-migration:1.1"
 
         compile ":grails-melody:1.14"
         compile ":svn:1.0.2"
@@ -76,7 +77,6 @@ grails.project.dependency.resolution = {
 
         test ":spock:0.6"
         build ":tomcat:$grailsVersion"
-//        runtime ":database-migration:1.1"
         compile ':cache:1.0.0'
     }
 }

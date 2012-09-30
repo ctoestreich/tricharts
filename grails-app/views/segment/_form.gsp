@@ -23,6 +23,6 @@
 		<g:message code="segment.distance.label" default="Distance" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="distance" required="" value="${fieldValue(bean: segmentInstance, field: 'distance')}"/>
+	<g:field type="number" name="distance" step="any" required="" value="${fieldValue(bean: segmentInstance, field: 'distance')}"/>
 </div>
 

@@ -13,7 +13,6 @@ class CountryService {
             try {
                 Country.findOrSaveWhere(countryID: country.CountryID.trim(), countryID3: country.CountryID3.trim(), countryName: country.CountryName.trim())
             } catch(Exception e) {
-                println country
                 importLoggingService.save(new ImportLog(importName: 'Seed Countries', error: true, description: "${e.message}", complete: true))
                 log.error e
             }
