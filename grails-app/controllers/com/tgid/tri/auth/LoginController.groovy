@@ -47,6 +47,9 @@ class LoginController {
         def config = SpringSecurityUtils.securityConfig
 
         if(springSecurityService.isLoggedIn()) {
+            LoginHistory.withTransaction {
+                new LoginHistory(user: (User)springSecurityService?.currentUser).save(flush: true)
+            }
             redirect uri: config.successHandler.defaultTargetUrl
             return
         }

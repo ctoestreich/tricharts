@@ -81,7 +81,7 @@ class VisualizationService {
         [males: males, females: females, you: you]
     }
 
-    @Cacheable("triathlonRecordsCache")
+    @Cacheable(cache="triathlonRecordsCache", keyGenerator="authenticationAwareKeyGenerator")
     Map mapTriathlonRecords(long userId) {
         def data = [:]
         if(userId) {
@@ -96,7 +96,7 @@ class VisualizationService {
         data
     }
 
-    @Cacheable('runningRecordsCache')
+    @Cacheable(cache="runningRecordsCache", keyGenerator="authenticationAwareKeyGenerator")
     Map mapRunningRecords(long userId) {
         def data = [:]
         if(userId) {

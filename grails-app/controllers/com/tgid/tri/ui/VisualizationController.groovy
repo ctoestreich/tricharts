@@ -7,6 +7,7 @@ import com.tgid.tri.race.RaceCategoryType
 import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.SegmentType
 import com.tgid.tri.results.RaceResult
+import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugin.springcache.annotations.Cacheable
 import grails.plugins.springsecurity.Secured
 
@@ -92,6 +93,11 @@ class VisualizationController extends BaseChartingController {
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
+    @CacheFlush(["chartCache", "triathlonRecordsCache", "runningRecordsCache"])
+    def clearRecordsCache() {
+        "ok"
+    }
+
     @Cacheable(cache = 'chartCache', keyGenerator = 'authenticationAwareKeyGenerator')
     def runningAveragePlaces() {
         User user = requestedUser
@@ -136,7 +142,7 @@ class VisualizationController extends BaseChartingController {
         renderTriathlonAveragesChart(resultDiv, userId, queryRaceType, segmentType)
     }
 
-    @Cacheable("runningRecordsCache")
+    @Cacheable(cache = "runningRecordsCache", keyGenerator = "authenticationAwareKeyGenerator")
     def runningPrs() {
         User user = requestedUser
         def userId = user.id
@@ -146,7 +152,7 @@ class VisualizationController extends BaseChartingController {
         renderRunningPrsChart(resultDiv, userId, queryRaceType)
     }
 
-    @Cacheable("triathlonRecordsCache")
+    @Cacheable(cache = "triathlonRecordsCache", keyGenerator = "authenticationAwareKeyGenerator")
     def triathlonPrs() {
         User user = requestedUser
         def userId = user.id

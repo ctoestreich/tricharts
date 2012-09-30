@@ -28,7 +28,7 @@ class BaseChartingController extends BaseController {
         return []
     }
 
-    @Cacheable("runningRecordsCache")
+    @Cacheable(cache="runningRecordsCache", keyGenerator="authenticationAwareKeyGenerator")
     protected void renderRunningPrsChart(String div, long userId, RaceType raceType) {
         def data = [:]
         def minYear = 0
@@ -57,7 +57,7 @@ class BaseChartingController extends BaseController {
         render template: '/templates/charts/runPrs', model: [types: types, data: data, minYear: minYear, maxYear: maxYear]
     }
 
-    @Cacheable("triathlonRecordsCache")
+    @Cacheable(cache="triathlonRecordsCache", keyGenerator="authenticationAwareKeyGenerator")
     protected void renderTriathlonPrsChart(String div, long userId, RaceType raceType) {
         def data = [:]
         def minYear = 0

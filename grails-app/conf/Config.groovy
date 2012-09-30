@@ -1,9 +1,6 @@
-import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
-import com.tgid.tri.queue.AthlinksResultsImportJesqueJob
-import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
-import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
-import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
+import com.tgid.tri.auth.LoginHistory
 import org.apache.log4j.DailyRollingFileAppender
+import com.tgid.tri.queue.*
 
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
@@ -172,7 +169,17 @@ grails.plugins.springsecurity.authority.className = 'com.tgid.tri.auth.Role'
 
 grails.plugins.springsecurity.facebook.domain.classname = 'com.tgid.tri.auth.FacebookUser'
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/dashboard/index'
-
+grails.plugins.springsecurity.useSecurityEventListener = true
+//grails.plugins.springsecurity.onAuthenticationSuccessEvent = { e, appCtx ->
+//    LoginHistory.withTransaction { new LoginHistory(user: User.findByUsername(e.authentication.name), success: true)}
+//}
+//grails.plugins.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
+//    LoginHistory.withTransaction {
+//        if(User.findByUsername(e.authentication.name)) {
+//            new LoginHistory(user: User.findByUsername(e.authentication.name), success: false).save()
+//        }
+//    }
+//}
 grails.plugins.springsecurity.controllerAnnotations.staticRules = [
         '/monitoring': ['ROLE_ADMIN'],
         '/monitoring/**': ['ROLE_ADMIN']

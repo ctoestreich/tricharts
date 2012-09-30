@@ -136,6 +136,41 @@
       </div>
     </g:form>
 
+    <div class="span12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+
+          <g:sortableColumn property="username" title="${message(code: 'loginHistory.loginDate.label', default: 'Login Date')}"/>
+
+          <g:sortableColumn property="firstName" title="${message(code: 'loginHistory.success.label', default: 'Success')}"/>
+
+          %{--<th></th>--}%
+        </tr>
+        </thead>
+        <tbody>
+        <g:each in="${logins}" var="login">
+          <tr <g:if test="${!login.success}">class="error"</g:if><g:else>class="success"</g:else>>
+
+            <td><g:formatDate date="${login.loginDate}" format="MM/dd/yyyy HH:mm:ss" /></td>
+
+            <td>${fieldValue(bean: login, field: "success")}</td>
+
+            %{--<td class="link">--}%
+              %{--<g:link action="show" id="${userInstance.id}" class="btn btn-small">Show &raquo;</g:link>--}%
+              %{--<a href="${createLink(controller: 'admin', action: 'importRacers', params: [userID: userInstance?.id])}" class="btn  btn-small"><i class="icon-download-alt"></i>--}%
+                %{--Import Racers--}%
+              %{--</a>--}%
+            %{--</td>--}%
+          </tr>
+        </g:each>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <bootstrap:paginate action="show" id="${userInstance.id}" total="${loginsTotal}"/>
+      </div>
+    </div>
   </div>
 
 </div>

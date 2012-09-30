@@ -30,6 +30,11 @@
     ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords', params: ['user.id': params?.user?.id])}
   };
 
+  app.clearRecordsCache = function(){
+    ${remoteFunction(controller: 'visualization', action: 'clearRecordsCache', params: ['user.id': params?.user?.id])}
+    app.loadRunRecords();
+  };
+
   $(function () {
     app.loadRunRecords();
   });
@@ -38,6 +43,7 @@
 
 <div class="row-fluid well-white">
   <div class="span12" style="text-align: center">
+    <g:link class="btn" controller="dashboard" action="index" params="${paramMap}">Refresh </g:link>&nbsp;
     <g:link class="btn" controller="dashboard" action="index" params="${paramMap}">View My Dashboard</g:link>&nbsp;
     <g:link class="btn" controller="results" action="index" params="${paramMap}">View All My Results</g:link>&nbsp;
     <g:link class="btn" controller="visualization" action="index" params="${paramMap}">View My Charts</g:link>&nbsp;
@@ -54,14 +60,12 @@
 </div>
 
 <div class="row-fluid">
-  <h2>Triathlon Records</h2>
-
+  <h2>Triathlon Records&nbsp;<small style="font-size: 9px;"><a href="javascript:app.clearRecordsCache();">refresh</a></small></h2>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 </div>
 
 <div class="row-fluid">
   <h2>Running Records</h2>
-
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 </div>
 

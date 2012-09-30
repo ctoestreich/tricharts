@@ -1,13 +1,14 @@
 package com.tgid.tri.results
 
-import com.tgid.tri.auth.User
 import com.tgid.tri.auth.GenderType
+import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.race.Race
+import com.tgid.tri.race.RaceType
+import com.tgid.tri.race.SegmentType
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap
 import org.joda.time.Duration
-import com.tgid.tri.race.SegmentType
 
 class RaceResultService {
 
@@ -50,9 +51,9 @@ class RaceResultService {
         try {
             def mapSegment = null
             def raceSegment = race?.segments?.sort {a, b -> a.segmentOrder <=> b.segmentOrder}
-            if(segment.ActionCatName == 'Swim'){ mapSegment = raceSegment.find{ it.segmentType == SegmentType.Swim } }
-            if(segment.ActionCatName == 'Bike/Cycle'){ mapSegment= raceSegment.find{ it.segmentType == SegmentType.Bike } }
-            if(segment.ActionCatName == 'Run'){ mapSegment = raceSegment.find{ it.segmentType == SegmentType.Run } }
+            if(segment.ActionCatName == 'Swim') { mapSegment = raceSegment.find { it.segmentType == SegmentType.Swim } }
+            if(segment.ActionCatName == 'Bike/Cycle') { mapSegment = raceSegment.find { it.segmentType == SegmentType.Bike } }
+            if(segment.ActionCatName == 'Run') { mapSegment = raceSegment.find { it.segmentType == SegmentType.Run } }
             if(raceSegment?.get(i)) {
                 def segmentResult = new SegmentResult(raceSegment: mapSegment ?: raceSegment.get(i),
                                                       duration: Duration.millis(segment.Ticks as Long),
@@ -83,22 +84,34 @@ class RaceResultService {
             raceResult.errors.rejectValue('duration', 'raceResult.duration.greater.than.zero')
         }
 
-        def segmentCount = params?.int('segmentCount') ?: 0
+        if(raceResult.race.raceType == RaceType.Running) {
+            def segmentResult = raceResult?.segmentResults?.toList()?.first()
+            if(segmentResult) {
+                segmentResult.duration = raceResult.duration
+                segmentResult.placeOverall = raceResult.placeOverall
+                segmentResult.placeGender = raceResult.placeGender
+                segmentResult.placeAgeGroup = raceResult.placeAgeGroup
+                segmentResult.save(flush: true)
+            }
+        } else {
 
-        (0..<segmentCount).each {
-            String key = "segmentResult[$it]".toString()
-            Map segment = params.get(key) as Map
-            def segmentResult
-            if(segment) {
-                if(segment?.id) {
-                    segmentResult = SegmentResult.get(segment.id)
-                    segmentResult.properties = segment
-                } else {
-                    segmentResult = new SegmentResult(segment)
-                    if(segmentCount == 1) {
-                        mapSegmentResultToRace(raceResult, segmentResult)
+            def segmentCount = params?.int('segmentCount') ?: 0
+
+            (0..<segmentCount).each {
+                String key = "segmentResult[$it]".toString()
+                Map segment = params.get(key) as Map
+                def segmentResult
+                if(segment) {
+                    if(segment?.id) {
+                        segmentResult = SegmentResult.get(segment.id)
+                        segmentResult.properties = segment
+                    } else {
+                        segmentResult = new SegmentResult(segment)
+                        if(segmentCount == 1) {
+                            mapSegmentResultToRace(raceResult, segmentResult)
+                        }
+                        raceResult.addToSegmentResults(segmentResult)
                     }
-                    raceResult.addToSegmentResults(segmentResult)
                 }
             }
         }

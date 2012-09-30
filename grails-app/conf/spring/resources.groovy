@@ -1,12 +1,14 @@
 import org.springframework.cache.ehcache.EhCacheFactoryBean
 import com.tgid.tri.cache.AuthenticationAwareKeyGenerator
+import com.tgid.tri.auth.SpringAuthenticationEventListener
+import com.tgid.tri.auth.SpringAuthenticationFailureEventListener
 
 // Place your Spring DSL code here
 beans = {
 
-    springcacheFilter {
-        keyGenerator = new AuthenticationAwareKeyGenerator()
-    }
+    springAuthenticationEventListener(SpringAuthenticationEventListener)
+
+    springAuthenticationFailureEventListener(SpringAuthenticationFailureEventListener)
 
     authenticationAwareKeyGenerator(AuthenticationAwareKeyGenerator)
 

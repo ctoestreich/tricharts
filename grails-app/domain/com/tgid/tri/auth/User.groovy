@@ -19,7 +19,7 @@ class User {
     boolean passwordExpired
     GenderType genderType
 
-    static hasMany = [races: Race, racers: Racer, states: State]
+    static hasMany = [races: Race, racers: Racer, states: State, logins: LoginHistory]
 
     static constraints = {
         username blank: false, unique: true, email: true
@@ -32,6 +32,7 @@ class User {
 
     static mapping = {
         password column: '`password`'
+        logins cascade: "all-delete-orphan"
     }
 
     Set<Role> getAuthorities() {

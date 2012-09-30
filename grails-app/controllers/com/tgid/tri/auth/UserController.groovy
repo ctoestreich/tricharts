@@ -82,7 +82,17 @@ class UserController {
             return
         }
 
-        [userInstance: userInstance]
+        def query = {
+            user {
+                eq('id', userInstance.id)
+            }
+        }
+
+        def criteria = LoginHistory.createCriteria()
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        List<LoginHistory> logins = criteria.list(query, max: params.max, offset: params.offset)
+
+        [userInstance: userInstance, logins: logins?.sort{a,b-> b.loginDate <=> a.loginDate}, loginsTotal: logins.totalCount]
     }
 
     def edit() {
