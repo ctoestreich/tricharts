@@ -1,4 +1,8 @@
 <%@ page import="com.tgid.tri.auth.User" %>
+<g:set var="paramMap" value="${[:]}"/>
+<sec:ifAllGranted roles="ROLE_ADMIN">
+  <g:set var="paramMap" value="${['user.id': params?.user?.id]}"/>
+</sec:ifAllGranted>
 <!doctype html>
 <html>
 <head>
@@ -34,10 +38,10 @@
 
 <div class="row-fluid well-white">
   <div class="span12" style="text-align: center">
-    <g:link class="btn" controller="dashboard" action="index">View My Dashboard</g:link>&nbsp;
-    <g:link class="btn" controller="results" action="index">View All My Results</g:link>&nbsp;
-    <g:link class="btn" controller="visualization" action="index">View My Charts</g:link>&nbsp;
-    <g:link class="btn" controller="account" action="index">View My Account</g:link>&nbsp;
+    <g:link class="btn" controller="dashboard" action="index" params="${paramMap}">View My Dashboard</g:link>&nbsp;
+    <g:link class="btn" controller="results" action="index" params="${paramMap}">View All My Results</g:link>&nbsp;
+    <g:link class="btn" controller="visualization" action="index" params="${paramMap}">View My Charts</g:link>&nbsp;
+    <g:link class="btn" controller="account" action="index" params="${paramMap}">View My Account</g:link>&nbsp;
   </div>
 </div>
 
@@ -51,12 +55,35 @@
 
 <div class="row-fluid">
   <h2>Triathlon Records</h2>
+
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 </div>
 
 <div class="row-fluid">
   <h2>Running Records</h2>
+
   <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
+</div>
+
+<div class="row-fluid">
+  <h2>Last 5 Results</h2>
+
+  <div class="span12">
+    <g:if test="${latestResults?.size() > 0}">
+    <g:each in="${latestResults}" var="result">
+      <g:if test="${result?.race?.raceType == com.tgid.tri.race.RaceType.Triathlon}">
+        <g:render template="/templates/results/triathlonResults" model="[result: result]"/>
+      </g:if>
+      <g:elseif test="${result?.race?.raceType == com.tgid.tri.race.RaceType.Running}">
+        <g:render template="/templates/results/runResults" model="[result: result]"/>
+      </g:elseif>
+    </g:each>
+    </g:if>
+    <g:else>
+      <div class="well-white">No Results</div>
+    </g:else>
+  </div>
+  <div class="span12" style="text-align: right; padding-top:10px;"><g:link class="btn btn-primary" controller="results" action="index">See All Results</g:link></div>
 </div>
 
 <r:script>

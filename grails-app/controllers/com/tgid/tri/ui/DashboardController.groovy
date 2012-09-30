@@ -15,7 +15,10 @@ class DashboardController extends BaseController {
     def index() {
         User user = requestedUser
 
-        render view: 'index', model: [user: user]
+        def latestResults = RaceResult.findAllByUser(user)?.sort {a,b -> b.date <=> a.date }
+        latestResults = latestResults.subList(0, latestResults.size() >= 5 ? 5 : latestResults.size())
+
+        render view: 'index', model: [user: user, latestResults: latestResults]
     }
 
     def racesCompleted() {
@@ -33,7 +36,7 @@ class DashboardController extends BaseController {
         }
 
         def closure = { List races, Map map, Boolean isYearly ->
-            races.sort{ a, b -> b.race.date <=> a.race.date}
+            races.sort { a, b -> b.race.date <=> a.race.date}
             races.each { RaceResult raceResult ->
                 def key = isYearly ? raceResult.race.date.year + 1900 : "${raceResult.race.raceCategoryType.raceCategoryType} ${raceResult.race.raceType}"
                 if(!map.containsKey(key)) {
@@ -58,7 +61,7 @@ class DashboardController extends BaseController {
         series.put("data", pieData)
 
         if(pieData.get(0)) {
-            render ([series] as JSON)
+            render([series] as JSON)
         } else {
             render ""
         }

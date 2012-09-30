@@ -4,6 +4,7 @@ import grails.plugin.springcache.annotations.Cacheable
 import groovy.text.SimpleTemplateEngine
 import uk.co.desirableobjects.sendgrid.SendGridEmail
 import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
+import grails.plugin.springcache.annotations.CacheFlush
 
 class RegistrationController {
 
@@ -61,6 +62,7 @@ class RegistrationController {
         render view: 'newuser', model: [userInstance: userInstance]
     }
 
+    @CacheFlush(["chartCache", "triathlonRecordsCache", "runningRecordsCache"])
     def password() {
         def passwordCode = PasswordCode.findByToken(params?.t)
         def userInstance = User.findByUsername(passwordCode?.username)
@@ -126,6 +128,7 @@ class RegistrationController {
         render view: 'confirmation', model: [user: user, racers: racers]
     }
 
+    @CacheFlush(["chartCache", "triathlonRecordsCache", "runningRecordsCache"])
     def complete() {
         def user = User.get(params?.userID)
         def save = false

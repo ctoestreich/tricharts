@@ -4,9 +4,9 @@ import com.tgid.tri.cache.AuthenticationAwareKeyGenerator
 // Place your Spring DSL code here
 beans = {
 
-//    springcacheFilter {
-//        keyGenerator = new AuthenticationAwareKeyGenerator()
-//    }
+    springcacheFilter {
+        keyGenerator = new AuthenticationAwareKeyGenerator()
+    }
 
     authenticationAwareKeyGenerator(AuthenticationAwareKeyGenerator)
 
@@ -17,7 +17,7 @@ beans = {
         eternal = false
         diskPersistent = false
         memoryStoreEvictionPolicy = "LRU"
-        timeToIdle = 3600
+        timeToIdle = 600
         timeToLive = 64000
     }
 
@@ -28,7 +28,7 @@ beans = {
         eternal = false
         diskPersistent = false
         memoryStoreEvictionPolicy = "LRU"
-        timeToIdle = 3600
+        timeToIdle = 600
         timeToLive = 64000
     }
 
