@@ -17,11 +17,11 @@
     <td><div class="clsCentered">Pace/Speed</div></td>
     <td class="clsResultBL">${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.pace}</td>
   </tr>
-  <tr class="clsResultMed clsBorderBot"><td valign="top"><div class="clsCentered">Place (G/O)</div></td>
+  <tr class="clsResultMed clsBorderBot"><td valign="top"><div class="clsCentered">Place (AG/O)</div></td>
     <td class="clsResultBL" valign="top" id="celResS_0">
-      <div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
+      <div class="clsBorderBot"><tri:placement place="${result?.placeAgeGroup}" overall="${result?.participantsAgeGroup}" /></div>
       %{--<div class="clsBorderBot"><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeGender}" overall="${result?.participantsGender}" /></div>--}%
-      <div><tri:placement place="${result?.segmentResults?.find {it.raceSegment.segmentType == SegmentType.Run}?.placeOverall}" overall="${result?.participantsOverall}" /></div>
+      <div><tri:placement place="${result?.placeOverall}" overall="${result?.participantsOverall}" /></div>
     </td>
     <g:render template="/templates/dashboard/overallStats" model="[result: result]"/>
   </tr>

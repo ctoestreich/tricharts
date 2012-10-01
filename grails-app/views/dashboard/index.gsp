@@ -89,6 +89,15 @@
   </div>
   <div class="span12" style="text-align: right; padding-top:10px;"><g:link class="btn btn-primary" controller="results" action="index">See All Results</g:link></div>
 </div>
+<g:form name="modifyRaceResultsForm" id="modifyRaceResultsForm" controller="results" action="modifyRaceResults">
+  <g:hiddenField name="raceResultId" value=""/>
+  <g:hiddenField name="user.id" value="${user?.id}"/>
+  <g:hiddenField name="raceResultEdit" value="false"/>
+</g:form>
+<g:form name="raceResultDeleteForm" id="raceResultDeleteForm" controller="results" action="deleteRaceResult">
+  <g:hiddenField name="raceResultDeleteId" value=""/>
+  <g:hiddenField name="user.id" value="${user?.id}"/>
+</g:form>
 
 <r:script>
   $(function () {
