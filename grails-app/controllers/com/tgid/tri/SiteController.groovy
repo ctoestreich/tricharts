@@ -19,6 +19,9 @@ class SiteController extends BaseController {
     }
 
     @Cacheable('siteCache')
+    def privacy(){}
+
+    @Cacheable('siteCache')
     def faq() { }
 
     @Cacheable('siteCache')

@@ -93,11 +93,6 @@ class VisualizationController extends BaseChartingController {
         renderTriathlonProgressionChart(resultDiv, userId, queryRaceType, queryRaceCategoryType)
     }
 
-    @CacheFlush(["chartCache", "triathlonRecordsCache", "runningRecordsCache"])
-    def clearRecordsCache() {
-        "ok"
-    }
-
     @Cacheable(cache = 'chartCache', keyGenerator = 'authenticationAwareKeyGenerator')
     def runningAveragePlaces() {
         User user = requestedUser

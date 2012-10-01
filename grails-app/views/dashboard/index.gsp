@@ -60,7 +60,7 @@
 </div>
 
 <div class="row-fluid">
-  <h2>Triathlon Records&nbsp;<small style="font-size: 9px;"><a href="javascript:app.clearRecordsCache();">refresh</a></small></h2>
+  <h2>Triathlon Records</h2>
   <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 </div>
 

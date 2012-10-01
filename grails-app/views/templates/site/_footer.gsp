@@ -12,6 +12,7 @@
           <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'aboutus')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'aboutus', params: paramMap)}">About Us</a></li>
           <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'contact')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'contact', params: paramMap)}">Contact</a></li>
           <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'faq')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'faq', params: paramMap)}">FAQ</a></li>
+          <li><a <%=request.forwardURI == "${createLink(controller: 'site', action: 'privacy')}" ? ' class="btn disabled"' : ''%> href="${createLink(controller: 'site', action: 'privacy', params: paramMap)}">Privacy Policy</a></li>
         </ul>
       </div>
     </div>

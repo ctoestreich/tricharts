@@ -201,6 +201,7 @@ class AthlinksResultsParsingService {
             case 'Swimming':
                 return RaceType.Swimming
             case 'Running':
+            case 'Trail Running':
                 return RaceType.Running
             case 'Triathlon & Multisport':
             case 'Off-Road Triathlon':
@@ -213,7 +214,7 @@ class AthlinksResultsParsingService {
                 return RaceType.Aquathon
         }
 
-        println "!! Could not mapRaceType - ${course?.RaceCatDesc}"
+        importLoggingService.save(new ImportLog(importName: 'Map Race Type Failure', error: true, description: course?.RaceCateDesc, complete: true))
 
         return RaceType.Triathlon
     }
