@@ -68,12 +68,13 @@ class ResultsController extends BaseController {
     }
 
     def addRace() {
+        User user = requestedUser
         if(params?.raceType) {
             params["raceType"] = RaceType.getRaceType(params.raceType)
         }
         switch(request.method) {
             case 'GET':
-                [raceInstance: new Race(params)]
+                [raceInstance: new Race(params), user:user]
                 break
             case 'POST':
                 def raceInstance = new Race(params)
@@ -85,14 +86,14 @@ class ResultsController extends BaseController {
                 }
 
                 if(!raceInstance.validate()) {
-                    render view: 'addRace', model: [raceInstance: raceInstance]
+                    render view: 'addRace', model: [raceInstance: raceInstance, user:user]
                     return
                 } else {
                     raceInstance.save(flush: true)
                 }
 
                 if(raceInstance.raceType == RaceType.Triathlon) {
-                    render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance]
+                    render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance, user:user]
                     break
                 } else {
                     flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])

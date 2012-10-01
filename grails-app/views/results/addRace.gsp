@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.auth.State; com.tgid.tri.auth.Country; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -43,6 +43,9 @@
           <f:field property="distanceType" />
           <f:field property="distance" input-step="any" input-min="0" />
           <f:field property="raceCategoryType"  />
+          <f:field property="city" input-class="span6"  />
+          <f:field property="state" input-class="span6" default="${user?.states?.toList()?.first()}" />
+          <f:field property="country" input-class="span6" default="${Country.findByCountryID("US")}"  />
         </f:with>
 
 
