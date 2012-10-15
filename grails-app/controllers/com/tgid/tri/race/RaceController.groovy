@@ -5,6 +5,7 @@ import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import org.springframework.dao.DataIntegrityViolationException
 import com.tgid.tri.auth.User
+import com.tgid.tri.auth.State
 
 @Secured(["ROLE_ADMIN"])
 class RaceController {
@@ -15,7 +16,11 @@ class RaceController {
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
     def search() {
+        println params?.int('state')
         def query = {
+            if(params?.int('state')){
+                eq('state', State.get(params.int('state')))
+            }
             eq('raceType',RaceType.getRaceType(params?.raceType))
             if(params.term) {
                 or {
@@ -26,8 +31,9 @@ class RaceController {
         def response = []
         def criteria = Race.createCriteria()
         def races = criteria.list(query)
-        races.each {
-            response << [label: it.toString(), value: it.toString(), raceId: it.id]
+        races.each { Race race ->
+            def label = "${race.toString()} - ${race.state}"
+            response << [label: label, value: label, raceId: race.id]
         }
         render response as JSON
     }

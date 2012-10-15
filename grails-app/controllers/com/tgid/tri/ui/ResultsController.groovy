@@ -7,6 +7,7 @@ import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.results.RaceResult
 import grails.plugins.springsecurity.Secured
 import com.tgid.tri.race.*
+import com.tgid.tri.auth.State
 
 @Secured(["ROLE_USER"])
 class ResultsController extends BaseController {
@@ -103,13 +104,13 @@ class ResultsController extends BaseController {
     def createResult() {
         User user = requestedUser
         def userId = user.id
-        List<Race> races
+        List<Race> races = []
         switch(params?.raceType) {
             case 'Running':
-                races = findRacesWithNoResults(userId, RaceType.Running)
+                //races = findRacesWithNoResults(userId, RaceType.Running)
                 break
             case 'Triathlon':
-                races = findRacesWithNoResults(userId, RaceType.Triathlon)
+                //races = findRacesWithNoResults(userId, RaceType.Triathlon)
                 break
             default:
                 races = []
@@ -143,15 +144,19 @@ class ResultsController extends BaseController {
         def raceResult = new RaceResult(race: race, user: user)
 
         if(!race) {
+            def raceName = params?.raceName
             def raceType = params?.raceType
+            def state = params?.int('state.id', 0)
             params.clear()
             params.setProperty('user.id', user.id)
+            params.setProperty('state.id', state)
             params.setProperty('raceType', raceType)
+            params.setProperty('raceName', raceName)
             if(!params.int('race.id')) {
-                flash.message = g.message(code: 'raceResult.race.null')
+                flash.message = g.message(code: 'raceResult.race.null', args: [raceName, State.get(state) ?: 'All States'])
             }
             raceResult.errors.rejectValue('race', 'raceResult.races.none.approved')
-            redirect action: 'createResult', params: params, model: [race: null, user: user, raceResult: raceResult]
+            redirect action: 'createResult', params: params, model: [race: null, user: user, raceResult: raceResult, raceName: raceName]
             return
         }
 
