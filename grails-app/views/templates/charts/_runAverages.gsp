@@ -14,9 +14,7 @@
             categories = ${categories},
             name = 'Mile Pace Averages',
             data = [
-              <g:each in="${data}" var="barData" status="i">
-              <g:if test="${barData.hasData}">
-              {
+              <g:each in="${data}" var="barData" status="i"><g:if test="${barData.hasData}">{
                 y: ${barData.y},
                 color:colors[${i}],
                 drilldown:{
@@ -25,12 +23,8 @@
                   data: ${barData?.drilldown?.data ?: []},
                   color:colors[${i}]
                 }
-              }
-              </g:if>
-                <g:else>{}</g:else>
-              <g:if test="${data.size() > i+1}">,
-              </g:if>
-              </g:each>
+              }</g:if><g:else>{}</g:else>
+              <g:if test="${data.size() > i+1}">,</g:if></g:each>
             ];
 
     chart${id} = new Highcharts.Chart({
