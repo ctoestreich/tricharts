@@ -8,7 +8,7 @@
   <g:if test="${hasData}">
   $('#ttl${id}').hide();
   hasData${id} = true;
-  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+  var timeToSubtract = Date.parse("1/1/1 0:00:00");
   var chart${id};
   $(function () {
 

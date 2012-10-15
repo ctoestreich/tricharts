@@ -9,7 +9,7 @@
   $('#ttl${id}').hide();
   hasData${id} = true;
   var chart${id};
-  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+  var timeToSubtract = Date.parse("1/1/1 0:00:00");
   $(function () {
     var colors = Highcharts.getOptions().colors,
             categories = ${categories},

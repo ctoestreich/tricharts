@@ -8,7 +8,7 @@
   <g:if test="${males.size() > 0 || females.size() > 0 || you.size() > 0}">
   hasData = true;
   var chart;
-  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+  var timeToSubtract = Date.parse("1/1/1 0:00:00");
   $(function () {
     chart = new Highcharts.Chart({
                                    chart: {

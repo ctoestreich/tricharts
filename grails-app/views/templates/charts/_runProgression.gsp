@@ -6,9 +6,9 @@
 
 <script>
   var timeToSubtract = Date.parse("1/1/1 0:00:00");
-  console.log(timeToSubtract);
-  console.log(Date.parse('1/1/1 0:05:31'));
-  console.log(Date.parse('1/1/1 0:05:31') - timeToSubtract);
+//  console.log(timeToSubtract);
+//  console.log(Date.parse('1/1/1 0:05:31'));
+//  console.log(Date.parse('1/1/1 0:05:31') - timeToSubtract);
   app.removeLoadingClasses($("#${id}").parent('div'));
   var hasData = false;
   <g:if test="${data}">
@@ -17,7 +17,7 @@
   $('#ttl${id}').hide();
   hasData = true;
   var chart;
-//  var timeToSubtract = Date.parse("1-1-1 0:00:00");
+//  var timeToSubtract = Date.parse("1/1/1 0:00:00");
     $(function(){
   chart = new Highcharts.Chart({
                                  plotOptions:{
