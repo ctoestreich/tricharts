@@ -13,7 +13,7 @@ class Race {
     RaceCategoryType raceCategoryType
     Double distance = 0.00
     String resultsUrl
-    StatusType statusType = StatusType.Pending
+    StatusType statusType = StatusType.Approved
     Long courseID
     Long eventCourseID
     RaceCategory raceCategory

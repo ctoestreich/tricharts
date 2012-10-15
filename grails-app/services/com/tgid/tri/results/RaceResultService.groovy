@@ -12,6 +12,21 @@ import org.joda.time.Duration
 
 class RaceResultService {
 
+    RaceResult mapRaceResult(Race race, RaceResult raceResult) {
+        if((raceResult?.segmentResults?.size() ?: 0) < race?.segments?.size()) {
+            race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}.each {
+                raceResult.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
+            }
+            try {
+                raceResult.save(flush: true)
+            } catch(Exception e) {
+                log.error e
+                println e
+            }
+        }
+        raceResult
+    }
+
     RaceResult mapRaceResultAthlinks(User user, Long eventCourseID, Map result = [:]) {
         def race = Race.findByEventCourseID(eventCourseID)
         def raceResult = RaceResult.findByAthlinkEntryID(result?.EntryID)
@@ -94,7 +109,6 @@ class RaceResultService {
                 segmentResult.save(flush: true)
             }
         } else {
-
             def segmentCount = params?.int('segmentCount') ?: 0
 
             (0..<segmentCount).each {

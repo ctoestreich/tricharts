@@ -57,6 +57,9 @@ class RaceResult {
     }
 
     transient SegmentResult getResult() {
-        segmentResults?.toList()?.first()
+        if(segmentResults.size() > 0)
+            return segmentResults?.toList()?.first()
+        else
+            return null
     }
 }

@@ -4,6 +4,7 @@ import com.tgid.tri.auth.User
 import uk.co.desirableobjects.sendgrid.SendGridEmail
 import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
 import grails.plugin.springcache.annotations.Cacheable
+import com.tgid.tri.results.RaceResult
 
 class SiteController extends BaseController {
 
@@ -13,7 +14,7 @@ class SiteController extends BaseController {
     @Cacheable('siteCache')
     def index(){
         def resultCount = redisService.memoize('resultCount', 3600){
-            com.tgid.tri.results.RaceResult.count()
+            RaceResult?.count() ?: 0
         }
         render view: '/index', model: [resultCount: resultCount]
     }

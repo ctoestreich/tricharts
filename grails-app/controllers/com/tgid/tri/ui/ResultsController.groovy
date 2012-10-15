@@ -1,18 +1,12 @@
 package com.tgid.tri.ui
 
-import grails.plugins.springsecurity.Secured
-import com.tgid.tri.auth.User
-import com.tgid.tri.results.RaceResult
-import com.tgid.tri.race.RaceType
 import com.tgid.tri.BaseController
-import com.tgid.tri.race.Race
-import com.tgid.tri.race.RaceSegment
-import com.tgid.tri.race.Segment
-import com.tgid.tri.race.StatusType
-import com.tgid.tri.results.SegmentResult
-import org.joda.time.Duration
-import com.tgid.tri.exception.SegmentResultException
+import com.tgid.tri.auth.User
 import com.tgid.tri.exception.RaceResultException
+import com.tgid.tri.exception.SegmentResultException
+import com.tgid.tri.results.RaceResult
+import grails.plugins.springsecurity.Secured
+import com.tgid.tri.race.*
 
 @Secured(["ROLE_USER"])
 class ResultsController extends BaseController {
@@ -47,6 +41,7 @@ class ResultsController extends BaseController {
     }
 
     def addSegments() {
+        User user = requestedUser
         switch(request.method) {
             case 'POST':
                 def raceInstance = Race.get(params?.raceId)
@@ -61,8 +56,9 @@ class ResultsController extends BaseController {
                     return
                 }
 
-                flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
-                redirect action: 'index', id: raceInstance.id
+                flash.message = message(code: 'race.created.approved.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
+                def raceResult = raceResultService.mapRaceResult(raceInstance, new RaceResult(race: raceInstance, user: user))
+                render view: 'createResult', model: [race: raceInstance, user: user, raceResult: raceResult]
                 break
         }
     }
@@ -74,7 +70,7 @@ class ResultsController extends BaseController {
         }
         switch(request.method) {
             case 'GET':
-                [raceInstance: new Race(params), user:user]
+                [raceInstance: new Race(params), user: user]
                 break
             case 'POST':
                 def raceInstance = new Race(params)
@@ -86,18 +82,19 @@ class ResultsController extends BaseController {
                 }
 
                 if(!raceInstance.validate()) {
-                    render view: 'addRace', model: [raceInstance: raceInstance, user:user]
+                    render view: 'addRace', model: [raceInstance: raceInstance, user: user]
                     return
                 } else {
                     raceInstance.save(flush: true)
                 }
 
                 if(raceInstance.raceType == RaceType.Triathlon) {
-                    render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance, user:user]
+                    render view: 'addSegments', id: raceInstance.id, model: [raceInstance: raceInstance, user: user]
                     break
                 } else {
-                    flash.message = message(code: 'race.created.pending.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
-                    redirect action: 'index', id: raceInstance.id
+                    flash.message = message(code: 'race.created.approved.message', args: [message(code: 'race.label', default: 'Race'), raceInstance.name])
+                    def raceResult = raceResultService.mapRaceResult(raceInstance, new RaceResult(race: raceInstance, user: user))
+                    render view: 'createResult', model: [race: raceInstance, user: user, raceResult: raceResult]
                     break
                 }
         }
@@ -117,7 +114,7 @@ class ResultsController extends BaseController {
             default:
                 races = []
         }
-        render view: 'createResult', model: [raceResult: new RaceResult(), user: user, races: races, 'user.id': user.id]
+        render view: 'createResult', model: [raceResult: new RaceResult(), user: user, races: races, 'user.id': user.id, raceName: params?.raceName], params: ['race.id': params?.int('race.id')]
     }
 
     private List<Race> findRacesWithNoResults(userId, RaceType raceType) {
@@ -154,13 +151,12 @@ class ResultsController extends BaseController {
                 flash.message = g.message(code: 'raceResult.race.null')
             }
             raceResult.errors.rejectValue('race', 'raceResult.races.none.approved')
-            redirect action: 'createResult', params: params, model: [race: race, user: user, raceResult: raceResult]
+            redirect action: 'createResult', params: params, model: [race: null, user: user, raceResult: raceResult]
             return
         }
 
-        race.segments.sort {a, b -> a.segmentOrder <=> b.segmentOrder}.each {
-            raceResult.addToSegmentResults(new SegmentResult(raceSegment: it, duration: new Duration(0)))
-        }
+        raceResultService.mapRaceResult(race, raceResult)
+
         render view: 'createResult', model: [race: race, user: user, raceResult: raceResult]
     }
 
@@ -178,19 +174,16 @@ class ResultsController extends BaseController {
             params.setProperty('user.id', user.id)
             raceResultService.createRaceResult(raceResult)
             redirect action: 'index', params: params
-            return
         }
         catch(SegmentResultException failed) {
             flash.message = failed.message
             flash.segmentResult = failed.problem
             redirect action: 'createRunResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
-            return
         }
         catch(RaceResultException failed) {
             flash.message = failed.message
             flash.raceResult = failed.problem
             redirect action: 'createRunResult', model: [race: raceResult.race, user: user, raceResult: raceResult]
-            return
         }
     }
 

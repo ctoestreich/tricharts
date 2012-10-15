@@ -37,8 +37,8 @@
     <g:if test="${races}">
       <p>Search For Race By Name</p>
       %{--<g:select noSelection="${['': '']}" optionKey="id" id="race" from="${races.sort {a, b -> a.toString() <=> b.toString()}}" name="race.id"/>--}%
-      <input id="raceSelect" class="span6" name="raceSelect" value="${race?.toString()}">
-      <input type="hidden" id="raceId" value="${race?.id}" name="race.id" />
+      <input id="raceSelect" class="span6" name="raceSelect" value="${raceName}">
+      <input type="hidden" id="raceId" value="${params?.int('race.id',0)}" name="race.id" />
       <button type="submit" class="btn">Next -></button>
     </g:if>
     <g:else>
@@ -84,7 +84,7 @@
   <div class="row-fluid well-white">
   <g:form id="saveResult" class="form-horizontal" controller="results" action="saveResult">
     <g:hiddenField name="user.id" if="user.id" value="${user?.id}"/>
-    <input type="hidden" name="race.id" value="${race.id}" id="race">
+    <input type="hidden" name="race.id" value="${race?.id}" id="race">
     <input type="hidden" name="raceResultId" value="${raceResult?.id}" id="raceResultId">
     <input type="hidden" name="segmentCount" value="${raceResult?.segmentResults?.size()}" id="segmentCount">
 
