@@ -1,16 +1,19 @@
 package com.tgid.tri.admin
 
+import grails.plugin.springcache.annotations.CacheFlush
+import grails.plugins.springsecurity.Secured
+
 import com.tgid.tri.auth.Racer
 import com.tgid.tri.auth.User
+import com.tgid.tri.auth.UserSport
 import com.tgid.tri.data.AthlinksResultsImportJob
 import com.tgid.tri.queue.AthlinksCoursePatternsImportJesqueJob
 import com.tgid.tri.queue.AthlinksRaceCategoryImportJesqueJob
 import com.tgid.tri.queue.AthlinksRaceImportJesqueJob
 import com.tgid.tri.queue.AthlinksUserResultsImportJesqueJob
 import com.tgid.tri.race.Race
+import com.tgid.tri.race.RaceType
 import com.tgid.tri.race.StatusType
-import grails.plugin.springcache.annotations.CacheFlush
-import grails.plugins.springsecurity.Secured
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {
@@ -22,6 +25,16 @@ class AdminController {
     def countryService
     def stateService
     def athlinksResultsParsingService
+
+    def defaultUserSports() {
+        User.list().each { user ->
+            UserSport userSport = new UserSport(user: user)
+            userSport.sports.addAll([RaceType.Triathlon, RaceType.Running])
+            userSport.save(failOnError: true, flush: true)
+        }
+
+        redirect view: 'index'
+    }
 
     def jobSettings() {
         render view: 'jobSettings'
