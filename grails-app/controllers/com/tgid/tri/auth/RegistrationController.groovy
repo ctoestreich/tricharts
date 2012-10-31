@@ -1,10 +1,11 @@
 package com.tgid.tri.auth
 
+import com.tgid.tri.race.RaceType
+import grails.plugin.springcache.annotations.CacheFlush
 import grails.plugin.springcache.annotations.Cacheable
 import groovy.text.SimpleTemplateEngine
 import uk.co.desirableobjects.sendgrid.SendGridEmail
 import uk.co.desirableobjects.sendgrid.SendGridEmailBuilder
-import grails.plugin.springcache.annotations.CacheFlush
 
 class RegistrationController {
 
@@ -35,10 +36,17 @@ class RegistrationController {
                 }
 
                 userInstance.save(flush: true)
+                initilizeUserSports(userInstance)
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), ''])
                 redirect action: 'newuser', id: userInstance.id
                 break
         }
+    }
+
+    private void initilizeUserSports(User userInstance) {
+        UserSport userSport = new UserSport(user: userInstance)
+        userSport.sports.addAll([RaceType.Biking, RaceType.Triathlon, RaceType.Running])
+        userSport.save(flush: true)
     }
 
     def newuser() {

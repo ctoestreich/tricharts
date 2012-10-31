@@ -40,7 +40,7 @@
   </g:if>
   <div class="row-fluid">
     <div class="span3 well">
-      <cache:render template="/templates/account/accountNav" key="${request.forwardURI}"/>
+      <g:render template="/templates/account/accountNav" key="${request.forwardURI}"/>
     </div>
 
     <div class="span9">

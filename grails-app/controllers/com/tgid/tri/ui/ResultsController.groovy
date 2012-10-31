@@ -1,13 +1,14 @@
 package com.tgid.tri.ui
 
 import com.tgid.tri.BaseController
+import com.tgid.tri.auth.State
 import com.tgid.tri.auth.User
+import com.tgid.tri.auth.UserSport
 import com.tgid.tri.exception.RaceResultException
 import com.tgid.tri.exception.SegmentResultException
 import com.tgid.tri.results.RaceResult
 import grails.plugins.springsecurity.Secured
 import com.tgid.tri.race.*
-import com.tgid.tri.auth.State
 
 @Secured(["ROLE_USER"])
 class ResultsController extends BaseController {
@@ -28,11 +29,17 @@ class ResultsController extends BaseController {
             race.raceType == RaceType.Running
         }.max(params.int('max') ?: 500)
 
+        def bikes = results.where {
+            race.raceType == RaceType.Biking
+        }.max(params.int('max') ?: 500)
+
         def triathlons = results.where {
             race.raceType == RaceType.Triathlon
         }.max(params.int('max') ?: 500)
 
-        render view: 'index', model: [runs: runs, triathlons: triathlons, user: user]
+        def sports = UserSport?.findByUser(user)?.sports ?: []
+
+        render view: 'index', model: [runs: runs, triathlons: triathlons, bikes: bikes, user: user, sports: sports]
     }
 
     def runCharts() {
@@ -71,6 +78,13 @@ class ResultsController extends BaseController {
         }
         switch(request.method) {
             case 'GET':
+                if(params.raceType == RaceType.Biking) {
+                    params.put('raceCategoryType', RaceCategoryType.Road)
+                } else  if(params.raceType == RaceType.Running) {
+                    params.put('raceCategoryType', RaceCategoryType.TenKilometer)
+                } else if(params.raceType == RaceType.Triathlon) {
+                    params.put('raceCategoryType', RaceCategoryType.Olympic)
+                }
                 [raceInstance: new Race(params), user: user]
                 break
             case 'POST':

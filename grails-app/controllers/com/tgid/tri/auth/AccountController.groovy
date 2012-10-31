@@ -1,5 +1,6 @@
 package com.tgid.tri.auth
 
+import com.tgid.tri.race.RaceType
 import grails.plugins.springsecurity.Secured
 
 @Secured('ROLE_USER')
@@ -50,8 +51,30 @@ class AccountController {
 
     }
 
-    def external(){
+    def external() {
         User user = springSecurityService.currentUser
         render view: 'external', model: [user: user]
+    }
+
+    def sports() {
+        User user = springSecurityService.currentUser
+        UserSport userSport = UserSport.findOrSaveWhere(user: user)
+        switch(request.method) {
+            case 'GET':
+                break
+            case 'POST':
+                RaceType.each { RaceType raceType ->
+                    def radio = params?.get(raceType.raceType, '0')
+                    if(radio != '0') {
+                        userSport.sports << raceType
+                    } else {
+                        userSport.sports.removeAll {it.raceType == raceType.raceType}
+                    }
+                    userSport.save(flush: true)
+                }
+                break
+        }
+
+        render view: 'sports', model: [userSport: userSport]
     }
 }

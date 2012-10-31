@@ -81,6 +81,9 @@
       <g:elseif test="${result?.race?.raceType == com.tgid.tri.race.RaceType.Running}">
         <g:render template="/templates/results/runResults" model="[result: result]"/>
       </g:elseif>
+      <g:elseif test="${result?.race?.raceType == com.tgid.tri.race.RaceType.Biking}">
+        <g:render template="/templates/results/bikeResults" model="[result: result]"/>
+      </g:elseif>
     </g:each>
     </g:if>
     <g:else>

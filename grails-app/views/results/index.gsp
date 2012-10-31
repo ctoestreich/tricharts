@@ -1,4 +1,4 @@
-<%@ page import="com.tgid.tri.auth.User" %>
+<%@ page import="com.tgid.tri.race.RaceType; com.tgid.tri.auth.UserSport; com.tgid.tri.auth.User" %>
 <!doctype html>
 <html>
 <head>
@@ -11,7 +11,7 @@
 <body>
 
 <div class="page-header">
-  <h1>Results For ${user.firstName} <small> you are fast</small></h1>
+  <h1>Results For ${user.firstName} <small>you are fast</small></h1>
 </div>
 
 <g:if test="${flash.message}">
@@ -23,6 +23,7 @@
 <script type="text/javascript">
   app.loadRunRecords = function () {
     ${remoteFunction(controller: 'visualization', action: 'runningRecords', update: 'runDashboardRecords', params: ['user.id': params?.user?.id])}
+    ${remoteFunction(controller: 'visualization', action: 'bikingRecords', update: 'bikeDashboardRecords', params: ['user.id': params?.user?.id])}
     ${remoteFunction(controller: 'visualization', action: 'triathlonRecords', update: 'triathlonDashboardRecords', params: ['user.id': params?.user?.id])}
   };
 
@@ -32,40 +33,64 @@
 
 </script>
 
-<div class="row well_clear">
-  %{--<div class="span12">--}%
-  <g:render template="/templates/dashboard/dashboardHeader" model="[sport: 'Triathlon']"/>
+<g:if test="${sports?.contains(RaceType.Triathlon)}">
+  <div class="row well_clear">
+    %{--<div class="span12">--}%
+    <g:render template="/templates/dashboard/dashboardHeader" model="[sport: 'Triathlon']"/>
 
-  <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
+    <div class="row-fluid" id="triathlonDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading triathlon records...</div>
 
-  <div id="results-triathlon" class="accordion">
-    <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/results/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/results/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
+    <div id="results-triathlon" class="accordion">
+      <g:if test="${params?.srt == "type"}">
+        <g:render template="/templates/results/triathlonResults" collection="${triathlons.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      </g:if>
+      <g:else>
+        <g:render template="/templates/results/triathlonResults" collection="${triathlons.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      </g:else>
+    </div>
   </div>
-</div>
+  <br/>
+</g:if>
 
-<br/>
+<g:if test="${sports?.contains(RaceType.Running)}">
+  <div class="row well_clear">
+    %{--<div class="span12">--}%
+    <g:render template="/templates/dashboard/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
 
-<div class="row well_clear">
-  %{--<div class="span12">--}%
-  <g:render template="/templates/dashboard/dashboardHeader" model="[sport: 'Running', user: params?.user]"/>
+    <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
 
-  <div class="row-fluid" id="runDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading run records...</div>
-
-  <div id="results-run" class="accordion">
-    <g:if test="${params?.srt == "type"}">
-      <g:render template="/templates/results/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
-    </g:if>
-    <g:else>
-      <g:render template="/templates/results/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
-    </g:else>
+    <div id="results-run" class="accordion">
+      <g:if test="${params?.srt == "type"}">
+        <g:render template="/templates/results/runResults" collection="${runs.list().sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      </g:if>
+      <g:else>
+        <g:render template="/templates/results/runResults" collection="${runs.list().sort {a, b -> b.date <=> a.date}}" var="result"/>
+      </g:else>
+    </div>
+    %{--</div>--}%
   </div>
-  %{--</div>--}%
-</div>
+  <br/>
+</g:if>
+
+<g:if test="${sports?.contains(RaceType.Biking)}">
+  <div class="row well_clear">
+    %{--<div class="span12">--}%
+    <g:render template="/templates/dashboard/dashboardHeader" model="[sport: 'Biking', user: params?.user]"/>
+
+    <div class="row-fluid" id="bikeDashboardRecords"><g:img dir="/images" file="spinner.gif"/> loading bike records...</div>
+
+    <div id="results-run" class="accordion">
+      <g:if test="${params?.srt == "type"}">
+        <g:render template="/templates/results/bikeResults" collection="${bikes?.list()?.sort {a, b -> b?.race?.raceCategoryType <=> a?.race?.raceCategoryType}}" var="result"/>
+      </g:if>
+      <g:else>
+        <g:render template="/templates/results/bikeResults" collection="${bikes?.list()?.sort {a, b -> b.date <=> a.date}}" var="result"/>
+      </g:else>
+    </div>
+    %{--</div>--}%
+  </div>
+  <br/>
+</g:if>
 
 <div class="modal hide" id="deleteConfirmation">
   <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
@@ -86,7 +111,6 @@
   <g:hiddenField name="raceResultDeleteId" value=""/>
   <g:hiddenField name="user.id" value="${user?.id}"/>
 </g:form>
-
 
 </body>
 </html>

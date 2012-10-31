@@ -172,6 +172,13 @@ class VisualizationController extends BaseChartingController {
         render template: "runningRecord", model: [data: data, user: user]
     }
 
+    def bikingRecords(){
+        User user = requestedUser
+        def userId = user.id
+        def data = []//visualizationService.mapRunningRecords(userId)
+        render template: "bikingRecord", model: [data: data, user: user]
+    }
+
     def mileChart() {
         User user = requestedUser
         def userId = user.id

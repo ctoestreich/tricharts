@@ -112,6 +112,7 @@ class AthlinksResultsParsingService {
     }
 
     private void importRaces(User user, Map raceMap) {
+        log.debug "Race id: ${raceMap?.Race?.RaceID}"
         def race = Race.findByAthlinkRaceID(raceMap?.Race?.RaceID)
         if(!race && raceMap?.Race?.RaceID) {
             log.info "Creating race for ${raceMap.Race.RaceID} - ${raceMap.Race.RaceName}"
