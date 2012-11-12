@@ -4,8 +4,6 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <title>Thank You!</title>
-  <r:require modules="dashboard,results"/>
-  <gvisualization:apiImport/>
 </head>
 
 <body>
