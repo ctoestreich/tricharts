@@ -36,6 +36,8 @@ class AthlinksResultsParsingService {
     def updateAthlinksRace(Race race) {
         def racesUrl = "http://api.athlinks.com/races/${race.athlinkRaceID}?key=${grailsApplication.config.athlinks.key}&format=json"
 
+        log.debug "fetching ${racesUrl}"
+
         def raceMap = [:]
         try {
             String apiString = new URL(racesUrl).text
@@ -95,6 +97,9 @@ class AthlinksResultsParsingService {
 
     private void importRacerRaces(Racer racer, User user) {
         def racesUrl = "http://api.athlinks.com/athletes/results/${racer.racerID}?key=${grailsApplication.config.athlinks.key}&format=json"
+
+        log.debug "fetching ${racesUrl}"
+
         def races
         try {
             String apiString = new URL(racesUrl).text
@@ -103,7 +108,7 @@ class AthlinksResultsParsingService {
             throw e
         }
 
-        races?.each { raceMap ->
+        races?.List?.each { raceMap ->
             importRaces(user, raceMap)
         }
 
@@ -111,7 +116,7 @@ class AthlinksResultsParsingService {
         racer.save(flush: true)
     }
 
-    private void importRaces(User user, Map raceMap) {
+    private void importRaces(user, raceMap) {
         log.debug "Race id: ${raceMap?.Race?.RaceID}"
         def race = Race.findByAthlinkRaceID(raceMap?.Race?.RaceID)
         if(!race && raceMap?.Race?.RaceID) {
@@ -180,6 +185,9 @@ class AthlinksResultsParsingService {
         log.info "Creating result for ${eventCourseID} entry: ${entryID}"
 
         def racesUrl = "http://api.athlinks.com/results/${entryID}?key=${grailsApplication.config.athlinks.key}&format=json"
+
+        log.debug "fetching ${racesUrl}"
+
         def result
 
         try {
@@ -224,10 +232,13 @@ class AthlinksResultsParsingService {
         def results = true
         def page = 1
         while(results) {
-            def url = "http://api.athlinks.com/enums/CoursePatterns?key=${grailsApplication.config.athlinks.key}&page=${page}&pageSize=10000&format=json"
+            def racesUrl = "http://api.athlinks.com/enums/CoursePatterns?key=${grailsApplication.config.athlinks.key}&page=${page}&pageSize=10000&format=json"
+
+            log.debug "fetching ${racesUrl}"
+
             def coursePatterns = null
             try {
-                String apiString = new URL(url).text
+                String apiString = new URL(racesUrl).text
                 coursePatterns = new JsonSlurper().parseText(apiString)
             } catch(Exception e) {
                 log.error e
@@ -242,10 +253,11 @@ class AthlinksResultsParsingService {
     }
 
     def importRaceCategories() {
-        def url = "http://api.athlinks.com/enums/RaceCategories?key=${grailsApplication.config.athlinks.key}&format=json"
+        def racesUrl = "http://api.athlinks.com/enums/RaceCategories?key=${grailsApplication.config.athlinks.key}&format=json"
+        log.debug "fetching ${racesUrl}"
         def raceCategories = null
         try {
-            String apiString = new URL(url).text
+            String apiString = new URL(racesUrl).text
             raceCategories = new JsonSlurper().parseText(apiString)
         } catch(Exception e) {
             log.error e
