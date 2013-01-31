@@ -41,7 +41,7 @@ class SegmentSpec extends Specification {
         def pace = segmentResults.pace
 
         then:
-        pace.speed == speed
+        if(speed && pace?.speed) pace.speed == speed
         pace.display == display
         pace.duration == duration
 

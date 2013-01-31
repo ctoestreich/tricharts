@@ -19,6 +19,12 @@ environments {
             password = 'Tr1Ch4rt5'
         }
     }
+    test {
+        dataSource {
+            dbCreate = "update"
+            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+        }
+    }
     production {
         dataSource {
             pooled = true

@@ -19,9 +19,9 @@ import com.tgid.tri.race.*
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
  */
 @TestMixin([GrailsUnitTestMixin, DomainClassUnitTestMixin, ServiceUnitTestMixin])
-@TestFor(TriHarderTagLib)
+@TestFor(TriChartsTagLib)
 @Mock([SegmentResult, RaceResult, Race, Segment, PaceService])
-class TriHarderTagLibSpec extends Specification {
+class TriChartsTagLibSpec extends Specification {
 
     @Shared
     PaceService paceService

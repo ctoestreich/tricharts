@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/tricharts.iml" filepath="$PROJECT_DIR$/tricharts.iml" />
       <module fileurl="file://$PROJECT_DIR$/tricharts-grailsPlugins.iml" filepath="$PROJECT_DIR$/tricharts-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trichartsDomain-inplacePlugin.iml" filepath="$PROJECT_DIR$/trichartsDomain-inplacePlugin.iml" />
     </modules>
   </component>
 </project>

@@ -13,7 +13,7 @@ import org.joda.time.format.PeriodFormatter
 import static org.joda.time.DurationFieldType.months
 import static org.joda.time.DurationFieldType.years
 
-class TriHarderTagLib {
+class TriChartsTagLib {
 
     static namespace = "tri"
 
