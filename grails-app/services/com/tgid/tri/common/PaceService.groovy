@@ -42,7 +42,8 @@ class PaceService {
     }
 
     private List calcSwimPacing(SegmentResult result) {
-        if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
+//        if(!result.duration || result.duration == Duration.standardSeconds(0) || result.duration < Duration.standardSeconds(120)) {
+        if(!result.duration || result.duration == Duration.standardSeconds(0)) {
             return ['', '']
         }
         BigDecimal distance = result.raceSegment.distance / swimMultiplier(result.raceSegment)

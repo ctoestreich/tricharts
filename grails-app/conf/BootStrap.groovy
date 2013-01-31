@@ -22,7 +22,7 @@ class BootStrap {
         segmentService.seedSegments()
         countryService.seedCountries()
         stateService.seedStates()
-        if(Environment.current == Environment.DEVELOPMENT) {
+        if(Environment.current != Environment.PRODUCTION) {
             bootStrapService.createDefaultUsers()
             //bootStrapService.seedResults()
         }
