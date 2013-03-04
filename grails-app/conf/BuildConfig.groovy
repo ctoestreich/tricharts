@@ -81,10 +81,4 @@ grails.project.dependency.resolution = {
     }
 }
 
-def serverBuild = System.getProperty("build")
-
-if(serverBuild) {
-    grails.plugin.location.'tricharts-domain' = "/apps/hudson/builds/workspace/tricharts-domain"
-} else {
-    grails.plugin.location.'tricharts-domain' = "../tricharts-domain"
-}
+grails.plugin.location.'tricharts-domain' = "../tricharts-domain"

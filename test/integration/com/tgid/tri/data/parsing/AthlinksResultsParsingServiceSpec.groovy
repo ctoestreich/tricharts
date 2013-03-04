@@ -4,6 +4,7 @@ import com.tgid.tri.auth.Racer
 import com.tgid.tri.results.RaceResult
 import grails.plugin.spock.IntegrationSpec
 import spock.lang.Unroll
+import com.tgid.tri.auth.User
 
 /**
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
@@ -21,6 +22,6 @@ class AthlinksResultsParsingServiceSpec extends IntegrationSpec {
         RaceResult.findAllByUser(racer.user).size() > 0
 
         where:
-        racer << Racer.list()
+        racer << Racer.findAllByUser(User.findByUsername('acetrike@yahoo.com'))
     }
 }
